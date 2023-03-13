@@ -1,6 +1,6 @@
-# Tools Application
+# ToDo Application
 
-Package: [`com.paul.toolbox'][1]
+Package: [`com.paul.ToDoList'][1]
 
 Jetsurvey is a sample survey app, built with
 [Jetpack Compose](https://developer.android.com/jetpack/compose). The goal of the sample is to
