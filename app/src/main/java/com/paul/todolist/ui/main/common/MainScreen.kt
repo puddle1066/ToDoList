@@ -25,8 +25,6 @@ class MainScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE)            //Hide the Tool bar
-
         val todoModel: ToDoModel by viewModels()
 
         setContent {

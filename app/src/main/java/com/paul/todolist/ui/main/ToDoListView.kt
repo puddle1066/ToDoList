@@ -21,7 +21,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.database.RoomDataProvider
-import com.paul.todolist.ui.main.common.HeadingView
 import com.paul.todolist.ui.theme.ToolboxTheme
 
 
@@ -57,7 +56,8 @@ fun MainView(model : ToDoModel) {
                 { Icon(Icons.Filled.Add,"")}
             }
             ) {
-                HeadingView()
+                val listofValues =  listOf("ToDo","Finished")    //From Database
+                HeadingView(model.getList())
 
         Box(
             Modifier

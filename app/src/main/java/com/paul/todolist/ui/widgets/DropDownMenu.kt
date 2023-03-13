@@ -1,7 +1,6 @@
 package com.paul.todolist.ui.widgets
 
 import android.content.res.Configuration
-import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
@@ -9,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,18 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.theme.ToolboxTheme
 import com.paul.todolist.ui.theme.typography
 
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun Preview() {
-    DropDownMenuComponent(DropDownMenuParameter(listOf("ToDo","Finished"),true,"Finished"))
-}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DropDownMenuComponent(params: DropDownMenuParameter) {
-    val expanded  = remember { mutableStateOf(params.expanded) }
+fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
+    val expanded  = remember { mutableStateOf(parameters.expanded) }
 
     val localStyle = typography.h6
     val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colors.secondary))
@@ -41,7 +31,7 @@ fun DropDownMenuComponent(params: DropDownMenuParameter) {
         ExposedDropdownMenuBox(
             expanded = expanded.value,
             onExpandedChange = {
-                expanded.value = !params.expanded
+                expanded.value = !parameters.expanded
             }
         ) {
             Row(
@@ -64,7 +54,7 @@ fun DropDownMenuComponent(params: DropDownMenuParameter) {
                 BasicTextField(
                     modifier = Modifier.width(200.dp),
                     readOnly = true,
-                    value = params.selectedOptionText,
+                    value = parameters.selectedOptionText,
                     onValueChange = { },
                     singleLine = true,
                     enabled = true,
@@ -88,10 +78,10 @@ fun DropDownMenuComponent(params: DropDownMenuParameter) {
                     expanded.value = false
                 }
             ) {
-                params.options.forEach { selectionOption ->
+                parameters.options.forEach { selectionOption ->
                     DropdownMenuItem(
                         onClick = {
-                            params.selectedOptionText = selectionOption
+                            parameters.selectedOptionText = selectionOption
                             expanded.value = false
                         },
 
@@ -117,9 +107,15 @@ fun DropDownMenuComponent(params: DropDownMenuParameter) {
     }
 }
 
-
 data class DropDownMenuParameter(
     var options: List<String>,
     var expanded: Boolean,
     var selectedOptionText: String,
 )
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun Preview() {
+    DropDownMenuComponent(DropDownMenuParameter(listOf("ToDo","Finished"),true,"Finished"))
+}

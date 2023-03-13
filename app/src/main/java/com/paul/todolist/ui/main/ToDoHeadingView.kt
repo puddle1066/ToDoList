@@ -1,6 +1,5 @@
-package com.paul.todolist.ui.main.common
+package com.paul.todolist.ui.main
 
-import android.app.Activity
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -8,24 +7,18 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paul.todolist.di.database.data.Lists
 import com.paul.todolist.ui.theme.ToolboxTheme
 import com.paul.todolist.ui.widgets.DropDownMenuComponent
 import com.paul.todolist.ui.widgets.DropDownMenuParameter
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun HeadingView() {
-    val listofValues =  listOf("ToDo","Finished")    //From Database
-
+fun HeadingView(lists: List<Lists>) {
     ToolboxTheme {
             Row(
                 modifier = Modifier
@@ -49,11 +42,25 @@ fun HeadingView() {
                     )
                 }
 
-                Spacer(Modifier.width(10.dp))
+             Spacer(Modifier.width(10.dp))
 
-                DropDownMenuComponent(DropDownMenuParameter(listofValues,false,""))
+             var nameList : MutableList<String> = ArrayList()
+             lists.forEach {
+                 nameList.add(it.title ?:"")
+             }
+
+                DropDownMenuComponent(DropDownMenuParameter(nameList,false,""))
 
             }
     }
 }
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun Preview() {
+    val listofValues =  listOf(Lists("0","First","0"),Lists("1","Last","0"))    //From Database
+    HeadingView(listofValues)
+}
+
 

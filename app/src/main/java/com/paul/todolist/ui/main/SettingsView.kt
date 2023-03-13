@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.paul.todolist.ui.main.common.HeadingView
 import com.paul.todolist.ui.theme.ToolboxTheme
 
 @Preview
@@ -20,7 +19,7 @@ fun SettingsView() {
 
     ToolboxTheme {
         Column {
-            HeadingView()
+           // HeadingView()
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,

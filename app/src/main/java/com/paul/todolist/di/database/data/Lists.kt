@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "Lists")
 data class Lists(
-    @PrimaryKey val listId: Int,
-    @ColumnInfo(name = "title") val title: String?,
+    @PrimaryKey val listId: String,
+    @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "fixed") val fixed: String  = "0",
     )

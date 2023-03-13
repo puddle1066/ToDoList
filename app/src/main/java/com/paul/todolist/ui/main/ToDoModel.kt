@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main
 
 import com.paul.todolist.base.BaseViewModel
 import com.paul.todolist.di.database.RoomDataProvider
+import com.paul.todolist.di.database.data.Lists
 import com.paul.todolist.di.database.data.ToDoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
@@ -13,15 +14,24 @@ open class ToDoModel @Inject constructor(
 
 ): BaseViewModel() {
 
-    private var todoItemList =  listOf<ToDoItem>()
+    private var lists =  listOf<Lists>()
+    private var toDoItem  = listOf<ToDoItem>()
 
-    fun getBatchList() : List<ToDoItem> {
+    fun getList() : List<Lists> {
         runBlocking {
-            todoItemList = dataBaseProvider.getToDoItems()
+            lists = dataBaseProvider.getList()
         }
-        return todoItemList
+        return lists
     }
 
     fun deleteItem(seletcedItem: ToDoItem) {
     }
+
+    fun getBatchList() : List<ToDoItem> {
+        runBlocking {
+            toDoItem = dataBaseProvider.getToDoItems()
+        }
+        return toDoItem
+    }
+
 }
