@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.draw
+package com.paul.todolist.ui.main.common.drawMenu
 
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size

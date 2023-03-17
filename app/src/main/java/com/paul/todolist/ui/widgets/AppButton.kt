@@ -35,7 +35,7 @@ import com.paul.todoList.R
 fun PreviewAppButtonIcon() {
     AppButton(
         drawingID = R.drawable.ic_measure,
-        onButtonPressed = { ToDoList.NavHostController.navigate(ToDoScreens.MainView.name) }
+        onButtonPressed = { ToDoList.NavHostController.navigate(ToDoScreens.ToDoListView.name) }
     )
 }
 

@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.common
+package com.paul.todolist.ui.main
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -11,7 +11,8 @@ import androidx.compose.animation.*
 import androidx.compose.material.*
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.paul.todolist.ToDoList
-import com.paul.todolist.ui.main.ToDoModel
+import com.paul.todolist.ui.main.common.NavigationFactory
+import com.paul.todolist.ui.main.todoListView.ToDoListModel
 import com.paul.todolist.ui.theme.ToolboxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,7 @@ class MainScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val model: ToDoModel by viewModels()
+        val model: ToDoListModel by viewModels()
 
         setContent {
             ToolboxTheme {

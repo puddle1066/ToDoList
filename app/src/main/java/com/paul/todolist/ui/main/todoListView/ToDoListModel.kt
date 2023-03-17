@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main
+package com.paul.todolist.ui.main.todoListView
 
 import com.paul.todolist.base.BaseViewModel
 import com.paul.todolist.di.database.RoomDataProvider
@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
-open class ToDoModel @Inject constructor(
+open class ToDoListModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider
 
 ): BaseViewModel() {

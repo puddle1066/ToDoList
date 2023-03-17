@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main
+package com.paul.todolist.ui.main.settingsView
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -9,30 +9,32 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.ToDoList
-import com.paul.todolist.di.database.data.Lists
-import com.paul.todolist.menuOptionSettings
-import com.paul.todolist.ui.main.draw.DrawerBody
-import com.paul.todolist.ui.main.draw.drawShape
+import com.paul.todolist.menuOptionLists
+import com.paul.todolist.menuOptionToDoList
+import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
+import com.paul.todolist.ui.main.common.drawMenu.drawShape
 import com.paul.todolist.ui.theme.ToolboxTheme
-import com.paul.todolist.ui.widgets.DropDownMenuComponent
-import com.paul.todolist.ui.widgets.DropDownMenuParameter
+import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HeadingView(lists: List<Lists>) {
+fun SettingsHeadingView() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val menuItems  = listOf(menuOptionSettings)
+    val menuItems  = listOf(menuOptionLists, menuOptionToDoList)
 
     ToolboxTheme {
         Scaffold(
-            topBar = { topBar(scope,scaffoldState,lists) },
+            topBar = { SettingsTopBar(scope,scaffoldState) },
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = true,
             drawerShape = drawShape(menuItems.size),
@@ -42,8 +44,7 @@ fun HeadingView(lists: List<Lists>) {
                     scaffoldState = scaffoldState,
                     scope = scope
                 ) {
-                    //Launch Options
-                    ToDoList.NavHostController .navigate(it.link) {
+                    ToDoList.NavHostController.navigate(it.link) {
                       ToDoList.NavHostController.graph.startDestinationId
                         launchSingleTop = true
                     }
@@ -56,7 +57,7 @@ fun HeadingView(lists: List<Lists>) {
 }
 
 @Composable
-fun topBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists: List<Lists>) {
+fun SettingsTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,21 +85,19 @@ fun topBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists: List<Li
         }
         Spacer(Modifier.width(10.dp))
 
-        var nameList: MutableList<String> = ArrayList()
-        lists.forEach {
-            nameList.add(it.title ?: "")
-        }
-        DropDownMenuComponent(DropDownMenuParameter(nameList, false, nameList.get(0)))
-    }
-
+        Text(
+            modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically),
+            text = LocalContext.current.resources.getString(R.string.settings),
+            color = MaterialTheme.colors.secondary,
+            style = typography.h6
+        )    }
 }
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    val listofValues =  listOf(Lists("0","First","0"),Lists("1","Last","0"))    //From Database
-    HeadingView(listofValues)
+    SettingsHeadingView()
 }
 
 

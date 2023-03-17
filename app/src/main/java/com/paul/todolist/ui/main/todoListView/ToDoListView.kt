@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main
+package com.paul.todolist.ui.main.todoListView
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -20,14 +20,15 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paul.todolist.ToDoList
+import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.ui.theme.ToolboxTheme
-
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainView(model : ToDoModel) {
+fun ToDoListView(model : ToDoListModel) {
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -50,14 +51,14 @@ fun MainView(model : ToDoModel) {
                             ),
                         backgroundColor = MaterialTheme.colors.primary,
                         onClick = {
-                            //TODO Implement
+                            ToDoList.NavHostController.navigate(ToDoScreens.ToDoItemView.name)
                         }
                     )
                     { Icon(Icons.Filled.Add,"")}
                 }
 
             ) {
-                HeadingView(model.getList())
+                ToDoListHeadingView(model.getList())
 
         Box(
             Modifier
@@ -72,10 +73,7 @@ fun MainView(model : ToDoModel) {
                             .fillMaxWidth()
                             .padding(10.dp)
                             .combinedClickable(
-                                onClick = {
-                                    //TODO implement
-//                                        HatchApp.NavHostController.currentBackStackEntry?.arguments?.putString(itemId, item.uid.toString())
-//                                        HatchApp.NavHostController.navigate(HatchScreens.HatchDetailScreen.name)
+                                onClick = {//TODO Iplement
                                 },
                                 onLongClick = { model.deleteItem(seletcedItem = item) },
                             )
@@ -84,15 +82,11 @@ fun MainView(model : ToDoModel) {
             }
             }}}
 }
-
-
-
     @Preview
     @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     fun MainViewMockLayout() {
-        val measureModel = ToDoModel(RoomDataProvider())
-        MainView(measureModel)
+        ToDoListView(ToDoListModel(RoomDataProvider()))
     }
 
 

@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.draw
+package com.paul.todolist.ui.main.common.drawMenu
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
