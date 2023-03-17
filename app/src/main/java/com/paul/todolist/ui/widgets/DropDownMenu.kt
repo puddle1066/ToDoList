@@ -23,6 +23,7 @@ import com.paul.todolist.ui.theme.typography
 @Composable
 fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
     val expanded  = remember { mutableStateOf(parameters.expanded) }
+    val chosedText  = remember { mutableStateOf(parameters.selectedOptionText) }
 
     val localStyle = typography.h6
     val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colors.secondary))
@@ -54,7 +55,7 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
                 BasicTextField(
                     modifier = Modifier.width(200.dp),
                     readOnly = true,
-                    value = parameters.selectedOptionText,
+                    value = chosedText.value,
                     onValueChange = { },
                     singleLine = true,
                     enabled = true,
@@ -81,7 +82,7 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
                 parameters.options.forEach { selectionOption ->
                     DropdownMenuItem(
                         onClick = {
-                            parameters.selectedOptionText = selectionOption
+                            chosedText.value = selectionOption
                             expanded.value = false
                         },
 

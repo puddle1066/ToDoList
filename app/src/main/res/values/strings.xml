@@ -3,36 +3,10 @@
 
     <string name="MainView">MainView</string>
     <string name="SettingsView">SettingsView(</string>
-    <string name="MeasureSettingsView">MeasureSettingsView</string>
-    <string name="MeasureView">MeasureView</string>
-    <string name="GPSSettingsView">GPSSettingsView</string>
-
-    <string name="Measure_staff_height">Please select from the list below the height of the staff used to support the device while taking the readings.</string>
-    <string name="Spacing_between_sample_points">Now select the distance that will be used between sample points when taking readings.</string>
-    <string name="SupportSize">Support Size</string>
-    <string name="MeasureDistance">Measure Distance</string>
 
     <string name="Continue">Continue</string>
 
+    <string name="settings">Settings</string>
+    <string name="home">home</string>
 
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <string name="add_stock">Add Stock</string>
-    <string name="add_note">Note</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

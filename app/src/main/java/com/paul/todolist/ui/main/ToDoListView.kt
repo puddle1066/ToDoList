@@ -39,24 +39,24 @@ fun MainView(model : ToDoModel) {
 
         ToolboxTheme {
             Scaffold(
-            floatingActionButton = {
-                FloatingActionButton(
-                    modifier = Modifier
-                        .width(90.dp)
-                        .height(70.dp)
-                        .padding(
-                            start = 10.dp,
-                            end = 10.dp
-                        ),
-                    backgroundColor = MaterialTheme.colors.primary,
-                    onClick = {
-                        //TODO Implement
-                    }
-                )
-                { Icon(Icons.Filled.Add,"")}
-            }
+                floatingActionButton = {
+                    FloatingActionButton(
+                        modifier = Modifier
+                            .width(90.dp)
+                            .height(70.dp)
+                            .padding(
+                                start = 10.dp,
+                                end = 10.dp
+                            ),
+                        backgroundColor = MaterialTheme.colors.primary,
+                        onClick = {
+                            //TODO Implement
+                        }
+                    )
+                    { Icon(Icons.Filled.Add,"")}
+                }
+
             ) {
-                val listofValues =  listOf("ToDo","Finished")    //From Database
                 HeadingView(model.getList())
 
         Box(

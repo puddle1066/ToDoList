@@ -1,7 +1,11 @@
 package com.paul.todolist
 
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import com.paul.todoList.R
+import com.paul.todolist.ui.main.draw.DrawItem
 
 /**
  * enum values that represent the screens in the app
@@ -10,10 +14,9 @@ enum class ToDoScreens(@StringRes val title: Int) {
     MainView(title = R.string.MainView),
     SettingsView(title = R.string.SettingsView)
 }
+val menuOptionSettings = DrawItem(Icons.Filled.Settings, R.string.settings, ToDoScreens.SettingsView.name)
+val menuOptionMain = DrawItem(Icons.Filled.Home, R.string.settings, ToDoScreens.MainView.name)
 
 const val DATABASE_NAME = "tools-db"
 const val PREFERENCES_NAME = "user_preferences"
-
-val listOfStaffSizes =  listOf(Pair("50", "50 Cm"), Pair("100", "1 Meter"), Pair("150", "1.5 Meters"))
-val distanceBetweenPoints =  listOf(Pair("1", "Variable"), Pair("2", "1 Meter"), Pair("3", "2 Meters"), Pair("4", "5 Meters"), Pair("5", "10 Meters"))
 

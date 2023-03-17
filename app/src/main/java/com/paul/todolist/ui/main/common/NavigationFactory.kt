@@ -11,12 +11,12 @@ import com.paul.todolist.util.screen
 
 @ExperimentalAnimationApi
 @Composable
-fun NavigationFactory(measureModel : ToDoModel) {
+fun NavigationFactory(model : ToDoModel) {
     AnimatedNavHost( ToDoList.NavHostController,
             startDestination =  ToDoScreens.MainView.name
     ) {
 
-        screen(ToDoScreens.MainView.name) { MainView(measureModel) }
+        screen(ToDoScreens.MainView.name) { MainView(model) }
 
         screen(ToDoScreens.SettingsView.name) { SettingsView() }
 
