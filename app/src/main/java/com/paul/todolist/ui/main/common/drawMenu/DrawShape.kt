@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import com.paul.todolist.util.dpToPx
 
 fun drawShape(lines : Int) =  object : Shape {
-    var drawHeight =   dpToPx(50f + (56f * lines))
+    var drawHeight =   dpToPx(50f + (62f * lines))
 
     override fun createOutline(
         size: Size,
