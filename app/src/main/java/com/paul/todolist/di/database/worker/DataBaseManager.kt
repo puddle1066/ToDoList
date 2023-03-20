@@ -12,7 +12,7 @@ import com.paul.todolist.di.database.dao.*
 import com.paul.todolist.di.database.data.*
 import java.util.*
 
-@Database(entities = [Lists::class,ToDoItem::class], version = 1)
+@Database(entities = [ListDataItem::class,ToDoDataItem::class], version = 1)
 @TypeConverters(Converters::class)
 
 abstract class DataBaseManager : RoomDatabase() {

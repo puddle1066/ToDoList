@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.*
-import com.paul.todolist.di.database.data.Lists
+import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
-import com.paul.todolist.ui.main.common.drawMenu.drawShape
+import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.theme.ToolboxTheme
 import com.paul.todolist.ui.widgets.DropDownMenuComponent
 import com.paul.todolist.ui.widgets.DropDownMenuParameter
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ToDoListHeadingView(lists: List<Lists>) {
+fun ToDoListHeadingView(lists: List<ListDataItem>) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val menuItems  = listOf(menuOptionLists, menuOptionSettings)
@@ -35,7 +35,7 @@ fun ToDoListHeadingView(lists: List<Lists>) {
             topBar = { ToDoListTopBar(scope,scaffoldState,lists) },
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = true,
-            drawerShape = drawShape(menuItems.size),
+            drawerShape = drawMenuShape(menuItems.size),
             drawerContent = {
                 DrawerBody(
                     drawItems = menuItems,
@@ -56,7 +56,7 @@ fun ToDoListHeadingView(lists: List<Lists>) {
 }
 
 @Composable
-fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists: List<Lists>) {
+fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists: List<ListDataItem>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,7 +97,7 @@ fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists:
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    val listofValues =  listOf(Lists("0","A","0"),Lists("1","B","0"))    //From Database
+    val listofValues =  listOf(ListDataItem("0","First in List","0"),ListDataItem("1","Last i  List","0"))    //From Database
     ToDoListHeadingView(listofValues)
 }
 

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.theme.typography
 
 @Composable
-fun DrawerItem(drawItem: DrawItem, modifier: Modifier = Modifier, onItemClick: (DrawItem) -> Unit) {
+fun DrawerItemMenu(drawItem: DrawItem, modifier: Modifier = Modifier, onItemClick: (DrawItem) -> Unit) {
     Column(
         modifier = Modifier.clickable {
             onItemClick(drawItem)

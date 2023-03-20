@@ -12,6 +12,7 @@ import androidx.compose.material.*
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.paul.todolist.ToDoList
 import com.paul.todolist.ui.main.common.NavigationFactory
+import com.paul.todolist.ui.main.listItemsView.ListItemsModel
 import com.paul.todolist.ui.main.todoListView.ToDoListModel
 import com.paul.todolist.ui.theme.ToolboxTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,12 +26,13 @@ class MainScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val model: ToDoListModel by viewModels()
+        val todoModel: ToDoListModel by viewModels()
+        val listsModel : ListItemsModel by viewModels()
 
         setContent {
             ToolboxTheme {
                     ToDoList.NavHostController = rememberAnimatedNavController()
-                    NavigationFactory(model)
+                    NavigationFactory(todoModel, listsModel)
             }
         }
     }

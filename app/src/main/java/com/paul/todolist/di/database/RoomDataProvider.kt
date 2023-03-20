@@ -1,7 +1,7 @@
 package com.paul.todolist.di.database
 
-import com.paul.todolist.di.database.data.Lists
-import com.paul.todolist.di.database.data.ToDoItem
+import com.paul.todolist.di.database.data.ListDataItem
+import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.worker.DataBaseManager
 import dagger.Module
 import dagger.Provides
@@ -22,15 +22,21 @@ class RoomDataProvider  @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getList(): List<Lists> {
+    suspend fun getList(): List<ListDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().getAll()
         }
     }
 
+    suspend fun insertList(list : ListDataItem) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().insert(list)
+        }
+    }
+
     @Singleton
     @Provides
-    suspend fun getToDoItems(): List<ToDoItem> {
+    suspend fun getToDoItems(): List<ToDoDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoItemDao().getAll()
         }

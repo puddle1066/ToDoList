@@ -13,7 +13,7 @@ import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
-import com.paul.todolist.ui.main.common.drawMenu.drawShape
+import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.theme.ToolboxTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -28,7 +28,7 @@ fun ToDoItemHeadingView() {
             topBar = { StandardTopBar(R.string.ToDo_item, scope, scaffoldState) },
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = true,
-            drawerShape = drawShape(menuItems.size),
+            drawerShape = drawMenuShape(menuItems.size),
             drawerContent = {
                 DrawerBody(
                     drawItems = menuItems,

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "ToDoItem")
-data class ToDoItem(
+data class ToDoDataItem(
     @PrimaryKey val itemId: Int,
     @ColumnInfo(name = "ListId") val listID: Int?,
     @ColumnInfo(name = "description") val description: String,

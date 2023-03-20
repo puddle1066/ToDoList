@@ -42,6 +42,7 @@ fun StandardTopBar(title : Int, scope : CoroutineScope, scaffoldState : Scaffold
                 tint = MaterialTheme.colors.secondary
             )
         }
+
         Spacer(Modifier.width(10.dp))
 
         Text(
