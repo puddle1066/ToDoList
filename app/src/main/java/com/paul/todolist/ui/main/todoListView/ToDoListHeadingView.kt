@@ -98,7 +98,7 @@ fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists:
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    val listofValues =  listOf(ListDataItem("0","First in List","0"),ListDataItem("1","Last i  List","0"))    //From Database
+    val listofValues =  listOf(ListDataItem("0","First in List",0),ListDataItem("1","Last i  List",0))    //From Database
     ToDoListHeadingView(listofValues)
 }
 

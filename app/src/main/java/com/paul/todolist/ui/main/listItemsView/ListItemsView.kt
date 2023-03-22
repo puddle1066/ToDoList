@@ -75,13 +75,13 @@ fun ListItemsView(model : ListItemsModel) {
                     keyboardType = KeyboardType.Text,
                     onFinished = {
                         model.insertList(textValue)
-                        myList.swapList(model.getList())
+                        myList.swapList(model.getUserList())
                     }
                 )
 
                 Spacer(Modifier.height(20.dp))
 
-                myList.swapList(model.getList())
+                myList.swapList(model.getUserList())
                 Box(
                     Modifier
                         .border(width = 4.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp))

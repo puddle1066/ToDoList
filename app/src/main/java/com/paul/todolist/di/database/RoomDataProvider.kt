@@ -28,6 +28,13 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    @Singleton
+    @Provides
+    suspend fun getListUserRows(): List<ListDataItem> {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().getUser()
+        }
+    }
     suspend fun insertList(list : ListDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().insert(list)

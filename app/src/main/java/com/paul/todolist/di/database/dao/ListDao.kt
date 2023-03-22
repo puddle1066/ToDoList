@@ -11,6 +11,9 @@ interface ListDao {
     @Query("SELECT * FROM Lists")
     fun getAll(): List<ListDataItem>
 
+    @Query("SELECT * FROM Lists where fixed =0")
+    fun getUser(): List<ListDataItem>
+
     @Query("DELETE FROM lists where listId = :listId")
     fun deleteListItem(listId: String)
 }

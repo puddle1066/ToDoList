@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ed63b81369816d90aa9e7f8ba7df42a8",
+    "identityHash": "360a6639a06b16d1e23418a1faf9cb6f",
     "entities": [
       {
         "tableName": "Lists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`listId` TEXT NOT NULL, `title` TEXT NOT NULL, `fixed` TEXT NOT NULL, PRIMARY KEY(`listId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`listId` TEXT NOT NULL, `title` TEXT NOT NULL, `fixed` INTEGER NOT NULL, PRIMARY KEY(`listId`))",
         "fields": [
           {
             "fieldPath": "listId",
@@ -23,15 +23,15 @@
           {
             "fieldPath": "fixed",
             "columnName": "fixed",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "listId"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -72,10 +72,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "itemId"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ed63b81369816d90aa9e7f8ba7df42a8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '360a6639a06b16d1e23418a1faf9cb6f')"
     ]
   }
 }

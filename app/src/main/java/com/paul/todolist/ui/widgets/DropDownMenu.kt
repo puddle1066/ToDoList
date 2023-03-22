@@ -75,6 +75,8 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
             }
 
             ExposedDropdownMenu(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background),
                 expanded = expanded.value,
                 onDismissRequest = {
                     expanded.value = false

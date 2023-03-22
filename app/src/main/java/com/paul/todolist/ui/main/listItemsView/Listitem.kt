@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.listItemsView
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -11,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.paul.todolist.ToDoList
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.theme.typography
 
@@ -26,7 +29,6 @@ fun ListListItem(list: ListDataItem, onItemClick: (ListDataItem) -> Unit) {
 
             Box(modifier = Modifier
                 .clickable {
-                    if (list.fixed.equals("0")) {               //CANNOT Delete fixed Colums
                         if (selected) {
                             backgroundColor.value  =  colorUnSelected
                             selected = false
@@ -35,7 +37,6 @@ fun ListListItem(list: ListDataItem, onItemClick: (ListDataItem) -> Unit) {
                             selected = true
                         }
                         onItemClick(list)
-                    }
                 }
                 .fillMaxSize()
                 .height(70.dp)
