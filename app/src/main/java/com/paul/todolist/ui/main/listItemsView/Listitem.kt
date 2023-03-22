@@ -26,14 +26,16 @@ fun ListListItem(list: ListDataItem, onItemClick: (ListDataItem) -> Unit) {
 
             Box(modifier = Modifier
                 .clickable {
-                    if (selected) {
-                        backgroundColor.value  =  colorUnSelected
-                        selected = false
-                    } else {
-                        backgroundColor.value  =  colorSelected
-                        selected = true
+                    if (list.fixed.equals("0")) {               //CANNOT Delete fixed Colums
+                        if (selected) {
+                            backgroundColor.value  =  colorUnSelected
+                            selected = false
+                        } else {
+                            backgroundColor.value  =  colorSelected
+                            selected = true
+                        }
+                        onItemClick(list)
                     }
-                    onItemClick(list)
                 }
                 .fillMaxSize()
                 .height(70.dp)

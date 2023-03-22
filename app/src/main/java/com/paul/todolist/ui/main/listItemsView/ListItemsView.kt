@@ -13,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.ToDoList
 import com.paul.todolist.di.database.RoomDataProvider
+import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
@@ -36,6 +38,7 @@ fun ListItemsView(model : ListItemsModel) {
     val scope = rememberCoroutineScope()
     val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
     var textValue = ""
+    var myList = remember { mutableStateListOf<ListDataItem>() }
 
     ToolboxTheme {
         Scaffold(
@@ -72,11 +75,13 @@ fun ListItemsView(model : ListItemsModel) {
                     keyboardType = KeyboardType.Text,
                     onFinished = {
                         model.insertList(textValue)
+                        myList.swapList(model.getList())
                     }
                 )
 
                 Spacer(Modifier.height(20.dp))
 
+                myList.swapList(model.getList())
                 Box(
                     Modifier
                         .border(width = 4.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp))
@@ -84,7 +89,7 @@ fun ListItemsView(model : ListItemsModel) {
                         .fillMaxHeight()
                 ) {
                     LazyColumn{
-                        itemsIndexed(model.getList()) { _, item ->
+                        itemsIndexed(myList) { _, item ->
                             ListListItem(item) {}
                         }
                         }
@@ -93,6 +98,12 @@ fun ListItemsView(model : ListItemsModel) {
             }
         }
     }
+
+fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
+    clear()
+    addAll(newList)
+}
+
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

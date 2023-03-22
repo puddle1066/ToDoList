@@ -70,23 +70,30 @@ fun InputField(
             keyboardActions = KeyboardActions(
                 onDone = {
                     keyboardController?.hide()
-                    onFinished("done") },
+                    onFinished("done")
+                    rememberText = ""},
                 onGo = {  keyboardController?.hide()
-                    onFinished("go") },
+                    onFinished("go")
+                    rememberText = ""},
                 onNext = {  keyboardController?.hide()
-                    onFinished("Next") },
+                    onFinished("Next")
+                    rememberText = ""},
                 onPrevious = {  keyboardController?.hide()
-                    onFinished("Previous") },
+                    onFinished("Previous")
+                    rememberText = ""},
                 onSearch = {  keyboardController?.hide()
-                    onFinished("Search") },
+                    onFinished("Search")
+                    rememberText = "" },
                 onSend = {  keyboardController?.hide()
-                    onFinished("Send") }
+                    onFinished("Send")
+                    rememberText = ""}
             ),
 
             colors = TextFieldDefaults.textFieldColors(
                 focusedTextColor = MaterialTheme.colorScheme.surface,
                 unfocusedTextColor = MaterialTheme.colorScheme.surface,
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+                cursorColor =  MaterialTheme.colorScheme.secondary
             ),
             textStyle = typography.bodyLarge,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
