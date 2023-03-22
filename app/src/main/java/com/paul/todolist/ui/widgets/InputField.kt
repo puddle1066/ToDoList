@@ -70,22 +70,22 @@ fun InputField(
             keyboardActions = KeyboardActions(
                 onDone = {
                     keyboardController?.hide()
-                    onFinished("done")
+                    onFinished(rememberText)
                     rememberText = ""},
                 onGo = {  keyboardController?.hide()
-                    onFinished("go")
+                    onFinished(rememberText)
                     rememberText = ""},
                 onNext = {  keyboardController?.hide()
-                    onFinished("Next")
+                    onFinished(rememberText)
                     rememberText = ""},
                 onPrevious = {  keyboardController?.hide()
-                    onFinished("Previous")
+                    onFinished(rememberText)
                     rememberText = ""},
                 onSearch = {  keyboardController?.hide()
-                    onFinished("Search")
+                    onFinished(rememberText)
                     rememberText = "" },
                 onSend = {  keyboardController?.hide()
-                    onFinished("Send")
+                    onFinished(rememberText)
                     rememberText = ""}
             ),
 

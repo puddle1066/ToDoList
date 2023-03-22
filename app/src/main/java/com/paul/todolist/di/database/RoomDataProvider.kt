@@ -49,5 +49,11 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    suspend fun deleteItem(listId : String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().deleteListItem(listId)
+        }
+    }
+
 
 }

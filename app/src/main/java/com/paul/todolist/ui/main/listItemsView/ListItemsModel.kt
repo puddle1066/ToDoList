@@ -3,6 +3,8 @@ package com.paul.todolist.ui.main.listItemsView
 import com.paul.todolist.base.BaseViewModel
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
+import com.paul.todolist.menuOptionSettings
+import com.paul.todolist.menuOptionToDoList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -14,6 +16,9 @@ open class ListItemsModel @Inject constructor(
 
 ): BaseViewModel() {
 
+    val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
+    var deleteList = ArrayList<ListDataItem>()
+
     private var lists =  listOf<ListDataItem>()
 
     fun getUserList() : List<ListDataItem> {
@@ -23,7 +28,11 @@ open class ListItemsModel @Inject constructor(
         return lists
     }
 
-    fun deleteItem(list : String) {}
+    fun deleteItem(listId : String) {
+        runBlocking {
+            dataBaseProvider.deleteItem(listId)
+        }
+    }
 
      fun insertList(title : String) {
         runBlocking {

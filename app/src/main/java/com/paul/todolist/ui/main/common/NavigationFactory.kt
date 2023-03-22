@@ -18,7 +18,7 @@ import com.paul.todolist.util.screen
 fun NavigationFactory(todoModel : ToDoListModel, listModel : ListItemsModel ) {
     AnimatedNavHost(
         ToDoList.NavHostController,
-        startDestination = ToDoScreens.listsView.name
+        startDestination = ToDoScreens.ToDoListView.name
 
     ) {
         screen(ToDoScreens.ToDoListView.name) { ToDoListView(todoModel) }
