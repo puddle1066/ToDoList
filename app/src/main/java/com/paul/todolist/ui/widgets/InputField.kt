@@ -2,17 +2,15 @@ package com.paul.todolist.ui.widgets
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -38,6 +36,7 @@ import com.paul.todolist.ui.theme.typography
                 }
 */
 
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun InputField(
@@ -51,58 +50,54 @@ fun InputField(
         var rememberText by remember { mutableStateOf(text) }
         val keyboardController = LocalSoftwareKeyboardController.current
 
-        Column(
-            modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.onPrimary),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(
-                label = {
-                    Text(
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.onPrimary)
-                            .clip(
-                                RoundedCornerShape(10.dp)
-                            ),
-                        text = fieldTitle,
-                        style = typography.caption,
-                        textAlign = TextAlign.Left,
-                        color = MaterialTheme.colorScheme.secondary)
-                },
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        keyboardController?.hide()
-                        onFinished("done") },
-                    onGo = {  keyboardController?.hide()
-                        onFinished("go") },
-                    onNext = {  keyboardController?.hide()
-                        onFinished("Next") },
-                    onPrevious = {  keyboardController?.hide()
-                        onFinished("Previous") },
-                    onSearch = {  keyboardController?.hide()
-                        onFinished("Search") },
-                    onSend = {  keyboardController?.hide()
-                        onFinished("Send") }
-                ),
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = MaterialTheme.colorScheme.secondary,
-                    containerColor = MaterialTheme.colorScheme.onPrimary,
-                    disabledTextColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = MaterialTheme.colorScheme.onError
-                ),
-                textStyle = typography.body1,
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
-                value = rememberText,
-                onValueChange = {
-                    rememberText = it
-                    onTextChanged.invoke(rememberText)
-                },
-                singleLine = true,
-            )
-        }
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary)
+                .border(width = 4.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp)),
+
+            label = {
+                Text(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.primary),
+                    text = fieldTitle,
+                    style = typography.bodyLarge,
+                    textAlign = TextAlign.Left,
+                    color = MaterialTheme.colorScheme.secondary)
+            },
+
+            shape = RoundedCornerShape(50.dp),
+
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+                    onFinished("done") },
+                onGo = {  keyboardController?.hide()
+                    onFinished("go") },
+                onNext = {  keyboardController?.hide()
+                    onFinished("Next") },
+                onPrevious = {  keyboardController?.hide()
+                    onFinished("Previous") },
+                onSearch = {  keyboardController?.hide()
+                    onFinished("Search") },
+                onSend = {  keyboardController?.hide()
+                    onFinished("Send") }
+            ),
+
+            colors = TextFieldDefaults.textFieldColors(
+                focusedTextColor = MaterialTheme.colorScheme.surface,
+                unfocusedTextColor = MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.primary
+            ),
+            textStyle = typography.bodyLarge,
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+            value = rememberText,
+            onValueChange = {
+                rememberText = it
+                onTextChanged.invoke(rememberText)
+            },
+            singleLine = true,
+        )
+
     }
 }
 

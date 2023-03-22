@@ -8,16 +8,15 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ToDoList
@@ -30,14 +29,6 @@ import com.paul.todolist.ui.theme.ToolboxTheme
 @Composable
 fun ToDoListView(model : ToDoListModel) {
 
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                return Offset.Zero
-            }
-        }
-    }
-
         ToolboxTheme {
             Scaffold(
                 floatingActionButton = {
@@ -49,7 +40,7 @@ fun ToDoListView(model : ToDoListModel) {
                                 start = 10.dp,
                                 end = 10.dp
                             ),
-                        backgroundColor = MaterialTheme.colors.primary,
+                        backgroundColor = MaterialTheme.colorScheme.primary,
                         onClick = {
                             ToDoList.NavHostController.navigate(ToDoScreens.ToDoItemView.name)
                         }
@@ -62,8 +53,7 @@ fun ToDoListView(model : ToDoListModel) {
 
         Box(
             Modifier
-                .nestedScroll(nestedScrollConnection)
-                .background(MaterialTheme.colors.background)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             LazyColumn(contentPadding = PaddingValues(top = 10.dp)) {
                 itemsIndexed(model.getBatchList()) { _, item ->

@@ -2,9 +2,13 @@ package com.paul.todolist.ui.main.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +25,7 @@ fun StandardTopBar(title : Int, scope : CoroutineScope, scaffoldState : Scaffold
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(MaterialTheme.colors.primary)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         IconButton(
             onClick = {
@@ -38,8 +42,8 @@ fun StandardTopBar(title : Int, scope : CoroutineScope, scaffoldState : Scaffold
                 modifier = Modifier
                     .width(30.dp)
                     .height(50.dp)
-                    .background(MaterialTheme.colors.primary),
-                tint = MaterialTheme.colors.secondary
+                    .background(MaterialTheme.colorScheme.primary),
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
 
@@ -48,7 +52,7 @@ fun StandardTopBar(title : Int, scope : CoroutineScope, scaffoldState : Scaffold
         Text(
             modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically),
             text = LocalContext.current.resources.getString(title),
-            color = MaterialTheme.colors.secondary,
-            style = typography.h6
+            color = MaterialTheme.colorScheme.secondary,
+            style = typography.titleLarge
         )    }
 }

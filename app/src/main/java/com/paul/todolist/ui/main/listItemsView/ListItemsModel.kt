@@ -18,7 +18,7 @@ open class ListItemsModel @Inject constructor(
 
     fun getList() : List<ListDataItem> {
         runBlocking {
-            lists = dataBaseProvider.getList()
+            lists = dataBaseProvider.getListAllRows()
         }
         return lists
     }
@@ -27,7 +27,7 @@ open class ListItemsModel @Inject constructor(
 
      fun insertList(title : String) {
         runBlocking {
-            dataBaseProvider.insertList(ListDataItem( UUID.randomUUID().toString(),title,"0'"))
+            dataBaseProvider.insertList(ListDataItem( UUID.randomUUID().toString(),title.capitalize(),"0'"))
         }
     }
 

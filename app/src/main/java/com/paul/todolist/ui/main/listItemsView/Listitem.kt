@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,13 +16,13 @@ import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.theme.typography
 
 @Composable
-fun ListListItem(list: ListDataItem, modifier: Modifier = Modifier, onItemClick: (ListDataItem) -> Unit) {
+fun ListListItem(list: ListDataItem, onItemClick: (ListDataItem) -> Unit) {
 
-            val colorSelected = MaterialTheme.colors.error
-            val colorUnSelected = MaterialTheme.colors.primary
+            val colorSelected = MaterialTheme.colorScheme.error
+            val colorUnSelected = MaterialTheme.colorScheme.primary
             val isSelected = false
             val backgroundColor = remember {mutableStateOf(colorUnSelected)}
-            val selected by remember { mutableStateOf(isSelected) }
+            var selected by remember { mutableStateOf(isSelected) }
 
             Box(modifier = Modifier
                 .clickable {
@@ -41,11 +41,11 @@ fun ListListItem(list: ListDataItem, modifier: Modifier = Modifier, onItemClick:
                 contentAlignment = Alignment.Center) {
                 Text(
                         text = list.title,
-                        style = typography.h6,
-                        color = MaterialTheme.colors.secondary,
+                        style = typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
             }
 
-            Divider(color = MaterialTheme.colors.onBackground, thickness = 4.dp)
+            Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
     }
 

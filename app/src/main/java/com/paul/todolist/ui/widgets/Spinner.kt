@@ -56,7 +56,7 @@ fun Spinner(
                     label = {  androidx.compose.material.Text(
                         modifier = Modifier.background(color.value).clip(RoundedCornerShape(10.dp)),
                         text = listTitle,
-                        style = typography.caption,
+                        style = typography.bodyLarge,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.onPrimary
                     )},
@@ -64,14 +64,15 @@ fun Spinner(
                     trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
                     readOnly = true,
                     colors = TextFieldDefaults.textFieldColors(
-                        textColor = MaterialTheme.colorScheme.secondary,
+                        focusedTextColor = MaterialTheme.colorScheme.surface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.surface,
                         containerColor = color.value,
                         disabledTextColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
                     ),
-                    textStyle =  typography.body1
+                    textStyle =  typography.bodyLarge,
                 )
 
                 DropdownMenu(
@@ -95,7 +96,7 @@ fun Spinner(
                                 Text(
                                     text = (entry.second),
                                     modifier = Modifier.wrapContentWidth().align(Alignment.Start),
-                                    style = typography.body1
+                                    style = typography.bodyLarge
                                 )
                             }
                         )

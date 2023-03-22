@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,12 +22,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.ToDoList
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import com.paul.todoList.R
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -112,9 +112,9 @@ fun AppButton(
                 Text(
                     modifier = Modifier.padding(10.dp),
                     text = stringResource(id =textID),
-                    style = typography.button,
+                    style = typography.bodyLarge,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.onPrimary
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
     }

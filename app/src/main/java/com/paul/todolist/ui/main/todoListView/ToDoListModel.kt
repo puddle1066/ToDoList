@@ -19,7 +19,7 @@ open class ToDoListModel @Inject constructor(
 
     fun getList() : List<ListDataItem> {
         runBlocking {
-            lists = dataBaseProvider.getList()
+            lists = dataBaseProvider.getListAllRows()
         }
         return lists
     }

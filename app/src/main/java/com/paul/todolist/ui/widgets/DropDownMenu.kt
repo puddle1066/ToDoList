@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,8 +26,8 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
     val expanded  = remember { mutableStateOf(parameters.expanded) }
     val chosedText  = remember { mutableStateOf(parameters.selectedOptionText) }
 
-    val localStyle = typography.h6
-    val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colors.secondary))
+    val localStyle = typography.bodyLarge
+    val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colorScheme.secondary))
 
     ToolboxTheme {
         ExposedDropdownMenuBox(
@@ -39,7 +40,7 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(70.dp)
-                    .background(MaterialTheme.colors.primary),
+                    .background(MaterialTheme.colorScheme.primary),
                 verticalAlignment =  Alignment.CenterVertically,
             ) {
 
@@ -49,7 +50,7 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
                         .height(30.dp),
                     imageVector = Icons.Filled.Menu,
                     contentDescription = "list",
-                    tint = MaterialTheme.colors.secondary
+                    tint = MaterialTheme.colorScheme.secondary
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 BasicTextField(
@@ -66,10 +67,10 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
                         modifier = Modifier
                             .width(40.dp)
                             .height(40.dp)
-                            .background(MaterialTheme.colors.primary),
+                            .background(MaterialTheme.colorScheme.primary),
                         imageVector = Icons.Filled.ExpandMore,
                         contentDescription = "menu",
-                        tint = MaterialTheme.colors.secondary
+                        tint = MaterialTheme.colorScheme.secondary
                     )
             }
 
@@ -93,12 +94,12 @@ fun DropDownMenuComponent(parameters: DropDownMenuParameter) {
                                 .height(30.dp),
                             imageVector = Icons.Filled.Menu,
                             contentDescription = "list",
-                            tint = MaterialTheme.colors.secondary
+                            tint = MaterialTheme.colorScheme.secondary
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = selectionOption,
-                            color = MaterialTheme.colors.secondary,
+                            color = MaterialTheme.colorScheme.secondary,
                             style = mergedStyle
                         )
                     }

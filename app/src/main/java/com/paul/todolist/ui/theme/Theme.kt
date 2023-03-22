@@ -1,7 +1,7 @@
 package com.paul.todolist.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
@@ -13,13 +13,13 @@ fun ToolboxTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = when {
+    val selectedColorScheme = when {
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = selectedColorScheme,
         typography = typography,
         shapes = Shapes,
         content = content

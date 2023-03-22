@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -61,7 +62,7 @@ fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists:
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(MaterialTheme.colors.primary)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         IconButton(
             onClick = {
@@ -78,8 +79,8 @@ fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists:
                 modifier = Modifier
                     .width(30.dp)
                     .height(50.dp)
-                    .background(MaterialTheme.colors.primary),
-                tint = MaterialTheme.colors.secondary
+                    .background(MaterialTheme.colorScheme.primary),
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
         Spacer(Modifier.width(10.dp))

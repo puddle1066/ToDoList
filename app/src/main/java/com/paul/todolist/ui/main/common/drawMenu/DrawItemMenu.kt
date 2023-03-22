@@ -4,8 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,15 +31,15 @@ fun DrawerItemMenu(drawItem: DrawItem, modifier: Modifier = Modifier, onItemClic
                 modifier = Modifier
                     .width(30.dp)
                     .height(40.dp),
-                tint = MaterialTheme.colors.secondary
+                tint = MaterialTheme.colorScheme.secondary
             )
             Spacer(Modifier.width(20.dp))
             Text(
                 text = stringResource(drawItem.title),
-                style = typography.body1,
-                color =  MaterialTheme.colors.secondary
+                style = typography.bodyLarge,
+                color =  MaterialTheme.colorScheme.secondary
             )
         }
-        Divider( color =  MaterialTheme.colors.primary, thickness = 2.dp)
+        Divider( color =  MaterialTheme.colorScheme.onBackground, thickness = 2.dp)
     }
 }

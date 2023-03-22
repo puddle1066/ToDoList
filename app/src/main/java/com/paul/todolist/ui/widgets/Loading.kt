@@ -4,8 +4,8 @@ package com.paul.todolist.ui.widgets
     import androidx.compose.foundation.background
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.shape.CircleShape
-    import androidx.compose.material.MaterialTheme
     import androidx.compose.material.Text
+    import androidx.compose.material3.MaterialTheme
     import androidx.compose.runtime.Composable
     import androidx.compose.runtime.getValue
     import androidx.compose.ui.Alignment
@@ -29,7 +29,7 @@ package com.paul.todolist.ui.widgets
                 .size(dotSize)
                 .scale(scale)
                 .background(
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground,
                     shape = CircleShape
                 )
         )
@@ -80,7 +80,7 @@ package com.paul.todolist.ui.widgets
                 .size(dotSize)
                 .scale(scaleX = minScale, scaleY = scale)
                 .background(
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground,
                     shape = CircleShape
                 )
         )
@@ -131,7 +131,7 @@ package com.paul.todolist.ui.widgets
                 .size(dotSize)
                 .alpha(alpha)
                 .background(
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground,
                     shape = CircleShape
                 )
         )
@@ -182,7 +182,7 @@ package com.paul.todolist.ui.widgets
                 .size(dotSize)
                 .offset(y = -offset.dp)
                 .background(
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground,
                     shape = CircleShape
                 )
         )
@@ -235,7 +235,7 @@ package com.paul.todolist.ui.widgets
                 .size(dotSize)
                 .offset(x = offset.dp)
                 .background(
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colorScheme.onBackground,
                     shape = CircleShape
                 )
         )
@@ -291,7 +291,7 @@ package com.paul.todolist.ui.widgets
 
             Text(
                 text = "Dots pulsing",
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.bodyMedium
             )
             DotsPulsing()
 
@@ -299,7 +299,7 @@ package com.paul.todolist.ui.widgets
 
             Text(
                 text = "Dots elastic",
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.bodyMedium
             )
             DotsElastic()
 
@@ -307,7 +307,7 @@ package com.paul.todolist.ui.widgets
 
             Text(
                 text = "Dots flashing",
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.bodyMedium
             )
             DotsFlashing()
 
@@ -315,7 +315,7 @@ package com.paul.todolist.ui.widgets
 
             Text(
                 text = "Dots typing",
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.bodyMedium
             )
             DotsTyping()
 
@@ -323,7 +323,7 @@ package com.paul.todolist.ui.widgets
 
             Text(
                 text = "Dots collision",
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.bodyMedium
             )
             DotsCollision()
         }
