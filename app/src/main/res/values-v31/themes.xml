@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><!-- Use these setting to styleise the notifcation and the navigtion bar  -->
-    <style name="ToDoListTheme" >
+<resources>
+    <style name="ToDoListTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowSplashScreenBackground">#FF0727f4</item>
