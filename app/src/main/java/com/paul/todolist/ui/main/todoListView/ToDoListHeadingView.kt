@@ -17,6 +17,7 @@ import com.paul.todolist.*
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
+import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToolboxTheme
 import com.paul.todolist.ui.widgets.DropDownMenuComponent
 import com.paul.todolist.ui.widgets.DropDownMenuParameter
@@ -43,11 +44,7 @@ fun ToDoListHeadingView(lists: List<ListDataItem>) {
                     scaffoldState = scaffoldState,
                     scope = scope
                 ) {
-                    //Launch Options
-                    ToDoList.NavHostController .navigate(it.link) {
-                      ToDoList.NavHostController.graph.startDestinationId
-                        launchSingleTop = true
-                    }
+                    showView(it.link)
                 }
             }
         ) {

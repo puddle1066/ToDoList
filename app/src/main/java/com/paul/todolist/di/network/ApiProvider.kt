@@ -16,7 +16,7 @@ import javax.inject.Inject
 class ApiProvider @Inject constructor() {
 
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
-
+//TODO Code cean up remove redundant code
     @Provides
     fun provideAuthInterceptorOkHttpClient(): OkHttpClient {
         return OkHttpClient

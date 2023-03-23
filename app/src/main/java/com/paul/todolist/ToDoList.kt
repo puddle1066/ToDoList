@@ -16,7 +16,6 @@ class ToDoList : Application() {
 
     //Create global reference for app context
     companion object {
-        lateinit var NavHostController: NavHostController           //Single instance of nav controller
         lateinit var appContext: Context                            //App Context for reference
     }
 }

@@ -1,6 +1,7 @@
 package com.paul.todolist.ui.main.todoListView
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog.show
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -22,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.paul.todolist.ToDoList
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.database.RoomDataProvider
+import com.paul.todolist.ui.main.common.NavigationFactory
+import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToolboxTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -42,7 +45,7 @@ fun ToDoListView(model : ToDoListModel) {
                             ),
                         backgroundColor = MaterialTheme.colorScheme.primary,
                         onClick = {
-                            ToDoList.NavHostController.navigate(ToDoScreens.ToDoItemView.name)
+                            showView(ToDoScreens.ToDoItemView.name)
                         }
                     )
                     { Icon(Icons.Filled.Add,"")}
@@ -63,7 +66,9 @@ fun ToDoListView(model : ToDoListModel) {
                             .fillMaxWidth()
                             .padding(10.dp)
                             .combinedClickable(
-                                onClick = {//TODO Iplement
+                                onClick = {
+                                    val listId = "22"
+                                //    ToDoList.NavHostController.
                                 },
                                 onLongClick = { model.deleteItem(seletcedItem = item) },
                             )

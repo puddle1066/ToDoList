@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.ToDoList
 import com.paul.todolist.ToDoScreens
+import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ import kotlinx.coroutines.launch
 fun PreviewAppButtonIcon() {
     AppButton(
         drawingID = R.drawable.ic_measure,
-        onButtonPressed = { ToDoList.NavHostController.navigate(ToDoScreens.ToDoListView.name) }
+        onButtonPressed = {showView(ToDoScreens.ToDoListView.name) }
     )
 }
 
@@ -43,7 +44,7 @@ fun PreviewAppButtonIcon() {
 @Composable
 fun PreviewAppButtonText() {
     AppButton(
-        onButtonPressed = { ToDoList.NavHostController.navigate(ToDoScreens.SettingsView.name) },
+        onButtonPressed = {showView(ToDoScreens.SettingsView.name) },
         textID = R.string.Continue
     )
 }

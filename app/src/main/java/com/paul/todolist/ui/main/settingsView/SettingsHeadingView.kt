@@ -14,6 +14,7 @@ import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
+import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToolboxTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -35,10 +36,7 @@ fun SettingsHeadingView() {
                     scaffoldState = scaffoldState,
                     scope = scope
                 ) {
-                    ToDoList.NavHostController.navigate(it.link) {
-                      ToDoList.NavHostController.graph.startDestinationId
-                        launchSingleTop = true
-                    }
+                    showView(it.link)
                 }
             }
         ) {

@@ -9,8 +9,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.material.*
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.paul.todolist.ToDoList
+import androidx.navigation.NavHostController
 import com.paul.todolist.ui.main.common.NavigationFactory
 import com.paul.todolist.ui.main.listItemsView.ListItemsModel
 import com.paul.todolist.ui.main.todoListView.ToDoListModel
@@ -31,12 +30,17 @@ class MainScreen : ComponentActivity() {
 
         setContent {
             ToolboxTheme {
-                    ToDoList.NavHostController = rememberAnimatedNavController()
                     NavigationFactory(todoModel, listsModel)
             }
         }
     }
+
+    companion object {
+        lateinit var navHostController: NavHostController
+    }
 }
+
+
 
 
 
