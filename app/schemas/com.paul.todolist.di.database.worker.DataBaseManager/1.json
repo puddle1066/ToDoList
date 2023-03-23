@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "360a6639a06b16d1e23418a1faf9cb6f",
+    "identityHash": "db577f5bd347ad27723659d81337a160",
     "entities": [
       {
         "tableName": "Lists",
@@ -38,18 +38,18 @@
       },
       {
         "tableName": "ToDoItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` INTEGER NOT NULL, `ListId` INTEGER, `description` TEXT NOT NULL, `DueDate` INTEGER, `FinishedDate` INTEGER, PRIMARY KEY(`itemId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `ListId` TEXT, `description` TEXT NOT NULL, `DueDate` TEXT, `FinishedDate` TEXT, PRIMARY KEY(`itemId`))",
         "fields": [
           {
             "fieldPath": "itemId",
             "columnName": "itemId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "listID",
             "columnName": "ListId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -61,13 +61,13 @@
           {
             "fieldPath": "dueDate",
             "columnName": "DueDate",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "finishedDate",
             "columnName": "FinishedDate",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '360a6639a06b16d1e23418a1faf9cb6f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'db577f5bd347ad27723659d81337a160')"
     ]
   }
 }

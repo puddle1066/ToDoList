@@ -1,63 +1,111 @@
 package com.paul.todolist.ui.main.todoItemView
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowDropDown
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.paul.todolist.ui.main.common.getToDoListId
+import com.paul.todoList.R
+import com.paul.todolist.ToDoScreens
+import com.paul.todolist.di.database.RoomDataProvider
+import com.paul.todolist.menuOptionSettings
+import com.paul.todolist.menuOptionToDoList
+import com.paul.todolist.ui.main.common.StandardTopBar
+import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
+import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
+import com.paul.todolist.ui.main.common.getListId
+import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToolboxTheme
-import com.paul.todolist.ui.theme.typography
+import com.paul.todolist.ui.widgets.InputField
 
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun ToDoItemView(model : ToDoItemModel) {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+    val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
+
+    var textDescription = ""
+
+    //TODO Get ToDO From DB if we have one
+    //  var x = getToDoListId()
+    Text("AAAA")
+
+
+
+    ToolboxTheme {
+        Scaffold(
+            topBar = { StandardTopBar(R.string.ToDo_item, scope, scaffoldState) },
+            scaffoldState = scaffoldState,
+            drawerGesturesEnabled = true,
+            drawerShape = drawMenuShape(menuItems.size),
+            drawerContent = {
+                DrawerBody(
+                    drawItems = menuItems,
+                    scaffoldState = scaffoldState,
+                    scope = scope
+                ) {
+                    showView(it.link)
+                }
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    modifier = Modifier
+                        .width(90.dp)
+                        .height(70.dp)
+                        .padding(
+                            start = 10.dp,
+                            end = 10.dp
+                        ),
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    onClick = {
+                        model.insertToDO(getListId(),textDescription)
+                        showView(ToDoScreens.ToDoListView.name)
+                    }
+                )
+                { Icon(Icons.Filled.Add,"") }
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp, 20.dp, 10.dp, 0.dp)
+                        .background(MaterialTheme.colorScheme.background)
+                ) {
+                    InputField(
+                        text = "",
+                        onTextChanged = {},
+                        fieldTitle = "Description",
+                        keyboardType = KeyboardType.Text,
+                        onFinished = {textDescription = it}
+                    )
+                }
+            }
+        }
+    }
+}
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun ToDoItemView() {
-
-    //TODO Get ToDO From DB if we have one
-    var x = getToDoListId()
-    Text("AAAA")
-
-
-    ToolboxTheme {
-        Column (
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background)
-        )
-        {
-            ToDoItemHeadingView()
-
-            OutlinedTextField (
-                value = ("AAAA"),
-                onValueChange = {},
-                label = {Text(
-                    modifier = Modifier.background(MaterialTheme.colorScheme.background).clip(RoundedCornerShape(10.dp)),
-                    text = "text",
-                    style = typography.bodyLarge,
-                    textAlign = TextAlign.Left,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )},
-                modifier = Modifier.fillMaxWidth(),
-                trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
-                readOnly = true,
-                textStyle =  typography.bodyLarge,
-            )
-        }
-    }
+fun Preview() {
+    ToDoItemView(ToDoItemModel(RoomDataProvider()))
 }
+

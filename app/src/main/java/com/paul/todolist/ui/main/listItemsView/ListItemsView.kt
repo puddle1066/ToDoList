@@ -20,7 +20,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
-import com.paul.todolist.ToDoList
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar

@@ -17,7 +17,7 @@ import java.util.*
 
 abstract class DataBaseManager : RoomDatabase() {
     abstract fun listDao(): ListDao
-    abstract fun ToDoItemDao(): ToDoItemDao
+    abstract fun ToDoDao(): ToDoDao
 
     companion object {
         private val TAG = DataBaseManager::class.java.name

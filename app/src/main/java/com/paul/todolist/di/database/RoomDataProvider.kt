@@ -41,17 +41,23 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    suspend fun deleteItem(listId : String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().deleteListItem(listId)
+        }
+    }
+
     @Singleton
     @Provides
     suspend fun getToDoItems(): List<ToDoDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().ToDoItemDao().getAll()
+            DataBaseManager.getInstance().ToDoDao().getAll()
         }
     }
 
-    suspend fun deleteItem(listId : String) {
+    suspend fun insertToDo(ToDo : ToDoDataItem) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listDao().deleteListItem(listId)
+            DataBaseManager.getInstance().ToDoDao().insert(ToDo)
         }
     }
 

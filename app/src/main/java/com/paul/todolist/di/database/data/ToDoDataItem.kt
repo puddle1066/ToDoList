@@ -7,9 +7,9 @@ import java.util.*
 
 @Entity(tableName = "ToDoItem")
 data class ToDoDataItem(
-    @PrimaryKey val itemId: Int,
-    @ColumnInfo(name = "ListId") val listID: Int?,
+    @PrimaryKey val itemId: String,
+    @ColumnInfo(name = "ListId") val listID: String?,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "DueDate") val dueDate: Calendar?,
-    @ColumnInfo(name = "FinishedDate") val finishedDate: Calendar?,
+    @ColumnInfo(name = "DueDate") val dueDate: String?,
+    @ColumnInfo(name = "FinishedDate") val finishedDate: String?,
     )
