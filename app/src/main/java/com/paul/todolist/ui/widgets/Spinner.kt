@@ -28,7 +28,6 @@ import com.paul.todolist.ui.theme.typography
                 }
  */
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Spinner(
     list: List<Pair<String, String>>,
@@ -63,15 +62,6 @@ fun Spinner(
                     modifier = Modifier.fillMaxWidth(),
                     trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
                     readOnly = true,
-                    colors = TextFieldDefaults.textFieldColors(
-                        focusedTextColor = MaterialTheme.colorScheme.surface,
-                        unfocusedTextColor = MaterialTheme.colorScheme.surface,
-                        containerColor = color.value,
-                        disabledTextColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
-                    ),
                     textStyle =  typography.bodyLarge,
                 )
 

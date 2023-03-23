@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main.common
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.paul.todolist.ToDoScreens
@@ -25,19 +26,22 @@ fun NavigationFactory(todoModel : ToDoListModel, listModel : ListItemsModel ) {
 
     ) {
         screen(ToDoScreens.ToDoListView.name) { ToDoListView(todoModel) }
-        screen(ToDoScreens.ToDoItemView.name) { ToDoItemView("") }
+        screen(ToDoScreens.ToDoItemView.name+"?listId={ListId}", arguments = listOf(navArgument("listId"){defaultValue=0})) { ToDoItemView() }
         screen(ToDoScreens.SettingsView.name) { SettingsView() }
         screen(ToDoScreens.listsView.name) { ListItemsView(listModel) }
     }
 
 }
 
-fun showView() {
+fun showView(screenId : String) {
     MainScreen.navHostController.popBackStack()
-    MainScreen.navHostController.navigate(ToDoScreens.ToDoItemView.name)
+    MainScreen.navHostController.navigate(screenId)
 }
-fun showView(listId : String) {
-    MainScreen.navHostController.popBackStack()
-    MainScreen.navHostController.navigate(ToDoScreens.ToDoItemView.name)
+fun showView(screenId : String , listId : Int?) {
+    MainScreen.navHostController.navigate(screenId+"?listId=$listId")
+}
+
+fun getToDoListId() : String {
+    return MainScreen.navHostController.currentBackStackEntry?.arguments?.getString("listId","") ?: ""
 }
 

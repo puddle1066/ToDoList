@@ -1,7 +1,6 @@
 package com.paul.todolist.ui.main.todoListView
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog.show
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -20,10 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.paul.todolist.ToDoList
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.database.RoomDataProvider
-import com.paul.todolist.ui.main.common.NavigationFactory
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToolboxTheme
 
@@ -52,7 +49,7 @@ fun ToDoListView(model : ToDoListModel) {
                 }
 
             ) {
-                ToDoListHeadingView(model.getList())
+                ToDoListHeadingView(model.getAllSortedASC())
 
         Box(
             Modifier
@@ -67,17 +64,17 @@ fun ToDoListView(model : ToDoListModel) {
                             .padding(10.dp)
                             .combinedClickable(
                                 onClick = {
-                                    val listId = "22"
-                                //    ToDoList.NavHostController.
+                                showView(ToDoScreens.ToDoItemView.name,item.listID)
                                 },
-                                onLongClick = { model.deleteItem(seletcedItem = item) },
+                            //    onLongClick = { model.deleteItem(seletcedItem = item) },  //TODO Implement or remove
                             )
                     )
                 }
             }
             }}}
 }
-    @Preview
+
+@Preview
     @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     fun MainViewMockLayout() {

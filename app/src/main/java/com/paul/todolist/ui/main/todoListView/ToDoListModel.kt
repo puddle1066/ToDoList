@@ -17,9 +17,9 @@ open class ToDoListModel @Inject constructor(
     private var lists =  listOf<ListDataItem>()
     private var toDoItem  = listOf<ToDoDataItem>()
 
-    fun getList() : List<ListDataItem> {
+    fun getAllSortedASC() : List<ListDataItem> {
         runBlocking {
-            lists = dataBaseProvider.getListAllRows()
+            lists = dataBaseProvider.getAllSortedASC()
         }
         return lists
     }

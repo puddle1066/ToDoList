@@ -22,9 +22,9 @@ class RoomDataProvider  @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getListAllRows(): List<ListDataItem> {
+    suspend fun getAllSortedASC(): List<ListDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listDao().getAll()
+            DataBaseManager.getInstance().listDao().getAllSortedASC()
         }
     }
 

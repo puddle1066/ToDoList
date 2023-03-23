@@ -8,10 +8,11 @@ interface ListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(list: ListDataItem)
 
-    @Query("SELECT * FROM Lists")
-    fun getAll(): List<ListDataItem>
+    @Query("SELECT * FROM Lists Order BY fixed ASC")
+    fun getAllSortedASC(): List<ListDataItem>
 
-    @Query("SELECT * FROM Lists where fixed =0")
+    @Query(value = "SELECT * FROM Lists where fixed = 0")
+    //Only return user defined lists
     fun getUser(): List<ListDataItem>
 
     @Query("DELETE FROM lists where listId = :listId")
