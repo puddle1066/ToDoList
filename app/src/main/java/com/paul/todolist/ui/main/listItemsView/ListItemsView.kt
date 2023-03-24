@@ -23,6 +23,7 @@ import com.paul.todoList.R
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar
+import com.paul.todolist.ui.main.common.UiState
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
@@ -31,7 +32,7 @@ import com.paul.todolist.ui.widgets.InputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ListItemsView(model : ListItemsModel) {
+fun ListItemsView(uiState: UiState, model : ListItemsModel) {
 
     val listDataItems = remember { mutableStateListOf<ListDataItem>() }
     val deleteButtonVisible = remember { mutableStateOf(false) }
@@ -132,8 +133,8 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun Preview() {
-    ListItemsView(ListItemsModel(RoomDataProvider()))
+fun ListItemsPreview() {
+    ListItemsView(UiState(), ListItemsModel(RoomDataProvider()))
 }
 
 

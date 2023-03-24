@@ -23,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
-import com.paul.todolist.ToDoList
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.typography

@@ -20,9 +20,9 @@ import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
+import com.paul.todolist.ui.main.common.UiState
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
-import com.paul.todolist.ui.main.common.getListId
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToolboxTheme
 import com.paul.todolist.ui.widgets.InputField
@@ -30,18 +30,12 @@ import com.paul.todolist.ui.widgets.InputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ToDoItemView(model : ToDoItemModel) {
+fun ToDoItemView(uiState: UiState, model : ToDoItemModel) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
 
     var textDescription = ""
-
-    //TODO Get ToDO From DB if we have one
-    //  var x = getToDoListId()
-    Text("AAAA")
-
-
 
     ToolboxTheme {
         Scaffold(
@@ -69,7 +63,7 @@ fun ToDoItemView(model : ToDoItemModel) {
                         ),
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     onClick = {
-                        model.insertToDO(getListId(),textDescription)
+                        model.insertToDO(uiState.listId, textDescription)
                         showView(ToDoScreens.ToDoListView.name)
                     }
                 )
@@ -106,6 +100,6 @@ fun ToDoItemView(model : ToDoItemModel) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    ToDoItemView(ToDoItemModel(RoomDataProvider()))
+    ToDoItemView(UiState(),ToDoItemModel(RoomDataProvider()))
 }
 

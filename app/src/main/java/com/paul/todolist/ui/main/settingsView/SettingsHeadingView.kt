@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import com.paul.todoList.R
-import com.paul.todolist.ToDoList
 import com.paul.todolist.menuOptionLists
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar

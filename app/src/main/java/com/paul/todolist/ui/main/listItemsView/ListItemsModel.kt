@@ -36,7 +36,7 @@ open class ListItemsModel @Inject constructor(
 
      fun insertList(title : String) {
         runBlocking {
-            dataBaseProvider.insertList(ListDataItem( UUID.randomUUID().toString(),title.capitalize(),0))
+            dataBaseProvider.insertList(ListDataItem( UUID.randomUUID().toString(),title.replaceFirstChar(Char::uppercase),0))
         }
     }
 

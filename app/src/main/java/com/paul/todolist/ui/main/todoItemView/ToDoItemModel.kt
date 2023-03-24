@@ -15,9 +15,8 @@ open class ToDoItemModel @Inject constructor(
 ): BaseViewModel() {
 
     fun insertToDO(listId : String,  title : String) {
-
         runBlocking {
-            dataBaseProvider.insertToDo(ToDoDataItem(UUID.randomUUID().toString(),listId,title.capitalize(),"",""))
+            dataBaseProvider.insertToDo(ToDoDataItem(UUID.randomUUID().toString(),listId,title.replaceFirstChar(Char::uppercase),"",""))
         }
     }
 }

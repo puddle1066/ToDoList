@@ -9,12 +9,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.paul.todolist.ui.main.common.UiState
 import com.paul.todolist.ui.theme.ToolboxTheme
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun SettingsView() {
+fun SettingsView(uiState: UiState) {
 
     ToolboxTheme {
         Column (
@@ -27,3 +26,13 @@ fun SettingsView() {
         }
     }
 }
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SettingsViewPreview() {
+    SettingsView(UiState())
+}
+
+
+
