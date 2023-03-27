@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.database.data.ListDataItem
-import com.paul.todolist.ui.theme.ToolboxTheme
+import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.theme.typography
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -28,7 +28,7 @@ fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) 
     val localStyle = typography.bodyLarge
     val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colorScheme.secondary))
 
-    ToolboxTheme {
+    ToDoListTheme {
         ExposedDropdownMenuBox(
             expanded = expanded.value,
             onExpandedChange = {

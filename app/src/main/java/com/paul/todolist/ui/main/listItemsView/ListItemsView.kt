@@ -16,33 +16,34 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
+import com.paul.todolist.di.dataStorage.DataStoreManager
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar
-import com.paul.todolist.ui.main.common.UiState
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
-import com.paul.todolist.ui.theme.ToolboxTheme
+import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.InputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ListItemsView(uiState: UiState, model : ListItemsModel) {
+fun ListItemsView(model : ListItemsModel) {
 
     val listDataItems = remember { mutableStateListOf<ListDataItem>() }
     val deleteButtonVisible = remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
-    ToolboxTheme {
+    ToDoListTheme {
         Scaffold(
             topBar = {
-                StandardTopBar(R.string.lists, coroutineScope, scaffoldState)
+                StandardTopBar(LocalContext.current.resources.getString(R.string.lists), coroutineScope, scaffoldState)
             },
             floatingActionButton = {
                 AnimatedVisibility(
@@ -134,7 +135,7 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ListItemsPreview() {
-    ListItemsView(UiState(), ListItemsModel(RoomDataProvider()))
+    ListItemsView(ListItemsModel(RoomDataProvider(), DataStoreManager(LocalContext.current)))
 }
 
 

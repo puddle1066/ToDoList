@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists: List<ListDataItem>, onListChanged: (listId : String) -> Unit) {
+fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists: List<ListDataItem>, selected : String,  onListChanged: (listId : String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,7 +49,7 @@ fun ToDoListTopBar(scope : CoroutineScope, scaffoldState : ScaffoldState, lists:
         ListItemsDropDown(lists, 
             onValueChanged = { onListChanged(it.listId)},
             false,
-            lists[0].title)
+            selected)
     }
 
 }

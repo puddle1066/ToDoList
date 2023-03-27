@@ -17,7 +17,7 @@ import com.paul.todolist.util.screen
 
 @ExperimentalAnimationApi
 @Composable
-fun NavigationFactory(uiState: UiState, toDoListModel : ToDoListModel, listItemsModel : ListItemsModel, toDoItemModel : ToDoItemModel) {
+fun NavigationFactory(toDoListModel : ToDoListModel, listItemsModel : ListItemsModel, toDoItemModel : ToDoItemModel) {
 
     MainScreen.navHostController = rememberAnimatedNavController()
 
@@ -26,14 +26,18 @@ fun NavigationFactory(uiState: UiState, toDoListModel : ToDoListModel, listItems
         startDestination = ToDoScreens.ToDoListView.name
 
     ) {
-        screen(ToDoScreens.ToDoListView.name) { ToDoListView(uiState,toDoListModel) }
-        screen(ToDoScreens.ToDoItemView.name) { ToDoItemView(uiState,toDoItemModel) }
-        screen(ToDoScreens.SettingsView.name) { SettingsView(uiState) }
-        screen(ToDoScreens.listsView.name) { ListItemsView(uiState, listItemsModel) }
+        screen(ToDoScreens.ToDoListView.name) { ToDoListView(toDoListModel) }
+        screen(ToDoScreens.ToDoItemView.name) { ToDoItemView(toDoItemModel) }
+        screen(ToDoScreens.SettingsView.name) { SettingsView() }
+        screen(ToDoScreens.listsView.name) { ListItemsView(listItemsModel) }
     }
 }
 
 fun showView(screenId : String) {
     MainScreen.navHostController.popBackStack()
+    MainScreen.navHostController.navigate(screenId)
+}
+
+fun showViewWithBackStack(screenId : String) {
     MainScreen.navHostController.navigate(screenId)
 }

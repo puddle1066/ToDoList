@@ -9,13 +9,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.paul.todolist.ui.main.common.UiState
-import com.paul.todolist.ui.theme.ToolboxTheme
+import com.paul.todolist.ui.theme.ToDoListTheme
 
 @Composable
-fun SettingsView(uiState: UiState) {
+fun SettingsView() {
 
-    ToolboxTheme {
+    ToDoListTheme {
         Column (
             modifier = Modifier
                 .fillMaxWidth()
@@ -31,7 +30,7 @@ fun SettingsView(uiState: UiState) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SettingsViewPreview() {
-    SettingsView(UiState())
+    SettingsView()
 }
 
 

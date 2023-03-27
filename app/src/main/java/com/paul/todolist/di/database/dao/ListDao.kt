@@ -17,4 +17,7 @@ interface ListDao {
 
     @Query("DELETE FROM lists where listId = :listId")
     fun deleteListItem(listId: String)
+
+    @Query(value = "SELECT title FROM Lists where listId = :listId")
+    fun getListTitle(listId: String): String
 }

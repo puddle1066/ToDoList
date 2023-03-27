@@ -35,6 +35,7 @@ class RoomDataProvider  @Inject constructor() {
             DataBaseManager.getInstance().listDao().getUser()
         }
     }
+
     suspend fun insertList(list : ListDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().insert(list)
@@ -46,6 +47,16 @@ class RoomDataProvider  @Inject constructor() {
             DataBaseManager.getInstance().listDao().deleteListItem(listId)
         }
     }
+
+
+    @Singleton
+    @Provides
+    suspend fun getListTitle(listId : String): String {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().getListTitle(listId)
+        }
+    }
+
 
     @Singleton
     @Provides

@@ -1,6 +1,7 @@
 package com.paul.todolist.ui.main.listItemsView
 
 import com.paul.todolist.base.BaseViewModel
+import com.paul.todolist.di.dataStorage.DataStoreManager
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.menuOptionSettings
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class ListItemsModel @Inject constructor(
-    private val dataBaseProvider: RoomDataProvider
+    private val dataBaseProvider: RoomDataProvider,
+    private val dataStoreManage: DataStoreManager
 
 ): BaseViewModel() {
 

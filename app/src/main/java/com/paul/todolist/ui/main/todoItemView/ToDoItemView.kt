@@ -11,35 +11,37 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.ToDoScreens
+import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
-import com.paul.todolist.ui.main.common.UiState
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
-import com.paul.todolist.ui.theme.ToolboxTheme
+import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.InputField
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ToDoItemView(uiState: UiState, model : ToDoItemModel) {
+fun ToDoItemView(model : ToDoItemModel) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
-
     var textDescription = ""
 
-    ToolboxTheme {
+    val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
+
+    ToDoListTheme {
         Scaffold(
-            topBar = { StandardTopBar(R.string.ToDo_item, scope, scaffoldState) },
+            topBar = { StandardTopBar(title, scope, scaffoldState)},
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = true,
             drawerShape = drawMenuShape(menuItems.size),
@@ -63,7 +65,9 @@ fun ToDoItemView(uiState: UiState, model : ToDoItemModel) {
                         ),
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     onClick = {
-                        model.insertToDO(uiState.listId, textDescription)
+                        model.getListId {
+                            model.insertToDO(it, textDescription)
+                        }
                         showView(ToDoScreens.ToDoListView.name)
                     }
                 )
@@ -84,11 +88,12 @@ fun ToDoItemView(uiState: UiState, model : ToDoItemModel) {
                         .background(MaterialTheme.colorScheme.background)
                 ) {
                     InputField(
-                        text = "",
+                        text = textDescription,
                         onTextChanged = {},
                         fieldTitle = "Description",
                         keyboardType = KeyboardType.Text,
-                        onFinished = {textDescription = it}
+                        onFinished = { textDescription = it },
+                        clearFieldOnKeyboard = false
                     )
                 }
             }
@@ -100,6 +105,6 @@ fun ToDoItemView(uiState: UiState, model : ToDoItemModel) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    ToDoItemView(UiState(),ToDoItemModel(RoomDataProvider()))
+    ToDoItemView(ToDoItemModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
 }
 

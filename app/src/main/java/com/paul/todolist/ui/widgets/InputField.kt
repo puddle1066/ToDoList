@@ -16,26 +16,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.paul.todolist.ui.theme.ToolboxTheme
+import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.theme.typography
-
-/* Example of how to use this widget
-
-                Row (modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                    verticalAlignment = Alignment.CenterVertically)
-                {
-                    InputField(
-                        text = "",
-                        onTextChanged = {
-                            measureModel.inputtext = it
-                        },
-                        "Input Title"
-                    )
-                }
-*/
-
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -45,8 +27,9 @@ fun InputField(
     fieldTitle: String = "",
     keyboardType : KeyboardType = KeyboardType.Number,
     onFinished: (String) -> Unit,
+    clearFieldOnKeyboard : Boolean = true
 ) {
-    ToolboxTheme {
+    ToDoListTheme {
         var rememberText by remember { mutableStateOf(text) }
         val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -68,25 +51,26 @@ fun InputField(
             shape = RoundedCornerShape(50.dp),
 
             keyboardActions = KeyboardActions(
+
                 onDone = {
                     keyboardController?.hide()
                     onFinished(rememberText)
-                    rememberText = ""},
+                    if(clearFieldOnKeyboard)  rememberText = ""},
                 onGo = {  keyboardController?.hide()
                     onFinished(rememberText)
-                    rememberText = ""},
+                    if(clearFieldOnKeyboard)  rememberText = ""},
                 onNext = {  keyboardController?.hide()
                     onFinished(rememberText)
-                    rememberText = ""},
+                    if(clearFieldOnKeyboard)  rememberText = ""},
                 onPrevious = {  keyboardController?.hide()
                     onFinished(rememberText)
-                    rememberText = ""},
+                    if(clearFieldOnKeyboard)  rememberText = ""},
                 onSearch = {  keyboardController?.hide()
                     onFinished(rememberText)
-                    rememberText = "" },
+                    if(clearFieldOnKeyboard)  rememberText = ""},
                 onSend = {  keyboardController?.hide()
                     onFinished(rememberText)
-                    rememberText = ""}
+                    if(clearFieldOnKeyboard)  rememberText = ""}
             ),
 
             colors = TextFieldDefaults.textFieldColors(

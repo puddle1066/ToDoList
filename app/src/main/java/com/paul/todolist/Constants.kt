@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.paul.todoList.R
 import com.paul.todolist.ui.main.common.drawMenu.DrawItem
 
@@ -25,3 +26,5 @@ val menuOptionToDoItem = DrawItem(Icons.Filled.Menu, R.string.ToDo_item,ToDoScre
 const val DATABASE_NAME = "tools-db"
 const val PREFERENCES_NAME = "user_preferences"
 
+val LIST_ID_KEY = stringPreferencesKey("listId")
+val ITEM_ID_KEY = stringPreferencesKey("itemId")

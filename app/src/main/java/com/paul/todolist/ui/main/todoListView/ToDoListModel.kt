@@ -1,26 +1,29 @@
 package com.paul.todolist.ui.main.todoListView
 
-import com.paul.todolist.base.BaseViewModel
+import android.util.Log
+import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.menuOptionLists
 import com.paul.todolist.menuOptionSettings
+import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 open class ToDoListModel @Inject constructor(
-    private val dataBaseProvider: RoomDataProvider
+    private val dataBaseProvider: RoomDataProvider,
+    private val dataStoreProvider: DataStoreProvider
 
-): BaseViewModel() {
+): StorageViewModel(dataStoreProvider) {
 
-    private var lists =  listOf<ListDataItem>()
-    private var toDoItem  = listOf<ToDoDataItem>()
-    val menuItems  = listOf(menuOptionLists, menuOptionSettings)
+    private var lists = listOf<ListDataItem>()
+    private var toDoItem = listOf<ToDoDataItem>()
+    val menuItems = listOf(menuOptionLists, menuOptionSettings)
 
-    fun getAllSortedASC() : List<ListDataItem> {
+    fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
             lists = dataBaseProvider.getAllSortedASC()
         }
@@ -30,11 +33,23 @@ open class ToDoListModel @Inject constructor(
     fun deleteItem(seletcedItem: ToDoDataItem) {
     }
 
-    fun getToDoList(listId : String) : List<ToDoDataItem> {
+    fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
             toDoItem = dataBaseProvider.getToDoItems(listId)
         }
         return toDoItem
     }
 
+    fun getListTitle() : String {
+        var title = ""
+        getListId(
+            {
+                runBlocking {
+                    title = dataBaseProvider.getListTitle(it)
+                    Log.e("StorageViewModel","getting list Id $it $title")
+                }
+            }
+        )
+        return title
+    }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
@@ -37,8 +38,9 @@ fun ListListItem(list: ListDataItem, onItemClick: (ListDataItem, Boolean) -> Uni
                 }
                 .fillMaxSize()
                 .height(70.dp)
-                .background(backgroundColor.value),
-                contentAlignment = Alignment.Center) {
+                .background(backgroundColor.value)
+                .padding(10.dp,0.dp,0.dp,0.dp),
+                contentAlignment = Alignment.CenterStart) {
                 Text(
                         text = list.title,
                         style = typography.bodyLarge,

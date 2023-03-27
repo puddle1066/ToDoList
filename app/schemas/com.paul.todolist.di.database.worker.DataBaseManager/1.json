@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "db577f5bd347ad27723659d81337a160",
+    "identityHash": "bddb4d0bdcdac3a35f8db43b11d4e355",
     "entities": [
       {
         "tableName": "Lists",
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "ToDoItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `ListId` TEXT, `description` TEXT NOT NULL, `DueDate` TEXT, `FinishedDate` TEXT, PRIMARY KEY(`itemId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `ListId` TEXT NOT NULL, `description` TEXT NOT NULL, `DueDate` TEXT, `FinishedDate` TEXT, PRIMARY KEY(`itemId`))",
         "fields": [
           {
             "fieldPath": "itemId",
@@ -50,7 +50,7 @@
             "fieldPath": "listID",
             "columnName": "ListId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "description",
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'db577f5bd347ad27723659d81337a160')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bddb4d0bdcdac3a35f8db43b11d4e355')"
     ]
   }
 }

@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun StandardTopBar(title : Int, scope : CoroutineScope, scaffoldState : ScaffoldState) {
+fun StandardTopBar(title : String, scope : CoroutineScope, scaffoldState : ScaffoldState) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +50,7 @@ fun StandardTopBar(title : Int, scope : CoroutineScope, scaffoldState : Scaffold
 
         Text(
             modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically),
-            text = LocalContext.current.resources.getString(title),
+            text = title,
             color = MaterialTheme.colorScheme.secondary,
             style = typography.titleLarge
         )    }

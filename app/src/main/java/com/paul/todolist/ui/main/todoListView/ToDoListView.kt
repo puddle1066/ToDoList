@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main.todoListView
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -17,44 +18,51 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ToDoScreens
+import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
-import com.paul.todolist.ui.main.common.UiState
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
+import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
-import com.paul.todolist.ui.theme.ToolboxTheme
+import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ToDoListView(uiState: UiState, model : ToDoListModel) {
+fun ToDoListView(model : ToDoListModel) {
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
-        var selectedListId : String = "n/a"
-
         val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
 
-        //TODO last listId should be stored and reloaded on restart
-        selectedListId = model.getAllSortedASC()[0].listId
+        //Set a default value for the start of the list if we don't have one..
+        model.getListId {
+            if (it.isEmpty()) {
+                model.setListId(model.getAllSortedASC()[0].listId)
+                Log.e("ToDoListView","Setting default list to  $model.getAllSortedASC()[0].listId")
+            } else {
+                listDataItems.clear()
+                listDataItems.swapList(model.getToDoList(it))
+            }
+        }
 
-
-        listDataItems.swapList(model.getToDoList(selectedListId))
-
-        ToolboxTheme {
+        ToDoListTheme {
             Scaffold(
             topBar = {
                 ToDoListTopBar(scope,
                     scaffoldState,
                     model.getAllSortedASC(),
-                    onListChanged ={
-                        selectedListId = it
-                        var list = model.getToDoList(listId = selectedListId)
-                        listDataItems.swapList(list)
-                    })},
+                    model.getListTitle()
+                ) {
+                    model.setListId(it)
+                    listDataItems.clear()
+                    listDataItems.swapList(model.getToDoList(it))
+                }
+            },
                 scaffoldState = scaffoldState,
                 drawerGesturesEnabled = true,
                 drawerShape = drawMenuShape(model.menuItems.size),
@@ -79,9 +87,8 @@ fun ToDoListView(uiState: UiState, model : ToDoListModel) {
                             ),
                         backgroundColor = MaterialTheme.colorScheme.primary,
                         onClick = {
-                            uiState.listId = selectedListId
-                            uiState.itemId=""
-                            showView(ToDoScreens.ToDoItemView.name)
+                            model.setItemId("")             //Clear Item ID as its a new item
+                            showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                         }
                     )
                     { Icon(Icons.Filled.Add,"")}
@@ -104,21 +111,24 @@ fun ToDoListView(uiState: UiState, model : ToDoListModel) {
                 LazyColumn() {
                     itemsIndexed(listDataItems) { _, item ->
                         ToDoItem(item, { item: ToDoDataItem ->
-                            uiState.listId = selectedListId
-                            uiState.itemId=item.itemId
-                            showView(ToDoScreens.ToDoItemView.name)
+                            model.setItemId(item.itemId)
+                            model.setListId(item.listID)
+                            Log.e("ToDoListView"," Saving - listId"+item.listID+"ItemId "+item.itemId)
+                            showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                         })
                     }
                 }
                 }
-            }}}
+            }
+            }
+        }
 }
 
 @Preview
     @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     fun MainViewMockLayout() {
-        ToDoListView(UiState(),ToDoListModel(RoomDataProvider()))
+        ToDoListView(ToDoListModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
     }
 
 
