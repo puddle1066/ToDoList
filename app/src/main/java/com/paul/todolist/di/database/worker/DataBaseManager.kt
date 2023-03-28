@@ -43,9 +43,9 @@ abstract class DataBaseManager : RoomDatabase() {
                 Log.e(TAG, "Create Database")
 
                 try {
-                    db.execSQL( "INSERT INTO Lists(selectedlistId, title, fixed) VALUES('"+ UUID.randomUUID().toString()+ "','ToDo', 1);")
-                    db.execSQL( "INSERT INTO Lists(selectedlistId, title, fixed) VALUES('"+ UUID.randomUUID().toString()+ "','Finished', 1);")
-                    db.execSQL( "INSERT INTO Lists(selectedlistId, title, fixed) VALUES('0','All', 1);")
+                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','ToDo', 'Y', 'N');")
+                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','Finished', 'Y', 'N');")
+                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('0','All', 'Y', 'Y');")
 
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)

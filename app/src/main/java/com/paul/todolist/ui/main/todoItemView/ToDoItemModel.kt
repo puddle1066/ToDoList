@@ -17,6 +17,7 @@ open class ToDoItemModel @Inject constructor(
 
 ): StorageViewModel(dataStoreProvider) {
     var selectedlistId = ""
+    var showAllEntries = false
 
     fun getListTitle() : String {
         var title = ""
@@ -34,7 +35,7 @@ open class ToDoItemModel @Inject constructor(
 
     fun insertToDO(listId : String,  title : String) {
         runBlocking {
-            dataBaseProvider.insertToDo(ToDoDataItem(UUID.randomUUID().toString(),listId,title.replaceFirstChar(Char::uppercase),"",""))
+            dataBaseProvider.insertToDo(ToDoDataItem(UUID.randomUUID().toString(),listId,title.replaceFirstChar(Char::uppercase),"0","0"))
         }
     }
 

@@ -57,6 +57,14 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    @Singleton
+    @Provides
+    suspend fun getShowAllItems(listId : String): String {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().getShowAllItems(listId)
+        }
+    }
+
 
     @Singleton
     @Provides
@@ -65,6 +73,15 @@ class RoomDataProvider  @Inject constructor() {
             DataBaseManager.getInstance().ToDoDao().getAllForListId(listId)
         }
     }
+
+    @Singleton
+    @Provides
+    suspend fun getAllItems(): List<ToDoDataItem> {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ToDoDao().getAll()
+        }
+    }
+
 
     suspend fun insertToDo(ToDo : ToDoDataItem) {
         return withContext(dispatcher) {

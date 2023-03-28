@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bddb4d0bdcdac3a35f8db43b11d4e355",
+    "identityHash": "da8db2db42c65dfc9d8a6a3753dca8e3",
     "entities": [
       {
         "tableName": "Lists",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`listId` TEXT NOT NULL, `title` TEXT NOT NULL, `fixed` INTEGER NOT NULL, PRIMARY KEY(`listId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`listId` TEXT NOT NULL, `title` TEXT NOT NULL, `fixed` TEXT NOT NULL, `showAll` TEXT NOT NULL, PRIMARY KEY(`listId`))",
         "fields": [
           {
             "fieldPath": "listId",
@@ -23,7 +23,13 @@
           {
             "fieldPath": "fixed",
             "columnName": "fixed",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "showAll",
+            "columnName": "showAll",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -38,7 +44,7 @@
       },
       {
         "tableName": "ToDoItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `ListId` TEXT NOT NULL, `description` TEXT NOT NULL, `DueDate` TEXT, `FinishedDate` TEXT, PRIMARY KEY(`itemId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `ListId` TEXT NOT NULL, `description` TEXT NOT NULL, `DueDate` TEXT NOT NULL, `FinishedDate` TEXT NOT NULL, PRIMARY KEY(`itemId`))",
         "fields": [
           {
             "fieldPath": "itemId",
@@ -62,13 +68,13 @@
             "fieldPath": "dueDate",
             "columnName": "DueDate",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "finishedDate",
             "columnName": "FinishedDate",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -84,7 +90,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bddb4d0bdcdac3a35f8db43b11d4e355')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da8db2db42c65dfc9d8a6a3753dca8e3')"
     ]
   }
 }

@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class ListDataItem(
     @PrimaryKey val listId: String,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "fixed") val fixed: Int  = 0,
+    @ColumnInfo(name = "fixed") val fixed: String = "N",
+    @ColumnInfo(name = "showAll") val showAll: String = "N"
     )

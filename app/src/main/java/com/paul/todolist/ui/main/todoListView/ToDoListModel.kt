@@ -20,8 +20,11 @@ open class ToDoListModel @Inject constructor(
 ): StorageViewModel(dataStoreProvider) {
 
     private var lists = listOf<ListDataItem>()
-    private var toDoItem = listOf<ToDoDataItem>()
+    private var toDoItems = listOf<ToDoDataItem>()
+    private var showAll = false
+
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
+
 
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
@@ -35,9 +38,14 @@ open class ToDoListModel @Inject constructor(
 
     fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
-            toDoItem = dataBaseProvider.getToDoItems(listId)
+            if (dataBaseProvider.getShowAllItems(listId) == "Y") {
+                toDoItems = dataBaseProvider.getAllItems()
+                showAll = true
+            } else {
+                toDoItems = dataBaseProvider.getToDoItems(listId)
+            }
         }
-        return toDoItem
+        return toDoItems
     }
 
     fun getListTitle() : String {
