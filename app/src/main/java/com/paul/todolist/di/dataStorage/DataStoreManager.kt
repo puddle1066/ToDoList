@@ -20,6 +20,7 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
         preferencesKey: Preferences.Key<T>, func: T.() -> Unit
     ) {
         data.catch {
+            Log.e("DataStoreManager","Exception Thrown  {$it}")
             if (it is IOException) {
                 emit(emptyPreferences())
             } else {

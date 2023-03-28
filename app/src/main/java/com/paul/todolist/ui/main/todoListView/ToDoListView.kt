@@ -40,10 +40,12 @@ fun ToDoListView(model : ToDoListModel) {
         val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
 
         //Set a default value for the start of the list if we don't have one..
+        model.getListId { Log.e("TAG","Value {$it}") }
+
         model.getListId {
             if (it.isEmpty()) {
                 model.setListId(model.getAllSortedASC()[0].listId)
-                Log.e("ToDoListView","Setting default list to  $model.getAllSortedASC()[0].listId")
+                Log.e("ToDoListView","Setting default list to  $model.getAllSortedASC()[0].selectedlistId")
             } else {
                 listDataItems.clear()
                 listDataItems.swapList(model.getToDoList(it))
@@ -113,7 +115,7 @@ fun ToDoListView(model : ToDoListModel) {
                         ToDoItem(item, { item: ToDoDataItem ->
                             model.setItemId(item.itemId)
                             model.setListId(item.listID)
-                            Log.e("ToDoListView"," Saving - listId"+item.listID+"ItemId "+item.itemId)
+                            Log.e("ToDoListView"," Saving - selectedlistId"+item.listID+"ItemId "+item.itemId)
                             showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                         })
                     }

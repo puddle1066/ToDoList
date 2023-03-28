@@ -32,14 +32,13 @@ import com.paul.todolist.ui.widgets.InputField
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ToDoItemView(model : ToDoItemModel) {
-    val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
-    val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
-    var textDescription = ""
+     val scaffoldState = rememberScaffoldState()
+     val scope = rememberCoroutineScope()
+     val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
+     var textDescription = ""
+     val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
 
-    val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
-
-    ToDoListTheme {
+        ToDoListTheme {
         Scaffold(
             topBar = { StandardTopBar(title, scope, scaffoldState)},
             scaffoldState = scaffoldState,
@@ -65,9 +64,10 @@ fun ToDoItemView(model : ToDoItemModel) {
                         ),
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     onClick = {
-                        model.getListId {
-                            model.insertToDO(it, textDescription)
+                        if (textDescription.length > 0) {
+                                model.insertToDO(model.selectedlistId, textDescription)
                         }
+                        textDescription = ""
                         showView(ToDoScreens.ToDoListView.name)
                     }
                 )

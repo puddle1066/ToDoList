@@ -99,6 +99,7 @@ fun ListItemsView(model : ListItemsModel) {
                     keyboardType = KeyboardType.Text,
                     onFinished = {
                         model.insertList(it)
+                        listDataItems.clear()
                         listDataItems.swapList(model.getUserList())
                     }
                 )

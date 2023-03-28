@@ -16,11 +16,13 @@ open class ToDoItemModel @Inject constructor(
     private val dataStoreProvider: DataStoreProvider
 
 ): StorageViewModel(dataStoreProvider) {
+    var selectedlistId = ""
 
     fun getListTitle() : String {
         var title = ""
         getListId(
             {
+                selectedlistId = it
                 runBlocking {
                     title = dataBaseProvider.getListTitle(it)
                     Log.e("StorageViewModel","getting list Id $it $title")

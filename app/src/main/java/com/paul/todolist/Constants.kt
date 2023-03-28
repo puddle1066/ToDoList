@@ -26,5 +26,5 @@ val menuOptionToDoItem = DrawItem(Icons.Filled.Menu, R.string.ToDo_item,ToDoScre
 const val DATABASE_NAME = "tools-db"
 const val PREFERENCES_NAME = "user_preferences"
 
-val LIST_ID_KEY = stringPreferencesKey("listId")
+val LIST_ID_KEY = stringPreferencesKey("selectedlistId")
 val ITEM_ID_KEY = stringPreferencesKey("itemId")
