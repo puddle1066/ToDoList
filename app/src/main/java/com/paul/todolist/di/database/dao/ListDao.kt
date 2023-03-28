@@ -23,4 +23,8 @@ interface ListDao {
 
     @Query(value = "SELECT showAll FROM Lists where listId = :listId")
     fun getShowAllItems(listId: String): String
+
+    @Query(value = "SELECT count(*) FROM ToDoItem where listId = :listId")
+    fun getListCount(listId: String): Int
+
 }

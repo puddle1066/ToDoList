@@ -20,12 +20,20 @@ open class ListItemsModel @Inject constructor(
     var deleteList = ArrayList<ListDataItem>()
 
     private var lists =  listOf<ListDataItem>()
+    private var count = 0
 
     fun getUserList() : List<ListDataItem> {
         runBlocking {
             lists = dataBaseProvider.getListUserRows()
         }
         return lists
+    }
+
+    fun getListCount(listId : String) : Int {
+        runBlocking {
+            count = dataBaseProvider.getLIstItemsCount(listId)
+        }
+        return count
     }
 
     fun deleteItem(listId : String) {

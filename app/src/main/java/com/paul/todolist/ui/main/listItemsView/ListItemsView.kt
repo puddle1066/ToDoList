@@ -21,7 +21,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
-import com.paul.todolist.di.dataStorage.DataStoreManager
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar
@@ -115,7 +114,8 @@ fun ListItemsView(model : ListItemsModel) {
                 ) {
                     LazyColumn{
                         itemsIndexed(listDataItems) { _, item  ->
-                            ListListItem(item ) { item: ListDataItem, delete: Boolean ->
+                            var count = model.getListCount(item.listId)
+                            ListListItem(item, count ) { item: ListDataItem, delete: Boolean ->
                                 if(delete) { model.deleteList.add(item)} else {model.deleteList.remove(item)}
                                 deleteButtonVisible.value = model.deleteList.size != 0
                             }
@@ -135,8 +135,8 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun ListItemsPreview() {
-    ListItemsView(ListItemsModel(RoomDataProvider(), DataStoreManager(LocalContext.current)))
+fun ListItemsViewPreview() {
+    ListItemsView(ListItemsModel(RoomDataProvider()))
 }
 
 

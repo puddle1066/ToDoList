@@ -36,6 +36,14 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    @Singleton
+    @Provides
+    suspend fun getLIstItemsCount(listId : String): Int {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().getListCount(listId)
+        }
+    }
+
     suspend fun insertList(list : ListDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().insert(list)

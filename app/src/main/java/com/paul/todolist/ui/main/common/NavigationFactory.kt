@@ -23,7 +23,7 @@ fun NavigationFactory(toDoListModel : ToDoListModel, listItemsModel : ListItemsM
 
     AnimatedNavHost(
         MainScreen.navHostController,
-        startDestination = ToDoScreens.ToDoListView.name
+        startDestination = ToDoScreens.listsView.name
 
     ) {
         screen(ToDoScreens.ToDoListView.name) { ToDoListView(toDoListModel) }
