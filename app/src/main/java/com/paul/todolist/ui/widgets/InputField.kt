@@ -27,7 +27,7 @@ fun InputField(
     fieldTitle: String = "",
     keyboardType : KeyboardType = KeyboardType.Number,
     onFinished: (String) -> Unit,
-    clearFieldOnKeyboard : Boolean = true
+    clearFieldOnKeyboard : Boolean = true,
 ) {
     ToDoListTheme {
         var rememberText by remember { mutableStateOf(text) }
@@ -53,7 +53,7 @@ fun InputField(
             keyboardActions = KeyboardActions(
 
                 onDone = {
-                    keyboardController?.hide()
+                   keyboardController?.hide()
                     onFinished(rememberText)
                     if(clearFieldOnKeyboard)  rememberText = ""},
                 onGo = {  keyboardController?.hide()

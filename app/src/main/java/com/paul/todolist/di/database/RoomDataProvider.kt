@@ -56,7 +56,6 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
-
     @Singleton
     @Provides
     suspend fun getListTitle(listId : String): String {
@@ -91,11 +90,18 @@ class RoomDataProvider  @Inject constructor() {
     }
 
 
-    suspend fun insertToDo(ToDo : ToDoDataItem) {
+    suspend fun insertToDo(toDoItem : ToDoDataItem) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().ToDoDao().insert(ToDo)
+            DataBaseManager.getInstance().ToDoDao().insert(toDoItem)
         }
     }
+
+    suspend fun deleteToDoItem(listId : String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ToDoDao().deleteListItem(listId)
+        }
+    }
+
 
 
 }

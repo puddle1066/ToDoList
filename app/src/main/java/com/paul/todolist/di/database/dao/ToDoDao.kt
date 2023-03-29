@@ -14,6 +14,7 @@ interface ToDoDao {
     @Query("SELECT * FROM ToDoItem where FinishedDate = '0'" )
     fun getAll() : List<ToDoDataItem>
 
-    @Delete
-    fun delete(List: ToDoDataItem)
+    @Query("DELETE FROM ToDoItem where listId = :listId")
+    fun deleteListItem(listId: String)
+
 }

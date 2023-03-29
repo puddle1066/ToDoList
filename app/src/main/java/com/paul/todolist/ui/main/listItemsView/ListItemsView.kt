@@ -97,9 +97,11 @@ fun ListItemsView(model : ListItemsModel) {
                     fieldTitle = "Input List Name",
                     keyboardType = KeyboardType.Text,
                     onFinished = {
-                        model.insertList(it)
-                        listDataItems.clear()
-                        listDataItems.swapList(model.getUserList())
+                        if (!it.isEmpty()) {
+                            model.insertList(it)
+                            listDataItems.clear()
+                            listDataItems.swapList(model.getUserList())
+                        }
                     }
                 )
 
@@ -114,7 +116,7 @@ fun ListItemsView(model : ListItemsModel) {
                 ) {
                     LazyColumn{
                         itemsIndexed(listDataItems) { _, item  ->
-                            var count = model.getListCount(item.listId)
+                            val count = model.getListCount(item.listId)
                             ListListItem(item, count ) { item: ListDataItem, delete: Boolean ->
                                 if(delete) { model.deleteList.add(item)} else {model.deleteList.remove(item)}
                                 deleteButtonVisible.value = model.deleteList.size != 0

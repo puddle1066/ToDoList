@@ -38,6 +38,7 @@ open class ListItemsModel @Inject constructor(
 
     fun deleteItem(listId : String) {
         runBlocking {
+            dataBaseProvider.deleteToDoItem(listId)
             dataBaseProvider.deleteItem(listId)
         }
     }
