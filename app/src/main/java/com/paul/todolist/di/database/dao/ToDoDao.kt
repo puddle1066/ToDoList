@@ -23,4 +23,8 @@ interface ToDoDao {
 
     @Query("UPDATE ToDoItem SET FinishedDate = :finishedDate where itemId = :itemId" )
     fun setFinishedDate(itemId : String, finishedDate : String )
+
+    @Query("SELECT * FROM ToDoItem where itemId = :itemId" )
+    fun getToDoItem(itemId : String) : ToDoDataItem
+
 }

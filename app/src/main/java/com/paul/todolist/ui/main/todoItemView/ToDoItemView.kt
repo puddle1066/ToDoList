@@ -22,6 +22,7 @@ import com.paul.todoList.R
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
+import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
@@ -41,7 +42,19 @@ fun ToDoItemView(model : ToDoItemModel) {
      var textDescription = ""
      val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
 
-        ToDoListTheme {
+    //Load Any Data we Have
+    model.getItemId {
+        if (it.length > 0) {
+            var todoModel = model.getItem(it)
+            textDescription = todoModel.description
+        }
+    }
+
+    fun loadData(todoItem : ToDoDataItem) {
+        textDescription = todoItem.description
+    }
+
+    ToDoListTheme {
         Scaffold(
             topBar = { StandardTopBar(title, scope, scaffoldState)},
             scaffoldState = scaffoldState,

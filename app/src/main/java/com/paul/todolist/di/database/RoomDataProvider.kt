@@ -104,4 +104,10 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    suspend fun getToDoItem(itemId : String): ToDoDataItem {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ToDoDao().getToDoItem(itemId)
+        }
+    }
+
 }

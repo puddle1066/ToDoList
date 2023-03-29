@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 
 open class StorageViewModel(private val dataStoreProvider: DataStoreProvider) : ViewModel() {
 
-
     fun setListId(listId: String) {
         viewModelScope.launch {
             dataStoreProvider.storeValue(LIST_ID_KEY, listId)

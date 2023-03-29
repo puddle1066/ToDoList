@@ -114,10 +114,6 @@ fun ToDoListView(model : ToDoListModel) {
                             if (todoItem.finishedDate == "0") {
                                 model.setItemId(todoItem.itemId)
                                 model.setListId(todoItem.listID)
-                                Log.e(
-                                    "ToDoListView",
-                                    " Saving - selectedlistId" + todoItem.listID + "ItemId " + todoItem.itemId
-                                )
                                 showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                             } else {
                                 model.setFinishedDate(todoItem.itemId, todoItem.finishedDate)

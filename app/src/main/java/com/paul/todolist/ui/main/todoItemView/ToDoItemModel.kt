@@ -25,11 +25,18 @@ open class ToDoItemModel @Inject constructor(
                 selectedlistId = it
                 runBlocking {
                     title = dataBaseProvider.getListTitle(it)
-                    Log.e("StorageViewModel","getting list Id $it $title")
                 }
             }
         )
         return title
+    }
+
+    fun getItem(itemId : String) : ToDoDataItem {
+        var todoItem : ToDoDataItem
+        runBlocking {
+            todoItem = dataBaseProvider.getToDoItem(itemId)
+        }
+        return todoItem
     }
 
     fun insertToDO(listId : String,  title : String) {
