@@ -1,6 +1,5 @@
 package com.paul.todolist.ui.main.todoListView
 
-import android.util.Log
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
@@ -33,19 +32,37 @@ open class ToDoListModel @Inject constructor(
         return lists
     }
 
-    fun deleteItem(seletcedItem: ToDoDataItem) {
-    }
 
     fun getToDoList(listId: String): List<ToDoDataItem> {
+        //TODO Replace hardcoded strings with strings
         runBlocking {
-            if (dataBaseProvider.getShowAllItems(listId) == "Y") {
-                toDoItems = dataBaseProvider.getAllItems()
-                showAll = true
-            } else {
-                toDoItems = dataBaseProvider.getToDoItems(listId)
+            var title = dataBaseProvider.getListTitle(listId)
+            when(title) {
+                "Finished" -> {
+                    showAll = false
+                    toDoItems = dataBaseProvider.getFinishedItems()
+                }
+                "All" -> {
+                    toDoItems = dataBaseProvider.getAllItems()
+                    showAll = true
+                }
+                else -> {
+                    toDoItems = dataBaseProvider.getToDoItems(listId)
+                    showAll = false
+                }
             }
         }
         return toDoItems
+    }
+
+    fun getIsFinishedList() : Boolean {
+        var finished = false
+        getListId {
+            runBlocking {
+                finished = (dataBaseProvider.getListTitle(it).equals("Finished"))
+            }
+        }
+        return finished
     }
 
     fun getListTitle() : String {
@@ -54,10 +71,15 @@ open class ToDoListModel @Inject constructor(
             {
                 runBlocking {
                     title = dataBaseProvider.getListTitle(it)
-                    Log.e("StorageViewModel","getting list Id $it $title")
                 }
             }
         )
         return title
+    }
+
+    fun setFinishedDate(itemId : String,  finishedDate : String) {
+        runBlocking {
+            dataBaseProvider.setFinishedDate(itemId,finishedDate )
+        }
     }
 }

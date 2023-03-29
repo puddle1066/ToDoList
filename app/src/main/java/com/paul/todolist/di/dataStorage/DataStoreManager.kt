@@ -38,14 +38,12 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
     suspend fun <T> storeValue(key: Preferences.Key<T>, value: T) {
         context.dataStore.edit {
             it[key] = value
-            Log.e("DataStoreManager","stored key $key - $it")
         }
     }
 
     suspend fun <T> readValue(key: Preferences.Key<T>, responseFunc: T.() -> Unit) {
         context.dataStore.getFromLocalStorage(key) {
             responseFunc.invoke(this)
-            Log.e("DataStoreManager","read key $key - $this")
         }
     }
 

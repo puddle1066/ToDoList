@@ -66,15 +66,6 @@ class RoomDataProvider  @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getShowAllItems(listId : String): String {
-        return withContext(dispatcher) {
-            DataBaseManager.getInstance().listDao().getShowAllItems(listId)
-        }
-    }
-
-
-    @Singleton
-    @Provides
     suspend fun getToDoItems(listId : String): List<ToDoDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().getAllForListId(listId)
@@ -89,6 +80,11 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
+    suspend fun getFinishedItems(): List<ToDoDataItem> {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ToDoDao().getAllFinished()
+        }
+    }
 
     suspend fun insertToDo(toDoItem : ToDoDataItem) {
         return withContext(dispatcher) {
@@ -102,6 +98,10 @@ class RoomDataProvider  @Inject constructor() {
         }
     }
 
-
+    suspend fun setFinishedDate(itemId : String, finishedDate : String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ToDoDao().setFinishedDate(itemId, finishedDate)
+        }
+    }
 
 }

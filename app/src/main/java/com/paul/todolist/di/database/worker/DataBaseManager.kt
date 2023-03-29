@@ -43,7 +43,7 @@ abstract class DataBaseManager : RoomDatabase() {
                 Log.e(TAG, "Create Database")
 
                 try {
-                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','ToDo', 'Y', 'N');")
+                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','ToDo', 'N', 'N');")
                     db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','Finished', 'Y', 'N');")
                     db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('0','All', 'Y', 'Y');")
 

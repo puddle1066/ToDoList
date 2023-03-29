@@ -13,10 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,23 +72,27 @@ fun ToDoListView(model : ToDoListModel) {
                         showView(it.link)
                     }
             },
-           floatingActionButton = {
-                    FloatingActionButton(
-                        modifier = Modifier
-                            .width(90.dp)
-                            .height(70.dp)
-                            .padding(
-                                start = 10.dp,
-                                end = 10.dp
-                            ),
-                        backgroundColor = MaterialTheme.colorScheme.primary,
-                        onClick = {
-                            model.setItemId("")             //Clear Item ID as its a new item
-                            showViewWithBackStack(ToDoScreens.ToDoItemView.name)
-                        }
-                    )
-                    { Icon(Icons.Filled.Add,"")}
-                }
+
+               floatingActionButton = {
+                   FloatingActionButton(
+                       modifier = Modifier
+                           .width(90.dp)
+                           .height(70.dp)
+                           .padding(
+                               start = 10.dp,
+                               end = 10.dp
+                           ),
+                       backgroundColor = MaterialTheme.colorScheme.primary,
+                       onClick = {
+                           //The button is disabled if we are showing the finished list
+                           if (!model.getIsFinishedList()) {
+                               model.setItemId("")             //Clear Item ID as its a new item
+                               showViewWithBackStack(ToDoScreens.ToDoItemView.name)
+                           }
+                       }
+                   )
+                   { Icon(Icons.Filled.Add, "") }
+               }
 
             ) {
             Column(Modifier
@@ -109,12 +110,19 @@ fun ToDoListView(model : ToDoListModel) {
                 ) {
                 LazyColumn() {
                     itemsIndexed(listDataItems) { _, item ->
-                        ToDoItem(item, { item: ToDoDataItem ->
-                            model.setItemId(item.itemId)
-                            model.setListId(item.listID)
-                            Log.e("ToDoListView"," Saving - selectedlistId"+item.listID+"ItemId "+item.itemId)
-                            showViewWithBackStack(ToDoScreens.ToDoItemView.name)
-                        })
+                        ToDoItem(item) { todoItem: ToDoDataItem ->
+                            if (todoItem.finishedDate == "0") {
+                                model.setItemId(todoItem.itemId)
+                                model.setListId(todoItem.listID)
+                                Log.e(
+                                    "ToDoListView",
+                                    " Saving - selectedlistId" + todoItem.listID + "ItemId " + todoItem.itemId
+                                )
+                                showViewWithBackStack(ToDoScreens.ToDoItemView.name)
+                            } else {
+                                model.setFinishedDate(todoItem.itemId, todoItem.finishedDate)
+                            }
+                        }
                     }
                 }
                 }

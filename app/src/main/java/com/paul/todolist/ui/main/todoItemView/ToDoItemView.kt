@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -65,7 +68,7 @@ fun ToDoItemView(model : ToDoItemModel) {
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     onClick = {
                         if (textDescription.length > 0) {
-                                model.insertToDO(model.selectedlistId, textDescription)
+                            model.insertToDO(model.selectedlistId, textDescription)
                         }
                         textDescription = ""
                         showView(ToDoScreens.ToDoListView.name)
