@@ -18,12 +18,16 @@ open class ToDoItemModel @Inject constructor(
     var todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
 
     fun loadData() {
-        getListId {todoItem.listID = it }
         getItemId {
             runBlocking {
-                todoItem = dataBaseProvider.getToDoItem(it)
+                if (it.length == 0) {
+                    todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
+                } else {
+                    todoItem = dataBaseProvider.getToDoItem(it)
+                }
             }
         }
+        getListId {todoItem.listID = it }
     }
 
     fun isNewItem() : Boolean {
@@ -43,14 +47,14 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun insert() {
-        todoItem.description.replaceFirstChar(Char::uppercase)
+        todoItem.description = todoItem.description.replaceFirstChar(Char::uppercase)
         runBlocking {
             dataBaseProvider.insertToDo(todoItem)
         }
     }
 
     fun update() {
-        todoItem.description.replaceFirstChar(Char::uppercase)
+        todoItem.description = todoItem.description.replaceFirstChar(Char::uppercase)
         runBlocking {
             dataBaseProvider.updateToDo(todoItem)
         }
