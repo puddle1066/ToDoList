@@ -8,6 +8,9 @@ interface ToDoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDoDataItem: ToDoDataItem)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(toDoDataItem: ToDoDataItem)
+
     @Query("SELECT * FROM ToDoItem where listId = :listId AND FinishedDate = '0'")
     fun getAllForListId(listId : String): List<ToDoDataItem>
 

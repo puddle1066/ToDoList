@@ -1,6 +1,5 @@
 package com.paul.todolist.ui.main.todoItemView
 
-import android.util.Log
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
@@ -16,13 +15,25 @@ open class ToDoItemModel @Inject constructor(
     private val dataStoreProvider: DataStoreProvider
 
 ): StorageViewModel(dataStoreProvider) {
-    var selectedlistId = ""
+    var todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
+
+    fun loadData() {
+        getListId {todoItem.listID = it }
+        getItemId {
+            runBlocking {
+                todoItem = dataBaseProvider.getToDoItem(it)
+            }
+        }
+    }
+
+    fun isNewItem() : Boolean {
+        return todoItem.description.length == 0
+    }
 
     fun getListTitle() : String {
         var title = ""
         getListId(
             {
-                selectedlistId = it
                 runBlocking {
                     title = dataBaseProvider.getListTitle(it)
                 }
@@ -31,17 +42,17 @@ open class ToDoItemModel @Inject constructor(
         return title
     }
 
-    fun getItem(itemId : String) : ToDoDataItem {
-        var todoItem : ToDoDataItem
+    fun insert() {
+        todoItem.description.replaceFirstChar(Char::uppercase)
         runBlocking {
-            todoItem = dataBaseProvider.getToDoItem(itemId)
+            dataBaseProvider.insertToDo(todoItem)
         }
-        return todoItem
     }
 
-    fun insertToDO(listId : String,  title : String) {
+    fun update() {
+        todoItem.description.replaceFirstChar(Char::uppercase)
         runBlocking {
-            dataBaseProvider.insertToDo(ToDoDataItem(UUID.randomUUID().toString(),listId,title.replaceFirstChar(Char::uppercase),"0","0"))
+            dataBaseProvider.updateToDo(todoItem)
         }
     }
 }

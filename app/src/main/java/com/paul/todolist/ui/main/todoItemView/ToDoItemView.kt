@@ -22,7 +22,6 @@ import com.paul.todoList.R
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
-import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
@@ -39,20 +38,9 @@ fun ToDoItemView(model : ToDoItemModel) {
      val scaffoldState = rememberScaffoldState()
      val scope = rememberCoroutineScope()
      val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
-     var textDescription = ""
      val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
 
-    //Load Any Data we Have
-    model.getItemId {
-        if (it.length > 0) {
-            var todoModel = model.getItem(it)
-            textDescription = todoModel.description
-        }
-    }
-
-    fun loadData(todoItem : ToDoDataItem) {
-        textDescription = todoItem.description
-    }
+    model.loadData()
 
     ToDoListTheme {
         Scaffold(
@@ -80,10 +68,12 @@ fun ToDoItemView(model : ToDoItemModel) {
                         ),
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     onClick = {
-                        if (textDescription.length > 0) {
-                            model.insertToDO(model.selectedlistId, textDescription)
+                        if (model.isNewItem()) {
+                            model.insert()
+                        } else {
+                            model.update()
                         }
-                        textDescription = ""
+
                         showView(ToDoScreens.ToDoListView.name)
                     }
                 )
@@ -104,11 +94,11 @@ fun ToDoItemView(model : ToDoItemModel) {
                         .background(MaterialTheme.colorScheme.background)
                 ) {
                     InputField(
-                        text = textDescription,
+                        text = model.todoItem.description,
                         onTextChanged = {},
                         fieldTitle = "Description",
                         keyboardType = KeyboardType.Text,
-                        onFinished = { textDescription = it },
+                        onFinished = { model.todoItem.description = it },
                         clearFieldOnKeyboard = false
                     )
                 }
