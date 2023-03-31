@@ -9,6 +9,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToDoListTheme
+import com.paul.todolist.ui.widgets.AppButton
 import com.paul.todolist.ui.widgets.InputField
 
 
@@ -102,6 +104,11 @@ fun ToDoItemView(model : ToDoItemModel) {
                         clearFieldOnKeyboard = false
                     )
                 }
+
+                AppButton(
+                    imageVector = Icons.Filled.Mic,
+                    onButtonPressed = { }
+                )
             }
         }
     }

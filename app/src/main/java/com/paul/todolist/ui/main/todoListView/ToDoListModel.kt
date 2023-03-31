@@ -1,5 +1,7 @@
 package com.paul.todolist.ui.main.todoListView
 
+import androidx.compose.ui.platform.LocalContext
+import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
@@ -74,6 +76,8 @@ open class ToDoListModel @Inject constructor(
                 }
             }
         )
+
+        if (title == null) { title = "Please Select"}
         return title
     }
 
