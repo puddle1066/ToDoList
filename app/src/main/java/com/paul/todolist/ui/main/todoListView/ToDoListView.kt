@@ -3,6 +3,7 @@ package com.paul.todolist.ui.main.todoListView
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.util.Log
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -35,6 +36,7 @@ fun ToDoListView(model : ToDoListModel) {
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
         val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
+        val isAddEnabled = remember { mutableStateOf(true) }
 
         //Set a default value for the start of the list if we don't have one..
         model.getListId {
@@ -44,7 +46,10 @@ fun ToDoListView(model : ToDoListModel) {
             }
             listDataItems.clear()
             listDataItems.swapList(model.getToDoList(it))
+            isAddEnabled.value = !model.showListName()
         }
+        
+
 
         ToDoListTheme {
             Scaffold(
@@ -57,6 +62,7 @@ fun ToDoListView(model : ToDoListModel) {
                     model.setListId(it)
                     listDataItems.clear()
                     listDataItems.swapList(model.getToDoList(it))
+                    isAddEnabled.value = !model.showListName()
                 }
             },
                 scaffoldState = scaffoldState,
@@ -68,30 +74,32 @@ fun ToDoListView(model : ToDoListModel) {
                         scaffoldState = scaffoldState,
                         scope = scope
                     ) {
-                        //Launch Options
                         showView(it.link)
                     }
             },
 
                floatingActionButton = {
-                   FloatingActionButton(
-                       modifier = Modifier
-                           .width(90.dp)
-                           .height(70.dp)
-                           .padding(
-                               start = 10.dp,
-                               end = 10.dp
-                           ),
-                       backgroundColor = MaterialTheme.colorScheme.primary,
-                       onClick = {
-                           //The button is disabled if we are showing the finished list
-                           if (!model.getIsFinishedList()) {
+                   AnimatedVisibility(
+                       visible = isAddEnabled.value,
+                       enter = fadeIn() + slideInHorizontally(),
+                       exit = fadeOut() + slideOutHorizontally()
+                   ) {
+                       FloatingActionButton(
+                           modifier = Modifier
+                               .width(90.dp)
+                               .height(70.dp)
+                               .padding(
+                                   start = 10.dp,
+                                   end = 10.dp
+                               ),
+                           backgroundColor = MaterialTheme.colorScheme.primary,
+                           onClick = {
                                model.setItemId("")             //Clear Item ID as its a new item
                                showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                            }
-                       }
-                   )
-                   { Icon(Icons.Filled.Add, "") }
+                       )
+                       { Icon(Icons.Filled.Add, "") }
+                   }
                }
 
             ) {
@@ -110,7 +118,10 @@ fun ToDoListView(model : ToDoListModel) {
                 ) {
                 LazyColumn() {
                     itemsIndexed(listDataItems) { _, item ->
-                        ToDoItem(item) { todoItem: ToDoDataItem ->
+                        var itemListName = ""
+                        if (model.showListName()) itemListName = model.getListTitleforId(item.listID)
+
+                        ToDoItem(item, itemListName)  { todoItem: ToDoDataItem ->
                             if (todoItem.finishedDate == "0") {
                                 model.setItemId(todoItem.itemId)
                                 model.setListId(todoItem.listID)

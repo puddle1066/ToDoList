@@ -1,10 +1,12 @@
 package com.paul.todolist.ui.widgets
 
 import android.content.res.Configuration
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -81,7 +83,9 @@ fun AppButton(
     drawingID: Int = -1,
     imageVector: ImageVector? = null,
     onButtonPressed: () -> Unit,
-    textID: Int = -1
+    textID: Int = -1,
+    backgroundColor: Color =  MaterialTheme.colorScheme.onPrimary,
+    buttonVisible : Boolean = true
 ) {
 
     val animationDuration: Int = 100
@@ -89,28 +93,34 @@ fun AppButton(
     val coroutineScope = rememberCoroutineScope()
     val scale = remember { Animatable(1f) }
 
-    Button(
-        onClick = {
-            coroutineScope.launch {
-                scale.animateTo(
-                    scaleDown,
-                    animationSpec = tween(animationDuration),
-                )
-                scale.animateTo(
-                    1f,
-                    animationSpec = tween(animationDuration),
-                )
-                delay((animationDuration).toLong())    //Wait for anim to finish before launching
-                onButtonPressed()
-            }
-        },
-        modifier = Modifier
-            .scale(scale = scale.value)
-            .border(BorderStroke(1.dp, Color.LightGray), RoundedCornerShape(25))
-            .fillMaxWidth()
-            .height(90.dp)
-
+    AnimatedVisibility(
+        visible = buttonVisible,
+        enter = fadeIn() + slideInHorizontally(),
+        exit = fadeOut() + slideOutHorizontally()
     ) {
+        Button(
+            onClick = {
+                coroutineScope.launch {
+                    scale.animateTo(
+                        scaleDown,
+                        animationSpec = tween(animationDuration),
+                    )
+                    scale.animateTo(
+                        1f,
+                        animationSpec = tween(animationDuration),
+                    )
+                    delay((animationDuration).toLong())    //Wait for anim to finish before launching
+                    onButtonPressed()
+                }
+            },
+            modifier = Modifier
+                .scale(scale = scale.value)
+                .border(BorderStroke(1.dp, Color.LightGray), RoundedCornerShape(25))
+                .fillMaxWidth()
+                .height(90.dp)
+                .background(backgroundColor)
+
+        ) {
             if (imageVector != null) {
                 Image(
                     modifier = Modifier
@@ -127,20 +137,22 @@ fun AppButton(
                         .height(50.dp)
                         .width(50.dp),
                     painter = painterResource(id = drawingID),
-                    contentDescription = "exit app"
+                    contentDescription = "exit app",
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
             if (textID != -1) {
                 Text(
                     modifier = Modifier.padding(10.dp),
-                    text = stringResource(id =textID),
-                    style = typography.bodyLarge,
+                    text = stringResource(id = textID),
+                    style = typography.titleLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
-    }
+        }
 
-    Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
+    }
 }

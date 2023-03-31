@@ -1,13 +1,10 @@
 package com.paul.todolist.ui.main.todoListView
 
-import androidx.compose.ui.platform.LocalContext
-import com.paul.todoList.R
+import com.paul.todolist.*
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
-import com.paul.todolist.menuOptionLists
-import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
@@ -26,7 +23,6 @@ open class ToDoListModel @Inject constructor(
 
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
 
-
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
             lists = dataBaseProvider.getAllSortedASC()
@@ -36,15 +32,13 @@ open class ToDoListModel @Inject constructor(
 
 
     fun getToDoList(listId: String): List<ToDoDataItem> {
-        //TODO Replace hardcoded strings with strings
         runBlocking {
-            var title = dataBaseProvider.getListTitle(listId)
-            when(title) {
-                "Finished" -> {
+            when(dataBaseProvider.getListTitle(listId)) {
+                FINISHED_LIST -> {
                     showAll = false
                     toDoItems = dataBaseProvider.getFinishedItems()
                 }
-                "All" -> {
+                LIST_OF_ALL -> {
                     toDoItems = dataBaseProvider.getAllItems()
                     showAll = true
                 }
@@ -57,14 +51,17 @@ open class ToDoListModel @Inject constructor(
         return toDoItems
     }
 
-    fun getIsFinishedList() : Boolean {
-        var finished = false
+    fun showListName() : Boolean {
+        var showListName = false
         getListId {
             runBlocking {
-                finished = (dataBaseProvider.getListTitle(it).equals("Finished"))
+                when(dataBaseProvider.getListTitle(it)) {
+                    FINISHED_LIST  -> showListName = true
+                    LIST_OF_ALL -> showListName = true
+                }
             }
         }
-        return finished
+        return showListName
     }
 
     fun getListTitle() : String {
@@ -77,7 +74,15 @@ open class ToDoListModel @Inject constructor(
             }
         )
 
-        if (title == null) { title = "Please Select"}
+        if (title == null || title.isEmpty() ) { title = PLEASE_SELECT_STRING}
+        return title
+    }
+
+    fun getListTitleforId(listId : String) : String {
+        var title = ""
+        runBlocking {
+            title = dataBaseProvider.getListTitle(listId)
+        }
         return title
     }
 

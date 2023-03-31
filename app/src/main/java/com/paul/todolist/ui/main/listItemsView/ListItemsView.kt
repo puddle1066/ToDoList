@@ -21,6 +21,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
+import com.paul.todolist.INPUT_LIST_NAME
+import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar
@@ -94,11 +96,11 @@ fun ListItemsView(model : ListItemsModel) {
                 InputField(
                     text = "",
                     onTextChanged = {},
-                    fieldTitle = "Input List Name",
+                    fieldTitle = INPUT_LIST_NAME,
                     keyboardType = KeyboardType.Text,
                     onFinished = {
                         if (!it.isEmpty()) {
-                            model.insertList(it)
+                            model.insertListItem(it)
                             listDataItems.clear()
                             listDataItems.swapList(model.getUserList())
                         }
@@ -138,7 +140,7 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ListItemsViewPreview() {
-    ListItemsView(ListItemsModel(RoomDataProvider()))
+    ListItemsView(ListItemsModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
 }
 
 

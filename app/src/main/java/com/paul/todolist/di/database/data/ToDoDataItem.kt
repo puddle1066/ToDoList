@@ -10,5 +10,5 @@ data class ToDoDataItem(
     @ColumnInfo(name = "ListId") var listID: String,
     @ColumnInfo(name = "description") var description: String,
     @ColumnInfo(name = "DueDate") var dueDate: String = "0",
-    @ColumnInfo(name = "FinishedDate") var finishedDate: String ="0",
+    @ColumnInfo(name = "FinishedDate") var finishedDate: String ="0"
     )

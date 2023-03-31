@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,10 +29,10 @@ import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
+import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.AppButton
 import com.paul.todolist.ui.widgets.InputField
-
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SuspiciousIndentation")
 @Composable
@@ -41,6 +41,7 @@ fun ToDoItemView(model : ToDoItemModel) {
      val scope = rememberCoroutineScope()
      val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
      val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
+     val addButtonVisibility = remember { mutableStateOf(false) }
 
     model.loadData()
 
@@ -58,28 +59,6 @@ fun ToDoItemView(model : ToDoItemModel) {
                 ) {
                     showView(it.link)
                 }
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    modifier = Modifier
-                        .width(90.dp)
-                        .height(70.dp)
-                        .padding(
-                            start = 10.dp,
-                            end = 10.dp
-                        ),
-                    backgroundColor = MaterialTheme.colorScheme.primary,
-                    onClick = {
-                        if (model.isNewItem()) {
-                            model.insert()
-                        } else {
-                            model.update()
-                        }
-
-                        showView(ToDoScreens.ToDoListView.name)
-                    }
-                )
-                { Icon(Icons.Filled.Add,"") }
             }
         ) {
             Column(
@@ -97,21 +76,44 @@ fun ToDoItemView(model : ToDoItemModel) {
                 ) {
                     InputField(
                         text = model.todoItem.description,
-                        onTextChanged = {},
+                        onTextChanged = {
+                            addButtonVisibility.value = !it.isBlank()
+                            model.todoItem.description = it
+                        },
+                        onFinished = {},
                         fieldTitle = "Description",
                         keyboardType = KeyboardType.Text,
-                        onFinished = { model.todoItem.description = it },
                         clearFieldOnKeyboard = false
                     )
                 }
-
-                AppButton(
-                    imageVector = Icons.Filled.Mic,
-                    onButtonPressed = { }
-                )
+                Column (
+                    modifier = Modifier.padding(20.dp)
+                ) {
+                    AppButton(
+                        imageVector = Icons.Filled.Mic,
+                        onButtonPressed = { }
+                    )
+                    AppButton(
+                        imageVector = Icons.Filled.Camera,
+                        onButtonPressed = { }
+                    )
+                    AppButton(
+                        onButtonPressed = {
+                            if (model.isNewItem()) {
+                                model.insert()
+                            } else {
+                                model.update()
+                            }
+                            showViewWithBackStack(ToDoScreens.ToDoListView.name)
+                        },
+                        textID = R.string.add_todo,
+                        buttonVisible = addButtonVisibility.value
+                    )
+                    }
+                }
             }
         }
-    }
+
 }
 
 @Preview
