@@ -12,7 +12,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-open class ListItemsModel @Inject constructor(
+open class ToDoItemsModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
     private val dataStoreProvider: DataStoreProvider
 

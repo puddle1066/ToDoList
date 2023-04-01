@@ -33,3 +33,5 @@ val FINISHED_LIST = "Finished"
 val LIST_OF_ALL = "All"
 val PLEASE_SELECT_STRING = "Please Select"
 val INPUT_LIST_NAME = "Input List Name"
+
+val SPEECH_LANGUAGE = "en"

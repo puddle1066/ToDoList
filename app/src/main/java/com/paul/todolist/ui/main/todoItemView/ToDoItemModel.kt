@@ -4,6 +4,7 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.ui.main.common.StorageViewModel
+import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -16,6 +17,9 @@ open class ToDoItemModel @Inject constructor(
 
 ): StorageViewModel(dataStoreProvider) {
     var todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
+
+    var canDoSpeechToText : Boolean = true
+    lateinit var voiceToText  : VoiceToTextParser
 
     fun loadData() {
         getItemId {

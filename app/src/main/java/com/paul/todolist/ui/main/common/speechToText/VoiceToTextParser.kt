@@ -6,16 +6,15 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class VoiceToTextParser(
-    private val app: Application) : RecognitionListener
+class VoiceToTextParser(private val app: Application) : RecognitionListener
 {
     private val _state = MutableStateFlow(VoiceToTextParserState())
-
     val state: StateFlow<VoiceToTextParserState> get() = _state.asStateFlow()
 
     private val recognizer = SpeechRecognizer.createSpeechRecognizer(app)
@@ -78,15 +77,14 @@ class VoiceToTextParser(
     }
 
     override fun onBeginningOfSpeech() {
-        TODO("Not yet implemented")
+        Log.e("VoiceToTextParser", "Start of speech")
     }
 
     override fun onRmsChanged(rmsdB: Float) {
-        TODO("Not yet implemented")
     }
 
     override fun onBufferReceived(buffer: ByteArray?) {
-        TODO("Not yet implemented")
+        Log.e("VoiceToTextParser", "onBufferReceived"+buffer.toString())
     }
 
     override fun onEndOfSpeech() {
@@ -96,6 +94,7 @@ class VoiceToTextParser(
                 isSpeaking = false
             )
         }
+        Log.e("VoiceToTextParser", "End of speech")
     }
 
     override fun onError(error: Int) {
@@ -107,6 +106,7 @@ class VoiceToTextParser(
                 error = "Error: $error"
             )
         }
+        Log.e("VoiceToTextParser", "Error $error")
     }
 
     override fun onResults(results: Bundle?) {
@@ -124,11 +124,9 @@ class VoiceToTextParser(
     }
 
     override fun onPartialResults(partialResults: Bundle?) {
-        TODO("Not yet implemented")
     }
 
     override fun onEvent(eventType: Int, params: Bundle?) {
-        TODO("Not yet implemented")
     }
 }
 

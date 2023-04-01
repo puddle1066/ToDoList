@@ -6,11 +6,11 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -84,7 +84,7 @@ fun AppButton(
     imageVector: ImageVector? = null,
     onButtonPressed: () -> Unit,
     textID: Int = -1,
-    backgroundColor: Color =  MaterialTheme.colorScheme.onPrimary,
+    backgroundColor: Color =  MaterialTheme.colorScheme.primary,
     buttonVisible : Boolean = true
 ) {
 
@@ -99,6 +99,13 @@ fun AppButton(
         exit = fadeOut() + slideOutHorizontally()
     ) {
         Button(
+            modifier = Modifier
+                .scale(scale = scale.value)
+                .fillMaxWidth()
+                .height(90.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface),
+            shape = RoundedCornerShape(25),
+            colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor),
             onClick = {
                 coroutineScope.launch {
                     scale.animateTo(
@@ -113,12 +120,6 @@ fun AppButton(
                     onButtonPressed()
                 }
             },
-            modifier = Modifier
-                .scale(scale = scale.value)
-                .border(BorderStroke(1.dp, Color.LightGray), RoundedCornerShape(25))
-                .fillMaxWidth()
-                .height(90.dp)
-                .background(backgroundColor)
 
         ) {
             if (imageVector != null) {

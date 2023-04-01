@@ -13,7 +13,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import com.paul.todolist.ui.main.common.NavigationFactory
-import com.paul.todolist.ui.main.listItemsView.ListItemsModel
+import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
+import com.paul.todolist.ui.main.listItemsView.ToDoItemsModel
 import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.ui.main.todoListView.ToDoListModel
 import com.paul.todolist.ui.theme.ToDoListTheme
@@ -28,20 +29,18 @@ class MainScreen : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val toDoListModel: ToDoListModel by viewModels()
-        val listItemsModel : ListItemsModel by viewModels()
+        val toDoItemsModel : ToDoItemsModel by viewModels()
         val toDoItemModel : ToDoItemModel by viewModels()
 
         setContent {
             ToDoListTheme {
-                    NavigationFactory(toDoListModel,listItemsModel,toDoItemModel)
+                    NavigationFactory(toDoListModel,toDoItemsModel,toDoItemModel)
 
-                var canRecord : Boolean
-
-                // Creates an permission request
+                // Creates an permission request for Voive to Text
                 val recordAudioLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.RequestPermission(),
                     onResult = { isGranted ->
-                        canRecord = isGranted
+                        toDoItemModel.canDoSpeechToText = isGranted
                     }
                 )
 
@@ -51,6 +50,8 @@ class MainScreen : ComponentActivity() {
                 }
             }
         }
+
+        toDoItemModel.voiceToText = VoiceToTextParser(application)
     }
 
     companion object {

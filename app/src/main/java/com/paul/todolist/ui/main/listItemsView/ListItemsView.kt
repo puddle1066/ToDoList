@@ -34,7 +34,7 @@ import com.paul.todolist.ui.widgets.InputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ListItemsView(model : ListItemsModel) {
+fun ListItemsView(model : ToDoItemsModel) {
 
     val listDataItems = remember { mutableStateListOf<ListDataItem>() }
     val deleteButtonVisible = remember { mutableStateOf(false) }
@@ -140,7 +140,7 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ListItemsViewPreview() {
-    ListItemsView(ListItemsModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
+    ListItemsView(ToDoItemsModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
 }
 
 
