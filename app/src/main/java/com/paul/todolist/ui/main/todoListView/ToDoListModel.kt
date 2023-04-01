@@ -74,8 +74,11 @@ open class ToDoListModel @Inject constructor(
             }
         )
 
-        if (title == null || title.isEmpty() ) { title = PLEASE_SELECT_STRING}
-        return title
+        when (title) {
+            null ->  return PLEASE_SELECT_STRING
+            ""   -> return PLEASE_SELECT_STRING
+            else ->  return title
+        }
     }
 
     fun getListTitleforId(listId : String) : String {
@@ -83,7 +86,12 @@ open class ToDoListModel @Inject constructor(
         runBlocking {
             title = dataBaseProvider.getListTitle(listId)
         }
-        return title
+
+        when (title) {
+            null ->  return PLEASE_SELECT_STRING
+            ""   -> return PLEASE_SELECT_STRING
+            else ->  return title
+        }
     }
 
     fun setFinishedDate(itemId : String,  finishedDate : String) {

@@ -70,10 +70,15 @@ fun ToDoItemView(model : ToDoItemModel) {
                         .padding(10.dp, 20.dp, 10.dp, 0.dp)
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-                    ToDoInputText(model, voiceState, onFinished = {
+                    ToDoInputText(
+                        model,
+                        "ToDo Task description",
+                        voiceState,
+                        onFinished = {
                           model.todoItem.description = it
                         addButtonVisibility.value = !model.todoItem.description.isEmpty()
-                    })
+                    }
+                    )
                 }
                 Column () {
                     Spacer(Modifier.height(1.dp))

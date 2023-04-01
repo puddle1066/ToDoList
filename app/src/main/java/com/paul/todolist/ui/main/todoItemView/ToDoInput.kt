@@ -22,6 +22,7 @@ import com.paul.todolist.ui.theme.typography
 @Composable
 fun ToDoInputText(
     model: ToDoItemModel,
+    fieldTitle : String,
     voiceState: VoiceToTextParserState,
     onFinished: (String) -> Unit,
     keyboardType : KeyboardType = KeyboardType.Text
@@ -44,7 +45,7 @@ fun ToDoInputText(
         label = {
             Text(
                 modifier = Modifier.background(MaterialTheme.colorScheme.primary),
-                text = "Field Title",
+                text = fieldTitle,
                 style = typography.bodyLarge,
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.secondary)

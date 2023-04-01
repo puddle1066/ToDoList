@@ -32,7 +32,7 @@ fun ToDoItem(
 
             checked.value = (!todoItem.finishedDate.equals("0"))
             isVisible.value = !checked.value
-            if (!listName.isEmpty()) {
+            if (listName.isNotBlank()) {
                 isVisible.value = true
             }
 
