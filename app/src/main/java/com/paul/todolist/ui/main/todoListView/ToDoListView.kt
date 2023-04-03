@@ -46,11 +46,12 @@ fun ToDoListView(model : ToDoListModel) {
         model.getListId {
             if (it.isEmpty()) {
                 model.setListId(model.getAllSortedASC()[0].listId)
-                Log.e("ToDoListView","Setting default list to  $model.getAllSortedASC()[0].selectedlistId")
             }
+
             listDataItems.clear()
             listDataItems.swapList(model.getToDoList(it))
             isAddEnabled.value = !model.showListName()
+            isDeleteAllowed.value = model.showFinished
         }
 
         ToDoListTheme {
@@ -157,7 +158,7 @@ fun ToDoListView(model : ToDoListModel) {
                         var itemListName = ""
                         if (model.showListName()) itemListName = model.getListTitleforId(item.listID)
 
-                        ToDoItem(item, itemListName,isDeleteAllowed.value)  { todoItem: ToDoDataItem, isSelected : Boolean ->
+                        ToDoItem(item, itemListName, isDeleteAllowed.value)  { todoItem: ToDoDataItem, isSelected : Boolean ->
                             if (isDeleteAllowed.value) {
                                 if(isSelected) {
                                     model.deleteList.add(item)

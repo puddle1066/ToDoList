@@ -20,7 +20,9 @@ open class ToDoListModel @Inject constructor(
 
     private var lists = listOf<ListDataItem>()
     private var toDoItems = listOf<ToDoDataItem>()
-    private var showAll = false
+
+    var showAll = false
+    var showFinished = false
 
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
     var deleteList = ArrayList<ToDoDataItem>()
@@ -32,15 +34,16 @@ open class ToDoListModel @Inject constructor(
         return lists
     }
 
-
     fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
             val todoItem: ListDataItem = dataBaseProvider.getListItem(listId)
+            showFinished = false
             if (todoItem.fixed.equals("Y")) {
                 showAll = todoItem.showAll.equals("Y")
                 if (todoItem.showAll.equals("Y")) {
                     toDoItems = dataBaseProvider.getAllItems()
                 } else {
+                    showFinished = true
                     toDoItems = dataBaseProvider.getFinishedItems()
                 }
             } else {
