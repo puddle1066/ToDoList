@@ -112,7 +112,7 @@ fun ToDoListView(model : ToDoListModel) {
                     Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .padding(10.dp)
+                        .padding(7.dp)
                         .border(width = 2.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp))
 
                 ) {

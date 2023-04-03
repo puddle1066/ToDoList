@@ -33,19 +33,16 @@ open class ToDoListModel @Inject constructor(
 
     fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
-            when(dataBaseProvider.getListTitle(listId)) {
-                FINISHED_LIST -> {
-                    showAll = false
+            val todoItem: ListDataItem = dataBaseProvider.getListItem(listId)
+            if (todoItem.fixed.equals("Y")) {
+                showAll = todoItem.showAll.equals("Y")
+                if (todoItem.showAll.equals("Y")) {
+                    toDoItems = dataBaseProvider.getAllItems()
+                } else {
                     toDoItems = dataBaseProvider.getFinishedItems()
                 }
-                LIST_OF_ALL -> {
-                    toDoItems = dataBaseProvider.getAllItems()
-                    showAll = true
-                }
-                else -> {
-                    toDoItems = dataBaseProvider.getToDoItems(listId)
-                    showAll = false
-                }
+            } else {
+                toDoItems = dataBaseProvider.getToDoItems(listId)
             }
         }
         return toDoItems
@@ -55,10 +52,8 @@ open class ToDoListModel @Inject constructor(
         var showListName = false
         getListId {
             runBlocking {
-                when(dataBaseProvider.getListTitle(it)) {
-                    FINISHED_LIST  -> showListName = true
-                    LIST_OF_ALL -> showListName = true
-                }
+                val todoItem: ListDataItem = dataBaseProvider.getListItem(it)
+                showListName = todoItem.fixed.equals("Y")
             }
         }
         return showListName
@@ -73,7 +68,6 @@ open class ToDoListModel @Inject constructor(
                 }
             }
         )
-
         when (title) {
             null ->  return PLEASE_SELECT_STRING
             ""   -> return PLEASE_SELECT_STRING
@@ -82,7 +76,7 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun getListTitleforId(listId : String) : String {
-        var title = ""
+        var title : String
         runBlocking {
             title = dataBaseProvider.getListTitle(listId)
         }

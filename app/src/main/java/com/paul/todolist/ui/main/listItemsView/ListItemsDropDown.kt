@@ -25,7 +25,7 @@ fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) 
     val expanded  = remember { mutableStateOf(showExpanded) }
     val chosedText  = remember { mutableStateOf(selectedOptionText) }
 
-    val localStyle = typography.bodyLarge
+    val localStyle = typography.titleLarge
     val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colorScheme.secondary))
 
     ToDoListTheme {
@@ -81,12 +81,12 @@ fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) 
                     expanded.value = false
                 }
             ) {
-                list.forEach { ListItem ->
+                list.forEach { listItem ->
                     DropdownMenuItem(
                         onClick = {
-                            chosedText.value = ListItem.title
+                            chosedText.value = listItem.title
                             expanded.value = false
-                            onValueChanged(ListItem)
+                            onValueChanged(listItem)
                         },
 
                         ) {
@@ -100,7 +100,7 @@ fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) 
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = ListItem.title,
+                            text = listItem.title,
                             color = MaterialTheme.colorScheme.secondary,
                             style = mergedStyle
                         )

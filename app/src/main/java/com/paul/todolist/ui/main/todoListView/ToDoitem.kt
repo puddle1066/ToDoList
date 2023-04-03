@@ -71,9 +71,9 @@ fun ToDoItem(
                         Text(
                             modifier = Modifier
                                 .clickable { onItemClick(todoItem) }
-                                .weight(1f),
+                                .weight(1.5f),
                             text = todoItem.description,
-                            style = typography.titleLarge,
+                            style = typography.bodyLarge,
                             color = MaterialTheme.colorScheme.secondary,
                         )
 
