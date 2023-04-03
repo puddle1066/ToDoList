@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.todoItemView
 
+import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
@@ -24,7 +25,7 @@ open class ToDoItemModel @Inject constructor(
     fun loadData() {
         getItemId {
             runBlocking {
-                if (it.length == 0) {
+                if (it.isEmpty()) {
                     todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
                 } else {
                     todoItem = dataBaseProvider.getToDoItem(it)
@@ -34,8 +35,16 @@ open class ToDoItemModel @Inject constructor(
         getListId {todoItem.listID = it }
     }
 
+    fun getButtonText() : Int {
+        if (todoItem.description.isEmpty()) {
+            return R.string.add_todo
+        } else {
+            return R.string.update_todo
+        }
+    }
+
     fun isNewItem() : Boolean {
-        return todoItem.description.length == 0
+        return todoItem.description.isEmpty()
     }
 
     fun getListTitle() : String {

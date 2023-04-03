@@ -93,7 +93,7 @@ fun ToDoItemView(model : ToDoItemModel) {
                                 voiceState.spokenText = ""
                                 showViewWithBackStack(ToDoScreens.ToDoListView.name)
                             },
-                            textID = R.string.add_todo,
+                            textID = model.getButtonText(),
                             buttonVisible = addButtonVisibility.value
                         )
                     }
