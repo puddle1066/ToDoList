@@ -8,9 +8,7 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -22,13 +20,18 @@ import com.paul.todolist.util.getCurrentDateAsString
 @Composable
 fun ToDoItem(
     todoItem: ToDoDataItem,
-    listName : String = "",
-    onItemClick: (ToDoDataItem) -> Unit,
+    listName: String = "",
+    deleteAllowed: Boolean,
+    onItemClick: (ToDoDataItem, Boolean) -> Unit,
 ) {
         val colorUnSelected = MaterialTheme.colorScheme.primary
         val backgroundColor = remember {mutableStateOf(colorUnSelected)}
         val checked = remember { mutableStateOf(false) }
         val isVisible = remember { mutableStateOf(true) }
+
+        val colorSelected = MaterialTheme.colorScheme.error
+        val isSelected = false
+        var selected by remember { mutableStateOf(isSelected) }
 
             checked.value = (!todoItem.finishedDate.equals("0"))
             isVisible.value = !checked.value
@@ -51,7 +54,20 @@ fun ToDoItem(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp)
-                            .background(backgroundColor.value),
+                            .background(backgroundColor.value)
+                            .clickable {
+                                if (deleteAllowed) {
+                                    if (selected) {
+                                        backgroundColor.value = colorUnSelected
+                                        selected = false
+                                    } else {
+                                        backgroundColor.value = colorSelected
+                                        selected = true
+                                    }
+                                    onItemClick(todoItem, selected)
+                                }
+
+                            },
                         verticalAlignment = Alignment.CenterVertically
 
                     ) {
@@ -65,12 +81,12 @@ fun ToDoItem(
                                 todoItem.finishedDate = getCurrentDateAsString()
                                 checked.value = it
                                 isVisible.value = !it
-                                onItemClick(todoItem)
+                                onItemClick(todoItem, false)
                             },
                         )
                         Text(
                             modifier = Modifier
-                                .clickable { onItemClick(todoItem) }
+                                .clickable { onItemClick(todoItem, false) }
                                 .weight(1.5f),
                             text = todoItem.description,
                             style = typography.bodyLarge,

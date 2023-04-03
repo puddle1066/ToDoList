@@ -14,7 +14,11 @@ import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.theme.typography
 
 @Composable
-fun ListListItem(list: ListDataItem, count : Int, onItemClick: (ListDataItem, Boolean) -> Unit) {
+fun ListListItem(
+    list: ListDataItem,
+    count : Int,
+    onItemClick: (ListDataItem, Boolean) -> Unit
+) {
 
             val colorSelected = MaterialTheme.colorScheme.error
             val colorUnSelected = MaterialTheme.colorScheme.primary

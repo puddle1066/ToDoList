@@ -16,7 +16,7 @@ interface ListDao {
     fun getUser(): List<ListDataItem>
 
     @Query("DELETE FROM lists where listId = :listId")
-    fun deleteListItem(listId: String)
+    fun deleteList(listId: String)
 
     @Query(value = "SELECT title FROM Lists where listId = :listId")
     fun getListTitle(listId: String): String

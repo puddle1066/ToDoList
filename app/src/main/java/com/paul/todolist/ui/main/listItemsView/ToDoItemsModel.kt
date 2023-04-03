@@ -38,13 +38,11 @@ open class ToDoItemsModel @Inject constructor(
         return count
     }
 
-    fun deleteItem(listId : String) {
+    fun deleteItem(itemId : String) {
         runBlocking {
-            dataBaseProvider.deleteToDoItem(listId)
-            dataBaseProvider.deleteItem(listId)
+            dataBaseProvider.deleteItem(itemId)
         }
     }
-
      fun insertListItem(title : String) {
         runBlocking {
             dataBaseProvider.insertList(ListDataItem( UUID.randomUUID().toString(),title.replaceFirstChar(Char::uppercase),"N"))

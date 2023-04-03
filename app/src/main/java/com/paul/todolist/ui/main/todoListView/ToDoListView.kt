@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -37,8 +38,11 @@ fun ToDoListView(model : ToDoListModel) {
         val scope = rememberCoroutineScope()
         val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
         val isAddEnabled = remember { mutableStateOf(true) }
+        val deleteButtonVisible = remember { mutableStateOf(false) }
+        val isDeleteAllowed = remember { mutableStateOf(true) }
 
-        //Set a default value for the start of the list if we don't have one..
+
+    //Set a default value for the start of the list if we don't have one..
         model.getListId {
             if (it.isEmpty()) {
                 model.setListId(model.getAllSortedASC()[0].listId)
@@ -48,8 +52,6 @@ fun ToDoListView(model : ToDoListModel) {
             listDataItems.swapList(model.getToDoList(it))
             isAddEnabled.value = !model.showListName()
         }
-        
-
 
         ToDoListTheme {
             Scaffold(
@@ -79,6 +81,8 @@ fun ToDoListView(model : ToDoListModel) {
             },
 
                floatingActionButton = {
+
+                   //Add button
                    AnimatedVisibility(
                        visible = isAddEnabled.value,
                        enter = fadeIn() + slideInHorizontally(),
@@ -100,6 +104,38 @@ fun ToDoListView(model : ToDoListModel) {
                        )
                        { Icon(Icons.Filled.Add, "") }
                    }
+
+                   //Delete Button if only shown on the finished list
+                   AnimatedVisibility(
+                       visible = deleteButtonVisible.value,
+                       enter = fadeIn() + slideInHorizontally(),
+                       exit = fadeOut() + slideOutHorizontally()
+                   ) {
+                       FloatingActionButton(
+                           modifier = Modifier
+                               .width(90.dp)
+                               .height(70.dp)
+                               .padding(
+                                   start = 10.dp,
+                                   end = 10.dp
+                               ),
+                           backgroundColor = MaterialTheme.colorScheme.error,
+                           onClick = {
+                               model.deleteList.forEach {
+                                   model.deleteItem(it.itemId)
+                               }
+                               model.deleteList.clear()
+                               model.getListId {
+                                   listDataItems.clear()
+                                   listDataItems.swapList(model.getToDoList(it))
+                               }
+                               deleteButtonVisible.value = false
+                           }
+                       )
+                       { Icon(Icons.Filled.Delete, "") }
+                   }
+
+
                }
 
             ) {
@@ -121,13 +157,22 @@ fun ToDoListView(model : ToDoListModel) {
                         var itemListName = ""
                         if (model.showListName()) itemListName = model.getListTitleforId(item.listID)
 
-                        ToDoItem(item, itemListName)  { todoItem: ToDoDataItem ->
-                            if (todoItem.finishedDate == "0") {
-                                model.setItemId(todoItem.itemId)
-                                model.setListId(todoItem.listID)
-                                showViewWithBackStack(ToDoScreens.ToDoItemView.name)
+                        ToDoItem(item, itemListName,isDeleteAllowed.value)  { todoItem: ToDoDataItem, isSelected : Boolean ->
+                            if (isDeleteAllowed.value) {
+                                if(isSelected) {
+                                    model.deleteList.add(item)
+                                } else {
+                                    model.deleteList.remove(item)
+                                }
+                                deleteButtonVisible.value = model.deleteList.size != 0
                             } else {
-                                model.setFinishedDate(todoItem.itemId, todoItem.finishedDate)
+                                if (todoItem.finishedDate == "0") {
+                                    model.setItemId(todoItem.itemId)
+                                    model.setListId(todoItem.listID)
+                                    showViewWithBackStack(ToDoScreens.ToDoItemView.name)
+                                } else {
+                                    model.setFinishedDate(todoItem.itemId, todoItem.finishedDate)
+                                }
                             }
                         }
                     }

@@ -8,6 +8,7 @@ import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
+import java.util.ArrayList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,7 @@ open class ToDoListModel @Inject constructor(
     private var showAll = false
 
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
+    var deleteList = ArrayList<ToDoDataItem>()
 
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
@@ -85,6 +87,12 @@ open class ToDoListModel @Inject constructor(
             null ->  return PLEASE_SELECT_STRING
             ""   -> return PLEASE_SELECT_STRING
             else ->  return title
+        }
+    }
+
+    fun deleteItem(itemId : String) {
+        runBlocking {
+            dataBaseProvider.deleteItem(itemId)
         }
     }
 
