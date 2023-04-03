@@ -76,7 +76,7 @@ fun ToDoItemView(model : ToDoItemModel) {
                         voiceState,
                         onFinished = {
                           model.todoItem.description = it
-                        addButtonVisibility.value = !model.todoItem.description.isEmpty()
+                         addButtonVisibility.value = !model.todoItem.description.isEmpty()
                     }
                     )
                 }
