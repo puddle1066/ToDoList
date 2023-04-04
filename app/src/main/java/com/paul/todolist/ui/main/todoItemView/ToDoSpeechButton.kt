@@ -40,7 +40,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
     val coroutineScope = rememberCoroutineScope()
     val scale = remember { Animatable(1f) }
 
-    Spacer(Modifier.height(1.dp))
+
     Row(modifier = Modifier.padding(10.dp) ) {
         Button(
             modifier = Modifier

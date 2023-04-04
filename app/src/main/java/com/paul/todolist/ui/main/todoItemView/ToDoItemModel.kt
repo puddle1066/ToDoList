@@ -20,6 +20,7 @@ open class ToDoItemModel @Inject constructor(
     var todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
 
     var canDoSpeechToText : Boolean = true
+    var todoItemExists : Boolean = true
     lateinit var voiceToText  : VoiceToTextParser
 
     fun loadData() {
@@ -27,7 +28,9 @@ open class ToDoItemModel @Inject constructor(
             runBlocking {
                 if (it.isEmpty()) {
                     todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
+                    todoItemExists = false
                 } else {
+                    todoItemExists = true
                     todoItem = dataBaseProvider.getToDoItem(it)
                 }
             }
@@ -36,10 +39,11 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun getButtonText() : Int {
-        if (todoItem.description.isEmpty()) {
-            return R.string.add_todo
-        } else {
+        if (todoItemExists) {
             return R.string.update_todo
+        } else {
+            return R.string.add_todo
+
         }
     }
 

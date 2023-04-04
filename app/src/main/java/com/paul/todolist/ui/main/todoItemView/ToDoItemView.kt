@@ -5,8 +5,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
@@ -15,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
-import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.menuOptionSettings
@@ -24,17 +21,17 @@ import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
-import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.theme.ToDoListTheme
-import com.paul.todolist.ui.widgets.AppButton
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SuspiciousIndentation")
 @Composable
 fun ToDoItemView(model : ToDoItemModel) {
+
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val addButtonVisibility = remember { mutableStateOf(false) }
     val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
+
     val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
 
     val voiceState by model.voiceToText.state.collectAsState()
@@ -82,34 +79,16 @@ fun ToDoItemView(model : ToDoItemModel) {
                 }
                 Column () {
                     Spacer(Modifier.height(1.dp))
-                    Row(modifier = Modifier.padding(10.dp)) {
-                        AppButton(
-                            onButtonPressed = {
-                                if (model.isNewItem()) {
-                                    model.insert()
-                                } else {
-                                    model.update()
-                                }
-                                voiceState.spokenText = ""
-                                showViewWithBackStack(ToDoScreens.ToDoListView.name)
-                            },
-                            textID = model.getButtonText(),
-                            buttonVisible = addButtonVisibility.value
-                        )
-                    }
+                    ToDoItemAddButton(model, voiceState, addButtonVisibility)
 
                     //Only show this button if speech enabled
                     if (model.canDoSpeechToText) {
+                        Spacer(Modifier.height(1.dp))
                         ToDoSpeechButton(model, voiceState)
                     }
 
                     Spacer(Modifier.height(1.dp))
-                    Row(modifier = Modifier.padding(10.dp)) {
-                        AppButton(
-                            imageVector = Icons.Filled.Camera,
-                            onButtonPressed = { }
-                        )
-                    }
+                    ToDoItemCameraButton()
                 }
                 }
             }
