@@ -1,9 +1,12 @@
 package com.paul.todolist.ui.main.todoItemView
 
+import Spinner
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +26,7 @@ import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.theme.ToDoListTheme
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SuspiciousIndentation")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ToDoItemView(model : ToDoItemModel) {
 
@@ -73,19 +76,40 @@ fun ToDoItemView(model : ToDoItemModel) {
                         voiceState,
                         onFinished = {
                           model.todoItem.description = it
-                         addButtonVisibility.value = !model.todoItem.description.isEmpty()
+                           if (model.todoItem.description.isEmpty())  {
+                               addButtonVisibility.value = false
+                           } else {
+                               addButtonVisibility.value = model.hasDataChanges()
+                           }
                     }
                     )
                 }
+
+                //Only show this button if speech enabled
+                if (model.canDoSpeechToText) {
+                    Spacer(Modifier.height(1.dp))
+                    ToDoSpeechButton(model, voiceState)
+                }
+
                 Column () {
                     Spacer(Modifier.height(1.dp))
-                    ToDoItemAddButton(model, voiceState, addButtonVisibility)
-
-                    //Only show this button if speech enabled
-                    if (model.canDoSpeechToText) {
-                        Spacer(Modifier.height(1.dp))
-                        ToDoSpeechButton(model, voiceState)
+                    Row(modifier = Modifier
+                        .padding(10.dp)
+                        .fillMaxWidth()
+                        .border(width = 4.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp)),
+                    ){
+                        Spinner(
+                            model.getListOfLists(),
+                            model.getListTitle(),
+                            {
+                                model.todoItem.listID = it
+                                addButtonVisibility.value = model.hasDataChanges()
+                            },
+                            "Move To List"
+                        )
                     }
+
+                    ToDoItemAddButton(model, voiceState, addButtonVisibility)
 
                     Spacer(Modifier.height(1.dp))
                     ToDoItemCameraButton()

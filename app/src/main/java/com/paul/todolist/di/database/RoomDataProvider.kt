@@ -30,7 +30,7 @@ class RoomDataProvider  @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getListUserRows(): List<ListDataItem> {
+    suspend fun getListOfLists(): List<ListDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().getUser()
         }

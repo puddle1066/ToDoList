@@ -1,5 +1,3 @@
-import androidx.compose.animation.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,83 +8,94 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.theme.typography
 
-/*  Example of how to use this spinner
-    Spinner(
-                        distanceBetweenPoints,
-                        preselected = distanceBetweenPoints[measureModel.measureDistanceIndex],
-                        onSelectionChanged = {
-                            measureModel.supportStaffHeightIndex = listOfStaffSizes.indexOf(it) },
-                        stringResource(id = R.string.MeasureDistance)
-                    )
-                }
- */
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Spinner(
-    list: List<Pair<String, String>>,
-    preselected: Pair<String, String>,
-    onSelectionChanged: (selection: Pair<String, String>) -> Unit,
-    listTitle: String = "",
-    startAnimationColor: Color =  MaterialTheme.colorScheme.primary,
-    endAnimationColour: Color =  MaterialTheme.colorScheme.onBackground
+    list: HashMap<String, String>,
+    preselected: String,
+    onSelectionChanged: (key: String) -> Unit,
+    listTitle: String = ""
 ) {
     var selected by remember { mutableStateOf(preselected) }
     var expanded by remember { mutableStateOf(false) } // initial value list closed
 
-    val color = remember { Animatable(startAnimationColor) }
-
-    LaunchedEffect(expanded) {
-        color.animateTo(if (expanded) endAnimationColour else startAnimationColor, animationSpec = tween(2000))
-    }
-
-    Box ( modifier = Modifier.background(color.value))
+    Box (modifier = Modifier
+        .fillMaxWidth()
+        .height(60.dp)
+        .background(MaterialTheme.colorScheme.background,
+        shape = RoundedCornerShape(4.dp))
+    )
         {
-            Column (modifier = Modifier.fillMaxWidth().background(color.value)) {
-                OutlinedTextField (
-                    value = (selected.second),
+            Column  {
+                TextField (
+                    modifier = Modifier
+                        .weight(0.90f)
+                        .fillMaxWidth()
+                        .height(40.dp),
+                    value = selected,
                     onValueChange = {},
-                    label = {  androidx.compose.material.Text(
-                        modifier = Modifier.background(color.value).clip(RoundedCornerShape(10.dp)),
+                    label = { Text(
                         text = listTitle,
                         style = typography.bodyLarge,
                         textAlign = TextAlign.Left,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )},
-                    modifier = Modifier.fillMaxWidth(),
-                    trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
+                        color = MaterialTheme.colorScheme.secondary,
+                        )
+                     },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        containerColor = MaterialTheme.colorScheme.background
+                    ),
+
+                    trailingIcon = {
+                        Icon(
+                        Icons.Outlined.ArrowDropDown,
+                        null,
+                        modifier = Modifier
+                            .weight(0.10f)
+                            .width(40.dp)
+                            .height(40.dp)
+                            .background(MaterialTheme.colorScheme.background)
+                            .clickable(
+                                onClick = {
+                                    expanded = !expanded
+                                }
+                            )
+                        )
+                  },
                     readOnly = true,
                     textStyle =  typography.bodyLarge,
                 )
 
                 DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
                     modifier = Modifier
-                        .width(340.dp)
-                        .background(color.value),
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background),
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+
                 ) {
                     list.forEach { entry ->
 
                         DropdownMenuItem(
                             modifier = Modifier
-                                      .background(color.value),
+                                      .padding(10.dp,0.dp,10.dp,0.dp)
+                                      .background(MaterialTheme.colorScheme.surface),
                             onClick = {
-                                selected = entry
+                                selected = entry.value
                                 expanded = false
-                                onSelectionChanged.invoke(entry)
+                                onSelectionChanged.invoke(entry.key)
                             },
                             text = {
                                 Text(
-                                    text = (entry.second),
+                                    text = (entry.value),
                                     modifier = Modifier.wrapContentWidth().align(Alignment.Start),
-                                    style = typography.bodyLarge
+                                    style = typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.secondary,
                                 )
                             }
                         )
@@ -98,8 +107,7 @@ fun Spinner(
                 modifier = Modifier
                     .matchParentSize()
                     .background(Color.Transparent)
-                    .padding(10.dp)
-                    .clickable(
+                    .clickable (
                         onClick = {
                             expanded = !expanded
                         }
@@ -113,14 +121,11 @@ fun Spinner(
 @Composable
 fun SpinnerPreview() {
     MaterialTheme {
-
-        val entry1 = Pair("Key1", "Entry1")
-        val entry2 = Pair("Key2", "Entry2")
-        val entry3 = Pair("Key3", "Entry3")
+        val list  =  hashMapOf("Key1" to "Entry1","Key2" to "Entry2", "Key3" to "Entry3")
 
         Spinner(
-            listOf(entry1, entry2, entry3),
-            preselected = entry2,
+            list,
+            preselected ="Key2",
             onSelectionChanged = {}
         )
     }

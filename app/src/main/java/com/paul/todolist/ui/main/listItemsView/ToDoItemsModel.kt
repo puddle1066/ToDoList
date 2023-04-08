@@ -21,12 +21,12 @@ open class ToDoItemsModel @Inject constructor(
     val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
     var deleteList = ArrayList<ListDataItem>()
 
-    private var lists =  listOf<ListDataItem>()
     private var count = 0
 
-    fun getUserList() : List<ListDataItem> {
+    fun getListOfLists() : List<ListDataItem> {
+        var lists =  listOf<ListDataItem>()
         runBlocking {
-            lists = dataBaseProvider.getListUserRows()
+            lists = dataBaseProvider.getListOfLists()
         }
         return lists
     }

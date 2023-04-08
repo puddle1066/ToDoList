@@ -66,7 +66,7 @@ fun ListItemsView(model : ToDoItemsModel) {
                                 model.deleteItem(it.listId)
                             }
                             model.deleteList.clear()
-                            listDataItems.swapList(model.getUserList())
+                            listDataItems.swapList(model.getListOfLists())
                             deleteButtonVisible.value = false
                         }
                     )
@@ -102,14 +102,14 @@ fun ListItemsView(model : ToDoItemsModel) {
                         if (!it.isEmpty()) {
                             model.insertListItem(it)
                             listDataItems.clear()
-                            listDataItems.swapList(model.getUserList())
+                            listDataItems.swapList(model.getListOfLists())
                         }
                     }
                 )
 
                 Spacer(Modifier.height(20.dp))
 
-                listDataItems.swapList(model.getUserList())
+                listDataItems.swapList(model.getListOfLists())
                 Box(
                     Modifier
                         .border(width = 2.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp))

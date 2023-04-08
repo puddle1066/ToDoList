@@ -17,6 +17,7 @@ open class ToDoItemModel @Inject constructor(
     private val dataStoreProvider: DataStoreProvider
 
 ): StorageViewModel(dataStoreProvider) {
+
     var todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
 
     var canDoSpeechToText : Boolean = true
@@ -36,6 +37,18 @@ open class ToDoItemModel @Inject constructor(
             }
         }
         getListId {todoItem.listID = it }
+    }
+
+    fun hasDataChanges() : Boolean {
+        var hasChanges = true
+        runBlocking {
+            if (dataBaseProvider.getToDoItem(todoItem.itemId).toString()
+                    .equals(todoItem.toString())
+            ) {
+                hasChanges = false
+            }
+        }
+        return hasChanges
     }
 
     fun getButtonText() : Int {
@@ -75,5 +88,17 @@ open class ToDoItemModel @Inject constructor(
         runBlocking {
             dataBaseProvider.updateToDo(todoItem)
         }
+    }
+
+
+    fun getListOfLists() : HashMap<String , String> {
+        var list: HashMap<String , String> = HashMap<String, String>()
+        runBlocking {
+        var toDoListList  = dataBaseProvider.getListOfLists()
+            toDoListList.forEach {
+                list.put(it.listId ,it.title)
+            }
+        }
+        return list
     }
 }

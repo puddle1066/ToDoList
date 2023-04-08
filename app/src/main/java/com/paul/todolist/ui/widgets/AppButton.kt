@@ -65,7 +65,7 @@ fun PreviewAppButtonImage() {
 
 
 @Composable
-fun AppButton() {
+fun PreviewAppButton() {
     Box(
         modifier = Modifier
             .scale(scale = 1f)
@@ -102,6 +102,7 @@ fun AppButton(
             modifier = Modifier
                 .scale(scale = scale.value)
                 .fillMaxWidth()
+                .padding(10.dp)
                 .height(90.dp),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface),
             shape = RoundedCornerShape(25),

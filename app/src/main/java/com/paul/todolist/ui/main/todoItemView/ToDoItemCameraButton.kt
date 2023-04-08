@@ -3,14 +3,11 @@ package com.paul.todolist.ui.main.todoItemView
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Camera
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.widgets.AppButton
 
 @Composable
@@ -20,7 +17,7 @@ fun ToDoItemCameraButton() {
         ImageCapture.Builder().build()
     }
 
-    Row(modifier = Modifier.padding(10.dp)) {
+    Row {
         AppButton(
             imageVector = Icons.Filled.Camera,
             onButtonPressed = {
