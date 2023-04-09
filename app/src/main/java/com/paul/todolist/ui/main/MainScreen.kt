@@ -36,7 +36,6 @@ class MainScreen : ComponentActivity() {
             ToDoListTheme {
                     NavigationFactory(toDoListModel,toDoItemsModel,toDoItemModel)
 
-                // Creates an permission request for Voive to Text
                 val recordAudioLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.RequestPermission(),
                     onResult = { isGranted ->
@@ -45,8 +44,8 @@ class MainScreen : ComponentActivity() {
                 )
 
                 LaunchedEffect(key1 = recordAudioLauncher) {
-                    // Launches the permission request
                     recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
+                    recordAudioLauncher.launch(Manifest.permission.CAMERA)
                 }
             }
         }
