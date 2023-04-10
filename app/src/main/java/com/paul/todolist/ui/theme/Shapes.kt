@@ -1,4 +1,3 @@
-
 package com.paul.todolist.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape

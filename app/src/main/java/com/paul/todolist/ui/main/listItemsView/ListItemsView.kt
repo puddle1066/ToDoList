@@ -34,7 +34,7 @@ import com.paul.todolist.ui.widgets.InputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ListItemsView(model : ToDoItemsModel) {
+fun ListItemsView(model: ToDoItemsModel) {
 
     val listDataItems = remember { mutableStateListOf<ListDataItem>() }
     val deleteButtonVisible = remember { mutableStateOf(false) }
@@ -44,7 +44,11 @@ fun ListItemsView(model : ToDoItemsModel) {
     ToDoListTheme {
         Scaffold(
             topBar = {
-                StandardTopBar(LocalContext.current.resources.getString(R.string.lists), coroutineScope, scaffoldState)
+                StandardTopBar(
+                    LocalContext.current.resources.getString(R.string.lists),
+                    coroutineScope,
+                    scaffoldState
+                )
             },
             floatingActionButton = {
                 AnimatedVisibility(
@@ -72,7 +76,7 @@ fun ListItemsView(model : ToDoItemsModel) {
                     )
                     { Icon(Icons.Filled.Delete, "") }
                 }
-             },
+            },
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = true,
             drawerShape = drawMenuShape(model.menuItems.size),
@@ -92,7 +96,7 @@ fun ListItemsView(model : ToDoItemsModel) {
                     .background(MaterialTheme.colorScheme.background)
                     .padding(10.dp, 20.dp, 10.dp, 20.dp),
 
-            ) {
+                ) {
                 InputField(
                     text = "",
                     onTextChanged = {},
@@ -112,26 +116,34 @@ fun ListItemsView(model : ToDoItemsModel) {
                 listDataItems.swapList(model.getListOfLists())
                 Box(
                     Modifier
-                        .border(width = 2.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp))
+                        .border(
+                            width = 2.dp,
+                            color = MaterialTheme.colorScheme.surface,
+                            shape = RoundedCornerShape(15.dp)
+                        )
                         .fillMaxWidth()
                         .fillMaxHeight()
                 ) {
-                    LazyColumn{
-                        itemsIndexed(listDataItems) { _, item  ->
+                    LazyColumn {
+                        itemsIndexed(listDataItems) { _, item ->
                             val count = model.getListCount(item.listId)
-                            ListListItem(item, count ) { item: ListDataItem, delete: Boolean ->
-                                if(delete) { model.deleteList.add(item)} else {model.deleteList.remove(item)}
+                            ListListItem(item, count) { item: ListDataItem, delete: Boolean ->
+                                if (delete) {
+                                    model.deleteList.add(item)
+                                } else {
+                                    model.deleteList.remove(item)
+                                }
                                 deleteButtonVisible.value = model.deleteList.size != 0
                             }
-                        }
                         }
                     }
                 }
             }
         }
     }
+}
 
-fun <T> SnapshotStateList<T>.swapList(newList: List<T>){
+fun <T> SnapshotStateList<T>.swapList(newList: List<T>) {
     clear()
     addAll(newList)
 }

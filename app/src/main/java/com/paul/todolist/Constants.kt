@@ -18,9 +18,12 @@ enum class ToDoScreens(@StringRes val title: Int) {
     listsView(R.string.lists),
     SettingsView(title = R.string.settings),
 }
-val menuOptionSettings = DrawItem(Icons.Filled.Settings, R.string.settings, ToDoScreens.SettingsView.name)
+
+val menuOptionSettings =
+    DrawItem(Icons.Filled.Settings, R.string.settings, ToDoScreens.SettingsView.name)
 val menuOptionLists = DrawItem(Icons.Filled.Menu, R.string.lists, ToDoScreens.listsView.name)
-val menuOptionToDoList = DrawItem(Icons.Filled.Home, R.string.ToDo_Lists, ToDoScreens.ToDoListView.name)
+val menuOptionToDoList =
+    DrawItem(Icons.Filled.Home, R.string.ToDo_Lists, ToDoScreens.ToDoListView.name)
 
 const val DATABASE_NAME = "tools-db"
 const val PREFERENCES_NAME = "user_preferences"

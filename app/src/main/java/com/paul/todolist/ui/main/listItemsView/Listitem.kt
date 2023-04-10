@@ -16,46 +16,46 @@ import com.paul.todolist.ui.theme.typography
 @Composable
 fun ListListItem(
     list: ListDataItem,
-    count : Int,
+    count: Int,
     onItemClick: (ListDataItem, Boolean) -> Unit
 ) {
 
-            val colorSelected = MaterialTheme.colorScheme.error
-            val colorUnSelected = MaterialTheme.colorScheme.primary
-            val isSelected = false
-            val backgroundColor = remember {mutableStateOf(colorUnSelected)}
-            var selected by remember { mutableStateOf(isSelected) }
+    val colorSelected = MaterialTheme.colorScheme.error
+    val colorUnSelected = MaterialTheme.colorScheme.primary
+    val isSelected = false
+    val backgroundColor = remember { mutableStateOf(colorUnSelected) }
+    var selected by remember { mutableStateOf(isSelected) }
 
-            Box(modifier = Modifier
-                .clickable {
-                    if (selected) {
-                        backgroundColor.value = colorUnSelected
-                        selected = false
-                    } else {
-                        backgroundColor.value = colorSelected
-                        selected = true
-                    }
-                    onItemClick(list, selected)
-                }
-                .fillMaxSize()
-                .height(70.dp)
-                .background(backgroundColor.value)
-                .padding(20.dp, 10.dp, 0.dp, 0.dp),
-                contentAlignment = Alignment.TopStart) {
-                Column {
-                    Text(
-                        text = list.title,
-                        style = typography.titleLarge,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                    Text(
-                        text = "Tasks: $count",
-                        style = typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
+    Box(modifier = Modifier
+        .clickable {
+            if (selected) {
+                backgroundColor.value = colorUnSelected
+                selected = false
+            } else {
+                backgroundColor.value = colorSelected
+                selected = true
             }
-
-            Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
+            onItemClick(list, selected)
+        }
+        .fillMaxSize()
+        .height(70.dp)
+        .background(backgroundColor.value)
+        .padding(20.dp, 10.dp, 0.dp, 0.dp),
+        contentAlignment = Alignment.TopStart) {
+        Column {
+            Text(
+                text = list.title,
+                style = typography.titleLarge,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            Text(
+                text = "Tasks: $count",
+                style = typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+        }
     }
+
+    Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
+}
 

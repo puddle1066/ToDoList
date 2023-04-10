@@ -1,4 +1,3 @@
-
 package com.paul.todolist.di.database.worker
 
 import android.graphics.Bitmap
@@ -16,13 +15,14 @@ class Converters {
     //DateTime
     @TypeConverter
     fun toDateTime(calendar: Calendar): Long = calendar.timeInMillis
+
     @TypeConverter
     fun fromDateTime(value: Long): Calendar =
         Calendar.getInstance().apply {
             timeInMillis = value
         }
 
-   //Bitmap converters
+    //Bitmap converters
     @TypeConverter
     fun fromBitmap(value: Bitmap): String {
         val baos = ByteArrayOutputStream()

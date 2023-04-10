@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun StandardTopBar(title : String, scope : CoroutineScope, scaffoldState : ScaffoldState) {
+fun StandardTopBar(title: String, scope: CoroutineScope, scaffoldState: ScaffoldState) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,9 +49,12 @@ fun StandardTopBar(title : String, scope : CoroutineScope, scaffoldState : Scaff
         Spacer(Modifier.width(10.dp))
 
         Text(
-            modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterVertically),
             text = title,
             color = MaterialTheme.colorScheme.secondary,
             style = typography.titleLarge
-        )    }
+        )
+    }
 }

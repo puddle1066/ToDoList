@@ -10,4 +10,4 @@ data class ListDataItem(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "fixed") val fixed: String = "N",
     @ColumnInfo(name = "showAll") val showAll: String = "N"
-    )
+)

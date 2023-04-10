@@ -26,18 +26,18 @@ fun DrawerBody(
 
     LazyColumn(
         Modifier.background(MaterialTheme.colorScheme.background)
-        ) {
-            items(drawItems) { item ->
-                DrawerItemMenu(
-                    item,
-                    modifier = modifier
-                ) {
-                    scope.launch {
-                        scaffoldState.drawerState.close()
-                    }
-                    onItemClick(item)
+    ) {
+        items(drawItems) { item ->
+            DrawerItemMenu(
+                item,
+                modifier = modifier
+            ) {
+                scope.launch {
+                    scaffoldState.drawerState.close()
                 }
+                onItemClick(item)
             }
         }
+    }
 }
 

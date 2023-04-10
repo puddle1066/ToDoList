@@ -24,90 +24,92 @@ fun ToDoItem(
     deleteAllowed: Boolean,
     onItemClick: (ToDoDataItem, Boolean) -> Unit,
 ) {
-        val colorUnSelected = MaterialTheme.colorScheme.primary
-        val backgroundColor = remember {mutableStateOf(colorUnSelected)}
-        val checked = remember { mutableStateOf(false) }
-        val isVisible = remember { mutableStateOf(true) }
+    val colorUnSelected = MaterialTheme.colorScheme.primary
+    val backgroundColor = remember { mutableStateOf(colorUnSelected) }
+    val checked = remember { mutableStateOf(false) }
+    val isVisible = remember { mutableStateOf(true) }
 
-        val colorSelected = MaterialTheme.colorScheme.error
-        val isSelected = false
-        var selected by remember { mutableStateOf(isSelected) }
+    val colorSelected = MaterialTheme.colorScheme.error
+    val isSelected = false
+    var selected by remember { mutableStateOf(isSelected) }
 
-            checked.value = (!todoItem.finishedDate.equals("0"))
-            isVisible.value = !checked.value
-            if (listName.isNotBlank()) {
-                isVisible.value = true
-            }
+    checked.value = (!todoItem.finishedDate.equals("0"))
+    isVisible.value = !checked.value
+    if (listName.isNotBlank()) {
+        isVisible.value = true
+    }
 
-            AnimatedVisibility(
-                visible = isVisible.value,
-                enter = fadeIn() + slideInHorizontally(),
-                exit = fadeOut() + slideOutHorizontally()
+    AnimatedVisibility(
+        visible = isVisible.value,
+        enter = fadeIn() + slideInHorizontally(),
+        exit = fadeOut() + slideOutHorizontally()
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+                .background(backgroundColor.value)
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .background(backgroundColor.value)
+                    .clickable {
+                        if (deleteAllowed) {
+                            if (selected) {
+                                backgroundColor.value = colorUnSelected
+                                selected = false
+                            } else {
+                                backgroundColor.value = colorSelected
+                                selected = true
+                            }
+                            onItemClick(todoItem, selected)
+                        }
+
+                    },
+                verticalAlignment = Alignment.CenterVertically
+
             ) {
 
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(65.dp)
-                    .background(backgroundColor.value)) {
+                Checkbox(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .weight(0.5f),
+                    checked = checked.value,
+                    onCheckedChange = {
+                        todoItem.finishedDate = getCurrentDateAsString()
+                        checked.value = it
+                        isVisible.value = !it
+                        onItemClick(todoItem, false)
+                    },
+                )
+                Text(
+                    modifier = Modifier
+                        .clickable { onItemClick(todoItem, false) }
+                        .weight(1.5f),
+                    text = todoItem.description,
+                    style = typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp)
-                            .background(backgroundColor.value)
-                            .clickable {
-                                if (deleteAllowed) {
-                                    if (selected) {
-                                        backgroundColor.value = colorUnSelected
-                                        selected = false
-                                    } else {
-                                        backgroundColor.value = colorSelected
-                                        selected = true
-                                    }
-                                    onItemClick(todoItem, selected)
-                                }
-
-                            },
-                        verticalAlignment = Alignment.CenterVertically
-
-                    ) {
-
-                        Checkbox(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .weight(0.5f),
-                            checked = checked.value,
-                            onCheckedChange = {
-                                todoItem.finishedDate = getCurrentDateAsString()
-                                checked.value = it
-                                isVisible.value = !it
-                                onItemClick(todoItem, false)
-                            },
-                        )
-                        Text(
-                            modifier = Modifier
-                                .clickable { onItemClick(todoItem, false) }
-                                .weight(1.5f),
-                            text = todoItem.description,
-                            style = typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
-
-                        Text(
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .padding(10.dp,10.dp,20.dp,10.dp),
-                            text = listName,
-                            style = typography.titleSmall,
-                            color = MaterialTheme.colorScheme.surface,
-                            textAlign = TextAlign.End
-                        )
-                    }
-
-                    Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
-                }
+                Text(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(10.dp, 10.dp, 20.dp, 10.dp),
+                    text = listName,
+                    style = typography.titleSmall,
+                    color = MaterialTheme.colorScheme.surface,
+                    textAlign = TextAlign.End
+                )
             }
+
+            Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
+        }
     }
+}
 
 
 

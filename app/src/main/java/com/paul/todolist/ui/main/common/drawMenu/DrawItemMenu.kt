@@ -14,7 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.theme.typography
 
 @Composable
-fun DrawerItemMenu(drawItem: DrawItem, modifier: Modifier = Modifier, onItemClick: (DrawItem) -> Unit) {
+fun DrawerItemMenu(
+    drawItem: DrawItem,
+    modifier: Modifier = Modifier,
+    onItemClick: (DrawItem) -> Unit
+) {
     Column(
         modifier = Modifier.clickable {
             onItemClick(drawItem)
@@ -37,9 +41,9 @@ fun DrawerItemMenu(drawItem: DrawItem, modifier: Modifier = Modifier, onItemClic
             Text(
                 text = stringResource(drawItem.title),
                 style = typography.bodyLarge,
-                color =  MaterialTheme.colorScheme.secondary
+                color = MaterialTheme.colorScheme.secondary
             )
         }
-        Divider( color =  MaterialTheme.colorScheme.onBackground, thickness = 2.dp)
+        Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 2.dp)
     }
 }

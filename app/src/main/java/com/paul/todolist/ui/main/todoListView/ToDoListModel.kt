@@ -1,14 +1,15 @@
 package com.paul.todolist.ui.main.todoListView
 
-import com.paul.todolist.*
+import com.paul.todolist.PLEASE_SELECT_STRING
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.menuOptionLists
+import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
-import java.util.ArrayList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,7 +17,7 @@ open class ToDoListModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
     private val dataStoreProvider: DataStoreProvider
 
-): StorageViewModel(dataStoreProvider) {
+) : StorageViewModel(dataStoreProvider) {
 
     private var lists = listOf<ListDataItem>()
     private var toDoItems = listOf<ToDoDataItem>()
@@ -53,7 +54,7 @@ open class ToDoListModel @Inject constructor(
         return toDoItems
     }
 
-    fun showListName() : Boolean {
+    fun showListName(): Boolean {
         var showListName = false
         getListId {
             runBlocking {
@@ -64,7 +65,7 @@ open class ToDoListModel @Inject constructor(
         return showListName
     }
 
-    fun getListTitle() : String {
+    fun getListTitle(): String {
         var title = ""
         getListId(
             {
@@ -74,34 +75,34 @@ open class ToDoListModel @Inject constructor(
             }
         )
         when (title) {
-            null ->  return PLEASE_SELECT_STRING
-            ""   -> return PLEASE_SELECT_STRING
-            else ->  return title
+            null -> return PLEASE_SELECT_STRING
+            "" -> return PLEASE_SELECT_STRING
+            else -> return title
         }
     }
 
-    fun getListTitleforId(listId : String) : String {
-        var title : String
+    fun getListTitleforId(listId: String): String {
+        var title: String
         runBlocking {
             title = dataBaseProvider.getListTitle(listId)
         }
 
         when (title) {
-            null ->  return PLEASE_SELECT_STRING
-            ""   -> return PLEASE_SELECT_STRING
-            else ->  return title
+            null -> return PLEASE_SELECT_STRING
+            "" -> return PLEASE_SELECT_STRING
+            else -> return title
         }
     }
 
-    fun deleteItem(itemId : String) {
+    fun deleteItem(itemId: String) {
         runBlocking {
             dataBaseProvider.deleteItem(itemId)
         }
     }
 
-    fun setFinishedDate(itemId : String,  finishedDate : String) {
+    fun setFinishedDate(itemId: String, finishedDate: String) {
         runBlocking {
-            dataBaseProvider.setFinishedDate(itemId,finishedDate )
+            dataBaseProvider.setFinishedDate(itemId, finishedDate)
         }
     }
 }

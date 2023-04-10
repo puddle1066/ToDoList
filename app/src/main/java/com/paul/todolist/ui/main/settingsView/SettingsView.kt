@@ -15,13 +15,13 @@ import com.paul.todolist.ui.theme.ToDoListTheme
 fun SettingsView() {
 
     ToDoListTheme {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.background)
-                ) {
-                    SettingsHeadingView()
+        ) {
+            SettingsHeadingView()
         }
     }
 }

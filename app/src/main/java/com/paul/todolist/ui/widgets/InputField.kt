@@ -25,9 +25,9 @@ fun InputField(
     text: String,
     onTextChanged: (String) -> Unit,
     fieldTitle: String = "",
-    keyboardType : KeyboardType = KeyboardType.Number,
+    keyboardType: KeyboardType = KeyboardType.Number,
     onFinished: (String) -> Unit,
-    clearFieldOnKeyboard : Boolean = true,
+    clearFieldOnKeyboard: Boolean = true,
 ) {
     ToDoListTheme {
         var rememberText by remember { mutableStateOf(text) }
@@ -37,7 +37,11 @@ fun InputField(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
-                .border(width = 4.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp)),
+                .border(
+                    width = 4.dp,
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = RoundedCornerShape(15.dp)
+                ),
 
             label = {
                 Text(
@@ -45,7 +49,8 @@ fun InputField(
                     text = fieldTitle,
                     style = typography.bodyLarge,
                     textAlign = TextAlign.Left,
-                    color = MaterialTheme.colorScheme.secondary)
+                    color = MaterialTheme.colorScheme.secondary
+                )
             },
 
             shape = RoundedCornerShape(50.dp),
@@ -53,31 +58,42 @@ fun InputField(
             keyboardActions = KeyboardActions(
 
                 onDone = {
-                   keyboardController?.hide()
+                    keyboardController?.hide()
                     onFinished(rememberText)
-                    if(clearFieldOnKeyboard)  rememberText = ""},
-                onGo = {  keyboardController?.hide()
+                    if (clearFieldOnKeyboard) rememberText = ""
+                },
+                onGo = {
+                    keyboardController?.hide()
                     onFinished(rememberText)
-                    if(clearFieldOnKeyboard)  rememberText = ""},
-                onNext = {  keyboardController?.hide()
+                    if (clearFieldOnKeyboard) rememberText = ""
+                },
+                onNext = {
+                    keyboardController?.hide()
                     onFinished(rememberText)
-                    if(clearFieldOnKeyboard)  rememberText = ""},
-                onPrevious = {  keyboardController?.hide()
+                    if (clearFieldOnKeyboard) rememberText = ""
+                },
+                onPrevious = {
+                    keyboardController?.hide()
                     onFinished(rememberText)
-                    if(clearFieldOnKeyboard)  rememberText = ""},
-                onSearch = {  keyboardController?.hide()
+                    if (clearFieldOnKeyboard) rememberText = ""
+                },
+                onSearch = {
+                    keyboardController?.hide()
                     onFinished(rememberText)
-                    if(clearFieldOnKeyboard)  rememberText = ""},
-                onSend = {  keyboardController?.hide()
+                    if (clearFieldOnKeyboard) rememberText = ""
+                },
+                onSend = {
+                    keyboardController?.hide()
                     onFinished(rememberText)
-                    if(clearFieldOnKeyboard)  rememberText = ""}
+                    if (clearFieldOnKeyboard) rememberText = ""
+                }
             ),
 
             colors = TextFieldDefaults.textFieldColors(
                 focusedTextColor = MaterialTheme.colorScheme.surface,
                 unfocusedTextColor = MaterialTheme.colorScheme.surface,
                 containerColor = MaterialTheme.colorScheme.primary,
-                cursorColor =  MaterialTheme.colorScheme.secondary
+                cursorColor = MaterialTheme.colorScheme.secondary
             ),
             textStyle = typography.bodyLarge,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
@@ -96,6 +112,6 @@ fun InputField(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MeasurePreview() {
-    InputField("",  onTextChanged = { },"Field Title", KeyboardType.Number, onFinished = {})
+    InputField("", onTextChanged = { }, "Field Title", KeyboardType.Number, onFinished = {})
 }
 

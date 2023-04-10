@@ -6,4 +6,4 @@ data class DrawItem(
     var icon: ImageVector,
     var title: Int = 0,
     var link: String = "",
-    )
+)

@@ -28,14 +28,15 @@ import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ToDoItemView(model : ToDoItemModel) {
+fun ToDoItemView(model: ToDoItemModel) {
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val addButtonVisibility = remember { mutableStateOf(false) }
-    val menuItems  = listOf(menuOptionToDoList, menuOptionSettings)
+    val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
 
-    val title = LocalContext.current.resources.getString(R.string.ToDo_item)+ " -  " + model.getListTitle()
+    val title =
+        LocalContext.current.resources.getString(R.string.ToDo_item) + " -  " + model.getListTitle()
 
     val voiceState by model.voiceToText.state.collectAsState()
 
@@ -43,7 +44,7 @@ fun ToDoItemView(model : ToDoItemModel) {
 
     ToDoListTheme {
         Scaffold(
-            topBar = { StandardTopBar(title, scope, scaffoldState)},
+            topBar = { StandardTopBar(title, scope, scaffoldState) },
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = true,
             drawerShape = drawMenuShape(menuItems.size),
@@ -75,29 +76,33 @@ fun ToDoItemView(model : ToDoItemModel) {
                         "ToDo Task description",
                         voiceState,
                         onFinished = {
-                          model.todoItem.description = it
-                           if (model.todoItem.description.isEmpty())  {
-                               addButtonVisibility.value = false
-                           } else {
-                               addButtonVisibility.value = model.hasDataChanges()
-                           }
-                    }
+                            model.todoItem.description = it
+                            if (model.todoItem.description.isEmpty()) {
+                                addButtonVisibility.value = false
+                            } else {
+                                addButtonVisibility.value = model.hasDataChanges()
+                            }
+                        }
                     )
                 }
 
-                //Only show this button if speech enabled
-                if (model.canDoSpeechToText) {
+                if (model.isSpeechToTextEnabled) {
                     Spacer(Modifier.height(1.dp))
                     ToDoSpeechButton(model, voiceState)
                 }
 
-                Column () {
+                Column() {
                     Spacer(Modifier.height(1.dp))
-                    Row(modifier = Modifier
-                        .padding(10.dp)
-                        .fillMaxWidth()
-                        .border(width = 4.dp, color = MaterialTheme.colorScheme.surface,shape = RoundedCornerShape(15.dp)),
-                    ){
+                    Row(
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth()
+                            .border(
+                                width = 4.dp,
+                                color = MaterialTheme.colorScheme.surface,
+                                shape = RoundedCornerShape(15.dp)
+                            ),
+                    ) {
                         Spinner(
                             model.getListOfLists(),
                             model.getListTitle(),
@@ -111,12 +116,19 @@ fun ToDoItemView(model : ToDoItemModel) {
 
                     ToDoItemAddButton(model, voiceState, addButtonVisibility)
 
-                    Spacer(Modifier.height(1.dp))
-                    ToDoItemCameraButton()
-                }
+                    if (model.isPhotoCaptureEnabled) {
+                        Spacer(Modifier.height(1.dp))
+                        ToDoItemCameraButton(
+                            onPictureTaken = {
+                                //TODO add bitmap dynamically
+
+                            }
+                        )
+                    }
                 }
             }
         }
+    }
 }
 
 @Preview

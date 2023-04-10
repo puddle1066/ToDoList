@@ -14,10 +14,7 @@ import androidx.compose.material.icons.rounded.Mic
 import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
@@ -36,12 +33,11 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
     val animationDuration = 100
-    val scaleDown  = 0.9f
+    val scaleDown = 0.9f
     val coroutineScope = rememberCoroutineScope()
     val scale = remember { Animatable(1f) }
 
-
-    Row(modifier = Modifier.padding(10.dp) ) {
+    Row(modifier = Modifier.padding(10.dp)) {
         Button(
             modifier = Modifier
                 .scale(scale = scale.value)
@@ -60,7 +56,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                     )
                     delay((animationDuration).toLong())    //Wait for anim to finish before launching
 
-                    if(voiceState.isSpeaking) {
+                    if (voiceState.isSpeaking) {
                         model.voiceToText.stopListening()
                         backgroundColor.value = colorUnSelected
                     } else {
@@ -81,7 +77,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                             .height(50.dp)
                             .width(50.dp),
                         imageVector = Icons.Rounded.Stop,
-                        contentDescription ="Image"
+                        contentDescription = "Image"
                     )
                 } else {
                     Icon(
@@ -96,4 +92,5 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
         }
     }
 }
+
 

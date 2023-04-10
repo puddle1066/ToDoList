@@ -12,8 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class VoiceToTextParser(private val app: Application) : RecognitionListener
-{
+class VoiceToTextParser(private val app: Application) : RecognitionListener {
     private val _state = MutableStateFlow(VoiceToTextParserState())
     val state: StateFlow<VoiceToTextParserState> get() = _state.asStateFlow()
 
@@ -84,7 +83,7 @@ class VoiceToTextParser(private val app: Application) : RecognitionListener
     }
 
     override fun onBufferReceived(buffer: ByteArray?) {
-        Log.e("VoiceToTextParser", "onBufferReceived"+buffer.toString())
+        Log.e("VoiceToTextParser", "onBufferReceived" + buffer.toString())
     }
 
     override fun onEndOfSpeech() {

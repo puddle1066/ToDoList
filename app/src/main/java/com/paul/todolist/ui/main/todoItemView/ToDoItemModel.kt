@@ -16,19 +16,22 @@ open class ToDoItemModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
     private val dataStoreProvider: DataStoreProvider
 
-): StorageViewModel(dataStoreProvider) {
+) : StorageViewModel(dataStoreProvider) {
 
-    var todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
+    var todoItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
 
-    var canDoSpeechToText : Boolean = true
-    var todoItemExists : Boolean = true
-    lateinit var voiceToText  : VoiceToTextParser
+    var todoItemExists: Boolean = true
+    lateinit var voiceToText: VoiceToTextParser
+
+    var isSpeechToTextEnabled = false
+    var isPhotoCaptureEnabled = true
+
 
     fun loadData() {
         getItemId {
             runBlocking {
                 if (it.isEmpty()) {
-                    todoItem = ToDoDataItem(UUID.randomUUID().toString(),"","","0","0")
+                    todoItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
                     todoItemExists = false
                 } else {
                     todoItemExists = true
@@ -36,26 +39,23 @@ open class ToDoItemModel @Inject constructor(
                 }
             }
         }
-        getListId {todoItem.listID = it }
+        getListId { todoItem.listID = it }
     }
 
-    fun hasDataChanges() : Boolean {
+    fun hasDataChanges(): Boolean {
         var hasChanges = true
         runBlocking {
-            var dbData = dataBaseProvider.getToDoItem(todoItem.itemId)
+            val dbData = dataBaseProvider.getToDoItem(todoItem.itemId)
             if (dbData == null) {
                 hasChanges = true
             } else {
-                if (dbData.equals(todoItem.toString())
-                ) {
-                    hasChanges = false
-                }
+                hasChanges = !dbData.equals(todoItem.toString())
             }
         }
         return hasChanges
     }
 
-    fun getButtonText() : Int {
+    fun getButtonText(): Int {
         if (todoItemExists) {
             return R.string.update_todo
         } else {
@@ -64,11 +64,11 @@ open class ToDoItemModel @Inject constructor(
         }
     }
 
-    fun isNewItem() : Boolean {
+    fun isNewItem(): Boolean {
         return todoItem.description.isEmpty()
     }
 
-    fun getListTitle() : String {
+    fun getListTitle(): String {
         var title = ""
         getListId(
             {
@@ -95,12 +95,12 @@ open class ToDoItemModel @Inject constructor(
     }
 
 
-    fun getListOfLists() : HashMap<String , String> {
-        var list: HashMap<String , String> = HashMap<String, String>()
+    fun getListOfLists(): HashMap<String, String> {
+        var list: HashMap<String, String> = HashMap<String, String>()
         runBlocking {
-        var toDoListList  = dataBaseProvider.getListOfLists()
+            var toDoListList = dataBaseProvider.getListOfLists()
             toDoListList.forEach {
-                list.put(it.listId ,it.title)
+                list.put(it.listId, it.title)
             }
         }
         return list

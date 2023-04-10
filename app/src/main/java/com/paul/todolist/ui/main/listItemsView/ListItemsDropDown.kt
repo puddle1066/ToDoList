@@ -21,9 +21,14 @@ import com.paul.todolist.ui.theme.typography
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) -> Unit, showExpanded : Boolean, selectedOptionText : String) {
-    val expanded  = remember { mutableStateOf(showExpanded) }
-    val chosedText  = remember { mutableStateOf(selectedOptionText) }
+fun ListItemsDropDown(
+    list: List<ListDataItem>,
+    onValueChanged: (ListDataItem) -> Unit,
+    showExpanded: Boolean,
+    selectedOptionText: String
+) {
+    val expanded = remember { mutableStateOf(showExpanded) }
+    val chosedText = remember { mutableStateOf(selectedOptionText) }
 
     val localStyle = typography.titleLarge
     val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colorScheme.secondary))
@@ -40,7 +45,7 @@ fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) 
                     .fillMaxWidth()
                     .height(70.dp)
                     .background(MaterialTheme.colorScheme.primary),
-                verticalAlignment =  Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
 
                 Icon(
@@ -60,17 +65,17 @@ fun ListItemsDropDown(list : List<ListDataItem>, onValueChanged: (ListDataItem) 
                     singleLine = true,
                     enabled = true,
                     textStyle = mergedStyle,
-                    )
+                )
 
-                    Icon(
-                        modifier = Modifier
-                            .width(40.dp)
-                            .height(40.dp)
-                            .background(MaterialTheme.colorScheme.primary),
-                        imageVector = Icons.Filled.ExpandMore,
-                        contentDescription = "menu",
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
+                Icon(
+                    modifier = Modifier
+                        .width(40.dp)
+                        .height(40.dp)
+                        .background(MaterialTheme.colorScheme.primary),
+                    imageVector = Icons.Filled.ExpandMore,
+                    contentDescription = "menu",
+                    tint = MaterialTheme.colorScheme.secondary
+                )
             }
 
             ExposedDropdownMenu(

@@ -25,34 +25,38 @@ fun Spinner(
     var selected by remember { mutableStateOf(preselected) }
     var expanded by remember { mutableStateOf(false) } // initial value list closed
 
-    Box (modifier = Modifier
-        .fillMaxWidth()
-        .height(60.dp)
-        .background(MaterialTheme.colorScheme.background,
-        shape = RoundedCornerShape(4.dp))
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .background(
+                MaterialTheme.colorScheme.background,
+                shape = RoundedCornerShape(4.dp)
+            )
     )
-        {
-            Column  {
-                TextField (
-                    modifier = Modifier
-                        .weight(0.90f)
-                        .fillMaxWidth()
-                        .height(40.dp),
-                    value = selected,
-                    onValueChange = {},
-                    label = { Text(
+    {
+        Column {
+            TextField(
+                modifier = Modifier
+                    .weight(0.90f)
+                    .fillMaxWidth()
+                    .height(40.dp),
+                value = selected,
+                onValueChange = {},
+                label = {
+                    Text(
                         text = listTitle,
                         style = typography.bodyLarge,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.secondary,
-                        )
-                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        containerColor = MaterialTheme.colorScheme.background
-                    ),
+                    )
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                ),
 
-                    trailingIcon = {
-                        Icon(
+                trailingIcon = {
+                    Icon(
                         Icons.Outlined.ArrowDropDown,
                         null,
                         modifier = Modifier
@@ -65,54 +69,56 @@ fun Spinner(
                                     expanded = !expanded
                                 }
                             )
-                        )
-                  },
-                    readOnly = true,
-                    textStyle =  typography.bodyLarge,
-                )
+                    )
+                },
+                readOnly = true,
+                textStyle = typography.bodyLarge,
+            )
 
-                DropdownMenu(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.background),
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-
-                ) {
-                    list.forEach { entry ->
-
-                        DropdownMenuItem(
-                            modifier = Modifier
-                                      .padding(10.dp,0.dp,10.dp,0.dp)
-                                      .background(MaterialTheme.colorScheme.surface),
-                            onClick = {
-                                selected = entry.value
-                                expanded = false
-                                onSelectionChanged.invoke(entry.key)
-                            },
-                            text = {
-                                Text(
-                                    text = (entry.value),
-                                    modifier = Modifier.wrapContentWidth().align(Alignment.Start),
-                                    style = typography.bodyLarge,
-                                    color = MaterialTheme.colorScheme.secondary,
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-
-            Spacer(
+            DropdownMenu(
                 modifier = Modifier
-                    .matchParentSize()
-                    .background(Color.Transparent)
-                    .clickable (
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.background),
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+
+            ) {
+                list.forEach { entry ->
+
+                    DropdownMenuItem(
+                        modifier = Modifier
+                            .padding(10.dp, 0.dp, 10.dp, 0.dp)
+                            .background(MaterialTheme.colorScheme.surface),
                         onClick = {
-                            expanded = !expanded
+                            selected = entry.value
+                            expanded = false
+                            onSelectionChanged.invoke(entry.key)
+                        },
+                        text = {
+                            Text(
+                                text = (entry.value),
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .align(Alignment.Start),
+                                style = typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.secondary,
+                            )
                         }
                     )
-            )
+                }
+            }
+        }
+
+        Spacer(
+            modifier = Modifier
+                .matchParentSize()
+                .background(Color.Transparent)
+                .clickable(
+                    onClick = {
+                        expanded = !expanded
+                    }
+                )
+        )
     }
 }
 
@@ -121,11 +127,11 @@ fun Spinner(
 @Composable
 fun SpinnerPreview() {
     MaterialTheme {
-        val list  =  hashMapOf("Key1" to "Entry1","Key2" to "Entry2", "Key3" to "Entry3")
+        val list = hashMapOf("Key1" to "Entry1", "Key2" to "Entry2", "Key3" to "Entry3")
 
         Spinner(
             list,
-            preselected ="Key2",
+            preselected = "Key2",
             onSelectionChanged = {}
         )
     }

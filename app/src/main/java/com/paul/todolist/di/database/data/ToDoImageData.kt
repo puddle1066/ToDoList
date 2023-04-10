@@ -8,4 +8,4 @@ import androidx.room.PrimaryKey
 data class ToDoImageData(
     @PrimaryKey val itemId: String,
     @ColumnInfo(name = "data") var data: String = "",
-    )
+)

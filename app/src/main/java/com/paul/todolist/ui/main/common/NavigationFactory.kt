@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.paul.todolist.ToDoScreens
-import com.paul.todolist.ui.main.MainScreen
+import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.listItemsView.ListItemsView
 import com.paul.todolist.ui.main.listItemsView.ToDoItemsModel
 import com.paul.todolist.ui.main.settingsView.SettingsView
@@ -17,12 +17,16 @@ import com.paul.todolist.util.screen
 
 @ExperimentalAnimationApi
 @Composable
-fun NavigationFactory(toDoListModel : ToDoListModel, toDoItemsModel : ToDoItemsModel, toDoItemModel : ToDoItemModel) {
+fun NavigationFactory(
+    toDoListModel: ToDoListModel,
+    toDoItemsModel: ToDoItemsModel,
+    toDoItemModel: ToDoItemModel
+) {
 
-    MainScreen.navHostController = rememberAnimatedNavController()
+    MainView.navHostController = rememberAnimatedNavController()
 
     AnimatedNavHost(
-        MainScreen.navHostController,
+        MainView.navHostController,
         startDestination = ToDoScreens.ToDoListView.name
 
     ) {
@@ -33,11 +37,11 @@ fun NavigationFactory(toDoListModel : ToDoListModel, toDoItemsModel : ToDoItemsM
     }
 }
 
-fun showView(screenId : String) {
-    MainScreen.navHostController.popBackStack()
-    MainScreen.navHostController.navigate(screenId)
+fun showView(screenId: String) {
+    MainView.navHostController.popBackStack()
+    MainView.navHostController.navigate(screenId)
 }
 
-fun showViewWithBackStack(screenId : String) {
-    MainScreen.navHostController.navigate(screenId)
+fun showViewWithBackStack(screenId: String) {
+    MainView.navHostController.navigate(screenId)
 }

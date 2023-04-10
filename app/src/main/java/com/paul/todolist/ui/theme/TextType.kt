@@ -20,7 +20,6 @@ var defaultFontFamily = MontserratFontFamily
 val typography = Typography(
 
 
-
     headlineLarge = TextStyle(
         fontFamily = defaultFontFamily,
         fontWeight = FontWeight.W300,

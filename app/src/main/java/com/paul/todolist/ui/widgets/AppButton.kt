@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
 fun PreviewAppButtonIcon() {
     AppButton(
         drawingID = R.drawable.ic_measure,
-        onButtonPressed = {showView(ToDoScreens.ToDoListView.name) }
+        onButtonPressed = { showView(ToDoScreens.ToDoListView.name) }
     )
 }
 
@@ -49,7 +49,7 @@ fun PreviewAppButtonIcon() {
 @Composable
 fun PreviewAppButtonText() {
     AppButton(
-        onButtonPressed = {showView(ToDoScreens.SettingsView.name) },
+        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
         textID = R.string.Continue
     )
 }
@@ -58,7 +58,7 @@ fun PreviewAppButtonText() {
 @Composable
 fun PreviewAppButtonImage() {
     AppButton(
-        onButtonPressed = {showView(ToDoScreens.SettingsView.name) },
+        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
         imageVector = Icons.Filled.Mic,
     )
 }
@@ -84,8 +84,8 @@ fun AppButton(
     imageVector: ImageVector? = null,
     onButtonPressed: () -> Unit,
     textID: Int = -1,
-    backgroundColor: Color =  MaterialTheme.colorScheme.primary,
-    buttonVisible : Boolean = true
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
+    buttonVisible: Boolean = true
 ) {
 
     val animationDuration: Int = 100
@@ -122,7 +122,7 @@ fun AppButton(
                 }
             },
 
-        ) {
+            ) {
             if (imageVector != null) {
                 Image(
                     modifier = Modifier

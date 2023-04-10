@@ -14,9 +14,9 @@ import javax.inject.Singleton
 
 class DataStoreProvider @Inject constructor(@ApplicationContext ctx: Context) {
 
-val context = ctx
+    val context = ctx
 
-@Singleton
+    @Singleton
     private var datastore = DataStoreManager(context)
 
     suspend fun <T> readValue(key: Preferences.Key<T>, defaultValue: T, onCompleted: T.() -> Unit) {
@@ -30,6 +30,6 @@ val context = ctx
     }
 
     suspend fun <T> storeValue(key: Preferences.Key<T>, value: T) {
-        datastore.storeValue(key,value)
+        datastore.storeValue(key, value)
     }
 }

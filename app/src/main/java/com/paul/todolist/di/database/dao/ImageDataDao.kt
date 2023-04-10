@@ -9,7 +9,7 @@ interface ImageDataDao {
     fun insert(image: ToDoImageData)
 
     @Query("SELECT * FROM ToDoImageData where itemId = :itemId")
-    fun getItemImages(itemId : String): List<ToDoImageData>
+    fun getItemImages(itemId: String): List<ToDoImageData>
 
 
 }

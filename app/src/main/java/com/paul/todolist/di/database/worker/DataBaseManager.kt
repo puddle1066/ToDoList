@@ -12,7 +12,7 @@ import com.paul.todolist.di.database.dao.*
 import com.paul.todolist.di.database.data.*
 import java.util.*
 
-@Database(entities = [ListDataItem::class,ToDoDataItem::class], version = 1)
+@Database(entities = [ListDataItem::class, ToDoDataItem::class], version = 1)
 @TypeConverters(Converters::class)
 
 abstract class DataBaseManager : RoomDatabase() {
@@ -28,9 +28,11 @@ abstract class DataBaseManager : RoomDatabase() {
         //TODO Dont reference TooboxApp conext as this will create a memory leak
         @Synchronized
         fun getInstance(): DataBaseManager {
-            if(instance == null)
-                instance = Room.databaseBuilder(ToDoList.appContext, DataBaseManager::class.java,
-                    DATABASE_NAME)
+            if (instance == null)
+                instance = Room.databaseBuilder(
+                    ToDoList.appContext, DataBaseManager::class.java,
+                    DATABASE_NAME
+                )
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build()
@@ -43,9 +45,15 @@ abstract class DataBaseManager : RoomDatabase() {
                 Log.e(TAG, "Create Database")
 
                 try {
-                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','ToDo', 'N', 'N');")
-                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('"+ UUID.randomUUID().toString()+ "','Finished', 'Y', 'N');")
-                    db.execSQL( "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('0','All', 'Y', 'Y');")
+                    db.execSQL(
+                        "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('" + UUID.randomUUID()
+                            .toString() + "','ToDo', 'N', 'N');"
+                    )
+                    db.execSQL(
+                        "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('" + UUID.randomUUID()
+                            .toString() + "','Finished', 'Y', 'N');"
+                    )
+                    db.execSQL("INSERT INTO Lists(listId, title, fixed, showAll) VALUES('0','All', 'Y', 'Y');")
 
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)

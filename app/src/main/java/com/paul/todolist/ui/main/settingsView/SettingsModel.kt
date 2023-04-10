@@ -9,6 +9,6 @@ import javax.inject.Inject
 open class SettingsModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider
 
-): BaseViewModel() {
+) : BaseViewModel() {
 
 }

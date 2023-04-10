@@ -16,36 +16,43 @@ open class ToDoItemsModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
     private val dataStoreProvider: DataStoreProvider
 
-): StorageViewModel(dataStoreProvider) {
+) : StorageViewModel(dataStoreProvider) {
 
     val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
     var deleteList = ArrayList<ListDataItem>()
 
     private var count = 0
 
-    fun getListOfLists() : List<ListDataItem> {
-        var lists =  listOf<ListDataItem>()
+    fun getListOfLists(): List<ListDataItem> {
+        var lists = listOf<ListDataItem>()
         runBlocking {
             lists = dataBaseProvider.getListOfLists()
         }
         return lists
     }
 
-    fun getListCount(listId : String) : Int {
+    fun getListCount(listId: String): Int {
         runBlocking {
             count = dataBaseProvider.getLIstItemsCount(listId)
         }
         return count
     }
 
-    fun deleteItem(itemId : String) {
+    fun deleteItem(itemId: String) {
         runBlocking {
             dataBaseProvider.deleteItem(itemId)
         }
     }
-     fun insertListItem(title : String) {
+
+    fun insertListItem(title: String) {
         runBlocking {
-            dataBaseProvider.insertList(ListDataItem( UUID.randomUUID().toString(),title.replaceFirstChar(Char::uppercase),"N"))
+            dataBaseProvider.insertList(
+                ListDataItem(
+                    UUID.randomUUID().toString(),
+                    title.replaceFirstChar(Char::uppercase),
+                    "N"
+                )
+            )
         }
     }
 

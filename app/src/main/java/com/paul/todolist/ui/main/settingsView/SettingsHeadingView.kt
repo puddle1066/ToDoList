@@ -22,8 +22,8 @@ import com.paul.todolist.ui.theme.ToDoListTheme
 fun SettingsHeadingView() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val menuItems  = listOf(menuOptionLists, menuOptionToDoList)
-    var title = LocalContext.current.resources.getString(R.string.settings)
+    val menuItems = listOf(menuOptionLists, menuOptionToDoList)
+    val title = LocalContext.current.resources.getString(R.string.settings)
 
     ToDoListTheme {
         Scaffold(

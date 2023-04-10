@@ -10,15 +10,15 @@ import androidx.compose.ui.unit.LayoutDirection
 import com.paul.todolist.util.dpToPx
 
 @Composable
-fun drawMenuShape(lines : Int) =  object : Shape {
-    var drawHeight =   dpToPx(50f + (62f * lines))
+fun drawMenuShape(lines: Int) = object : Shape {
+    var drawHeight = dpToPx(50f + (62f * lines))
 
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
-          return Outline.Rectangle(Rect(0f,150f,800f, drawHeight))
+        return Outline.Rectangle(Rect(0f, 150f, 800f, drawHeight))
     }
 }
 
