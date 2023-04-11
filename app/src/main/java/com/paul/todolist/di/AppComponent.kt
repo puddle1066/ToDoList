@@ -14,5 +14,4 @@ import javax.inject.Singleton
         DataStoreProvider::class
     ]
 )
-interface AppComponent {
-}
+interface AppComponent

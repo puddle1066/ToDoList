@@ -1,6 +1,5 @@
 package com.paul.todolist.ui.main.todoItemView
 
-import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
@@ -25,7 +24,6 @@ open class ToDoItemModel @Inject constructor(
 
     var isSpeechToTextEnabled = false
     var isPhotoCaptureEnabled = true
-
 
     fun loadData() {
         getItemId {
@@ -53,15 +51,6 @@ open class ToDoItemModel @Inject constructor(
             }
         }
         return hasChanges
-    }
-
-    fun getButtonText(): Int {
-        if (todoItemExists) {
-            return R.string.update_todo
-        } else {
-            return R.string.add_todo
-
-        }
     }
 
     fun isNewItem(): Boolean {

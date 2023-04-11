@@ -1,18 +1,16 @@
 package com.paul.todolist.ui.main.todoItemView
 
-import Spinner
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
@@ -36,7 +34,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
 
     val title =
-        LocalContext.current.resources.getString(R.string.ToDo_item) + " -  " + model.getListTitle()
+        stringResource(R.string.ToDo_item) + " -  " + model.getListTitle()
 
     val voiceState by model.voiceToText.state.collectAsState()
 
@@ -73,7 +71,8 @@ fun ToDoItemView(model: ToDoItemModel) {
                 ) {
                     ToDoInputText(
                         model,
-                        "ToDo Task description",
+
+                        stringResource(R.string.ToDo_Task_description),
                         voiceState,
                         onFinished = {
                             model.todoItem.description = it
@@ -91,41 +90,22 @@ fun ToDoItemView(model: ToDoItemModel) {
                     ToDoSpeechButton(model, voiceState)
                 }
 
-                Column() {
+                ToDoChangeListDropDown(model, addButtonVisibility)
+
+
+                if (model.isPhotoCaptureEnabled) {
                     Spacer(Modifier.height(1.dp))
-                    Row(
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .fillMaxWidth()
-                            .border(
-                                width = 4.dp,
-                                color = MaterialTheme.colorScheme.surface,
-                                shape = RoundedCornerShape(15.dp)
-                            ),
-                    ) {
-                        Spinner(
-                            model.getListOfLists(),
-                            model.getListTitle(),
-                            {
-                                model.todoItem.listID = it
-                                addButtonVisibility.value = model.hasDataChanges()
-                            },
-                            "Move To List"
-                        )
-                    }
-
-                    ToDoItemAddButton(model, voiceState, addButtonVisibility)
-
-                    if (model.isPhotoCaptureEnabled) {
-                        Spacer(Modifier.height(1.dp))
-                        ToDoItemCameraButton(
-                            onPictureTaken = {
-                                //TODO add bitmap dynamically
-
-                            }
-                        )
-                    }
+                    ToDoItemCameraButton(
+                        onPictureTaken = {
+                            //TODO add bitmap dynamically
+                        }
+                    )
                 }
+
+                if(addButtonVisibility.value) {
+                    ToDoItemAddButton(model, voiceState)
+                }
+
             }
         }
     }

@@ -54,7 +54,7 @@ fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit,) {
         )
     }
 
-//TODO Implement this when we clos this composable
+//TODO Implement this when we close this composable
 //    if (finishedPicture.value) {
 ////        cameraExecutor.shutdownNow()
 ////        cameraProvider.unbindAll()

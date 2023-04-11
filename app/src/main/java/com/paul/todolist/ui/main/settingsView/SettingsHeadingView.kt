@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paul.todoList.R
 import com.paul.todolist.menuOptionLists
@@ -23,7 +23,7 @@ fun SettingsHeadingView() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val menuItems = listOf(menuOptionLists, menuOptionToDoList)
-    val title = LocalContext.current.resources.getString(R.string.settings)
+    val title = stringResource(R.string.settings)
 
     ToDoListTheme {
         Scaffold(

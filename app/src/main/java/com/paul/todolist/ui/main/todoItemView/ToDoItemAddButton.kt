@@ -2,7 +2,7 @@ package com.paul.todolist.ui.main.todoItemView
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import com.paul.todoList.R
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParserState
@@ -11,9 +11,14 @@ import com.paul.todolist.ui.widgets.AppButton
 @Composable
 fun ToDoItemAddButton(
     model: ToDoItemModel,
-    voiceState: VoiceToTextParserState,
-    addButtonVisibility: MutableState<Boolean>
+    voiceState: VoiceToTextParserState
 ) {
+    var buttonStringId = R.string.add_todo
+
+    if (model.todoItemExists) {
+        buttonStringId = R.string.update_todo
+    }
+
     Row {
         AppButton(
             onButtonPressed = {
@@ -25,8 +30,6 @@ fun ToDoItemAddButton(
                 voiceState.spokenText = ""
                 showViewWithBackStack(ToDoScreens.ToDoListView.name)
             },
-            textID = model.getButtonText(),
-            buttonVisible = addButtonVisibility.value
-        )
-    }
+            textID = buttonStringId)
+            }
 }
