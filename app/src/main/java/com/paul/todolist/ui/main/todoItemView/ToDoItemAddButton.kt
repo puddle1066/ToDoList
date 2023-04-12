@@ -30,6 +30,7 @@ fun ToDoItemAddButton(
                 voiceState.spokenText = ""
                 showViewWithBackStack(ToDoScreens.ToDoListView.name)
             },
-            textID = buttonStringId)
-            }
+            textID = buttonStringId
+        )
+    }
 }

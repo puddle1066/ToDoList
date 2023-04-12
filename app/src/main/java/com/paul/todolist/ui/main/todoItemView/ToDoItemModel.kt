@@ -1,8 +1,10 @@
 package com.paul.todolist.ui.main.todoItemView
 
+import android.graphics.Bitmap
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.ui.main.common.StorageViewModel
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,10 +22,10 @@ open class ToDoItemModel @Inject constructor(
     var todoItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
 
     var todoItemExists: Boolean = true
-    lateinit var voiceToText: VoiceToTextParser
-
     var isSpeechToTextEnabled = false
     var isPhotoCaptureEnabled = true
+
+    lateinit var voiceToText: VoiceToTextParser
 
     fun loadData() {
         getItemId {
@@ -83,7 +85,6 @@ open class ToDoItemModel @Inject constructor(
         }
     }
 
-
     fun getListOfLists(): HashMap<String, String> {
         var list: HashMap<String, String> = HashMap<String, String>()
         runBlocking {
@@ -93,5 +94,22 @@ open class ToDoItemModel @Inject constructor(
             }
         }
         return list
+    }
+
+    fun getToDoImages(itemId: String): List<ToDoImageData> {
+        var list = listOf<ToDoImageData>()
+        getListId({
+            runBlocking {
+                list = dataBaseProvider.getToDoImages(itemId)
+            }
+        }
+        )
+        return list
+    }
+
+    fun insertToDoImage(image: Bitmap) {
+        runBlocking {
+            dataBaseProvider.insertToDoImage(ToDoImageData(todoItem.itemId, image))
+        }
     }
 }

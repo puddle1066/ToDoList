@@ -2,6 +2,7 @@ package com.paul.todolist.di.database
 
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.di.database.worker.DataBaseManager
 import dagger.Module
 import dagger.Provides
@@ -114,6 +115,18 @@ class RoomDataProvider @Inject constructor() {
     suspend fun getToDoItem(itemId: String): ToDoDataItem {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().getToDoItem(itemId)
+        }
+    }
+
+    suspend fun insertToDoImage(toDoImage: ToDoImageData) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ImageDataDao().insert(toDoImage)
+        }
+    }
+
+    suspend fun getToDoImages(itemId: String): List<ToDoImageData> {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ImageDataDao().getItemImages(itemId)
         }
     }
 

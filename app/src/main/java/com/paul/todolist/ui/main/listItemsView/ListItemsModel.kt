@@ -12,7 +12,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-open class ToDoItemsModel @Inject constructor(
+open class ListItemsModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
     private val dataStoreProvider: DataStoreProvider
 
@@ -24,7 +24,7 @@ open class ToDoItemsModel @Inject constructor(
     private var count = 0
 
     fun getListOfLists(): List<ListDataItem> {
-        var lists = listOf<ListDataItem>()
+        var lists: List<ListDataItem>
         runBlocking {
             lists = dataBaseProvider.getListOfLists()
         }

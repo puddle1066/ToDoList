@@ -12,12 +12,19 @@ import com.paul.todolist.di.database.dao.*
 import com.paul.todolist.di.database.data.*
 import java.util.*
 
-@Database(entities = [ListDataItem::class, ToDoDataItem::class], version = 1)
+@Database(
+    entities = [
+        ListDataItem::class,
+        ToDoDataItem::class,
+        ToDoImageData::class
+    ], version = 2
+)
 @TypeConverters(Converters::class)
 
 abstract class DataBaseManager : RoomDatabase() {
     abstract fun listDao(): ListDao
     abstract fun ToDoDao(): ToDoDao
+    abstract fun ImageDataDao(): ImageDataDao
 
     companion object {
         private val TAG = DataBaseManager::class.java.name
@@ -25,7 +32,7 @@ abstract class DataBaseManager : RoomDatabase() {
         private var instance: DataBaseManager? = null
 
 
-        //TODO Dont reference TooboxApp conext as this will create a memory leak
+        //TODO Don't reference ToolboxApp context as this will create a memory leak
         @Synchronized
         fun getInstance(): DataBaseManager {
             if (instance == null)

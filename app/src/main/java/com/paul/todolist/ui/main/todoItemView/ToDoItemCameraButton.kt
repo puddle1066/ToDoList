@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @Composable
-fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit,) {
+fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
 
     val animationDuration = 100
     val scaleDown = 0.9f

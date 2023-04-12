@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
@@ -16,12 +18,14 @@ import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
+import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.menuOptionToDoList
 import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
+import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -33,12 +37,17 @@ fun ToDoItemView(model: ToDoItemModel) {
     val addButtonVisibility = remember { mutableStateOf(false) }
     val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
 
-    val title =
-        stringResource(R.string.ToDo_item) + " -  " + model.getListTitle()
+    val title = stringResource(R.string.ToDo_item) + " -  " + model.getListTitle()
 
     val voiceState by model.voiceToText.state.collectAsState()
+    val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
 
     model.loadData()
+
+    toDoImageData.clear()
+    model.getItemId {
+        toDoImageData.swapList(model.getToDoImages(it))
+    }
 
     ToDoListTheme {
         Scaffold(
@@ -62,7 +71,6 @@ fun ToDoItemView(model: ToDoItemModel) {
                     .fillMaxHeight()
                     .background(MaterialTheme.colorScheme.background)
             ) {
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -71,7 +79,6 @@ fun ToDoItemView(model: ToDoItemModel) {
                 ) {
                     ToDoInputText(
                         model,
-
                         stringResource(R.string.ToDo_Task_description),
                         voiceState,
                         onFinished = {
@@ -92,20 +99,31 @@ fun ToDoItemView(model: ToDoItemModel) {
 
                 ToDoChangeListDropDown(model, addButtonVisibility)
 
-
                 if (model.isPhotoCaptureEnabled) {
                     Spacer(Modifier.height(1.dp))
                     ToDoItemCameraButton(
-                        onPictureTaken = {
-                            //TODO add bitmap dynamically
+                        onPictureTaken = { bitmap ->
+                            model.insertToDoImage(bitmap)
+
+                            toDoImageData.clear()
+                            model.getItemId { itemID ->
+                                toDoImageData.swapList(model.getToDoImages(itemID))
+
+                            }
                         }
                     )
                 }
 
-                if(addButtonVisibility.value) {
-                    ToDoItemAddButton(model, voiceState)
+                LazyColumn {
+                    itemsIndexed(toDoImageData) { _, item ->
+                        ToDoImageitem(item) { imageData: ToDoImageData, delete: Boolean ->
+                        }
+                    }
                 }
 
+                if (addButtonVisibility.value) {
+                    ToDoItemAddButton(model, voiceState)
+                }
             }
         }
     }

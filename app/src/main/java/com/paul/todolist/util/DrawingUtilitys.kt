@@ -15,7 +15,8 @@ fun dpToPx(dp: Float): Float {
         LocalContext.current.applicationContext.getResources().getDisplayMetrics()
     return dp * (metrics.densityDpi / 160f)
 }
- fun convertImageProxyToBitmap(image: ImageProxy): Bitmap {
+
+fun convertImageProxyToBitmap(image: ImageProxy): Bitmap {
     val byteBuffer: ByteBuffer = image.planes[0].buffer
     byteBuffer.rewind()
     val bytes = ByteArray(byteBuffer.capacity())
