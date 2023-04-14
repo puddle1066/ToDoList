@@ -130,4 +130,16 @@ class RoomDataProvider @Inject constructor() {
         }
     }
 
+    suspend fun deleteAllToDoImages(itemId: String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ImageDataDao().deleteAllImagesForItem(itemId)
+        }
+    }
+
+    suspend fun deleteToDoImage(key: String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ImageDataDao().deleteImage(key)
+        }
+    }
+
 }

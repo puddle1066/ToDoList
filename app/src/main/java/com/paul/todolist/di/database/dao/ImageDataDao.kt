@@ -11,5 +11,8 @@ interface ImageDataDao {
     @Query("SELECT * FROM ToDoImageData where itemId = :itemId")
     fun getItemImages(itemId: String): List<ToDoImageData>
 
+    @Query("DELETE FROM ToDoImageData where itemId = :itemId")
+    fun deleteAllImagesForItem(itemId: String)
 
-}
+    @Query("DELETE FROM ToDoImageData where key = :key")
+    fun deleteImage(key: String)}

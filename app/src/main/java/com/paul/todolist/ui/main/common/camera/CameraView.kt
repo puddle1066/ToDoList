@@ -1,10 +1,12 @@
 package com.paul.todolist.ui.main.common.camera
 
+import android.annotation.SuppressLint
+import android.util.Size
 import androidx.camera.core.*
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todolist.ui.main.MainView.Companion.cameraProvider
 import java.util.concurrent.Executor
 
+@SuppressLint("RestrictedApi")
 @Composable
 fun CameraView(
     executor: Executor,
@@ -40,7 +43,11 @@ fun CameraView(
 
     val preview = Preview.Builder().build()
     val previewView = remember { PreviewView(context) }
-    val imageCapture: ImageCapture = remember { ImageCapture.Builder().build() }
+    val imageCapture: ImageCapture = remember {
+        ImageCapture
+            .Builder().setDefaultResolution(Size(480, 640))
+            .build()
+    }
     val cameraSelector = CameraSelector.Builder()
         .requireLensFacing(lensFacing)
         .build()
@@ -61,19 +68,21 @@ fun CameraView(
     if (!finished.value) {
         Box(
             contentAlignment = Alignment.BottomCenter,
-            modifier = Modifier
-                .fillMaxSize()
-                .border(
-                    width = 4.dp,
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(15.dp)
-                )
-                .padding(5.dp, 170.dp, 5.dp, 100.dp)
         )
         {
-            AndroidView(
-                { previewView }
-            )
+            Column(
+                modifier = Modifier
+                    .border(
+                        width = 4.dp,
+                        color = MaterialTheme.colorScheme.surface,
+                        shape = RoundedCornerShape(15.dp)
+                    )
+                    .padding(5.dp, 55.dp, 5.dp, 55.dp)
+            ) {
+                AndroidView(
+                    { previewView }
+                )
+            }
 
             IconButton(
                 modifier = Modifier.padding(bottom = 5.dp),

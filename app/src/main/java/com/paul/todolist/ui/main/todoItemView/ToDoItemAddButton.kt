@@ -27,6 +27,7 @@ fun ToDoItemAddButton(
                 } else {
                     model.update()
                 }
+                model.addPhotos()
                 voiceState.spokenText = ""
                 showViewWithBackStack(ToDoScreens.ToDoListView.name)
             },

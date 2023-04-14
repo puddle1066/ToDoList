@@ -65,56 +65,38 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
             }
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
+                    .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 20.dp, 10.dp, 0.dp)
-                        .background(MaterialTheme.colorScheme.background)
-                ) {
-                    ToDoInputText(
-                        model,
-                        stringResource(R.string.ToDo_Task_description),
-                        voiceState,
-                        onFinished = {
-                            model.todoItem.description = it
-                            if (model.todoItem.description.isEmpty()) {
-                                addButtonVisibility.value = false
-                            } else {
-                                addButtonVisibility.value = model.hasDataChanges()
-                            }
-                        }
-                    )
+            )
+            {
+                item {
+                    ToDoInputName(model, addButtonVisibility, voiceState)
+                }
+
+                item {
+                    ToDoChangeListDropDown(model, addButtonVisibility)
                 }
 
                 if (model.isSpeechToTextEnabled) {
-                    Spacer(Modifier.height(1.dp))
-                    ToDoSpeechButton(model, voiceState)
+                    item {
+                        Spacer(Modifier.height(1.dp))
+                        ToDoSpeechButton(model, voiceState)
+                    }
                 }
 
-                ToDoChangeListDropDown(model, addButtonVisibility)
-
-                if (model.isPhotoCaptureEnabled) {
-                    Spacer(Modifier.height(1.dp))
-                    ToDoItemCameraButton(
-                        onPictureTaken = { bitmap ->
-                            model.insertToDoImage(bitmap)
-
-                            toDoImageData.clear()
-                            model.getItemId { itemID ->
-                                toDoImageData.swapList(model.getToDoImages(itemID))
-
+                if (model.isPhotoCaptureEnabled && !model.isNewItem()) {
+                    item {
+                        Spacer(Modifier.height(1.dp))
+                        ToDoItemCameraButton(
+                            onPictureTaken = { bitmap ->
+                                model.addedBitmapList.add(bitmap)
+                                addButtonVisibility.value = true
                             }
-                        }
-                    )
-                }
+                        )
+                    }
 
-                LazyColumn {
                     itemsIndexed(toDoImageData) { _, item ->
                         ToDoImageitem(item) { imageData: ToDoImageData, delete: Boolean ->
                         }
@@ -122,7 +104,9 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
 
                 if (addButtonVisibility.value) {
-                    ToDoItemAddButton(model, voiceState)
+                    item {
+                        ToDoItemAddButton(model, voiceState)
+                    }
                 }
             }
         }

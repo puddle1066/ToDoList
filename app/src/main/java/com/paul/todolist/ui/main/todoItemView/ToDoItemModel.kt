@@ -7,10 +7,12 @@ import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.ui.main.common.StorageViewModel
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
+import com.paul.todolist.util.encodeTobase64
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
+
 
 @HiltViewModel
 open class ToDoItemModel @Inject constructor(
@@ -26,6 +28,8 @@ open class ToDoItemModel @Inject constructor(
     var isPhotoCaptureEnabled = true
 
     lateinit var voiceToText: VoiceToTextParser
+
+    var addedBitmapList = ArrayList<Bitmap>()
 
     fun loadData() {
         getItemId {
@@ -85,6 +89,20 @@ open class ToDoItemModel @Inject constructor(
         }
     }
 
+    fun addPhotos() {
+        runBlocking {
+            addedBitmapList.forEach { bitmap ->
+                encodeTobase64(bitmap)?.let {
+                    ToDoImageData(
+                        UUID.randomUUID().toString(),
+                        todoItem.itemId,
+                        it
+                    )
+                }?.let { dataBaseProvider.insertToDoImage(it) }
+            }
+        }
+    }
+
     fun getListOfLists(): HashMap<String, String> {
         var list: HashMap<String, String> = HashMap<String, String>()
         runBlocking {
@@ -98,18 +116,13 @@ open class ToDoItemModel @Inject constructor(
 
     fun getToDoImages(itemId: String): List<ToDoImageData> {
         var list = listOf<ToDoImageData>()
-        getListId({
-            runBlocking {
-                list = dataBaseProvider.getToDoImages(itemId)
+        runBlocking {
+            list = dataBaseProvider.getToDoImages(itemId)
+            if (list.isEmpty()) {
+                list = listOf<ToDoImageData>()
             }
         }
-        )
         return list
     }
 
-    fun insertToDoImage(image: Bitmap) {
-        runBlocking {
-            dataBaseProvider.insertToDoImage(ToDoImageData(todoItem.itemId, image))
-        }
-    }
 }
