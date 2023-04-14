@@ -2,9 +2,14 @@ package com.paul.todolist.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 
+fun Bitmap.rotate(degrees: Float): Bitmap {
+    val matrix = Matrix().apply { postRotate(degrees) }
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
 
 fun encodeTobase64(image: Bitmap): String? {
     val baos = ByteArrayOutputStream()

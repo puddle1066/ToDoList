@@ -15,4 +15,5 @@ interface ImageDataDao {
     fun deleteAllImagesForItem(itemId: String)
 
     @Query("DELETE FROM ToDoImageData where key = :key")
-    fun deleteImage(key: String)}
+    fun deleteImage(key: String)
+}

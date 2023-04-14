@@ -13,7 +13,6 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
 
-
 @HiltViewModel
 open class ToDoItemModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
@@ -44,6 +43,7 @@ open class ToDoItemModel @Inject constructor(
             }
         }
         getListId { todoItem.listID = it }
+        addedBitmapList.clear()
     }
 
     fun hasDataChanges(): Boolean {
@@ -124,5 +124,4 @@ open class ToDoItemModel @Inject constructor(
         }
         return list
     }
-
 }

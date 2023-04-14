@@ -27,6 +27,8 @@ import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
+import com.paul.todolist.util.encodeTobase64
+import com.paul.todolist.util.rotate
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -87,19 +89,31 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
 
                 if (model.isPhotoCaptureEnabled && !model.isNewItem()) {
+                    itemsIndexed(toDoImageData) { _, item ->
+                        ToDoImageitem(item) {imageData: ToDoImageData, delete: Boolean ->
+                        }
+                    }
+                }
+
+                if (model.isPhotoCaptureEnabled && !model.isNewItem()) {
                     item {
                         Spacer(Modifier.height(1.dp))
                         ToDoItemCameraButton(
                             onPictureTaken = { bitmap ->
-                                model.addedBitmapList.add(bitmap)
+
+                                //rotate the bitmap as the screen is fixed portrait
+                                var rotated = bitmap.rotate(90f)
+
+                                model.addedBitmapList.add(rotated)
                                 addButtonVisibility.value = true
+                                encodeTobase64(rotated)?.let { bitmapString ->
+                                    ToDoImageData(
+                                        "", "",
+                                        bitmapString
+                                    )
+                                }?.let { it -> toDoImageData.add(it) }
                             }
                         )
-                    }
-
-                    itemsIndexed(toDoImageData) { _, item ->
-                        ToDoImageitem(item) { imageData: ToDoImageData, delete: Boolean ->
-                        }
                     }
                 }
 

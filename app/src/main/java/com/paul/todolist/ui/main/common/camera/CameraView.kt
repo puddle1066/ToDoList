@@ -45,7 +45,8 @@ fun CameraView(
     val previewView = remember { PreviewView(context) }
     val imageCapture: ImageCapture = remember {
         ImageCapture
-            .Builder().setDefaultResolution(Size(480, 640))
+            .Builder()
+            .setDefaultResolution(Size(480, 640))
             .build()
     }
     val cameraSelector = CameraSelector.Builder()
