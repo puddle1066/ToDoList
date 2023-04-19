@@ -29,7 +29,7 @@ import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
-import com.paul.todolist.ui.main.common.showView
+import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.InputField
 
@@ -87,7 +87,7 @@ fun ListItemsView(model: ListItemsModel) {
                     scaffoldState = scaffoldState,
                     scope = coroutineScope
                 ) {
-                    showView(it.link)
+                    showViewWithBackStack(it.link)
                 }
             }
 

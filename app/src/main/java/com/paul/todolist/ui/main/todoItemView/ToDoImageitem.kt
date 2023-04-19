@@ -9,13 +9,11 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Fullscreen
+import androidx.compose.material.icons.filled.OpenInFull
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,9 +21,9 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.util.decodeBase64
-import com.paul.todoList.R
 
 
 @Composable
@@ -34,10 +32,6 @@ fun ToDoImageitem(
     onDeleteClick: (ToDoImageData) -> Unit,
     onExpandClick: (ToDoImageData) -> Unit
 ) {
-
-    val colorUnSelected = MaterialTheme.colorScheme.primary
-    val backgroundColor = remember { mutableStateOf(colorUnSelected) }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -51,7 +45,7 @@ fun ToDoImageitem(
                     .clip(RoundedCornerShape(15.dp))
                     .border(
                         width = 4.dp,
-                        color = backgroundColor.value,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(15.dp)
                     ),
                 contentScale = ContentScale.FillBounds,
@@ -70,7 +64,7 @@ fun ToDoImageitem(
                     .align(Alignment.TopStart)
                     .border(
                         width = 2.dp,
-                        color = backgroundColor.value,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(15.dp)
                     ),
             ) {
@@ -91,12 +85,12 @@ fun ToDoImageitem(
                     .align(Alignment.TopEnd)
                     .border(
                         width = 2.dp,
-                        color = backgroundColor.value,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(15.dp)
                     ),
             ) {
                 Icon(
-                    Icons.Filled.Fullscreen,
+                    Icons.Filled.OpenInFull,
                     contentDescription = stringResource(id = R.string.missing_resource)
                 )
             }

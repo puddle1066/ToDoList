@@ -25,7 +25,6 @@ import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
-import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
@@ -77,7 +76,7 @@ fun ToDoListView(model: ToDoListModel) {
                     scaffoldState = scaffoldState,
                     scope = scope
                 ) {
-                    showView(it.link)
+                    showViewWithBackStack(it.link)
                 }
             },
 

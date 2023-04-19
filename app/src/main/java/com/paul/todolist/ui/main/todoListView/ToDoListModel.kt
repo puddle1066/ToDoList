@@ -96,6 +96,7 @@ open class ToDoListModel @Inject constructor(
 
     fun deleteItem(itemId: String) {
         runBlocking {
+            dataBaseProvider.deleteAllToDoImages(itemId)
             dataBaseProvider.deleteItem(itemId)
         }
     }

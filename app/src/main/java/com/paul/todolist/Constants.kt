@@ -17,6 +17,7 @@ enum class ToDoScreens(@StringRes val title: Int) {
     ToDoItemView(R.string.ToDo_item),
     listsView(R.string.lists),
     SettingsView(title = R.string.settings),
+    ImageItemView(title = R.string.image_view),
 }
 
 val menuOptionSettings =
@@ -30,6 +31,7 @@ const val PREFERENCES_NAME = "user_preferences"
 
 val LIST_ID_KEY = stringPreferencesKey("selectedlistId")
 val ITEM_ID_KEY = stringPreferencesKey("itemId")
+val IMAGE_KEY = stringPreferencesKey("image_key")
 
 val PLEASE_SELECT_STRING = "Please Select"
 val INPUT_LIST_NAME = "Input List Name"

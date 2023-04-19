@@ -6,6 +6,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.imageView.ItemImageModel
+import com.paul.todolist.ui.main.imageView.ItemImageView
 import com.paul.todolist.ui.main.listItemsView.ListItemsModel
 import com.paul.todolist.ui.main.listItemsView.ListItemsView
 import com.paul.todolist.ui.main.settingsView.SettingsView
@@ -20,7 +22,8 @@ import com.paul.todolist.util.screen
 fun NavigationFactory(
     toDoListModel: ToDoListModel,
     listItemsModel: ListItemsModel,
-    toDoItemModel: ToDoItemModel
+    toDoItemModel: ToDoItemModel,
+    itemImageModel: ItemImageModel
 ) {
 
     MainView.navHostController = rememberAnimatedNavController()
@@ -34,6 +37,7 @@ fun NavigationFactory(
         screen(ToDoScreens.ToDoItemView.name) { ToDoItemView(toDoItemModel) }
         screen(ToDoScreens.SettingsView.name) { SettingsView() }
         screen(ToDoScreens.listsView.name) { ListItemsView(listItemsModel) }
+        screen(ToDoScreens.ImageItemView.name) { ItemImageView(itemImageModel) }
     }
 }
 

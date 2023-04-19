@@ -124,4 +124,10 @@ open class ToDoItemModel @Inject constructor(
         }
         return list
     }
+
+    fun deleteImage(key: String) {
+        runBlocking {
+            dataBaseProvider.deleteToDoImage(key)
+        }
+    }
 }
