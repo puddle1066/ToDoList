@@ -24,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.paul.todoList.R
 import com.paul.todolist.ui.main.MainView.Companion.cameraProvider
 import java.util.concurrent.Executor
 
@@ -98,7 +100,7 @@ fun CameraView(
                 content = {
                     Icon(
                         imageVector = Icons.Sharp.Lens,
-                        contentDescription = "Take picture",
+                        contentDescription = stringResource(id = R.string.missing_resource),
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .size(100.dp)

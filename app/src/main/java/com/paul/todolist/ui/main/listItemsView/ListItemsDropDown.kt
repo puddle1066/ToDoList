@@ -13,8 +13,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.theme.typography
@@ -53,7 +55,7 @@ fun ListItemsDropDown(
                         .width(30.dp)
                         .height(30.dp),
                     imageVector = Icons.Filled.Menu,
-                    contentDescription = "list",
+                    contentDescription = stringResource(id = R.string.missing_resource),
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Spacer(modifier = Modifier.width(10.dp))
@@ -73,7 +75,7 @@ fun ListItemsDropDown(
                         .height(40.dp)
                         .background(MaterialTheme.colorScheme.primary),
                     imageVector = Icons.Filled.ExpandMore,
-                    contentDescription = "menu",
+                    contentDescription = stringResource(id = R.string.missing_resource),
                     tint = MaterialTheme.colorScheme.secondary
                 )
             }
@@ -100,7 +102,7 @@ fun ListItemsDropDown(
                                 .width(30.dp)
                                 .height(30.dp),
                             imageVector = Icons.Filled.Menu,
-                            contentDescription = "list",
+                            contentDescription = stringResource(id = R.string.missing_resource),
                             tint = MaterialTheme.colorScheme.secondary
                         )
                         Spacer(modifier = Modifier.width(10.dp))

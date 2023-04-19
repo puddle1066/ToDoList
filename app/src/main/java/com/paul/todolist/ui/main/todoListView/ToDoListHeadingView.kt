@@ -9,7 +9,9 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.*
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.listItemsView.ListItemsDropDown
@@ -42,7 +44,7 @@ fun ToDoListTopBar(
         ) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
-                contentDescription = "menu",
+                contentDescription = stringResource(id = R.string.missing_resource),
                 modifier = Modifier
                     .width(30.dp)
                     .height(50.dp)

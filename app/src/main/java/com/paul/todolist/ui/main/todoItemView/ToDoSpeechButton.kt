@@ -17,7 +17,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.SPEECH_LANGUAGE
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParserState
 import kotlinx.coroutines.delay
@@ -77,7 +79,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                             .height(50.dp)
                             .width(50.dp),
                         imageVector = Icons.Rounded.Stop,
-                        contentDescription = "Image"
+                        contentDescription = stringResource(id = R.string.missing_resource)
                     )
                 } else {
                     Icon(
@@ -85,7 +87,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                             .height(50.dp)
                             .width(50.dp),
                         imageVector = Icons.Rounded.Mic,
-                        contentDescription = "Image"
+                        contentDescription = stringResource(id = R.string.missing_resource)
                     )
                 }
             }

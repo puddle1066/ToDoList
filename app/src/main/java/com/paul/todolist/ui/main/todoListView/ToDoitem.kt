@@ -95,15 +95,17 @@ fun ToDoItem(
                     color = MaterialTheme.colorScheme.secondary,
                 )
 
-                Text(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .padding(10.dp, 10.dp, 20.dp, 10.dp),
-                    text = listName,
-                    style = typography.titleSmall,
-                    color = MaterialTheme.colorScheme.surface,
-                    textAlign = TextAlign.End
-                )
+                if (listName.isNotBlank()) {
+                    Text(
+                        modifier = Modifier
+                            .weight(0.5f)
+                            .padding(10.dp, 10.dp, 20.dp, 10.dp),
+                        text = listName,
+                        style = typography.titleSmall,
+                        color = MaterialTheme.colorScheme.surface,
+                        textAlign = TextAlign.End
+                    )
+                }
             }
 
             Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)

@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.ui.theme.typography
 
 @Composable
@@ -31,7 +32,7 @@ fun DrawerItemMenu(
         ) {
             Icon(
                 imageVector = drawItem.icon,
-                contentDescription = "menuIcon",
+                contentDescription = stringResource(id = R.string.missing_resource),
                 modifier = Modifier
                     .width(30.dp)
                     .height(40.dp),

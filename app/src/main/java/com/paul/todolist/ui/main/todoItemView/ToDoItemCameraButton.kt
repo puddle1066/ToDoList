@@ -21,7 +21,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.ui.main.common.camera.CameraView
 import com.paul.todolist.util.convertImageProxyToBitmap
 import kotlinx.coroutines.delay
@@ -101,7 +103,7 @@ fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
                         .height(50.dp)
                         .width(50.dp),
                     imageVector = Icons.Rounded.PhotoCamera,
-                    contentDescription = "Image"
+                    contentDescription = stringResource(id = R.string.missing_resource)
                 )
             }
         }

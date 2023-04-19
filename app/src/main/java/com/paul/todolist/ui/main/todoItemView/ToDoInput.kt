@@ -52,7 +52,7 @@ fun ToDoInputText(
                     text = fieldTitle,
                     style = typography.bodyLarge,
                     textAlign = TextAlign.Left,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.surface
                 )
             },
 
@@ -87,8 +87,8 @@ fun ToDoInputText(
             ),
 
             colors = TextFieldDefaults.textFieldColors(
-                focusedTextColor = MaterialTheme.colorScheme.surface,
-                unfocusedTextColor = MaterialTheme.colorScheme.surface,
+                focusedTextColor = MaterialTheme.colorScheme.secondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.secondary,
                 containerColor = MaterialTheme.colorScheme.primary,
                 cursorColor = MaterialTheme.colorScheme.secondary
             ),

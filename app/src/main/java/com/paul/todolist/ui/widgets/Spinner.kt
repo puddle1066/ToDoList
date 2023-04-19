@@ -38,6 +38,7 @@ fun Spinner(
         Column {
             TextField(
                 modifier = Modifier
+                    .background(MaterialTheme.colorScheme.primary)
                     .weight(0.90f)
                     .fillMaxWidth()
                     .height(40.dp),
@@ -48,13 +49,15 @@ fun Spinner(
                         text = listTitle,
                         style = typography.bodyLarge,
                         textAlign = TextAlign.Left,
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.surface,
                     )
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    containerColor = MaterialTheme.colorScheme.background
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedTextColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    cursorColor = MaterialTheme.colorScheme.secondary
                 ),
-
                 trailingIcon = {
                     Icon(
                         Icons.Outlined.ArrowDropDown,
@@ -63,7 +66,7 @@ fun Spinner(
                             .weight(0.10f)
                             .width(40.dp)
                             .height(40.dp)
-                            .background(MaterialTheme.colorScheme.background)
+                            .background(MaterialTheme.colorScheme.primary)
                             .clickable(
                                 onClick = {
                                     expanded = !expanded

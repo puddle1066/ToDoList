@@ -12,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paul.todoList.R
 import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -37,7 +39,7 @@ fun StandardTopBar(title: String, scope: CoroutineScope, scaffoldState: Scaffold
         ) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
-                contentDescription = "menu",
+                contentDescription = stringResource(id = R.string.missing_resource),
                 modifier = Modifier
                     .width(30.dp)
                     .height(50.dp)

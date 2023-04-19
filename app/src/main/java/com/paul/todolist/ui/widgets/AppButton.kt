@@ -88,8 +88,8 @@ fun AppButton(
     buttonVisible: Boolean = true
 ) {
 
-    val animationDuration: Int = 100
-    val scaleDown: Float = 0.9f
+    val animationDuration = 100
+    val scaleDown = 0.9f
     val coroutineScope = rememberCoroutineScope()
     val scale = remember { Animatable(1f) }
 
@@ -129,7 +129,7 @@ fun AppButton(
                         .height(50.dp)
                         .width(50.dp),
                     imageVector = imageVector,
-                    contentDescription = "Image"
+                    contentDescription = stringResource(id = R.string.missing_resource)
                 )
             }
 
@@ -139,7 +139,7 @@ fun AppButton(
                         .height(50.dp)
                         .width(50.dp),
                     painter = painterResource(id = drawingID),
-                    contentDescription = "exit app",
+                    contentDescription = stringResource(id = R.string.missing_resource),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }

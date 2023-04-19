@@ -1,6 +1,5 @@
 package com.paul.todolist.ui.widgets
 
-import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -88,7 +87,7 @@ fun NumberPicker(
 
         val arrowColor = MaterialTheme.colors.onSecondary.copy(alpha = ContentAlpha.disabled)
 
-        Arrow(direction = DrawerArrowDrawable.ArrowDirection.UP, tint = arrowColor)
+   //     Arrow(direction = DrawerArrowDrawable.ArrowDirection.UP, tint = arrowColor)
 
         Spacer(modifier = Modifier.height(spacing))
 
@@ -121,7 +120,7 @@ fun NumberPicker(
 
         Spacer(modifier = Modifier.height(spacing))
 
-        Arrow(direction = DrawerArrowDrawable.ArrowDirection.DOWN, tint = arrowColor)
+      //  Arrow(direction = DrawerArrowDrawable.ArrowDirection.DOWN, tint = arrowColor)
     }
 }
 

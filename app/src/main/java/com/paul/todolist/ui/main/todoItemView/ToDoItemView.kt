@@ -80,6 +80,13 @@ fun ToDoItemView(model: ToDoItemModel) {
                 item {
                     ToDoChangeListDropDown(model, addButtonVisibility)
                 }
+//TODO Implement
+//                item {
+//                    NumberPicker(
+//                        state = remember { mutableStateOf(9) },
+//                        range = 0..10
+//                    )
+//                }
 
                 if (model.isSpeechToTextEnabled) {
                     item {
@@ -90,8 +97,15 @@ fun ToDoItemView(model: ToDoItemModel) {
 
                 if (model.isPhotoCaptureEnabled && !model.isNewItem()) {
                     itemsIndexed(toDoImageData) { _, item ->
-                        ToDoImageitem(item) {imageData: ToDoImageData, delete: Boolean ->
-                        }
+                        ToDoImageitem(
+                            item,
+                            onDeleteClick = {
+                                //TODO Implement
+                            },
+                            onExpandClick = {
+                                //TODO Implement
+                            }
+                        )
                     }
                 }
 
@@ -102,7 +116,7 @@ fun ToDoItemView(model: ToDoItemModel) {
                             onPictureTaken = { bitmap ->
 
                                 //rotate the bitmap as the screen is fixed portrait
-                                var rotated = bitmap.rotate(90f)
+                                val rotated = bitmap.rotate(90f)
 
                                 model.addedBitmapList.add(rotated)
                                 addButtonVisibility.value = true
