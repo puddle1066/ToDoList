@@ -81,6 +81,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                         imageVector = Icons.Rounded.Stop,
                         contentDescription = stringResource(id = R.string.missing_resource)
                     )
+                    backgroundColor.value = colorSelected
                 } else {
                     Icon(
                         modifier = Modifier
@@ -89,6 +90,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                         imageVector = Icons.Rounded.Mic,
                         contentDescription = stringResource(id = R.string.missing_resource)
                     )
+                    backgroundColor.value = colorUnSelected
                 }
             }
         }

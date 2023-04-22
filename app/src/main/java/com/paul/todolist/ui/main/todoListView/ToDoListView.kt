@@ -42,7 +42,7 @@ fun ToDoListView(model: ToDoListModel) {
 
     //Set a default value for the start of the list if we don't have one..
     model.getListId {
-        if (it.isEmpty()) {
+        if (it.isBlank()) {
             model.setListId(model.getAllSortedASC()[0].listId)
         }
 

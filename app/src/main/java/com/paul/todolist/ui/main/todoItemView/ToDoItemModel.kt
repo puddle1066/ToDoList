@@ -10,7 +10,7 @@ import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paul.todolist.util.encodeTobase64
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,11 +49,11 @@ open class ToDoItemModel @Inject constructor(
     fun hasDataChanges(): Boolean {
         var hasChanges = true
         runBlocking {
-            val dbData = dataBaseProvider.getToDoItem(todoItem.itemId)
-            if (dbData == null) {
+            if (dataBaseProvider.getToDoItem(todoItem.itemId) == null) {
                 hasChanges = true
             } else {
-                hasChanges = !dbData.equals(todoItem.toString())
+                hasChanges =
+                    !dataBaseProvider.getToDoItem(todoItem.itemId).equals(todoItem.toString())
             }
         }
         return hasChanges
