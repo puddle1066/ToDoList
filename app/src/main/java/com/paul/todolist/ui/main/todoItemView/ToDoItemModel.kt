@@ -5,6 +5,7 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.data.ToDoImageData
+import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.StorageViewModel
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paul.todolist.util.encodeTobase64
@@ -20,7 +21,7 @@ open class ToDoItemModel @Inject constructor(
 
 ) : StorageViewModel(dataStoreProvider) {
 
-    var todoItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
+    var todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
 
     var todoItemExists: Boolean = true
     var isSpeechToTextEnabled = false
@@ -31,63 +32,57 @@ open class ToDoItemModel @Inject constructor(
     var addedBitmapList = ArrayList<Bitmap>()
 
     fun loadData() {
-        getItemId {
             runBlocking {
-                if (it.isEmpty()) {
-                    todoItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
+                if (MainView.itemID.isBlank()) {
+                    todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
                     todoItemExists = false
                 } else {
                     todoItemExists = true
-                    todoItem = dataBaseProvider.getToDoItem(it)
+                    todoDataItem = dataBaseProvider.getToDoItem(MainView.itemID)
                 }
             }
-        }
-        getListId { todoItem.listID = it }
         addedBitmapList.clear()
     }
 
     fun hasDataChanges(): Boolean {
         var hasChanges = true
         runBlocking {
-            if (dataBaseProvider.getToDoItem(todoItem.itemId) == null) {
+            if (dataBaseProvider.getToDoItem(todoDataItem.itemId) == null) {
                 hasChanges = true
             } else {
                 hasChanges =
-                    !dataBaseProvider.getToDoItem(todoItem.itemId).equals(todoItem.toString())
+                    !dataBaseProvider.getToDoItem(todoDataItem.itemId)
+                        .equals(todoDataItem.toString())
             }
         }
         return hasChanges
     }
 
     fun isNewItem(): Boolean {
-        return todoItem.listID.isEmpty()
+        return todoDataItem.listID.isEmpty()
     }
 
     fun getListTitle(): String {
         var title = ""
-        getListId(
-            {
-                runBlocking {
-                    title = dataBaseProvider.getListTitle(it)
-                }
-            }
-        )
+        runBlocking {
+            title = dataBaseProvider.getListTitle(MainView.listId)
+        }
         return title
     }
 
     fun insert() {
-        todoItem.description = todoItem.description.replaceFirstChar(Char::uppercase)
-
+        todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
+        todoDataItem.listID = MainView.listId
         runBlocking {
-            todoItem.display_sequence = dataBaseProvider.getLastSequence()
-            dataBaseProvider.insertToDo(todoItem)
+            todoDataItem.display_sequence = dataBaseProvider.getLastSequence() + 1
+            dataBaseProvider.insertToDo(todoDataItem)
         }
     }
 
     fun update() {
-        todoItem.description = todoItem.description.replaceFirstChar(Char::uppercase)
+        todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
         runBlocking {
-            dataBaseProvider.updateToDo(todoItem)
+            dataBaseProvider.updateToDo(todoDataItem)
         }
     }
 
@@ -97,7 +92,7 @@ open class ToDoItemModel @Inject constructor(
                 encodeTobase64(bitmap)?.let {
                     ToDoImageData(
                         UUID.randomUUID().toString(),
-                        todoItem.itemId,
+                        todoDataItem.itemId,
                         it
                     )
                 }?.let { dataBaseProvider.insertToDoImage(it) }

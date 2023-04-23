@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
+import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.util.decodeBase64
 
@@ -31,10 +32,8 @@ fun ItemImageView(model: ItemImageModel) {
     //Create a placeholder image until we can populate the image
     val image: Bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
     val imageState = remember { mutableStateOf(image) }
-    model.getImage {
-        decodeBase64(it)?.let {
-            imageState.value = it
-        }
+    decodeBase64(MainView.image)?.let {
+        imageState.value = it
     }
 
     ToDoListTheme {

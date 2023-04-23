@@ -130,7 +130,11 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getLastSequence(): Int {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().ToDoDao().getLastSequence().display_sequence
+            if (DataBaseManager.getInstance().ToDoDao().getLastSequence() != null) {
+                DataBaseManager.getInstance().ToDoDao().getLastSequence().display_sequence
+            } else {
+                0
+            }
         }
     }
 

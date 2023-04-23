@@ -19,6 +19,7 @@ import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoImageData
+import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
@@ -39,9 +40,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.loadData()
 
     toDoImageData.clear()
-    model.getItemId {
-        toDoImageData.swapList(model.getToDoImages(it))
-    }
+    toDoImageData.swapList(model.getToDoImages(MainView.itemID))
 
     ToDoListTheme {
         Column() {
@@ -97,13 +96,11 @@ fun ToDoItemView(model: ToDoItemModel) {
                                 model.deleteImage(it.key)
 
                                 toDoImageData.clear()
-                                model.getItemId {
-                                    toDoImageData.swapList(model.getToDoImages(it))
-                                }
+                                toDoImageData.swapList(model.getToDoImages(MainView.itemID))
                                 addUpdateButtonVisibility.value = true
                             },
                             onExpandClick = {
-                                model.setImage(it.image)
+                                MainView.image = it.image
                                 showViewWithBackStack(ToDoScreens.ImageItemView.name)
                             }
                         )

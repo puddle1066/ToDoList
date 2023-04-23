@@ -95,7 +95,7 @@ fun ToDoListView(model: ToDoListModel) {
                             ),
                         backgroundColor = MaterialTheme.colorScheme.primary,
                         onClick = {
-                            model.setItemId("")             //Clear Item ID as its a new item
+                            MainView.itemID = ""   //Clear Item ID as its a new item
                             showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                         }
                     )
@@ -172,8 +172,8 @@ fun ToDoListView(model: ToDoListModel) {
                                     deleteButtonVisible.value = model.deleteList.size != 0
                                 } else {
                                     if (todoItem.finishedDate == "0") {
-                                        model.setItemId(todoItem.itemId)
-                                        model.saveListId(todoItem.listID)
+                                        MainView.itemID = todoItem.itemId
+                                        MainView.listId = todoItem.listID
                                         showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                     } else {
                                         model.setFinishedDate(

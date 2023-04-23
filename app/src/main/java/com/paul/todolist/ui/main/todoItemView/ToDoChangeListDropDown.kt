@@ -2,7 +2,12 @@ package com.paul.todolist.ui.main.todoItemView
 
 import Spinner
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -30,7 +35,7 @@ fun ToDoChangeListDropDown(model: ToDoItemModel, addButtonVisibility: MutableSta
                 model.getListOfLists(),
                 model.getListTitle(),
                 {
-                    model.todoItem.listID = it
+                    model.todoDataItem.listID = it
                     addButtonVisibility.value = model.hasDataChanges()
                 },
                 listTitle = stringResource(R.string.move_to_list)

@@ -38,8 +38,6 @@ class MainView : ComponentActivity() {
         toDoListModel.getListId {
             listId = it
         }
-        toDoListModel.setItemId("")             //Clear any only cache
-        toDoListModel.setImage("")
 
         setContent {
             ToDoListTheme {
@@ -82,6 +80,7 @@ class MainView : ComponentActivity() {
 
         var listId: String = ""
         var itemID: String = ""
+        var image: String = ""
     }
 }
 
