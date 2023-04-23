@@ -27,7 +27,6 @@ import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
-import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -41,10 +40,6 @@ fun ToDoListView(model: ToDoListModel) {
 
 
     //Set a default value for the start of the list if we don't have one..
-    model.getListId {
-        if (it.isBlank()) {
-            model.setListId(model.getAllSortedASC()[0].listId)
-        }
 
         listDataItems.clear()
         listDataItems.swapList(model.getToDoList(it))

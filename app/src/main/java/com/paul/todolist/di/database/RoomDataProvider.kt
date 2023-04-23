@@ -45,12 +45,16 @@ class RoomDataProvider @Inject constructor() {
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun insertList(list: ListDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().insert(list)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun deleteItem(itemId: String) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().deleteItem(itemId)
@@ -65,6 +69,8 @@ class RoomDataProvider @Inject constructor() {
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun getListItem(listId: String): ListDataItem {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().getListItem(listId)
@@ -88,58 +94,83 @@ class RoomDataProvider @Inject constructor() {
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun getFinishedItems(): List<ToDoDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().getAllFinished()
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun insertToDo(toDoItem: ToDoDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().insert(toDoItem)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun updateToDo(toDoItem: ToDoDataItem) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().ToDoDao().insert(toDoItem)
+            DataBaseManager.getInstance().ToDoDao().update(toDoItem)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun setFinishedDate(itemId: String, finishedDate: String) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().setFinishedDate(itemId, finishedDate)
         }
     }
 
+    @Singleton
+    @Provides
+    suspend fun getLastSequence(): Int {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().ToDoDao().getLastSequence().display_sequence
+        }
+    }
+
+    @Singleton
+    @Provides
     suspend fun getToDoItem(itemId: String): ToDoDataItem {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().getToDoItem(itemId)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun insertToDoImage(toDoImage: ToDoImageData) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ImageDataDao().insert(toDoImage)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun getToDoImages(itemId: String): List<ToDoImageData> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ImageDataDao().getItemImages(itemId)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun deleteAllToDoImages(itemId: String) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ImageDataDao().deleteAllImagesForItem(itemId)
         }
     }
 
+    @Singleton
+    @Provides
     suspend fun deleteToDoImage(key: String) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ImageDataDao().deleteImage(key)
         }
     }
-
 }

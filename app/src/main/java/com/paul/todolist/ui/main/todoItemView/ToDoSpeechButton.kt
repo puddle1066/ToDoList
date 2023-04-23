@@ -63,6 +63,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                         backgroundColor.value = colorUnSelected
                     } else {
                         model.voiceToText.startListening(SPEECH_LANGUAGE)
+                        voiceState.spokenText = ""
                         backgroundColor.value = colorSelected
                     }
                 }

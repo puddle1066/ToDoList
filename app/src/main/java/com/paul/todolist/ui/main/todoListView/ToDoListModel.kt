@@ -28,6 +28,11 @@ open class ToDoListModel @Inject constructor(
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
     var deleteList = ArrayList<ToDoDataItem>()
 
+    init()
+    {
+
+    }
+
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
             lists = dataBaseProvider.getAllSortedASC()

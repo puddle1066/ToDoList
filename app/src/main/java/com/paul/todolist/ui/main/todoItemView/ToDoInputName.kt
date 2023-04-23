@@ -30,6 +30,7 @@ fun ToDoInputName(
             stringResource(R.string.ToDo_Task_description),
             voiceState,
             onFinished = {
+                voiceState.spokenText = ""
                 model.todoItem.description = it
                 if (model.todoItem.description.isEmpty()) {
                     addButtonVisibility.value = false

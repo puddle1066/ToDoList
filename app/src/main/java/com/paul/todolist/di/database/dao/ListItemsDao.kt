@@ -4,7 +4,7 @@ import androidx.room.*
 import com.paul.todolist.di.database.data.ListDataItem
 
 @Dao
-interface ListDao {
+interface ListItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(list: ListDataItem)
 

@@ -4,7 +4,7 @@ import androidx.room.*
 import com.paul.todolist.di.database.data.ToDoDataItem
 
 @Dao
-interface ToDoDao {
+interface ToDoItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDoDataItem: ToDoDataItem)
 
@@ -20,6 +20,8 @@ interface ToDoDao {
     @Query("SELECT * FROM ToDoItem where FinishedDate <> '0'")
     fun getAllFinished(): List<ToDoDataItem>
 
+    @Query("SELECT * FROM ToDoItem Order By display_sequence")
+    fun getLastSequence(): ToDoDataItem
 
     @Query("DELETE FROM ToDoItem where itemId = :itemId")
     fun deleteItem(itemId: String)

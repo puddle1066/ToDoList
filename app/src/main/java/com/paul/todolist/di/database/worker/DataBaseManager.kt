@@ -17,13 +17,13 @@ import java.util.*
         ListDataItem::class,
         ToDoDataItem::class,
         ToDoImageData::class
-    ], version = 2
+    ], version = 3
 )
 @TypeConverters(Converters::class)
 
 abstract class DataBaseManager : RoomDatabase() {
-    abstract fun listDao(): ListDao
-    abstract fun ToDoDao(): ToDoDao
+    abstract fun listDao(): ListItemsDao
+    abstract fun ToDoDao(): ToDoItemsDao
     abstract fun ImageDataDao(): ImageDataDao
 
     companion object {

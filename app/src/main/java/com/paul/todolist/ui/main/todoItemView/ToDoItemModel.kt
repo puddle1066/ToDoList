@@ -60,7 +60,7 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun isNewItem(): Boolean {
-        return todoItem.description.isEmpty()
+        return todoItem.listID.isEmpty()
     }
 
     fun getListTitle(): String {
@@ -77,7 +77,9 @@ open class ToDoItemModel @Inject constructor(
 
     fun insert() {
         todoItem.description = todoItem.description.replaceFirstChar(Char::uppercase)
+
         runBlocking {
+            todoItem.display_sequence = dataBaseProvider.getLastSequence()
             dataBaseProvider.insertToDo(todoItem)
         }
     }

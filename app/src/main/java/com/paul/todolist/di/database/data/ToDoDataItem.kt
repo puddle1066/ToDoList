@@ -9,6 +9,7 @@ data class ToDoDataItem(
     @PrimaryKey val itemId: String,
     @ColumnInfo(name = "ListId") var listID: String,
     @ColumnInfo(name = "description") var description: String = "",
-    @ColumnInfo(name = "DueDate") var dueDate: String = "0",
-    @ColumnInfo(name = "FinishedDate") var finishedDate: String = "0"
+    @ColumnInfo(name = "DueDate") var dueDate: String = "",
+    @ColumnInfo(name = "FinishedDate") var finishedDate: String = "",
+    @ColumnInfo(name = "display_sequence") var display_sequence: Int = 0
 )

@@ -12,10 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -36,14 +34,13 @@ fun ToDoInputText(
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     ToDoListTheme {
-        var rememberText by remember { mutableStateOf(model.todoItem.description) }
+        var textValue = model.todoItem.description
+        var textState = remember { mutableStateOf(textValue) }
         val keyboardController = LocalSoftwareKeyboardController.current
 
         if (!voiceState.isSpeaking && !voiceState.spokenText.isEmpty()) {
-            rememberText = voiceState.spokenText
-            onFinished(rememberText)
-        } else {
-            rememberText = model.todoItem.description
+            textState.value = voiceState.spokenText
+            onFinished(textState.value)
         }
 
         TextField(
@@ -72,27 +69,27 @@ fun ToDoInputText(
 
                 onDone = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
+                    onFinished(textState.value)
                 },
                 onGo = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
+                    onFinished(textState.value)
                 },
                 onNext = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
+                    onFinished(textState.value)
                 },
                 onPrevious = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
+                    onFinished(textState.value)
                 },
                 onSearch = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
+                    onFinished(textState.value)
                 },
                 onSend = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
+                    onFinished(textState.value)
                 },
             ),
 
@@ -104,9 +101,9 @@ fun ToDoInputText(
             ),
             textStyle = typography.bodyLarge,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
-            value = rememberText,
+            value = textState.value,
             onValueChange = {
-                rememberText = it
+                textState.value = it
             },
             singleLine = true,
         )
