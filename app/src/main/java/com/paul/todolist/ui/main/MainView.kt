@@ -35,6 +35,12 @@ class MainView : ComponentActivity() {
         val toDoItemModel: ToDoItemModel by viewModels()
         val imageItemModel: ItemImageModel by viewModels()
 
+        toDoListModel.getListId {
+            listId = it
+        }
+        toDoListModel.setItemId("")             //Clear any only cache
+        toDoListModel.setImage("")
+
         setContent {
             ToDoListTheme {
                 NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, imageItemModel)
@@ -73,6 +79,9 @@ class MainView : ComponentActivity() {
     companion object {
         lateinit var navHostController: NavHostController
         lateinit var cameraProvider: ProcessCameraProvider
+
+        var listId: String = ""
+        var itemID: String = ""
     }
 }
 

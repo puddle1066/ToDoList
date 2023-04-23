@@ -9,7 +9,7 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import kotlinx.coroutines.launch
 
 open class StorageViewModel(private val dataStoreProvider: DataStoreProvider) : BaseViewModel() {
-    fun setListId(listId: String) {
+    fun saveListId(listId: String) {
         viewModelScope.launch {
             dataStoreProvider.storeValue(LIST_ID_KEY, listId)
         }
@@ -23,9 +23,9 @@ open class StorageViewModel(private val dataStoreProvider: DataStoreProvider) : 
         }
     }
 
-    fun setItemId(listId: String) {
+    fun setItemId(itemId: String) {
         viewModelScope.launch {
-            dataStoreProvider.storeValue(ITEM_ID_KEY, listId)
+            dataStoreProvider.storeValue(ITEM_ID_KEY, itemId)
         }
     }
 

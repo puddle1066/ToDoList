@@ -23,10 +23,12 @@ import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
+import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -38,14 +40,16 @@ fun ToDoListView(model: ToDoListModel) {
     val deleteButtonVisible = remember { mutableStateOf(false) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
-
-    //Set a default value for the start of the list if we don't have one..
-
-        listDataItems.clear()
-        listDataItems.swapList(model.getToDoList(it))
-        isAddEnabled.value = !model.showListName()
-        isDeleteAllowed.value = model.showFinished
+    if (MainView.listId.isBlank()) {
+        MainView.listId = model.getAllSortedASC()[0].listId
+        model.saveListId(MainView.listId)
     }
+
+    listDataItems.clear()
+    listDataItems.swapList(model.getToDoList(MainView.listId))
+    isAddEnabled.value = !model.showListName()
+    isDeleteAllowed.value = model.showFinished
+
 
     ToDoListTheme {
         Scaffold(
@@ -56,7 +60,7 @@ fun ToDoListView(model: ToDoListModel) {
                     model.getAllSortedASC(),
                     model.getListTitle()
                 ) {
-                    model.setListId(it)
+                    model.saveListId(it)
                     listDataItems.clear()
                     listDataItems.swapList(model.getToDoList(it))
                     isAddEnabled.value = !model.showListName()
@@ -75,9 +79,7 @@ fun ToDoListView(model: ToDoListModel) {
                 }
             },
 
-            floatingActionButton = {
-
-                //Add button
+            floatingActionButton = {    //Add button
                 AnimatedVisibility(
                     visible = isAddEnabled.value,
                     enter = fadeIn() + slideInHorizontally(),
@@ -120,10 +122,8 @@ fun ToDoListView(model: ToDoListModel) {
                                 model.deleteItem(it.itemId)
                             }
                             model.deleteList.clear()
-                            model.getListId {
-                                listDataItems.clear()
-                                listDataItems.swapList(model.getToDoList(it))
-                            }
+                            listDataItems.clear()
+                            listDataItems.swapList(model.getToDoList(MainView.listId))
                             deleteButtonVisible.value = false
                         }
                     )
@@ -173,7 +173,7 @@ fun ToDoListView(model: ToDoListModel) {
                                 } else {
                                     if (todoItem.finishedDate == "0") {
                                         model.setItemId(todoItem.itemId)
-                                        model.setListId(todoItem.listID)
+                                        model.saveListId(todoItem.listID)
                                         showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                     } else {
                                         model.setFinishedDate(

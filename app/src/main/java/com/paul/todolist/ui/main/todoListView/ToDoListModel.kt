@@ -7,6 +7,7 @@ import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.menuOptionLists
 import com.paul.todolist.menuOptionSettings
+import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
@@ -28,10 +29,7 @@ open class ToDoListModel @Inject constructor(
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
     var deleteList = ArrayList<ToDoDataItem>()
 
-    init()
-    {
-
-    }
+    lateinit var todoListItem: ListDataItem
 
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
@@ -42,11 +40,11 @@ open class ToDoListModel @Inject constructor(
 
     fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
-            val todoItem: ListDataItem = dataBaseProvider.getListItem(listId)
+            todoListItem = dataBaseProvider.getListItem(listId)
             showFinished = false
-            if (todoItem.fixed.equals("Y")) {
-                showAll = todoItem.showAll.equals("Y")
-                if (todoItem.showAll.equals("Y")) {
+            if (todoListItem.fixed.equals("Y")) {
+                showAll = todoListItem.showAll.equals("Y")
+                if (todoListItem.showAll.equals("Y")) {
                     toDoItems = dataBaseProvider.getAllItems()
                 } else {
                     showFinished = true
@@ -61,24 +59,18 @@ open class ToDoListModel @Inject constructor(
 
     fun showListName(): Boolean {
         var showListName = false
-        getListId {
             runBlocking {
-                val todoItem: ListDataItem = dataBaseProvider.getListItem(it)
+                val todoItem: ListDataItem = dataBaseProvider.getListItem(MainView.listId)
                 showListName = todoItem.fixed.equals("Y")
-            }
         }
         return showListName
     }
 
     fun getListTitle(): String {
         var title = ""
-        getListId(
-            {
-                runBlocking {
-                    title = dataBaseProvider.getListTitle(it)
-                }
-            }
-        )
+        runBlocking {
+            title = dataBaseProvider.getListTitle(MainView.listId)
+        }
         when (title) {
             null -> return PLEASE_SELECT_STRING
             "" -> return PLEASE_SELECT_STRING
