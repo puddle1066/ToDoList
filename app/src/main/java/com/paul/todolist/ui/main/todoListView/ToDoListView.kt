@@ -6,8 +6,6 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -24,6 +22,7 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.common.draganddrop.DragDropColumn
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
 import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showViewWithBackStack
@@ -39,6 +38,9 @@ fun ToDoListView(model: ToDoListModel) {
     val isAddEnabled = remember { mutableStateOf(true) }
     val deleteButtonVisible = remember { mutableStateOf(false) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
+
+
+    val uiState = model.uiState.collectAsState()
 
     if (MainView.listId.isBlank()) {
         MainView.listId = model.getAllSortedASC()[0].listId
@@ -152,35 +154,36 @@ fun ToDoListView(model: ToDoListModel) {
                         )
 
                 ) {
-                    LazyColumn() {
-                        itemsIndexed(listDataItems) { _, item ->
-                            var itemListName = ""
-                            if (model.showListName()) itemListName =
-                                model.getListTitleforId(item.listID)
+                    DragDropColumn(
+                        items = uiState.value,
+                        onSwap = model::swapSections
+                    ) { item ->
+                        var itemListName = ""
+                        if (model.showListName()) itemListName =
+                            model.getListTitleforId(item.listID)
 
-                            ToDoItem(
-                                item,
-                                itemListName,
-                                isDeleteAllowed.value
-                            ) { todoItem: ToDoDataItem, isSelected: Boolean ->
-                                if (isDeleteAllowed.value) {
-                                    if (isSelected) {
-                                        model.deleteList.add(item)
-                                    } else {
-                                        model.deleteList.remove(item)
-                                    }
-                                    deleteButtonVisible.value = model.deleteList.size != 0
+                        ToDoItem(
+                            item,
+                            itemListName,
+                            isDeleteAllowed.value
+                        ) { todoItem: ToDoDataItem, isSelected: Boolean ->
+                            if (isDeleteAllowed.value) {
+                                if (isSelected) {
+                                    model.deleteList.add(item)
                                 } else {
-                                    if (todoItem.finishedDate == "0") {
-                                        MainView.itemID = todoItem.itemId
-                                        MainView.listId = todoItem.listID
-                                        showViewWithBackStack(ToDoScreens.ToDoItemView.name)
-                                    } else {
-                                        model.setFinishedDate(
-                                            todoItem.itemId,
-                                            todoItem.finishedDate
-                                        )
-                                    }
+                                    model.deleteList.remove(item)
+                                }
+                                deleteButtonVisible.value = model.deleteList.size != 0
+                            } else {
+                                if (todoItem.finishedDate == "0") {
+                                    MainView.itemID = todoItem.itemId
+                                    MainView.listId = todoItem.listID
+                                    showViewWithBackStack(ToDoScreens.ToDoItemView.name)
+                                } else {
+                                    model.setFinishedDate(
+                                        todoItem.itemId,
+                                        todoItem.finishedDate
+                                    )
                                 }
                             }
                         }

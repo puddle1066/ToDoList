@@ -1,7 +1,8 @@
 package com.paul.todolist.util
 
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss", Locale.getDefault())
 

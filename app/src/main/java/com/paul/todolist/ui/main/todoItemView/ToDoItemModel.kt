@@ -32,15 +32,15 @@ open class ToDoItemModel @Inject constructor(
     var addedBitmapList = ArrayList<Bitmap>()
 
     fun loadData() {
-            runBlocking {
-                if (MainView.itemID.isBlank()) {
-                    todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
-                    todoItemExists = false
-                } else {
-                    todoItemExists = true
-                    todoDataItem = dataBaseProvider.getToDoItem(MainView.itemID)
-                }
+        runBlocking {
+            if (MainView.itemID.isBlank()) {
+                todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
+                todoItemExists = false
+            } else {
+                todoItemExists = true
+                todoDataItem = dataBaseProvider.getToDoItem(MainView.itemID)
             }
+        }
         addedBitmapList.clear()
     }
 
@@ -101,7 +101,7 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun getListOfLists(): HashMap<String, String> {
-        var list: HashMap<String, String> = HashMap<String, String>()
+        val list: HashMap<String, String> = HashMap<String, String>()
         runBlocking {
             var toDoListList = dataBaseProvider.getListOfLists()
             toDoListList.forEach {

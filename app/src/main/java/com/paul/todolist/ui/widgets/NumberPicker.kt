@@ -1,12 +1,26 @@
 package com.paul.todolist.ui.widgets
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationResult
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.DecayAnimationSpec
+import androidx.compose.animation.core.calculateTargetValue
+import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
@@ -34,9 +48,11 @@ fun NumberPicker(
     val coroutineScope = rememberCoroutineScope()
     val numbersColumnHeight = 36.dp
     val halvedNumbersColumnHeight = numbersColumnHeight / 2
-    val halvedNumbersColumnHeightPx = with(LocalDensity.current) { halvedNumbersColumnHeight.toPx() }
+    val halvedNumbersColumnHeightPx =
+        with(LocalDensity.current) { halvedNumbersColumnHeight.toPx() }
 
-    fun animatedStateValue(offset: Float): Int = state.value - (offset / halvedNumbersColumnHeightPx).toInt()
+    fun animatedStateValue(offset: Float): Int =
+        state.value - (offset / halvedNumbersColumnHeightPx).toInt()
 
     val animatedOffset = remember { Animatable(0f) }.apply {
         if (range != null) {
@@ -69,9 +85,15 @@ fun NumberPicker(
                             animationSpec = exponentialDecay(frictionMultiplier = 20f),
                             adjustTarget = { target ->
                                 val coercedTarget = target % halvedNumbersColumnHeightPx
-                                val coercedAnchors = listOf(-halvedNumbersColumnHeightPx, 0f, halvedNumbersColumnHeightPx)
-                                val coercedPoint = coercedAnchors.minByOrNull { abs(it - coercedTarget) }!!
-                                val base = halvedNumbersColumnHeightPx * (target / halvedNumbersColumnHeightPx).toInt()
+                                val coercedAnchors = listOf(
+                                    -halvedNumbersColumnHeightPx,
+                                    0f,
+                                    halvedNumbersColumnHeightPx
+                                )
+                                val coercedPoint =
+                                    coercedAnchors.minByOrNull { abs(it - coercedTarget) }!!
+                                val base =
+                                    halvedNumbersColumnHeightPx * (target / halvedNumbersColumnHeightPx).toInt()
                                 coercedPoint + base
                             }
                         ).endState.value
@@ -87,7 +109,7 @@ fun NumberPicker(
 
         val arrowColor = MaterialTheme.colors.onSecondary.copy(alpha = ContentAlpha.disabled)
 
-   //     Arrow(direction = DrawerArrowDrawable.ArrowDirection.UP, tint = arrowColor)
+        //     Arrow(direction = DrawerArrowDrawable.ArrowDirection.UP, tint = arrowColor)
 
         Spacer(modifier = Modifier.height(spacing))
 
@@ -120,7 +142,7 @@ fun NumberPicker(
 
         Spacer(modifier = Modifier.height(spacing))
 
-      //  Arrow(direction = DrawerArrowDrawable.ArrowDirection.DOWN, tint = arrowColor)
+        //  Arrow(direction = DrawerArrowDrawable.ArrowDirection.DOWN, tint = arrowColor)
     }
 }
 

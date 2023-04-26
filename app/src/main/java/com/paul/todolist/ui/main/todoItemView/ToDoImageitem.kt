@@ -2,7 +2,12 @@ package com.paul.todolist.ui.main.todoItemView
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.IconButton
@@ -56,7 +61,7 @@ fun ToDoImageitem(
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             IconButton(
-                onClick = {onDeleteClick(todoimage)},
+                onClick = { onDeleteClick(todoimage) },
                 modifier = Modifier
                     .padding(20.dp)
                     .width(40.dp)
@@ -75,9 +80,9 @@ fun ToDoImageitem(
             }
         }
 
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             IconButton(
-                onClick = {onExpandClick(todoimage)},
+                onClick = { onExpandClick(todoimage) },
                 modifier = Modifier
                     .padding(20.dp)
                     .width(40.dp)

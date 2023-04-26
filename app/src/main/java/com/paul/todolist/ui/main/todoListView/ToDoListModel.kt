@@ -10,6 +10,8 @@ import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -20,8 +22,22 @@ open class ToDoListModel @Inject constructor(
 
 ) : StorageViewModel(dataStoreProvider) {
 
+
     private var lists = listOf<ListDataItem>()
+
     private var toDoItems = listOf<ToDoDataItem>()
+    private val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
+    val uiState = _uiState.asStateFlow()
+
+    fun swapSections(from: Int, to: Int) {
+        val fromItem = _uiState.value[from]
+        val toItem = _uiState.value[to]
+        val newList = _uiState.value.toMutableList()
+        newList[from] = toItem
+        newList[to] = fromItem
+
+        _uiState.value = newList
+    }
 
     var showAll = false
     var showFinished = false
@@ -54,14 +70,15 @@ open class ToDoListModel @Inject constructor(
                 toDoItems = dataBaseProvider.getToDoItems(listId)
             }
         }
+        _uiState.value = toDoItems
         return toDoItems
     }
 
     fun showListName(): Boolean {
         var showListName = false
-            runBlocking {
-                val todoItem: ListDataItem = dataBaseProvider.getListItem(MainView.listId)
-                showListName = todoItem.fixed.equals("Y")
+        runBlocking {
+            val todoItem: ListDataItem = dataBaseProvider.getListItem(MainView.listId)
+            showListName = todoItem.fixed.equals("Y")
         }
         return showListName
     }
