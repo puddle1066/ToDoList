@@ -33,7 +33,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getListOfLists(): List<ListDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listDao().getUser()
+            DataBaseManager.getInstance().listDao().getUserDefinedLists()
         }
     }
 
@@ -50,6 +50,14 @@ class RoomDataProvider @Inject constructor() {
     suspend fun insertList(list: ListDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().listDao().insert(list)
+        }
+    }
+
+    @Singleton
+    @Provides
+    suspend fun deleteList(listId: String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listDao().deleteList(listId)
         }
     }
 

@@ -68,7 +68,7 @@ fun ListItemsView(model: ListItemsModel) {
                         backgroundColor = MaterialTheme.colorScheme.error,
                         onClick = {
                             model.deleteList.forEach {
-                                model.deleteItem(it.listId)
+                                model.deleteListId(it.listId)
                             }
                             model.deleteList.clear()
                             listDataItems.swapList(model.getListOfLists())

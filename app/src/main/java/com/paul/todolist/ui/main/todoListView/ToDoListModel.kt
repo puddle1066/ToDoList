@@ -28,8 +28,9 @@ open class ToDoListModel @Inject constructor(
 
     private var lists = listOf<ListDataItem>()
 
-    private var toDoItems = listOf<ToDoDataItem>()
-    private val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
+    var toDoItems = listOf<ToDoDataItem>()
+
+    val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
     val uiState = _uiState.asStateFlow()
 
     fun swapSections(from: Int, to: Int) {

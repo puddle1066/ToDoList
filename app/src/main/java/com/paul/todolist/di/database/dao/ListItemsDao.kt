@@ -13,8 +13,7 @@ interface ListItemsDao {
     fun getAllSortedASC(): List<ListDataItem>
 
     @Query(value = "SELECT * FROM Lists where type = '" + listState_Normal + "'")
-    //Only return user defined lists
-    fun getUser(): List<ListDataItem>
+    fun getUserDefinedLists(): List<ListDataItem>
 
     @Query("DELETE FROM lists where listId = :listId")
     fun deleteList(listId: String)

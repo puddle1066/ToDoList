@@ -38,9 +38,9 @@ open class ListItemsModel @Inject constructor(
         return count
     }
 
-    fun deleteItem(itemId: String) {
+    fun deleteListId(listId: String) {
         runBlocking {
-            dataBaseProvider.deleteItem(itemId)
+            dataBaseProvider.deleteList(listId)
         }
     }
 
@@ -50,7 +50,7 @@ open class ListItemsModel @Inject constructor(
                 ListDataItem(
                     UUID.randomUUID().toString(),
                     title.replaceFirstChar(Char::uppercase),
-                    "N"
+                    "0"
                 )
             )
         }

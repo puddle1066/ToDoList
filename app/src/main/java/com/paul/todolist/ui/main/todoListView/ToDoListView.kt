@@ -30,7 +30,6 @@ import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
-import com.paul.todolist.util.getCurrentDateAsString
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -137,6 +136,7 @@ fun ToDoListView(model: ToDoListModel) {
                             listName,
                             isDeleteAllowed.value,
                             backgroundColor,
+                            model.todoListItem.type,
                             onRowClick = { todoItem: ToDoDataItem, isSelected: Boolean ->
                                 if (todoItem.finishedDate == "0") {
                                     MainView.itemID = todoItem.itemId
@@ -151,16 +151,14 @@ fun ToDoListView(model: ToDoListModel) {
                                     isDeleteButtonVisible.value = model.deleteList.size != 0
                                 }
                             },
-                            onItemChecked = { todoItem: ToDoDataItem, isChecked: Boolean ->
-                                val finishedDate = if (isChecked) getCurrentDateAsString() else "0"
-
+                            onCheckChanged = { todoItem: ToDoDataItem, isChecked: Boolean ->
                                 model.setFinishedDate(
                                     todoItem.itemId,
-                                    finishedDate
+                                    todoItem.finishedDate
                                 )
 
                                 listDataItems.clear()
-                                listDataItems.swapList(model.getToDoList(todoItem.listID))
+                                listDataItems.swapList(model.getToDoList(MainView.listId))
                             }
                         )
                     }
