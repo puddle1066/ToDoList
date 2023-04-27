@@ -6,13 +6,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Job
@@ -23,6 +26,8 @@ import kotlinx.coroutines.launch
 fun <T : Any> DragDropColumn(
     items: List<T>,
     onSwap: (Int, Int) -> Unit,
+    backgroundColor: MutableState<Color>,
+    moveAllowed: MutableState<Boolean>,
     itemContent: @Composable LazyItemScope.(item: T) -> Unit
 ) {
     var overscrollJob by remember { mutableStateOf<Job?>(null) }
@@ -32,13 +37,20 @@ fun <T : Any> DragDropColumn(
         onSwap(fromIndex, toIndex)
     }
 
+    val colorUnSelected = MaterialTheme.colorScheme.primary
+    val colorMoveSelected = MaterialTheme.colorScheme.onSurface
+
+
     LazyColumn(
         modifier = Modifier
+            .fillMaxHeight()
             .pointerInput(dragDropState) {
                 detectDragGesturesAfterLongPress(
                     onDrag = { change, offset ->
                         change.consume()
-                        dragDropState.onDrag(offset = offset)
+                        if (moveAllowed.value) {
+                            dragDropState.onDrag(offset = offset)
+                        }
 
                         if (overscrollJob?.isActive == true)
                             return@detectDragGesturesAfterLongPress
@@ -56,14 +68,25 @@ fun <T : Any> DragDropColumn(
                             }
                             ?: run { overscrollJob?.cancel() }
                     },
-                    onDragStart = { offset -> dragDropState.onDragStart(offset) },
+                    onDragStart = {
+                        if (moveAllowed.value) {
+                            dragDropState.onDragStart(it)
+                            backgroundColor.value = colorMoveSelected
+                        }
+                    },
                     onDragEnd = {
-                        dragDropState.onDragInterrupted()
-                        overscrollJob?.cancel()
+                        if (moveAllowed.value) {
+                            dragDropState.onDragInterrupted()
+                            backgroundColor.value = colorUnSelected
+                            overscrollJob?.cancel()
+                        }
                     },
                     onDragCancel = {
-                        dragDropState.onDragInterrupted()
-                        overscrollJob?.cancel()
+                        if (moveAllowed.value) {
+                            dragDropState.onDragInterrupted()
+                            backgroundColor.value = colorUnSelected
+                            overscrollJob?.cancel()
+                        }
                     }
                 )
             },

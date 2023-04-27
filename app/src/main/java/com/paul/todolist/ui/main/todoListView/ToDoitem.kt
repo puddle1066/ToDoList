@@ -17,39 +17,37 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.ui.theme.typography
-import com.paul.todolist.util.getCurrentDateAsString
 
 @Composable
 fun ToDoItem(
     todoItem: ToDoDataItem,
     listName: String = "",
     deleteAllowed: Boolean,
-    onItemClick: (ToDoDataItem, Boolean) -> Unit,
+    backgroundColor: MutableState<Color>,
+    onRowClick: (ToDoDataItem, Boolean) -> Unit,
+    onItemChecked: (ToDoDataItem, Boolean) -> Unit,
 ) {
     val colorUnSelected = MaterialTheme.colorScheme.primary
-    val backgroundColor = remember { mutableStateOf(colorUnSelected) }
-    val checked = remember { mutableStateOf(false) }
-    val isVisible = remember { mutableStateOf(true) }
+    val colorDeleteSelected = MaterialTheme.colorScheme.error
 
-    val colorSelected = MaterialTheme.colorScheme.error
-    val isSelected = false
-    var selected by remember { mutableStateOf(isSelected) }
+    var isChecked = remember { mutableStateOf(false) }
+    var isVisible = remember { mutableStateOf(true) }
+    var isSelectedItem = remember { mutableStateOf(false) }
 
-    checked.value = (todoItem.finishedDate != "0")
-    isVisible.value = !checked.value
     if (listName.isNotBlank()) {
         isVisible.value = true
     }
+    isChecked.value = todoItem.finishedDate != "0"
 
     AnimatedVisibility(
         visible = isVisible.value,
@@ -64,24 +62,12 @@ fun ToDoItem(
                 .background(backgroundColor.value)
         ) {
 
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
-                    .background(backgroundColor.value)
-                    .clickable {
-                        if (deleteAllowed) {
-                            if (selected) {
-                                backgroundColor.value = colorUnSelected
-                                selected = false
-                            } else {
-                                backgroundColor.value = colorSelected
-                                selected = true
-                            }
-                            onItemClick(todoItem, selected)
-                        }
-
-                    },
+                    .background(backgroundColor.value),
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
@@ -90,18 +76,26 @@ fun ToDoItem(
                     modifier = Modifier
                         .padding(16.dp)
                         .weight(0.5f),
-                    checked = checked.value,
+                    checked = isChecked.value,
                     onCheckedChange = {
-                        todoItem.finishedDate = getCurrentDateAsString()
-                        checked.value = it
-                        isVisible.value = !it
-                        onItemClick(todoItem, false)
+                        isChecked.value = it
+                        isVisible.value = false     //Always false hear as transition between lists
+                        onItemChecked(todoItem, isChecked.value)
                     },
                 )
                 Text(
                     modifier = Modifier
-                        .clickable { onItemClick(todoItem, false) }
-                        .weight(1.5f),
+                        .weight(1.5f)
+                        .clickable {
+                            selectForDeletion(
+                                deleteAllowed,
+                                isSelectedItem,
+                                backgroundColor,
+                                colorUnSelected,
+                                colorDeleteSelected
+                            )
+                            onRowClick(todoItem, isSelectedItem.value)
+                        },
                     text = todoItem.description,
                     style = typography.bodyLarge,
                     color = MaterialTheme.colorScheme.secondary,
@@ -111,6 +105,16 @@ fun ToDoItem(
                     Text(
                         modifier = Modifier
                             .weight(0.5f)
+                            .clickable {
+                                selectForDeletion(
+                                    deleteAllowed,
+                                    isSelectedItem,
+                                    backgroundColor,
+                                    colorUnSelected,
+                                    colorDeleteSelected
+                                )
+                                onRowClick(todoItem, isSelectedItem.value)
+                            }
                             .padding(10.dp, 10.dp, 20.dp, 10.dp),
                         text = listName,
                         style = typography.titleSmall,
@@ -122,6 +126,26 @@ fun ToDoItem(
 
             Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
         }
+    }
+}
+
+fun selectForDeletion(
+    deleteAllowed: Boolean,
+    isSelected: MutableState<Boolean>,
+    backgroundColor: MutableState<Color>,
+    colorUnSelected: Color,
+    colorDeleteSelected: Color
+) {
+
+    if (deleteAllowed) {
+        if (isSelected.value) {
+            backgroundColor.value = colorUnSelected
+            isSelected.value = false
+        } else {
+            backgroundColor.value = colorDeleteSelected
+            isSelected.value = true
+        }
+
     }
 }
 

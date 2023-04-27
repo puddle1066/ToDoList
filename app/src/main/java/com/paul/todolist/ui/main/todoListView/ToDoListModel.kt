@@ -5,6 +5,9 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.listState_Finished
+import com.paul.todolist.listState_Normal
+import com.paul.todolist.listState_all_incomplete
 import com.paul.todolist.menuOptionLists
 import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.ui.main.MainView
@@ -39,9 +42,6 @@ open class ToDoListModel @Inject constructor(
         _uiState.value = newList
     }
 
-    var showAll = false
-    var showFinished = false
-
     val menuItems = listOf(menuOptionLists, menuOptionSettings)
     var deleteList = ArrayList<ToDoDataItem>()
 
@@ -57,30 +57,32 @@ open class ToDoListModel @Inject constructor(
     fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
             todoListItem = dataBaseProvider.getListItem(listId)
-            showFinished = false
-            if (todoListItem.fixed.equals("Y")) {
-                showAll = todoListItem.showAll.equals("Y")
-                if (todoListItem.showAll.equals("Y")) {
-                    toDoItems = dataBaseProvider.getAllItems()
-                } else {
-                    showFinished = true
+
+            when (todoListItem.type) {
+                listState_all_incomplete ->
+                    toDoItems = dataBaseProvider.getAllIncompleteItems()
+
+                listState_Finished ->
                     toDoItems = dataBaseProvider.getFinishedItems()
-                }
-            } else {
-                toDoItems = dataBaseProvider.getToDoItems(listId)
+
+                else ->
+                    toDoItems = dataBaseProvider.getToDoItems(listId)
             }
         }
         _uiState.value = toDoItems
         return toDoItems
     }
 
-    fun showListName(): Boolean {
-        var showListName = false
-        runBlocking {
-            val todoItem: ListDataItem = dataBaseProvider.getListItem(MainView.listId)
-            showListName = todoItem.fixed.equals("Y")
-        }
-        return showListName
+    fun isFinishedList(): Boolean {
+        return todoListItem.type.equals(listState_Finished)
+    }
+
+    fun isNormalList(): Boolean {
+        return todoListItem.type.equals(listState_Normal)
+    }
+
+    fun isFullList(): Boolean {
+        return todoListItem.type.equals(listState_all_incomplete)
     }
 
     fun getListTitle(): String {

@@ -10,6 +10,9 @@ import com.paul.todolist.DATABASE_NAME
 import com.paul.todolist.ToDoList
 import com.paul.todolist.di.database.dao.*
 import com.paul.todolist.di.database.data.*
+import com.paul.todolist.listState_Finished
+import com.paul.todolist.listState_Normal
+import com.paul.todolist.listState_all_incomplete
 import java.util.*
 
 @Database(
@@ -17,7 +20,7 @@ import java.util.*
         ListDataItem::class,
         ToDoDataItem::class,
         ToDoImageData::class
-    ], version = 3
+    ], version = 1
 )
 @TypeConverters(Converters::class)
 
@@ -53,14 +56,14 @@ abstract class DataBaseManager : RoomDatabase() {
 
                 try {
                     db.execSQL(
-                        "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('" + UUID.randomUUID()
-                            .toString() + "','ToDo', 'N', 'N');"
+                        "INSERT INTO Lists(listId, title, type) VALUES('" + UUID.randomUUID()
+                            .toString() + "','ToDo', '" + listState_Normal + "');"
                     )
                     db.execSQL(
-                        "INSERT INTO Lists(listId, title, fixed, showAll) VALUES('" + UUID.randomUUID()
-                            .toString() + "','Finished', 'Y', 'N');"
+                        "INSERT INTO Lists(listId, title, type) VALUES('" + UUID.randomUUID()
+                            .toString() + "','Finished', '" + listState_Finished + "');"
                     )
-                    db.execSQL("INSERT INTO Lists(listId, title, fixed, showAll) VALUES('0','All', 'Y', 'Y');")
+                    db.execSQL("INSERT INTO Lists(listId, title, type) VALUES('0','All', '" + listState_all_incomplete + "');")
 
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)

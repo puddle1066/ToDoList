@@ -88,7 +88,7 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getAllItems(): List<ToDoDataItem> {
+    suspend fun getAllIncompleteItems(): List<ToDoDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoDao().getAll()
         }

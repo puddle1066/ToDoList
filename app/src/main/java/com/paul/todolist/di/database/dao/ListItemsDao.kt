@@ -2,16 +2,17 @@ package com.paul.todolist.di.database.dao
 
 import androidx.room.*
 import com.paul.todolist.di.database.data.ListDataItem
+import com.paul.todolist.listState_Normal
 
 @Dao
 interface ListItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(list: ListDataItem)
 
-    @Query("SELECT * FROM Lists Order BY fixed ASC")
+    @Query("SELECT * FROM Lists Order BY type ASC")
     fun getAllSortedASC(): List<ListDataItem>
 
-    @Query(value = "SELECT * FROM Lists where fixed = 'N'")
+    @Query(value = "SELECT * FROM Lists where type = '" + listState_Normal + "'")
     //Only return user defined lists
     fun getUser(): List<ListDataItem>
 

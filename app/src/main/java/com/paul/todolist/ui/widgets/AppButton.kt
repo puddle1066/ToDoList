@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PreviewAppButtonIcon() {
     AppButton(
-        drawingID = R.drawable.ic_measure,
+        drawingID = com.google.android.material.R.drawable.ic_clock_black_24dp,
         onButtonPressed = { showView(ToDoScreens.ToDoListView.name) }
     )
 }
