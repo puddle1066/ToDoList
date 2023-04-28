@@ -37,15 +37,20 @@ fun ToDoListView(model: ToDoListModel) {
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
     val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
+
     val isAddButtonVisible = remember { mutableStateOf(true) }
     val isDeleteButtonVisible = remember { mutableStateOf(false) }
+
     val backgroundColor = remember { mutableStateOf(Color.Gray) }
 
     val isMoveEnabled = remember { mutableStateOf(false) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
     val uiState = model.uiState.collectAsState()
+
+    val startDragIndex = remember { mutableStateOf(-1) }
 
     backgroundColor.value = MaterialTheme.colorScheme.primary
 
@@ -95,8 +100,8 @@ fun ToDoListView(model: ToDoListModel) {
 
 
             floatingActionButton = {
-                createAddButton(isAddButtonVisible)
-                createDeleteButton(model, listDataItems, isDeleteButtonVisible)
+                CreateAddButton(isAddButtonVisible)
+                CreateDeleteButton(model, listDataItems, isDeleteButtonVisible)
             }
 
         ) {
@@ -122,14 +127,19 @@ fun ToDoListView(model: ToDoListModel) {
                         items = uiState.value,
                         onSwap = model::swapSections,
                         backgroundColor,
-                        isMoveEnabled
+                        isMoveEnabled,
+                        onDragStart = {
+                            startDragIndex.value = it
+                        },
+                        onDragEnd = {
+                            model.toDoDataItems[startDragIndex.value].display_sequence = it
+                            model.updateSequence()
+                        }
                     ) { item ->
 
                         //Only display the listId for "All" or "Finished" lists
-                        var listName = ""
-                        if (!model.isNormalList()) {
-                            listName = model.getListTitleforId(item.listID)
-                        }
+                        var listName =
+                            if (!model.isNormalList()) model.getListTitleforId(item.listID) else ""
 
                         ToDoItem(
                             item,
@@ -151,7 +161,7 @@ fun ToDoListView(model: ToDoListModel) {
                                     isDeleteButtonVisible.value = model.deleteList.size != 0
                                 }
                             },
-                            onCheckChanged = { todoItem: ToDoDataItem, isChecked: Boolean ->
+                            onCheckChanged = { todoItem: ToDoDataItem, _ ->
                                 model.setFinishedDate(
                                     todoItem.itemId,
                                     todoItem.finishedDate
@@ -166,11 +176,10 @@ fun ToDoListView(model: ToDoListModel) {
             }
         }
     }
-
 }
 
 @Composable
-fun createAddButton(isAddEnabled: MutableState<Boolean>) {
+fun CreateAddButton(isAddEnabled: MutableState<Boolean>) {
     AnimatedVisibility(
         visible = isAddEnabled.value,
         enter = fadeIn() + slideInHorizontally(),
@@ -195,7 +204,7 @@ fun createAddButton(isAddEnabled: MutableState<Boolean>) {
 }
 
 @Composable
-fun createDeleteButton(
+fun CreateDeleteButton(
     model: ToDoListModel,
     listDataItems: SnapshotStateList<ToDoDataItem>,
     deleteButtonVisible: MutableState<Boolean>

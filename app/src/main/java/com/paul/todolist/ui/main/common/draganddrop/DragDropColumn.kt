@@ -28,6 +28,8 @@ fun <T : Any> DragDropColumn(
     onSwap: (Int, Int) -> Unit,
     backgroundColor: MutableState<Color>,
     moveAllowed: MutableState<Boolean>,
+    onDragStart: (index: Int) -> Unit,
+    onDragEnd: (index: Int) -> Unit,
     itemContent: @Composable LazyItemScope.(item: T) -> Unit
 ) {
     var overscrollJob by remember { mutableStateOf<Job?>(null) }
@@ -40,6 +42,8 @@ fun <T : Any> DragDropColumn(
     val colorUnSelected = MaterialTheme.colorScheme.primary
     val colorMoveSelected = MaterialTheme.colorScheme.onSurface
 
+    val isCurrentlyDragging = remember { mutableStateOf(false) }
+    val lastIndex = remember { mutableStateOf(0) }
 
     LazyColumn(
         modifier = Modifier
@@ -79,6 +83,8 @@ fun <T : Any> DragDropColumn(
                             dragDropState.onDragInterrupted()
                             backgroundColor.value = colorUnSelected
                             overscrollJob?.cancel()
+                            isCurrentlyDragging.value = false
+                            onDragEnd(lastIndex.value)
                         }
                     },
                     onDragCancel = {
@@ -86,6 +92,8 @@ fun <T : Any> DragDropColumn(
                             dragDropState.onDragInterrupted()
                             backgroundColor.value = colorUnSelected
                             overscrollJob?.cancel()
+                            isCurrentlyDragging.value = false
+                            onDragEnd(lastIndex.value)
                         }
                     }
                 )
@@ -98,6 +106,15 @@ fun <T : Any> DragDropColumn(
                 index = index
             ) { isDragging ->
                 val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
+                if (isDragging) {
+                    if (!isCurrentlyDragging.value) {
+                        isCurrentlyDragging.value = true
+                        onDragStart(index)
+                    } else {
+                        lastIndex.value = index
+                    }
+                }
+
                 Card(elevation = elevation) {
                     itemContent(item)
                 }

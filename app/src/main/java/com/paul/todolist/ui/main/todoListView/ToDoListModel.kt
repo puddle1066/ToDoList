@@ -26,11 +26,11 @@ open class ToDoListModel @Inject constructor(
 ) : StorageViewModel(dataStoreProvider) {
 
 
-    private var lists = listOf<ListDataItem>()
+    private var listDataItems = listOf<ListDataItem>()
+    var toDoDataItems = listOf<ToDoDataItem>()
 
-    var toDoItems = listOf<ToDoDataItem>()
+    private val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
 
-    val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
     val uiState = _uiState.asStateFlow()
 
     fun swapSections(from: Int, to: Int) {
@@ -50,9 +50,9 @@ open class ToDoListModel @Inject constructor(
 
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {
-            lists = dataBaseProvider.getAllSortedASC()
+            listDataItems = dataBaseProvider.getAllListsSorted()
         }
-        return lists
+        return listDataItems
     }
 
     fun getToDoList(listId: String): List<ToDoDataItem> {
@@ -61,17 +61,17 @@ open class ToDoListModel @Inject constructor(
 
             when (todoListItem.type) {
                 listState_all_incomplete ->
-                    toDoItems = dataBaseProvider.getAllIncompleteItems()
+                    toDoDataItems = dataBaseProvider.getAllIncompleteItems()
 
                 listState_Finished ->
-                    toDoItems = dataBaseProvider.getFinishedItems()
+                    toDoDataItems = dataBaseProvider.getFinishedItems()
 
                 else ->
-                    toDoItems = dataBaseProvider.getToDoItems(listId)
+                    toDoDataItems = dataBaseProvider.getToDoItems(listId)
             }
         }
-        _uiState.value = toDoItems
-        return toDoItems
+        _uiState.value = toDoDataItems
+        return toDoDataItems
     }
 
     fun isFinishedList(): Boolean {
@@ -95,6 +95,18 @@ open class ToDoListModel @Inject constructor(
             null -> return PLEASE_SELECT_STRING
             "" -> return PLEASE_SELECT_STRING
             else -> return title
+        }
+    }
+
+    fun updateSequence() {
+        var seq = 0
+        _uiState.value.forEach {
+            runBlocking {
+                var todoitem = dataBaseProvider.getToDoItem(it.itemId)
+                todoitem.display_sequence = seq
+                seq++
+                dataBaseProvider.updateToDo(todoitem)
+            }
         }
     }
 

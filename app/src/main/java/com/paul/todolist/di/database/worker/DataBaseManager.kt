@@ -25,8 +25,8 @@ import java.util.*
 @TypeConverters(Converters::class)
 
 abstract class DataBaseManager : RoomDatabase() {
-    abstract fun listDao(): ListItemsDao
-    abstract fun ToDoDao(): ToDoItemsDao
+    abstract fun listItemsDao(): ListItemsDao
+    abstract fun ToDoItemsDao(): ToDoItemsDao
     abstract fun ImageDataDao(): ImageDataDao
 
     companion object {

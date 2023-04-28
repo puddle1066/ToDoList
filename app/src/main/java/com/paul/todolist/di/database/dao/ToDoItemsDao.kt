@@ -11,7 +11,7 @@ interface ToDoItemsDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(toDoDataItem: ToDoDataItem)
 
-    @Query("SELECT * FROM ToDoItem where listId = :listId AND FinishedDate = '0'")
+    @Query("SELECT * FROM ToDoItem where listId = :listId AND FinishedDate = '0' Order by display_sequence")
     fun getAllForListId(listId: String): List<ToDoDataItem>
 
     @Query("SELECT * FROM ToDoItem where FinishedDate = '0'")
