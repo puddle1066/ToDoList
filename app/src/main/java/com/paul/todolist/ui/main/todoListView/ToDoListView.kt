@@ -82,7 +82,6 @@ fun ToDoListView(model: ToDoListModel) {
                     isAddButtonVisible.value = model.isNormalList()
                     isDeleteAllowed.value = !model.isFullList()
                     isMoveEnabled.value = model.isNormalList()
-
                 }
             },
             scaffoldState = scaffoldState,
@@ -138,7 +137,7 @@ fun ToDoListView(model: ToDoListModel) {
                     ) { item ->
 
                         //Only display the listId for "All" or "Finished" lists
-                        var listName =
+                        val listName =
                             if (!model.isNormalList()) model.getListTitleforId(item.listID) else ""
 
                         ToDoItem(
