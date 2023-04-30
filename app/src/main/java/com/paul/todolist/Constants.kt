@@ -30,11 +30,6 @@ const val DATABASE_NAME = "tools-db"
 const val PREFERENCES_NAME = "user_preferences"
 
 val LIST_ID_KEY = stringPreferencesKey("selectedlistId")
-val ITEM_ID_KEY = stringPreferencesKey("itemId")
-val IMAGE_KEY = stringPreferencesKey("image_key")
-
-val PLEASE_SELECT_STRING = "Please Select"
-val INPUT_LIST_NAME = "Input List Name"
 
 val SPEECH_LANGUAGE = "en"
 

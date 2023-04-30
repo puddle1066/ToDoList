@@ -1,10 +1,11 @@
 package com.paul.todolist.ui.main.todoListView
 
-import com.paul.todolist.PLEASE_SELECT_STRING
+import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.listState_Finished
 import com.paul.todolist.listState_Normal
 import com.paul.todolist.listState_all_incomplete
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 open class ToDoListModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
-    private val dataStoreProvider: DataStoreProvider
+    private val dataStoreProvider: DataStoreProvider,
+    private val resourcesProvider: ResourcesProvider
 
 ) : StorageViewModel(dataStoreProvider) {
 
@@ -92,8 +94,8 @@ open class ToDoListModel @Inject constructor(
             title = dataBaseProvider.getListTitle(MainView.listId)
         }
         when (title) {
-            null -> return PLEASE_SELECT_STRING
-            "" -> return PLEASE_SELECT_STRING
+            null -> return resourcesProvider.getString(R.string.please_select)
+            "" -> return resourcesProvider.getString(R.string.please_select)
             else -> return title
         }
     }
@@ -117,8 +119,8 @@ open class ToDoListModel @Inject constructor(
         }
 
         when (title) {
-            null -> return PLEASE_SELECT_STRING
-            "" -> return PLEASE_SELECT_STRING
+            null -> return resourcesProvider.getString(R.string.please_select)
+            "" -> return resourcesProvider.getString(R.string.please_select)
             else -> return title
         }
     }
@@ -136,3 +138,4 @@ open class ToDoListModel @Inject constructor(
         }
     }
 }
+

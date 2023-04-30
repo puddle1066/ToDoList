@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
-import com.paul.todolist.INPUT_LIST_NAME
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
@@ -101,7 +100,7 @@ fun ListItemsView(model: ListItemsModel) {
                 InputField(
                     text = "",
                     onTextChanged = {},
-                    fieldTitle = INPUT_LIST_NAME,
+                    fieldTitle = stringResource(id = R.string.input_list_name),
                     keyboardType = KeyboardType.Text,
                     onFinished = {
                         if (!it.isEmpty()) {

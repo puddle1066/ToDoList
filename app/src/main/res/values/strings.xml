@@ -13,5 +13,7 @@
     <string name="ToDo_item">ToDo Item</string>
     <string name="please_select">Please Select</string>
     <string name="missing_resource">Missing Resource</string>
+    <string name="input_list_name">Input List Name"</string>
+
 
 </resources>

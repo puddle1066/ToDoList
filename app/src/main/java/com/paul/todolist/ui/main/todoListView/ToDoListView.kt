@@ -23,6 +23,7 @@ import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.draganddrop.DragDropColumn
 import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
@@ -241,7 +242,13 @@ fun CreateDeleteButton(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MainViewMockLayout() {
-    ToDoListView(ToDoListModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
+    ToDoListView(
+        ToDoListModel(
+            RoomDataProvider(),
+            DataStoreProvider(LocalContext.current),
+            ResourcesProvider(LocalContext.current)
+        )
+    )
 }
 
 
