@@ -21,7 +21,7 @@ open class ToDoItemModel @Inject constructor(
 
 ) : StorageViewModel(dataStoreProvider) {
 
-    var todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
+    var todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0", 0)
 
     var todoItemExists: Boolean = true
     var isSpeechToTextEnabled = false
@@ -34,7 +34,14 @@ open class ToDoItemModel @Inject constructor(
     fun loadData() {
         runBlocking {
             if (MainView.itemID.isBlank()) {
-                todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0")
+                todoDataItem = ToDoDataItem(
+                    UUID.randomUUID().toString(),
+                    "",
+                    "",
+                    "0",
+                    "0",
+                    dataBaseProvider.getLastSequence() + 1
+                )
                 todoItemExists = false
             } else {
                 todoItemExists = true

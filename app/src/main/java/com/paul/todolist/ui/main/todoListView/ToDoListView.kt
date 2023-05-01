@@ -15,7 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,8 +25,6 @@ import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.draganddrop.DragDropColumn
-import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
-import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
@@ -44,16 +41,12 @@ fun ToDoListView(model: ToDoListModel) {
     val isAddButtonVisible = remember { mutableStateOf(true) }
     val isDeleteButtonVisible = remember { mutableStateOf(false) }
 
-    val backgroundColor = remember { mutableStateOf(Color.Gray) }
-
-    val isMoveEnabled = remember { mutableStateOf(false) }
+    val isMoveAllowed = remember { mutableStateOf(false) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
     val uiState = model.uiState.collectAsState()
 
     val startDragIndex = remember { mutableStateOf(-1) }
-
-    backgroundColor.value = MaterialTheme.colorScheme.primary
 
     //If we don't have a first entry in the list use the first
     //entry in the list as a default
@@ -65,8 +58,8 @@ fun ToDoListView(model: ToDoListModel) {
     listDataItems.clear()
     listDataItems.swapList(model.getToDoList(MainView.listId))
     isAddButtonVisible.value = model.isNormalList()
-    isDeleteAllowed.value = !model.isFullList()
-    isMoveEnabled.value = model.isNormalList()
+    isDeleteAllowed.value = model.isFinishedList()
+    isMoveAllowed.value = model.isNormalList()
 
     ToDoListTheme {
         Scaffold(
@@ -81,24 +74,11 @@ fun ToDoListView(model: ToDoListModel) {
                     listDataItems.clear()
                     listDataItems.swapList(model.getToDoList(it))
                     isAddButtonVisible.value = model.isNormalList()
-                    isDeleteAllowed.value = !model.isFullList()
-                    isMoveEnabled.value = model.isNormalList()
+                    isDeleteAllowed.value = model.isFinishedList()
+                    isMoveAllowed.value = model.isNormalList()
                 }
             },
             scaffoldState = scaffoldState,
-            drawerGesturesEnabled = true,
-            drawerShape = drawMenuShape(model.menuItems.size),
-            drawerContent = {
-                DrawerBody(
-                    drawItems = model.menuItems,
-                    scaffoldState = scaffoldState,
-                    scope = scope
-                ) {
-                    showViewWithBackStack(it.link)
-                }
-            },
-
-
             floatingActionButton = {
                 CreateAddButton(isAddButtonVisible)
                 CreateDeleteButton(model, listDataItems, isDeleteButtonVisible)
@@ -126,12 +106,12 @@ fun ToDoListView(model: ToDoListModel) {
                     DragDropColumn(
                         items = uiState.value,
                         onSwap = model::swapSections,
-                        backgroundColor,
-                        isMoveEnabled,
+                        isMoveAllowed.value,
                         onDragStart = {
                             startDragIndex.value = it
                         },
                         onDragEnd = {
+                            startDragIndex.value = it
                             model.toDoDataItems[startDragIndex.value].display_sequence = it
                             model.updateSequence()
                         }
@@ -144,21 +124,22 @@ fun ToDoListView(model: ToDoListModel) {
                         ToDoItem(
                             item,
                             listName,
-                            isDeleteAllowed.value,
-                            backgroundColor,
+                            isDeleteAllowed,
+                            isMoveAllowed,
                             model.todoListItem.type,
-                            onRowClick = { todoItem: ToDoDataItem, isSelected: Boolean ->
+                            onRowDelete = { todoItem: ToDoDataItem, isSelected: Boolean ->
+                                if (isSelected) {
+                                    model.deleteList.add(todoItem)
+                                } else {
+                                    model.deleteList.remove(todoItem)
+                                }
+                                isDeleteButtonVisible.value = model.deleteList.size != 0
+                            },
+                            onRowDetails = { todoItem: ToDoDataItem, _ ->
                                 if (todoItem.finishedDate == "0") {
                                     MainView.itemID = todoItem.itemId
                                     MainView.listId = todoItem.listID
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
-                                } else {
-                                    if (isSelected) {
-                                        model.deleteList.add(todoItem)
-                                    } else {
-                                        model.deleteList.remove(todoItem)
-                                    }
-                                    isDeleteButtonVisible.value = model.deleteList.size != 0
                                 }
                             },
                             onCheckChanged = { todoItem: ToDoDataItem, _ ->

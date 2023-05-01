@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.common.draganddrop
 
+import android.util.Log
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -12,10 +13,8 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Job
@@ -26,8 +25,7 @@ import kotlinx.coroutines.launch
 fun <T : Any> DragDropColumn(
     items: List<T>,
     onSwap: (Int, Int) -> Unit,
-    backgroundColor: MutableState<Color>,
-    moveAllowed: MutableState<Boolean>,
+    moveAllowed: Boolean,
     onDragStart: (index: Int) -> Unit,
     onDragEnd: (index: Int) -> Unit,
     itemContent: @Composable LazyItemScope.(item: T) -> Unit
@@ -39,9 +37,6 @@ fun <T : Any> DragDropColumn(
         onSwap(fromIndex, toIndex)
     }
 
-    val colorUnSelected = MaterialTheme.colorScheme.primary
-    val colorMoveSelected = MaterialTheme.colorScheme.onSurface
-
     val isCurrentlyDragging = remember { mutableStateOf(false) }
     val lastIndex = remember { mutableStateOf(0) }
 
@@ -52,7 +47,7 @@ fun <T : Any> DragDropColumn(
                 detectDragGesturesAfterLongPress(
                     onDrag = { change, offset ->
                         change.consume()
-                        if (moveAllowed.value) {
+                        if (moveAllowed) {
                             dragDropState.onDrag(offset = offset)
                         }
 
@@ -73,27 +68,27 @@ fun <T : Any> DragDropColumn(
                             ?: run { overscrollJob?.cancel() }
                     },
                     onDragStart = {
-                        if (moveAllowed.value) {
+                        if (moveAllowed) {
+                            Log.e("AAA", "onDragStart")
                             dragDropState.onDragStart(it)
-                            backgroundColor.value = colorMoveSelected
                         }
                     },
                     onDragEnd = {
-                        if (moveAllowed.value) {
+                        if (moveAllowed) {
                             dragDropState.onDragInterrupted()
-                            backgroundColor.value = colorUnSelected
                             overscrollJob?.cancel()
                             isCurrentlyDragging.value = false
                             onDragEnd(lastIndex.value)
+                            Log.e("AAA", "onDragEnd")
                         }
                     },
                     onDragCancel = {
-                        if (moveAllowed.value) {
+                        if (moveAllowed) {
                             dragDropState.onDragInterrupted()
-                            backgroundColor.value = colorUnSelected
                             overscrollJob?.cancel()
                             isCurrentlyDragging.value = false
                             onDragEnd(lastIndex.value)
+                            Log.e("AAA", "onDragCancel")
                         }
                     }
                 )

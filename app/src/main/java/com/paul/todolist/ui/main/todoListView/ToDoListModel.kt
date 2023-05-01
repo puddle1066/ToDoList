@@ -27,13 +27,17 @@ open class ToDoListModel @Inject constructor(
 
 ) : StorageViewModel(dataStoreProvider) {
 
-
     private var listDataItems = listOf<ListDataItem>()
     var toDoDataItems = listOf<ToDoDataItem>()
 
     private val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
 
     val uiState = _uiState.asStateFlow()
+
+    val menuItems = listOf(menuOptionLists, menuOptionSettings)
+    var deleteList = ArrayList<ToDoDataItem>()
+
+    lateinit var todoListItem: ListDataItem
 
     fun swapSections(from: Int, to: Int) {
         val fromItem = _uiState.value[from]
@@ -44,11 +48,6 @@ open class ToDoListModel @Inject constructor(
 
         _uiState.value = newList
     }
-
-    val menuItems = listOf(menuOptionLists, menuOptionSettings)
-    var deleteList = ArrayList<ToDoDataItem>()
-
-    lateinit var todoListItem: ListDataItem
 
     fun getAllSortedASC(): List<ListDataItem> {
         runBlocking {

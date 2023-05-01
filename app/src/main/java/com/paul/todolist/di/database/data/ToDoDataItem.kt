@@ -13,3 +13,4 @@ data class ToDoDataItem(
     @ColumnInfo(name = "FinishedDate") var finishedDate: String = "",
     @ColumnInfo(name = "display_sequence") var display_sequence: Int = 0
 )
+

@@ -1,13 +1,15 @@
 package com.paul.todolist.ui.main.todoListView
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.database.data.ToDoDataItem
@@ -31,23 +34,28 @@ import com.paul.todolist.listState_all_incomplete
 import com.paul.todolist.ui.theme.typography
 import com.paul.todolist.util.getCurrentDateAsString
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ToDoItem(
     todoItem: ToDoDataItem,
     listName: String = "",
-    deleteAllowed: Boolean,
-    backgroundColor: MutableState<Color>,
+    isDeleteEnabled: MutableState<Boolean>,
+    isMoveAllowed: MutableState<Boolean>,
     listType: String,
-    onRowClick: (ToDoDataItem, Boolean) -> Unit,
+    onRowDelete: (ToDoDataItem, Boolean) -> Unit,
+    onRowDetails: (ToDoDataItem, Boolean) -> Unit,
     onCheckChanged: (ToDoDataItem, Boolean) -> Unit,
 ) {
+
+    val isChecked = remember { mutableStateOf(false) }
+    val isVisible = remember { mutableStateOf(true) }
+    val isSelectedItem = remember { mutableStateOf(false) }
+
     val colorUnSelected = MaterialTheme.colorScheme.primary
     val colorDeleteSelected = MaterialTheme.colorScheme.error
+    val colorMoveSelected = Color.Gray
 
-    var isChecked = remember { mutableStateOf(false) }
-    var isVisible = remember { mutableStateOf(true) }
-    var isSelectedItem = remember { mutableStateOf(false) }
-
+    val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
     isChecked.value = todoItem.finishedDate != "0"
 
@@ -68,19 +76,52 @@ fun ToDoItem(
         exit = fadeOut() + slideOutHorizontally()
     ) {
 
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(65.dp)
                 .background(backgroundColor.value)
-        ) {
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = {
+                            Log.e("AAA", "onPress")
+                            if (isMoveAllowed.value) {
+                                if (isSelectedItem.value) {
+                                    backgroundColor.value = colorUnSelected
+                                    isSelectedItem.value = false
+                                } else {
+                                    backgroundColor.value = colorMoveSelected
+                                    isSelectedItem.value = true
+                                }
+                            }
+                        },
+                        onDoubleTap = {
+                            Log.e("AAA", "onDoubleTap")
+                        },
+                        onTap = {
+                            Log.e("AAA", "onTAP")
+                            if (isDeleteEnabled.value) {
+                                if (isSelectedItem.value) {
+                                    backgroundColor.value = colorUnSelected
+                                    isSelectedItem.value = false
+                                } else {
+                                    backgroundColor.value = colorDeleteSelected
+                                    isSelectedItem.value = true
+                                }
+                                onRowDelete(todoItem, isSelectedItem.value)
+                            } else {
+                                onRowDetails(todoItem, isSelectedItem.value)
+                            }
+                        }
+                    )
+                }
 
+        ) {
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
-                    .background(backgroundColor.value),
+                    .height(60.dp),
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
@@ -92,27 +133,14 @@ fun ToDoItem(
                     checked = isChecked.value,
                     onCheckedChange = {
                         isChecked.value = it
-
                         isVisible.value = false     //Always false hear as transition between lists
-
                         todoItem.finishedDate =
                             if (isChecked.value) getCurrentDateAsString() else "0"
                         onCheckChanged(todoItem, isChecked.value)
                     },
                 )
                 Text(
-                    modifier = Modifier
-                        .weight(1.5f)
-                        .clickable {
-                            selectForDeletion(
-                                deleteAllowed,
-                                isSelectedItem,
-                                backgroundColor,
-                                colorUnSelected,
-                                colorDeleteSelected
-                            )
-                            onRowClick(todoItem, isSelectedItem.value)
-                        },
+                    modifier = Modifier.weight(1.5f),
                     text = todoItem.description,
                     style = typography.bodyLarge,
                     color = MaterialTheme.colorScheme.secondary,
@@ -122,16 +150,6 @@ fun ToDoItem(
                     Text(
                         modifier = Modifier
                             .weight(0.5f)
-                            .clickable {
-                                selectForDeletion(
-                                    deleteAllowed,
-                                    isSelectedItem,
-                                    backgroundColor,
-                                    colorUnSelected,
-                                    colorDeleteSelected
-                                )
-                                onRowClick(todoItem, isSelectedItem.value)
-                            }
                             .padding(10.dp, 10.dp, 20.dp, 10.dp),
                         text = listName,
                         style = typography.titleSmall,
@@ -145,26 +163,3 @@ fun ToDoItem(
         }
     }
 }
-
-fun selectForDeletion(
-    deleteAllowed: Boolean,
-    isSelected: MutableState<Boolean>,
-    backgroundColor: MutableState<Color>,
-    colorUnSelected: Color,
-    colorDeleteSelected: Color
-) {
-
-    if (deleteAllowed) {
-        if (isSelected.value) {
-            backgroundColor.value = colorUnSelected
-            isSelected.value = false
-        } else {
-            backgroundColor.value = colorDeleteSelected
-            isSelected.value = true
-        }
-
-    }
-}
-
-
-
