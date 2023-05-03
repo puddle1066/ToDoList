@@ -24,7 +24,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,6 +45,7 @@ fun ToDoItem(
     onRowDetails: (ToDoDataItem, Boolean) -> Unit,
     onCheckChanged: (ToDoDataItem, Boolean) -> Unit,
 ) {
+    var TAG = object {}::class.java.enclosingMethod.name
 
     val isChecked = remember { mutableStateOf(false) }
     val isVisible = remember { mutableStateOf(true) }
@@ -53,7 +53,7 @@ fun ToDoItem(
 
     val colorUnSelected = MaterialTheme.colorScheme.primary
     val colorDeleteSelected = MaterialTheme.colorScheme.error
-    val colorMoveSelected = Color.Gray
+    val colorMoveSelected = MaterialTheme.colorScheme.primary  //Color.Gray
 
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
@@ -84,7 +84,7 @@ fun ToDoItem(
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onPress = {
-                            Log.e("AAA", "onPress")
+                            Log.e(TAG, "onPress")
                             if (isMoveAllowed.value) {
                                 if (isSelectedItem.value) {
                                     backgroundColor.value = colorUnSelected
@@ -96,10 +96,10 @@ fun ToDoItem(
                             }
                         },
                         onDoubleTap = {
-                            Log.e("AAA", "onDoubleTap")
+                            Log.e(TAG, "onDoubleTap")
                         },
                         onTap = {
-                            Log.e("AAA", "onTAP")
+                            Log.e(TAG, "onTAP")
                             if (isDeleteEnabled.value) {
                                 if (isSelectedItem.value) {
                                     backgroundColor.value = colorUnSelected

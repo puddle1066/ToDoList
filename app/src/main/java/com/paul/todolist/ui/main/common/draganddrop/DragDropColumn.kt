@@ -30,6 +30,7 @@ fun <T : Any> DragDropColumn(
     onDragEnd: (index: Int) -> Unit,
     itemContent: @Composable LazyItemScope.(item: T) -> Unit
 ) {
+    var TAG = object {}::class.java.enclosingMethod.name
     var overscrollJob by remember { mutableStateOf<Job?>(null) }
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -69,7 +70,7 @@ fun <T : Any> DragDropColumn(
                     },
                     onDragStart = {
                         if (moveAllowed) {
-                            Log.e("AAA", "onDragStart")
+                            Log.e(TAG, "onDragStart")
                             dragDropState.onDragStart(it)
                         }
                     },
@@ -79,7 +80,7 @@ fun <T : Any> DragDropColumn(
                             overscrollJob?.cancel()
                             isCurrentlyDragging.value = false
                             onDragEnd(lastIndex.value)
-                            Log.e("AAA", "onDragEnd")
+                            Log.e(TAG, "onDragEnd")
                         }
                     },
                     onDragCancel = {
@@ -88,7 +89,7 @@ fun <T : Any> DragDropColumn(
                             overscrollJob?.cancel()
                             isCurrentlyDragging.value = false
                             onDragEnd(lastIndex.value)
-                            Log.e("AAA", "onDragCancel")
+                            Log.e(TAG, "onDragCancel")
                         }
                     }
                 )
