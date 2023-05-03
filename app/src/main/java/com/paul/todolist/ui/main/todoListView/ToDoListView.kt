@@ -34,7 +34,6 @@ import com.paul.todolist.ui.theme.ToDoListTheme
 fun ToDoListView(model: ToDoListModel) {
 
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
 
     val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
 
@@ -65,8 +64,6 @@ fun ToDoListView(model: ToDoListModel) {
         Scaffold(
             topBar = {
                 ToDoListTopBar(
-                    scope,
-                    scaffoldState,
                     model.getAllSortedASC(),
                     model.getListTitle()
                 ) {
@@ -127,6 +124,7 @@ fun ToDoListView(model: ToDoListModel) {
                             isDeleteAllowed,
                             isMoveAllowed,
                             model.todoListItem.type,
+
                             onRowDelete = { todoItem: ToDoDataItem, isSelected: Boolean ->
                                 if (isSelected) {
                                     model.deleteList.add(todoItem)

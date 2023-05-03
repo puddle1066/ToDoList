@@ -22,13 +22,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
+import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.StandardTopBar
-import com.paul.todolist.ui.main.common.drawMenu.DrawerBody
-import com.paul.todolist.ui.main.common.drawMenu.drawMenuShape
-import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.InputField
 
@@ -39,16 +37,16 @@ fun ListItemsView(model: ListItemsModel) {
     val listDataItems = remember { mutableStateListOf<ListDataItem>() }
     val deleteButtonVisible = remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
-    val coroutineScope = rememberCoroutineScope()
+
+    val menuItems = hashMapOf<Int, String>(
+        R.string.ToDo_Lists to ToDoScreens.ToDoListView.name,
+        R.string.settings to ToDoScreens.SettingsView.name
+    )
 
     ToDoListTheme {
         Scaffold(
             topBar = {
-                StandardTopBar(
-                    stringResource(R.string.lists),
-                    coroutineScope,
-                    scaffoldState
-                )
+                StandardTopBar(stringResource(R.string.lists), menuItems)
             },
             floatingActionButton = {
                 AnimatedVisibility(
@@ -77,18 +75,7 @@ fun ListItemsView(model: ListItemsModel) {
                     { Icon(Icons.Filled.Delete, "") }
                 }
             },
-            scaffoldState = scaffoldState,
-            drawerGesturesEnabled = true,
-            drawerShape = drawMenuShape(model.menuItems.size),
-            drawerContent = {
-                DrawerBody(
-                    drawItems = model.menuItems,
-                    scaffoldState = scaffoldState,
-                    scope = coroutineScope
-                ) {
-                    showViewWithBackStack(it.link)
-                }
-            }
+            scaffoldState = scaffoldState
 
         ) {
             Column(
@@ -152,7 +139,12 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ListItemsViewPreview() {
-    ListItemsView(ListItemsModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
+    ListItemsView(
+        ListItemsModel(
+            RoomDataProvider(),
+            DataStoreProvider(LocalContext.current)
+        )
+    )
 }
 
 

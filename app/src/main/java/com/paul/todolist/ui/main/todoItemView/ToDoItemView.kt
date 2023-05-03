@@ -137,10 +137,15 @@ fun ToDoItemView(model: ToDoItemModel) {
     }
 }
 
-@Preview
+
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    ToDoItemView(ToDoItemModel(RoomDataProvider(), DataStoreProvider(LocalContext.current)))
+    ToDoItemView(
+        ToDoItemModel(
+            RoomDataProvider(),
+            DataStoreProvider(LocalContext.current)
+        )
+    )
 }
 

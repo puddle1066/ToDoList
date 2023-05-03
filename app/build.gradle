@@ -175,8 +175,8 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:${hilt_version}"
 
     // Hilt - testing
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
+    androidTestImplementation "com.google.dagger:hilt-android-testing:${hilt_version}"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:${hilt_version}"
 
 
     //Camera

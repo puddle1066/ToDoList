@@ -11,7 +11,6 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
-
 class DataStoreProvider @Inject constructor(@ApplicationContext ctx: Context) {
 
     val context = ctx

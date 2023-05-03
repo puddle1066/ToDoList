@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(ViewModelComponent::class)
 class RoomDataProvider @Inject constructor() {
 
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     @Singleton
     @Provides
@@ -137,6 +137,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getLastSequence(): Int {
         return withContext(dispatcher) {
+            //Need to check for empty database
             if (DataBaseManager.getInstance().ToDoItemsDao().getLastSequence() != null) {
                 DataBaseManager.getInstance().ToDoItemsDao().getLastSequence().display_sequence
             } else {
