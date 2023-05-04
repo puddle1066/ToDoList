@@ -15,12 +15,13 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DataStoreManager @Inject constructor(@ApplicationContext private val context: Context) {
+    private var TAG = DataStoreManager::class.simpleName
 
     private suspend fun <T> DataStore<Preferences>.getFromLocalStorage(
         preferencesKey: Preferences.Key<T>, func: T.() -> Unit
     ) {
         data.catch {
-            Log.e("DataStoreManager", "Exception Thrown  {$it}")
+            Log.e(TAG, "Exception Thrown  {$it}")
             if (it is IOException) {
                 emit(emptyPreferences())
             } else {

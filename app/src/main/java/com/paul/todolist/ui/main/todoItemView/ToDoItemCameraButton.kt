@@ -36,6 +36,7 @@ import java.util.concurrent.Executors
 
 @Composable
 fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
+    val TAG = object {}::class.java.enclosingMethod.name
 
     val animationDuration = 100
     val scaleDown = 0.9f
@@ -58,7 +59,7 @@ fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
                 takePictureButtonClicked.value = false
             },
             onError = {
-                Log.e("ToDoItemCameraButton", "Capture Error: {$it}")
+                Log.e(TAG, "Capture Error: {$it}")
                 showErrorMessage.value = it.message.toString()
                 finishedPicture.value = true
                 takePictureButtonClicked.value = false

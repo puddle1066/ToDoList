@@ -30,7 +30,8 @@ fun <T : Any> DragDropColumn(
     onDragEnd: (index: Int) -> Unit,
     itemContent: @Composable LazyItemScope.(item: T) -> Unit
 ) {
-    var TAG = object {}::class.java.enclosingMethod.name
+    val TAG = object {}::class.java.enclosingMethod.name
+
     var overscrollJob by remember { mutableStateOf<Job?>(null) }
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -102,6 +103,7 @@ fun <T : Any> DragDropColumn(
                 index = index
             ) { isDragging ->
                 val elevation by animateDpAsState(if (isDragging) 4.dp else 0.dp)
+
                 if (isDragging) {
                     if (!isCurrentlyDragging.value) {
                         isCurrentlyDragging.value = true

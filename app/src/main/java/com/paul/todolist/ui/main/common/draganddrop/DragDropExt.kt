@@ -55,22 +55,28 @@ fun LazyItemScope.DraggableItem(
     val previous: Float by animateFloatAsState(dragDropState.previousItemOffset.value * 0.67f)
     val dragging = index == dragDropState.currentIndexOfDraggedItem
 
+//    val colorUnSelected = MaterialTheme.colorScheme.primary
+//    val colorMoveSelected = MaterialTheme.colorScheme.onSecondary
+
     val draggingModifier = if (dragging) {
         Modifier
             .zIndex(1f)
             .graphicsLayer {
                 translationY = current
             }
+
     } else if (index == dragDropState.previousIndexOfDraggedItem) {
         Modifier
             .zIndex(1f)
             .graphicsLayer {
                 translationY = previous
             }
+
     } else {
         Modifier.animateItemPlacement(
             tween(easing = FastOutLinearInEasing)
         )
+
     }
     Column(modifier = modifier.then(draggingModifier)) {
         content(dragging)

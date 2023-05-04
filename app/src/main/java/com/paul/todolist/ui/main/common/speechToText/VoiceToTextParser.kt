@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class VoiceToTextParser(private val app: Application) : RecognitionListener {
+    private var TAG = VoiceToTextParser::class.simpleName
+
     private val _state = MutableStateFlow(VoiceToTextParserState())
     val state: StateFlow<VoiceToTextParserState> get() = _state.asStateFlow()
 
@@ -76,14 +78,14 @@ class VoiceToTextParser(private val app: Application) : RecognitionListener {
     }
 
     override fun onBeginningOfSpeech() {
-        Log.e("VoiceToTextParser", "Start of speech")
+        Log.e(TAG, "Start of speech")
     }
 
     override fun onRmsChanged(rmsdB: Float) {
     }
 
     override fun onBufferReceived(buffer: ByteArray?) {
-        Log.e("VoiceToTextParser", "onBufferReceived" + buffer.toString())
+        Log.e(TAG, "onBufferReceived" + buffer.toString())
     }
 
     override fun onEndOfSpeech() {
@@ -93,7 +95,7 @@ class VoiceToTextParser(private val app: Application) : RecognitionListener {
                 isSpeaking = false
             )
         }
-        Log.e("VoiceToTextParser", "End of speech")
+        Log.e(TAG, "End of speech")
     }
 
     override fun onError(error: Int) {
@@ -105,7 +107,7 @@ class VoiceToTextParser(private val app: Application) : RecognitionListener {
                 error = "Error: $error"
             )
         }
-        Log.e("VoiceToTextParser", "Error $error")
+        Log.e(TAG, "Error $error")
     }
 
     override fun onResults(results: Bundle?) {

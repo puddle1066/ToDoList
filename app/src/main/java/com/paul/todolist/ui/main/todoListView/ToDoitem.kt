@@ -45,7 +45,7 @@ fun ToDoItem(
     onRowDetails: (ToDoDataItem, Boolean) -> Unit,
     onCheckChanged: (ToDoDataItem, Boolean) -> Unit,
 ) {
-    var TAG = object {}::class.java.enclosingMethod.name
+    val TAG = object {}::class.java.enclosingMethod.name
 
     val isChecked = remember { mutableStateOf(false) }
     val isVisible = remember { mutableStateOf(true) }
@@ -86,13 +86,7 @@ fun ToDoItem(
                         onPress = {
                             Log.e(TAG, "onPress")
                             if (isMoveAllowed.value) {
-                                if (isSelectedItem.value) {
-                                    backgroundColor.value = colorUnSelected
-                                    isSelectedItem.value = false
-                                } else {
-                                    backgroundColor.value = colorMoveSelected
-                                    isSelectedItem.value = true
-                                }
+                                isSelectedItem.value = !isSelectedItem.value
                             }
                         },
                         onDoubleTap = {
@@ -101,13 +95,7 @@ fun ToDoItem(
                         onTap = {
                             Log.e(TAG, "onTAP")
                             if (isDeleteEnabled.value) {
-                                if (isSelectedItem.value) {
-                                    backgroundColor.value = colorUnSelected
-                                    isSelectedItem.value = false
-                                } else {
-                                    backgroundColor.value = colorDeleteSelected
-                                    isSelectedItem.value = true
-                                }
+                                isSelectedItem.value = !isSelectedItem.value
                                 onRowDelete(todoItem, isSelectedItem.value)
                             } else {
                                 onRowDetails(todoItem, isSelectedItem.value)
