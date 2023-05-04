@@ -40,6 +40,7 @@ fun ToDoItem(
     listName: String = "",
     isDeleteEnabled: MutableState<Boolean>,
     isMoveAllowed: MutableState<Boolean>,
+    isPreSelected: Boolean,
     listType: String,
     onRowDelete: (ToDoDataItem, Boolean) -> Unit,
     onRowDetails: (ToDoDataItem, Boolean) -> Unit,
@@ -49,25 +50,30 @@ fun ToDoItem(
 
     val isChecked = remember { mutableStateOf(false) }
     val isVisible = remember { mutableStateOf(true) }
-    val isSelectedItem = remember { mutableStateOf(false) }
+    val isSelectedItem = remember { mutableStateOf(isPreSelected) }
 
     val colorUnSelected = MaterialTheme.colorScheme.primary
+    val colorMoveSelected = MaterialTheme.colorScheme.onSurface
     val colorDeleteSelected = MaterialTheme.colorScheme.error
-    val colorMoveSelected = MaterialTheme.colorScheme.primary  //Color.Gray
 
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
     isChecked.value = todoItem.finishedDate != "0"
 
+    backgroundColor.value = colorUnSelected
     when (listType) {
         listState_all_incomplete ->
             if (todoItem.finishedDate == "0") isVisible.value = true else false
 
-        listState_Finished ->
+        listState_Finished -> {
             if (todoItem.finishedDate != "0") isVisible.value = true else false
+            if (isSelectedItem.value) backgroundColor.value = colorDeleteSelected
+        }
 
-        else ->
+        else -> {
             isVisible.value = true
+            if (todoItem.display_sequence == 999) backgroundColor.value = colorMoveSelected
+        }
     }
 
     AnimatedVisibility(

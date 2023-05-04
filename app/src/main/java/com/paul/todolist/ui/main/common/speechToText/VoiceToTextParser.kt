@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class VoiceToTextParser(private val app: Application) : RecognitionListener {
-    private var TAG = VoiceToTextParser::class.simpleName
+    private var TAG = "VoiceToTextParser"
 
     private val _state = MutableStateFlow(VoiceToTextParserState())
     val state: StateFlow<VoiceToTextParserState> get() = _state.asStateFlow()

@@ -37,10 +37,11 @@ fun ToDoListView(model: ToDoListModel) {
 
     val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
 
+    var isFalse = false
     val isAddButtonVisible = remember { mutableStateOf(true) }
-    val isDeleteButtonVisible = remember { mutableStateOf(false) }
+    val isDeleteButtonVisible = remember { mutableStateOf(isFalse) }
 
-    val isMoveAllowed = remember { mutableStateOf(false) }
+    val isMoveAllowed = remember { mutableStateOf(isFalse) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
     val uiState = model.uiState.collectAsState()
@@ -106,11 +107,16 @@ fun ToDoListView(model: ToDoListModel) {
                         isMoveAllowed.value,
                         onDragStart = {
                             startDragIndex.value = it
+                            uiState.value.get(startDragIndex.value).display_sequence = 999
                         },
                         onDragEnd = {
                             startDragIndex.value = it
+                            uiState.value.get(startDragIndex.value).display_sequence = it
                             model.toDoDataItems[startDragIndex.value].display_sequence = it
                             model.updateSequence()
+
+                            listDataItems.clear()
+                            listDataItems.swapList(model.getToDoList(MainView.listId))
                         }
                     ) { item ->
 
@@ -123,6 +129,7 @@ fun ToDoListView(model: ToDoListModel) {
                             listName,
                             isDeleteAllowed,
                             isMoveAllowed,
+                            false,
                             model.todoListItem.type,
 
                             onRowDelete = { todoItem: ToDoDataItem, isSelected: Boolean ->

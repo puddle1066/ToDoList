@@ -27,7 +27,7 @@ class DragDropState internal constructor(
         get() = state.layoutInfo.visibleItemsInfo
             .firstOrNull { it.index == currentIndexOfDraggedItem }
 
-    internal var previousIndexOfDraggedItem by mutableStateOf<Int?>(null)
+    var previousIndexOfDraggedItem by mutableStateOf<Int?>(null)
         private set
     internal var previousItemOffset = Animatable(0f)
         private set
@@ -40,11 +40,10 @@ class DragDropState internal constructor(
     private val initialOffsets: Pair<Int, Int>?
         get() = initiallyDraggedElement?.let { Pair(it.offset, it.offsetEnd) }
 
-    private val currentElement: LazyListItemInfo?
+    val currentElement: LazyListItemInfo?
         get() = currentIndexOfDraggedItem?.let {
             state.getVisibleItemInfoFor(absoluteIndex = it)
         }
-
 
     fun onDragStart(offset: Offset) {
         state.layoutInfo.visibleItemsInfo
@@ -59,7 +58,6 @@ class DragDropState internal constructor(
     fun onDragInterrupted() {
         if (currentIndexOfDraggedItem != null) {
             previousIndexOfDraggedItem = currentIndexOfDraggedItem
-            // val startOffset = draggingItemOffset
             scope.launch {
                 previousItemOffset.animateTo(
                     0f,

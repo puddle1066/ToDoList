@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DataStoreManager @Inject constructor(@ApplicationContext private val context: Context) {
+
     private var TAG = DataStoreManager::class.simpleName
 
     private suspend fun <T> DataStore<Preferences>.getFromLocalStorage(

@@ -19,6 +19,8 @@ import javax.inject.Singleton
 @InstallIn(ViewModelComponent::class)
 class RoomDataProvider @Inject constructor() {
 
+    private var TAG = RoomDataProvider::class.simpleName
+
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     @Singleton

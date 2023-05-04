@@ -50,6 +50,8 @@ fun <T : Any> DragDropColumn(
                     onDrag = { change, offset ->
                         change.consume()
                         if (moveAllowed) {
+                            dragDropState.currentElement
+                            dragDropState.previousIndexOfDraggedItem
                             dragDropState.onDrag(offset = offset)
                         }
 

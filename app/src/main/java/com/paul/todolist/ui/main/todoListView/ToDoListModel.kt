@@ -60,15 +60,15 @@ open class ToDoListModel @Inject constructor(
         runBlocking {
             todoListItem = dataBaseProvider.getListItem(listId)
 
-            when (todoListItem.type) {
+            toDoDataItems = when (todoListItem.type) {
                 listState_all_incomplete ->
-                    toDoDataItems = dataBaseProvider.getAllIncompleteItems()
+                    dataBaseProvider.getAllIncompleteItems()
 
                 listState_Finished ->
-                    toDoDataItems = dataBaseProvider.getFinishedItems()
+                    dataBaseProvider.getFinishedItems()
 
                 else ->
-                    toDoDataItems = dataBaseProvider.getToDoItems(listId)
+                    dataBaseProvider.getToDoItems(listId)
             }
         }
         _uiState.value = toDoDataItems
@@ -92,10 +92,10 @@ open class ToDoListModel @Inject constructor(
         runBlocking {
             title = dataBaseProvider.getListTitle(MainView.listId)
         }
-        when (title) {
-            null -> return resourcesProvider.getString(R.string.please_select)
-            "" -> return resourcesProvider.getString(R.string.please_select)
-            else -> return title
+        return when (title) {
+            null -> resourcesProvider.getString(R.string.please_select)
+            "" -> resourcesProvider.getString(R.string.please_select)
+            else -> title
         }
     }
 

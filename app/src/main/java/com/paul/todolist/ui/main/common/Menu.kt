@@ -53,7 +53,7 @@ fun AppMenu(
                         Text(
                             modifier = Modifier.weight(1.5f),
                             text = stringResource(key),
-                            style = typography.titleLarge,
+                            style = typography.titleMedium,
                             color = MaterialTheme.colorScheme.secondary,
                         )
                     }
