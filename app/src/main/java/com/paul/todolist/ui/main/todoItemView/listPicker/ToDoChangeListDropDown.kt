@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.listPicker
 
 import Spinner
 import androidx.compose.foundation.border
@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
+import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 
 @Composable
 fun ToDoChangeListDropDown(model: ToDoItemModel, addButtonVisibility: MutableState<Boolean>) {

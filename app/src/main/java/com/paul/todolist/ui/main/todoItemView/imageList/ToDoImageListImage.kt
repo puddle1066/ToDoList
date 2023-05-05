@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.imageList
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

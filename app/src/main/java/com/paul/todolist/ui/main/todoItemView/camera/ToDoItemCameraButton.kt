@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.camera
 
 import android.graphics.Bitmap
 import android.util.Log

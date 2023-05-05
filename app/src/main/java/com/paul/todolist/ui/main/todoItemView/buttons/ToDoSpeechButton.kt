@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.buttons
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.SPEECH_LANGUAGE
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParserState
+import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

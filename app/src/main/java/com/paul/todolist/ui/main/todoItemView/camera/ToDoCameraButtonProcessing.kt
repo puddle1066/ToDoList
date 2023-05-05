@@ -1,9 +1,10 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.camera
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.paul.todolist.di.database.data.ToDoImageData
+import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.util.encodeTobase64
 import com.paul.todolist.util.rotate
 

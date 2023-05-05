@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.imageList
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -8,6 +8,7 @@ import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
+import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.util.decodeBase64
 
 @Composable

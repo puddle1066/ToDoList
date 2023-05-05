@@ -1,4 +1,4 @@
-package com.paul.todolist.ui.main.todoItemView
+package com.paul.todolist.ui.main.todoItemView.buttons
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -6,6 +6,7 @@ import com.paul.todoList.R
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParserState
+import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.ui.widgets.AppButton
 
 @Composable

@@ -17,7 +17,13 @@ import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.listItemsView.swapList
+import com.paul.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
+import com.paul.todolist.ui.main.todoItemView.buttons.ToDoSpeechButton
+import com.paul.todolist.ui.main.todoItemView.camera.ToDoCameraButtonProcessing
 import com.paul.todolist.ui.main.todoItemView.datePicker.ToDoDatePicker
+import com.paul.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
+import com.paul.todolist.ui.main.todoItemView.inputName.ToDoInputName
+import com.paul.todolist.ui.main.todoItemView.listPicker.ToDoChangeListDropDown
 import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
