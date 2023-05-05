@@ -17,7 +17,7 @@ fun ToDoImageListItem(
     toDoImageData: SnapshotStateList<ToDoImageData>,
     addUpdateButtonVisibility: MutableState<Boolean>
 ) {
-    ToDoImageitem(
+    ToDoImageDisplayImage(
         item,
         onDeleteClick = {
             decodeBase64(it.image)?.let {

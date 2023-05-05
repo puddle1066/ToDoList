@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,10 @@ fun CameraView(
         .requireLensFacing(lensFacing)
         .build()
 
+    val colorSelected = MaterialTheme.colorScheme.onPrimary
+    val colorUnSelected = MaterialTheme.colorScheme.primary
+    val buttonColor = remember { mutableStateOf(colorUnSelected) }
+
     LaunchedEffect(lensFacing) {
         cameraProvider = context.getCameraProvider()
         cameraProvider.unbindAll()
@@ -90,6 +95,7 @@ fun CameraView(
             IconButton(
                 modifier = Modifier.padding(bottom = 5.dp),
                 onClick = {
+                    buttonColor.value = colorSelected
                     takePhoto(
                         imageCapture = imageCapture,
                         executor = executor,
@@ -101,7 +107,7 @@ fun CameraView(
                     Icon(
                         imageVector = Icons.Sharp.Lens,
                         contentDescription = stringResource(id = R.string.missing_resource),
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = buttonColor.value,
                         modifier = Modifier
                             .size(100.dp)
                             .padding(1.dp)

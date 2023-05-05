@@ -32,7 +32,7 @@ import com.paul.todolist.util.decodeBase64
 
 
 @Composable
-fun ToDoImageitem(
+fun ToDoImageDisplayImage(
     todoimage: ToDoImageData,
     onDeleteClick: (ToDoImageData) -> Unit,
     onExpandClick: (ToDoImageData) -> Unit

@@ -17,9 +17,8 @@ import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.listItemsView.swapList
+import com.paul.todolist.ui.main.todoItemView.datePicker.ToDoDatePicker
 import com.paul.todolist.ui.theme.ToDoListTheme
-import com.paul.todolist.util.encodeTobase64
-import com.paul.todolist.util.rotate
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -63,31 +62,18 @@ fun ToDoItemView(model: ToDoItemModel) {
                     }
                 }
 
-                if (model.isPhotoCaptureEnabled && !model.isNewItem()) {
+                if (model.isPhotoCaptureEnabled) {
                     itemsIndexed(toDoImageData) { _, item ->
                         ToDoImageListItem(model, item, toDoImageData, addUpdateButtonVisibility)
                     }
 
                     item {
                         Spacer(Modifier.height(1.dp))
-                        ToDoItemCameraButton { bitmap ->
-
-                            val rotated =
-                                bitmap.rotate(90f)  //rotate the bitmap as the screen is fixed portrait
-
-                            model.addedBitmapList.add(rotated)
-                            addUpdateButtonVisibility.value = true
-                            encodeTobase64(rotated)?.let { bitmapString ->
-                                ToDoImageData(
-                                    "", "",
-                                    bitmapString
-                                )
-                            }?.let { it -> toDoImageData.add(it) }
-                        }
+                        ToDoCameraButtonProcessing(model, toDoImageData, addUpdateButtonVisibility)
                     }
                 }
 
-                if (addUpdateButtonVisibility.value) {
+                if (addUpdateButtonVisibility.value && model.todoDataItem.description.isNotEmpty()) {
                     item {
                         ToDoItemAddButton(model, voiceState)
                     }
