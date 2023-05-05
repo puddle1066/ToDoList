@@ -36,6 +36,7 @@ import java.util.concurrent.Executors
 
 @Composable
 fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
+
     val TAG = object {}::class.java.enclosingMethod.name
 
     val animationDuration = 100
