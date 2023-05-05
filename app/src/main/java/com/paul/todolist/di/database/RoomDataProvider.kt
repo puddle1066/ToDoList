@@ -1,15 +1,15 @@
 package com.paul.todolist.di.database
 
+import android.util.Log
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.di.database.worker.DataBaseManager
+import com.paul.todolist.ui.main.MainView.Companion.dispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
@@ -20,8 +20,6 @@ import javax.inject.Singleton
 class RoomDataProvider @Inject constructor() {
 
     private var TAG = RoomDataProvider::class.simpleName
-
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     @Singleton
     @Provides
@@ -139,11 +137,10 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getLastSequence(): Int {
         return withContext(dispatcher) {
-            //Need to check for empty database
-            if (DataBaseManager.getInstance().ToDoItemsDao().getLastSequence() != null) {
+            try {
                 DataBaseManager.getInstance().ToDoItemsDao().getLastSequence().display_sequence
-            } else {
-                0
+            } catch (e: Exception) {
+                Log.e(TAG, "getLastSequence - $e")
             }
         }
     }

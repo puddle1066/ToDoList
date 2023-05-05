@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.todoListView
 
+import android.util.Log
 import com.paul.todoList.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
@@ -9,8 +10,6 @@ import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.listState_Finished
 import com.paul.todolist.listState_Normal
 import com.paul.todolist.listState_all_incomplete
-import com.paul.todolist.menuOptionLists
-import com.paul.todolist.menuOptionSettings
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +26,8 @@ open class ToDoListModel @Inject constructor(
 
 ) : StorageViewModel(dataStoreProvider) {
 
+    private var TAG = this::class.simpleName
+
     private var listDataItems = listOf<ListDataItem>()
     var toDoDataItems = listOf<ToDoDataItem>()
 
@@ -34,7 +35,6 @@ open class ToDoListModel @Inject constructor(
 
     val uiState = _uiState.asStateFlow()
 
-    val menuItems = listOf(menuOptionLists, menuOptionSettings)
     var deleteList = ArrayList<ToDoDataItem>()
 
     lateinit var todoListItem: ListDataItem
@@ -103,7 +103,7 @@ open class ToDoListModel @Inject constructor(
         var seq = 0
         _uiState.value.forEach {
             runBlocking {
-                var todoitem = dataBaseProvider.getToDoItem(it.itemId)
+                val todoitem = dataBaseProvider.getToDoItem(it.itemId)
                 todoitem.display_sequence = seq
                 seq++
                 dataBaseProvider.updateToDo(todoitem)
@@ -126,8 +126,12 @@ open class ToDoListModel @Inject constructor(
 
     fun deleteItem(itemId: String) {
         runBlocking {
-            dataBaseProvider.deleteAllToDoImages(itemId)
-            dataBaseProvider.deleteItem(itemId)
+            try {
+                dataBaseProvider.deleteAllToDoImages(itemId)
+                dataBaseProvider.deleteItem(itemId)
+            } catch (e: Exception) {
+                Log.e(TAG, "getToDoImages - Failed $e")
+            }
         }
     }
 

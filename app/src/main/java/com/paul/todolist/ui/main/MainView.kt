@@ -20,6 +20,8 @@ import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.ui.main.todoListView.ToDoListModel
 import com.paul.todolist.ui.theme.ToDoListTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @AndroidEntryPoint
 class MainView : ComponentActivity() {
@@ -74,6 +76,8 @@ class MainView : ComponentActivity() {
     companion object {
         lateinit var navHostController: NavHostController
         lateinit var cameraProvider: ProcessCameraProvider
+
+        val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
         var listId: String = ""
         var itemID: String = ""

@@ -1,6 +1,7 @@
 package com.paul.todolist.ui.main.todoItemView
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
@@ -20,6 +21,8 @@ open class ToDoItemModel @Inject constructor(
     private val dataStoreProvider: DataStoreProvider
 
 ) : StorageViewModel(dataStoreProvider) {
+
+    private var TAG = this::class.simpleName
 
     var todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0", 0)
 
@@ -121,9 +124,10 @@ open class ToDoItemModel @Inject constructor(
     fun getToDoImages(itemId: String): List<ToDoImageData> {
         var list = listOf<ToDoImageData>()
         runBlocking {
-            list = dataBaseProvider.getToDoImages(itemId)
-            if (list.isEmpty()) {
-                list = listOf<ToDoImageData>()
+            try {
+                list = dataBaseProvider.getToDoImages(itemId)
+            } catch (e: Exception) {
+                Log.e(TAG, "getToDoImages - Failed $e")
             }
         }
         return list
