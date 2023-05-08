@@ -35,8 +35,8 @@ fun ToDoInputText(
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     ToDoListTheme {
-        var textValue = model.todoDataItem.description
-        var textState = remember { mutableStateOf(textValue) }
+        val textValue = model.todoDataItem.description
+        val textState = remember { mutableStateOf(textValue) }
         val keyboardController = LocalSoftwareKeyboardController.current
 
         if (!voiceState.isSpeaking && !voiceState.spokenText.isEmpty()) {
@@ -106,7 +106,6 @@ fun ToDoInputText(
             onValueChange = {
                 textState.value = it
             },
-            singleLine = true,
         )
     }
 }
