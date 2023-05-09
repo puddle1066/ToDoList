@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParserState
@@ -31,8 +31,7 @@ fun ToDoInputText(
     model: ToDoItemModel,
     fieldTitle: String,
     voiceState: VoiceToTextParserState,
-    onFinished: (String) -> Unit,
-    keyboardType: KeyboardType = KeyboardType.Text
+    onFinished: (String) -> Unit
 ) {
     ToDoListTheme {
         val textValue = model.todoDataItem.description
@@ -65,34 +64,14 @@ fun ToDoInputText(
             },
 
             shape = RoundedCornerShape(50.dp),
-
             keyboardActions = KeyboardActions(
 
                 onDone = {
                     keyboardController?.hide()
                     onFinished(textState.value)
                 },
-                onGo = {
-                    keyboardController?.hide()
-                    onFinished(textState.value)
-                },
-                onNext = {
-                    keyboardController?.hide()
-                    onFinished(textState.value)
-                },
-                onPrevious = {
-                    keyboardController?.hide()
-                    onFinished(textState.value)
-                },
-                onSearch = {
-                    keyboardController?.hide()
-                    onFinished(textState.value)
-                },
-                onSend = {
-                    keyboardController?.hide()
-                    onFinished(textState.value)
-                },
             ),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
 
             colors = TextFieldDefaults.textFieldColors(
                 focusedTextColor = MaterialTheme.colorScheme.secondary,
@@ -101,7 +80,7 @@ fun ToDoInputText(
                 cursorColor = MaterialTheme.colorScheme.secondary
             ),
             textStyle = typography.bodyLarge,
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+
             value = textState.value,
             onValueChange = {
                 textState.value = it
