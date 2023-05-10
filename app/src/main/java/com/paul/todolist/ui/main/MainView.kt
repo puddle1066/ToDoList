@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -73,6 +74,11 @@ class MainView : ComponentActivity() {
         toDoItemModel.voiceToText = VoiceToTextParser(application)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        //TODO Destroy camera and Nav host controller
+    }
+
     companion object {
         lateinit var navHostController: NavHostController
         lateinit var cameraProvider: ProcessCameraProvider
@@ -81,7 +87,7 @@ class MainView : ComponentActivity() {
 
         var listId: String = ""
         var itemID: String = ""
-        var image: String = ""
+        lateinit var image: Bitmap
     }
 }
 

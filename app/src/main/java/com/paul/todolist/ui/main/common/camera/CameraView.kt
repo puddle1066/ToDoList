@@ -29,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todoList.R
+import com.paul.todolist.imageHeight
+import com.paul.todolist.imageWidth
 import com.paul.todolist.ui.main.MainView.Companion.cameraProvider
 import java.util.concurrent.Executor
 
@@ -49,7 +51,7 @@ fun CameraView(
     val imageCapture: ImageCapture = remember {
         ImageCapture
             .Builder()
-            .setDefaultResolution(Size(480, 640))
+            .setDefaultResolution(Size(imageWidth, imageHeight))
             .build()
     }
     val cameraSelector = CameraSelector.Builder()
@@ -59,6 +61,8 @@ fun CameraView(
     val colorSelected = MaterialTheme.colorScheme.onPrimary
     val colorUnSelected = MaterialTheme.colorScheme.primary
     val buttonColor = remember { mutableStateOf(colorUnSelected) }
+
+    val enableButton = remember { mutableStateOf(true) }
 
     LaunchedEffect(lensFacing) {
         cameraProvider = context.getCameraProvider()
@@ -96,6 +100,7 @@ fun CameraView(
                 modifier = Modifier.padding(bottom = 5.dp),
                 onClick = {
                     buttonColor.value = colorSelected
+                    enableButton.value = false
                     takePhoto(
                         imageCapture = imageCapture,
                         executor = executor,
@@ -103,6 +108,7 @@ fun CameraView(
                         onError = onError
                     )
                 },
+                enabled = enableButton.value,
                 content = {
                     Icon(
                         imageVector = Icons.Sharp.Lens,

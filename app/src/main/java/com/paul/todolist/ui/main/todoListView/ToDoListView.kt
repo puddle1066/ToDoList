@@ -35,9 +35,9 @@ fun ToDoListView(model: ToDoListModel) {
 
     val scaffoldState = rememberScaffoldState()
 
-    val listDataItems = remember { mutableStateListOf<ToDoDataItem>() }
+    val displayListofData = remember { mutableStateListOf<ToDoDataItem>() }
 
-    var isFalse = false
+    val isFalse = false
     val isAddButtonVisible = remember { mutableStateOf(true) }
     val isDeleteButtonVisible = remember { mutableStateOf(isFalse) }
 
@@ -45,7 +45,6 @@ fun ToDoListView(model: ToDoListModel) {
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
     val uiState = model.uiState.collectAsState()
-
     val startDragIndex = remember { mutableStateOf(-1) }
 
     //If we don't have a first entry in the list use the first
@@ -55,8 +54,8 @@ fun ToDoListView(model: ToDoListModel) {
         model.saveListId(MainView.listId)
     }
 
-    listDataItems.clear()
-    listDataItems.swapList(model.getToDoList(MainView.listId))
+    displayListofData.clear()
+    displayListofData.swapList(model.getToDoList(MainView.listId))
     isAddButtonVisible.value = model.isNormalList()
     isDeleteAllowed.value = model.isFinishedList()
     isMoveAllowed.value = model.isNormalList()
@@ -68,9 +67,12 @@ fun ToDoListView(model: ToDoListModel) {
                     model.getAllSortedASC(),
                     model.getListTitle()
                 ) {
+
                     model.saveListId(it)
-                    listDataItems.clear()
-                    listDataItems.swapList(model.getToDoList(it))
+
+                    MainView.listId = it
+                    displayListofData.clear()
+                    displayListofData.swapList(model.getToDoList(it))
                     isAddButtonVisible.value = model.isNormalList()
                     isDeleteAllowed.value = model.isFinishedList()
                     isMoveAllowed.value = model.isNormalList()
@@ -79,7 +81,7 @@ fun ToDoListView(model: ToDoListModel) {
             scaffoldState = scaffoldState,
             floatingActionButton = {
                 CreateAddButton(isAddButtonVisible)
-                CreateDeleteButton(model, listDataItems, isDeleteButtonVisible)
+                CreateDeleteButton(model, displayListofData, isDeleteButtonVisible)
             }
 
         ) {
@@ -115,14 +117,15 @@ fun ToDoListView(model: ToDoListModel) {
                             model.toDoDataItems[startDragIndex.value].display_sequence = it
                             model.updateSequence()
 
-                            listDataItems.clear()
-                            listDataItems.swapList(model.getToDoList(MainView.listId))
+                            displayListofData.clear()
+                            displayListofData.swapList(model.getToDoList(MainView.listId))
                         }
                     ) { item ->
 
                         //Only display the listId for "All" or "Finished" lists
                         val listName =
-                            if (!model.isNormalList()) model.getListTitleforId(item.listID) else ""
+                            if (!model.isNormalList())
+                                model.getListTitleforId(item.listID) else ""
 
                         ToDoItem(
                             item,
@@ -141,9 +144,8 @@ fun ToDoListView(model: ToDoListModel) {
                                 isDeleteButtonVisible.value = model.deleteList.size != 0
                             },
                             onRowDetails = { todoItem: ToDoDataItem, _ ->
-                                if (todoItem.finishedDate == "0") {
-                                    MainView.itemID = todoItem.itemId
-                                    MainView.listId = todoItem.listID
+                                if (item.finishedDate == "0") {
+                                    MainView.itemID = item.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }
                             },
@@ -153,8 +155,8 @@ fun ToDoListView(model: ToDoListModel) {
                                     todoItem.finishedDate
                                 )
 
-                                listDataItems.clear()
-                                listDataItems.swapList(model.getToDoList(MainView.listId))
+                                displayListofData.clear()
+                                displayListofData.swapList(model.getToDoList(MainView.listId))
                             }
                         )
                     }

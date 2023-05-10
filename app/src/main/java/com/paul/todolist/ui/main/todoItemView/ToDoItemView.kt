@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main.todoItemView
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,11 +18,12 @@ import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.listItemsView.swapList
+import com.paul.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonProcessing
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoSpeechButton
-import com.paul.todolist.ui.main.todoItemView.camera.ToDoCameraButtonProcessing
 import com.paul.todolist.ui.main.todoItemView.datePicker.ToDoDatePicker
 import com.paul.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
+import com.paul.todolist.ui.main.todoItemView.imageList.ToDoNewImage
 import com.paul.todolist.ui.main.todoItemView.inputName.ToDoInputName
 import com.paul.todolist.ui.main.todoItemView.listPicker.ToDoChangeListDropDown
 import com.paul.todolist.ui.theme.ToDoListTheme
@@ -34,11 +36,12 @@ fun ToDoItemView(model: ToDoItemModel) {
 
     val voiceState by model.voiceToText.state.collectAsState()
     val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
-
-    model.loadData()
+    val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
 
     toDoImageData.clear()
     toDoImageData.swapList(model.getToDoImages(MainView.itemID))
+
+    model.loadData()
 
     ToDoListTheme {
         Column() {
@@ -69,19 +72,30 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
 
                 if (model.isPhotoCaptureEnabled) {
+                    //Add cached images from disk
                     itemsIndexed(toDoImageData) { _, item ->
-                        ToDoImageListItem(model, item, toDoImageData, addUpdateButtonVisibility)
+                        ToDoImageListItem(
+                            model,
+                            item,
+                            toDoImageData,
+                            toDoImagesNew,
+                            addUpdateButtonVisibility
+                        )
+                    }
+                    //Add any images just added
+                    itemsIndexed(toDoImagesNew) { _, item ->
+                        ToDoNewImage(model, item, toDoImagesNew, addUpdateButtonVisibility)
                     }
 
                     item {
                         Spacer(Modifier.height(1.dp))
-                        ToDoCameraButtonProcessing(model, toDoImageData, addUpdateButtonVisibility)
+                        ToDoCameraButtonProcessing(model, toDoImagesNew, addUpdateButtonVisibility)
                     }
                 }
 
-                if (addUpdateButtonVisibility.value && model.todoDataItem.description.isNotEmpty()) {
+                if (addUpdateButtonVisibility.value && model.hasDescription()) {
                     item {
-                        ToDoItemAddButton(model, voiceState)
+                        ToDoItemAddButton(model, toDoImagesNew, voiceState)
                     }
                 }
             }

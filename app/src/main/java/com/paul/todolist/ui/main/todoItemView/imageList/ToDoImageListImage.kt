@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.todoItemView.imageList
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -27,15 +28,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
-import com.paul.todolist.di.database.data.ToDoImageData
-import com.paul.todolist.util.decodeBase64
-
+import com.paul.todolist.imageHeight
+import com.paul.todolist.imageWidth
 
 @Composable
 fun ToDoImageDisplayImage(
-    todoimage: ToDoImageData,
-    onDeleteClick: (ToDoImageData) -> Unit,
-    onExpandClick: (ToDoImageData) -> Unit
+    key: String,
+    image: Bitmap,
+    onDeleteClick: (String) -> Unit,
+    onExpandClick: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -43,25 +44,24 @@ fun ToDoImageDisplayImage(
             .padding(20.dp, 20.dp, 20.dp, 20.dp),
     ) {
 
-        decodeBase64(todoimage.image)?.let {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(15.dp))
-                    .border(
-                        width = 4.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = RoundedCornerShape(15.dp)
-                    ),
-                contentScale = ContentScale.FillBounds,
-                bitmap = it.asImageBitmap(),
-                contentDescription = stringResource(id = R.string.missing_resource)
-            )
-        }
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(15.dp))
+                .border(
+                    width = 4.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(15.dp)
+                ),
+            contentScale = ContentScale.FillBounds,
+            bitmap = Bitmap.createScaledBitmap(image, imageWidth, imageHeight, false)
+                .asImageBitmap(),
+            contentDescription = stringResource(id = R.string.missing_resource)
+        )
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             IconButton(
-                onClick = { onDeleteClick(todoimage) },
+                onClick = { onDeleteClick(key) },
                 modifier = Modifier
                     .padding(20.dp)
                     .width(40.dp)
@@ -82,7 +82,7 @@ fun ToDoImageDisplayImage(
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             IconButton(
-                onClick = { onExpandClick(todoimage) },
+                onClick = { onExpandClick(key) },
                 modifier = Modifier
                     .padding(20.dp)
                     .width(40.dp)

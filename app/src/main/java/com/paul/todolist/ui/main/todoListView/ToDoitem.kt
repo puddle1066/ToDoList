@@ -58,6 +58,8 @@ fun ToDoItem(
 
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
+    Log.e(TAG, "item = $todoItem")
+
     isChecked.value = todoItem.finishedDate != "0"
 
     backgroundColor.value = colorUnSelected

@@ -19,28 +19,25 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.ZoomableBox
-import com.paul.todolist.util.decodeBase64
+import com.paul.todolist.util.dpToPx
+import com.paul.todolist.util.rotate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ItemImageView() {
 
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp.value
-    val screenHeight = configuration.screenHeightDp.dp.value
+    val imageState = remember { mutableStateOf(MainView.image) }
 
-    //Create a placeholder image until we can populate the image
-    val image: Bitmap =
-        Bitmap.createBitmap(screenWidth.toInt(), screenHeight.toInt(), Bitmap.Config.ARGB_8888)
-    val imageState = remember { mutableStateOf(image) }
-    decodeBase64(MainView.image)?.let {
-        imageState.value = it
-    }
+    val configuration = LocalConfiguration.current
+    val screenHeight = dpToPx(dp = configuration.screenHeightDp.toFloat()).toInt() - 200
+    val screenWidth = dpToPx(configuration.screenWidthDp.toFloat()).toInt()
+
+    val image =
+        Bitmap.createScaledBitmap(imageState.value, screenHeight, screenWidth, false).rotate(90f)
 
     ToDoListTheme {
         Column(
@@ -61,7 +58,7 @@ fun ItemImageView() {
                             translationX = offsetX,
                             translationY = offsetY
                         ),
-                    bitmap = imageState.value.asImageBitmap(),
+                    bitmap = image.asImageBitmap(),
                     contentDescription = stringResource(id = R.string.missing_resource)
                 )
             }

@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.todoItemView.imageList
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -16,23 +17,31 @@ fun ToDoImageListItem(
     model: ToDoItemModel,
     item: ToDoImageData,
     toDoImageData: SnapshotStateList<ToDoImageData>,
+    toDoImages: SnapshotStateList<Bitmap>,
     addUpdateButtonVisibility: MutableState<Boolean>
 ) {
-    ToDoImageDisplayImage(
-        item,
-        onDeleteClick = {
-            decodeBase64(it.image)?.let {
-                model.addedBitmapList.remove(it)
-            }
-            model.deleteImage(it.key)
+    decodeBase64(item.image)?.let {
+        ToDoImageDisplayImage(
+            item.key,
+            it,
+            onDeleteClick = {
+                decodeBase64(item.image)?.let {
+                    toDoImages.remove(it)
+                }
+                model.deleteImage(item.key)
 
-            toDoImageData.clear()
-            toDoImageData.swapList(model.getToDoImages(MainView.itemID))
-            addUpdateButtonVisibility.value = true
-        },
-        onExpandClick = {
-            MainView.image = it.image
-            showViewWithBackStack(ToDoScreens.ImageItemView.name)
-        }
-    )
+                toDoImageData.clear()
+                toDoImageData.swapList(model.getToDoImages(MainView.itemID))
+                if (model.hasDescription()) {
+                    addUpdateButtonVisibility.value = true
+                }
+            },
+            onExpandClick = {
+                decodeBase64(item.image)?.let {
+                    MainView.image = it
+                }
+                showViewWithBackStack(ToDoScreens.ImageItemView.name)
+            }
+        )
+    }
 }

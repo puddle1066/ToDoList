@@ -28,16 +28,14 @@ open class ToDoListModel @Inject constructor(
 
     private var TAG = this::class.simpleName
 
-    private var listDataItems = listOf<ListDataItem>()
-    var toDoDataItems = listOf<ToDoDataItem>()
-
     private val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
 
     val uiState = _uiState.asStateFlow()
 
     var deleteList = ArrayList<ToDoDataItem>()
 
-    lateinit var todoListItem: ListDataItem
+    var todoListItem =
+        ListDataItem("", (resourcesProvider.getString(R.string.please_select)), listState_Normal)
 
     fun swapSections(from: Int, to: Int) {
         val fromItem = _uiState.value[from]
@@ -50,28 +48,34 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun getAllSortedASC(): List<ListDataItem> {
+        var listDataItems = listOf<ListDataItem>()
         runBlocking {
             listDataItems = dataBaseProvider.getAllListsSorted()
         }
         return listDataItems
     }
 
+    var toDoDataItems = listOf<ToDoDataItem>()
     fun getToDoList(listId: String): List<ToDoDataItem> {
         runBlocking {
-            todoListItem = dataBaseProvider.getListItem(listId)
+            try {
+                todoListItem = dataBaseProvider.getListItem(listId)
 
-            toDoDataItems = when (todoListItem.type) {
-                listState_all_incomplete ->
-                    dataBaseProvider.getAllIncompleteItems()
+                toDoDataItems = when (todoListItem.type) {
+                    listState_all_incomplete ->
+                        dataBaseProvider.getAllIncompleteItems()
 
-                listState_Finished ->
-                    dataBaseProvider.getFinishedItems()
+                    listState_Finished ->
+                        dataBaseProvider.getFinishedItems()
 
-                else ->
-                    dataBaseProvider.getToDoItems(listId)
+                    else ->
+                        dataBaseProvider.getToDoItems(listId)
+                }
+                _uiState.value = toDoDataItems
+            } catch (e: Exception) {
+                Log.e(TAG, "getToDoList = exception thrown $e")
             }
         }
-        _uiState.value = toDoDataItems
         return toDoDataItems
     }
 

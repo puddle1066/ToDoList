@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main.todoItemView
 
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
@@ -32,8 +33,6 @@ open class ToDoItemModel @Inject constructor(
 
     lateinit var voiceToText: VoiceToTextParser
 
-    var addedBitmapList = ArrayList<Bitmap>()
-
     fun loadData() {
         runBlocking {
             if (MainView.itemID.isBlank()) {
@@ -51,7 +50,6 @@ open class ToDoItemModel @Inject constructor(
                 todoDataItem = dataBaseProvider.getToDoItem(MainView.itemID)
             }
         }
-        addedBitmapList.clear()
     }
 
     fun hasDataChanges(): Boolean {
@@ -72,6 +70,10 @@ open class ToDoItemModel @Inject constructor(
         return todoDataItem.listID.isEmpty()
     }
 
+    fun hasDescription(): Boolean {
+        return todoDataItem.description.isNotEmpty()
+    }
+
     fun getListTitle(): String {
         var title = ""
         runBlocking {
@@ -83,6 +85,7 @@ open class ToDoItemModel @Inject constructor(
     fun insert() {
         todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
         todoDataItem.listID = MainView.listId
+        todoDataItem.itemId = UUID.randomUUID().toString()
         runBlocking {
             todoDataItem.display_sequence = dataBaseProvider.getLastSequence() + 1
             dataBaseProvider.insertToDo(todoDataItem)
@@ -96,9 +99,9 @@ open class ToDoItemModel @Inject constructor(
         }
     }
 
-    fun addPhotos() {
+    fun addPhotos(toDoImages: SnapshotStateList<Bitmap>) {
         runBlocking {
-            addedBitmapList.forEach { bitmap ->
+            toDoImages.forEach { bitmap ->
                 encodeTobase64(bitmap)?.let {
                     ToDoImageData(
                         UUID.randomUUID().toString(),
