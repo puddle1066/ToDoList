@@ -1,8 +1,6 @@
 package com.paul.todolist.ui.main.common
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -18,45 +16,40 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ui.theme.typography
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppMenu(
     menuItems: HashMap<Int, String>,
     expanded: MutableState<Boolean>
 ) {
-    AnimatedVisibility(
-        visible = expanded.value,
-        enter = fadeIn(),
-        exit = fadeOut()
+    Box(
+        modifier = Modifier
+            .padding(5.dp, 50.dp, 0.dp, 0.dp)
     ) {
-        Box(
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = {
+                expanded.value = false
+            },
             modifier = Modifier
-                .padding(5.dp, 50.dp, 0.dp, 0.dp)
+                .background(MaterialTheme.colorScheme.primary)
+                .width(200.dp),
         ) {
-            DropdownMenu(
-                expanded = expanded.value,
-                onDismissRequest = {
-                    expanded.value = false
-                },
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary)
-                    .width(200.dp),
-            ) {
-                menuItems.forEach { (key, value) ->
-                    DropdownMenuItem(
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.primary),
-                        onClick = {
-                            expanded.value = false
-                            showView(value)
-                        },
-                    ) {
-                        Text(
-                            modifier = Modifier.weight(1.5f),
-                            text = stringResource(key),
-                            style = typography.titleMedium,
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
-                    }
+            menuItems.forEach { (key, value) ->
+                DropdownMenuItem(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.primary),
+                    onClick = {
+                        expanded.value = false
+                        showView(value)
+                    },
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1.5f),
+                        text = stringResource(key),
+                        style = typography.titleMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
                 }
             }
         }

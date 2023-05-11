@@ -32,11 +32,6 @@ open class ToDoListModel @Inject constructor(
 
     val uiState = _uiState.asStateFlow()
 
-    var deleteList = ArrayList<ToDoDataItem>()
-
-    var todoListItem =
-        ListDataItem("", (resourcesProvider.getString(R.string.please_select)), listState_Normal)
-
     fun swapSections(from: Int, to: Int) {
         val fromItem = _uiState.value[from]
         val toItem = _uiState.value[to]
@@ -55,11 +50,16 @@ open class ToDoListModel @Inject constructor(
         return listDataItems
     }
 
-    var toDoDataItems = listOf<ToDoDataItem>()
+    fun isListKnown(): Boolean {
+        return MainView.listId.isBlank()
+    }
+
     fun getToDoList(listId: String): List<ToDoDataItem> {
+        var toDoDataItems = listOf<ToDoDataItem>()
+
         runBlocking {
             try {
-                todoListItem = dataBaseProvider.getListItem(listId)
+                var todoListItem = dataBaseProvider.getListItem(listId)
 
                 toDoDataItems = when (todoListItem.type) {
                     listState_all_incomplete ->
@@ -80,15 +80,23 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun isFinishedList(): Boolean {
-        return todoListItem.type.equals(listState_Finished)
+        return getItemType().equals(listState_Finished)
     }
 
     fun isNormalList(): Boolean {
-        return todoListItem.type.equals(listState_Normal)
+        return getItemType().equals(listState_Normal)
     }
 
     fun isFullList(): Boolean {
-        return todoListItem.type.equals(listState_all_incomplete)
+        return getItemType().equals(listState_all_incomplete)
+    }
+
+    fun getItemType(): String {
+        var type = "0"
+        runBlocking {
+            type = dataBaseProvider.getListItem(MainView.listId).type
+        }
+        return type
     }
 
     fun getListTitle(): String {
