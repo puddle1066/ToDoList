@@ -8,12 +8,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,23 +22,23 @@ import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.draganddrop.DragDropColumn
 import com.paul.todolist.ui.main.common.showViewWithBackStack
+import com.paul.todolist.ui.main.todoListView.buttons.CreateAddButton
+import com.paul.todolist.ui.main.todoListView.buttons.CreateDeleteButton
 import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ToDoListView(model: ToDoListModel) {
 
-    val scaffoldState = rememberScaffoldState()
-
     val deleteList = remember { mutableStateListOf<ToDoDataItem>() }
 
     val isAddButtonVisible = remember { mutableStateOf(true) }
     val isDeleteButtonVisible = remember { mutableStateOf(false) }
-
     val isMoveAllowed = remember { mutableStateOf(false) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
     val uiState = model.uiState.collectAsState()
+
     val startDragIndex = remember { mutableStateOf(-1) }
 
     //If we don't have a first entry in the list use the first
@@ -75,7 +71,6 @@ fun ToDoListView(model: ToDoListModel) {
                     deleteList.clear()
                 }
             },
-            scaffoldState = scaffoldState,
             floatingActionButton = {
                 CreateAddButton(isAddButtonVisible)
                 CreateDeleteButton(model, deleteList, isDeleteButtonVisible)
@@ -125,10 +120,10 @@ fun ToDoListView(model: ToDoListModel) {
                         ToDoItem(
                             item,
                             listName,
+                            model.getItemType(),
+                            deleteList,
                             isDeleteAllowed,
                             isMoveAllowed,
-                            false,
-                            model.getItemType(),
 
                             onRowDelete = { todoItem: ToDoDataItem, isSelected: Boolean ->
                                 if (isSelected) {
@@ -143,17 +138,16 @@ fun ToDoListView(model: ToDoListModel) {
                                     MainView.itemID = todoItem.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }
-                            },
-                            onCheckChanged = { todoItem: ToDoDataItem, _ ->
-                                model.setFinishedDate(
-                                    todoItem.itemId,
-                                    todoItem.finishedDate
-                                )
-
-                                model.getToDoList(MainView.listId)
-
                             }
-                        )
+                        ) { todoItem: ToDoDataItem, _ ->
+                            model.setFinishedDate(
+                                todoItem.itemId,
+                                todoItem.finishedDate
+                            )
+
+                            model.getToDoList(MainView.listId)
+
+                        }
                     }
                 }
             }
@@ -161,64 +155,7 @@ fun ToDoListView(model: ToDoListModel) {
     }
 }
 
-@Composable
-fun CreateAddButton(isAddEnabled: MutableState<Boolean>) {
-    AnimatedVisibility(
-        visible = isAddEnabled.value,
-        enter = fadeIn() + slideInHorizontally(),
-        exit = fadeOut() + slideOutHorizontally()
-    ) {
-        FloatingActionButton(
-            modifier = Modifier
-                .width(90.dp)
-                .height(70.dp)
-                .padding(
-                    start = 10.dp,
-                    end = 10.dp
-                ),
-            backgroundColor = MaterialTheme.colorScheme.primary,
-            onClick = {
-                MainView.itemID = ""   //Clear Item ID as its a new item
-                showViewWithBackStack(ToDoScreens.ToDoItemView.name)
-            }
-        )
-        { Icon(Icons.Filled.Add, "") }
-    }
-}
 
-@Composable
-fun CreateDeleteButton(
-    model: ToDoListModel,
-    deleteList: SnapshotStateList<ToDoDataItem>,
-    deleteButtonVisible: MutableState<Boolean>
-) {
-    AnimatedVisibility(
-        visible = deleteButtonVisible.value,
-        enter = fadeIn() + slideInHorizontally(),
-        exit = fadeOut() + slideOutHorizontally()
-    ) {
-        FloatingActionButton(
-            modifier = Modifier
-                .width(90.dp)
-                .height(70.dp)
-                .padding(
-                    start = 10.dp,
-                    end = 10.dp
-                ),
-            backgroundColor = MaterialTheme.colorScheme.error,
-            onClick = {
-                deleteList.forEach {
-                    model.deleteItem(it.itemId)
-                }
-                deleteList.clear()
-                model.getToDoList(MainView.listId)
-                deleteButtonVisible.value = false
-            }
-        )
-        { Icon(Icons.Filled.Delete, "") }
-    }
-
-}
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

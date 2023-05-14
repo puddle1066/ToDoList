@@ -29,7 +29,6 @@ open class ToDoListModel @Inject constructor(
     private var TAG = this::class.simpleName
 
     private val _uiState = MutableStateFlow<List<ToDoDataItem>>(listOf())
-
     val uiState = _uiState.asStateFlow()
 
     fun swapSections(from: Int, to: Int) {
@@ -54,12 +53,12 @@ open class ToDoListModel @Inject constructor(
         return MainView.listId.isBlank()
     }
 
-    fun getToDoList(listId: String): List<ToDoDataItem> {
+    fun getToDoList(listId: String) {
         var toDoDataItems = listOf<ToDoDataItem>()
 
         runBlocking {
             try {
-                var todoListItem = dataBaseProvider.getListItem(listId)
+                val todoListItem = dataBaseProvider.getListItem(listId)
 
                 toDoDataItems = when (todoListItem.type) {
                     listState_all_incomplete ->
@@ -76,7 +75,6 @@ open class ToDoListModel @Inject constructor(
                 Log.e(TAG, "getToDoList = exception thrown $e")
             }
         }
-        return toDoDataItems
     }
 
     fun isFinishedList(): Boolean {

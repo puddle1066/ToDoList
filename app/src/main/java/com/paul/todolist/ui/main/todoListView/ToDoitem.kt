@@ -6,8 +6,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -33,15 +34,14 @@ import com.paul.todolist.listState_all_incomplete
 import com.paul.todolist.ui.theme.typography
 import com.paul.todolist.util.getCurrentDateAsString
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ToDoItem(
     item: ToDoDataItem,
     listName: String = "",
+    listType: String,
+    deleteList: SnapshotStateList<ToDoDataItem>,
     isDeleteEnabled: MutableState<Boolean>,
     isMoveAllowed: MutableState<Boolean>,
-    isPreSelected: Boolean,
-    listType: String,
     onRowDelete: (ToDoDataItem, Boolean) -> Unit,
     onRowDetails: (ToDoDataItem) -> Unit,
     onCheckChanged: (ToDoDataItem, Boolean) -> Unit,
@@ -50,7 +50,7 @@ fun ToDoItem(
 
     val isChecked = remember { mutableStateOf(false) }
     val isVisible = remember { mutableStateOf(false) }
-    val isSelectedItem = remember { mutableStateOf(isPreSelected) }
+    val isSelectedItem = remember { mutableStateOf(false) }
 
     val colorUnSelected = MaterialTheme.colorScheme.primary
     val colorMoveSelected = MaterialTheme.colorScheme.onSurface
@@ -67,7 +67,7 @@ fun ToDoItem(
 
         listState_Finished -> {
             if (item.finishedDate != "0") isVisible.value = true
-            if (isSelectedItem.value) backgroundColor.value = colorDeleteSelected
+            if (deleteList.contains(item)) backgroundColor.value = colorDeleteSelected
         }
 
         else -> {
@@ -100,12 +100,6 @@ fun ToDoItem(
                         },
                         onTap = {
                             Log.e(TAG, "onTAP")
-                            if (isDeleteEnabled.value) {
-                                isSelectedItem.value = !isSelectedItem.value
-                                onRowDelete(item, isSelectedItem.value)
-                            } else {
-                                onRowDetails(item)
-                            }
                         }
                     )
                 }
@@ -115,7 +109,16 @@ fun ToDoItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp),
+                    .height(60.dp)
+                    .clickable {
+                        Log.e(TAG, "clickable")
+                        if (isDeleteEnabled.value) {
+                            isSelectedItem.value = !isSelectedItem.value
+                            onRowDelete(item, isSelectedItem.value)
+                        } else {
+                            onRowDetails(item)
+                        }
+                    },
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
@@ -153,7 +156,11 @@ fun ToDoItem(
                 }
             }
 
-            Divider(color = MaterialTheme.colorScheme.onBackground, thickness = 4.dp)
+            Divider(
+                modifier = Modifier.padding(5.dp, 0.dp, 5.dp, 0.dp),
+                color = MaterialTheme.colorScheme.onBackground,
+                thickness = 2.dp
+            )
         }
     }
 }
