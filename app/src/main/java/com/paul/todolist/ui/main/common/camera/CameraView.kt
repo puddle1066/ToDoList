@@ -66,8 +66,8 @@ fun CameraView(
 
     LaunchedEffect(lensFacing) {
         cameraProvider = context.getCameraProvider()
-        cameraProvider.unbindAll()
-        cameraProvider.bindToLifecycle(
+        cameraProvider!!.unbindAll()
+        cameraProvider!!.bindToLifecycle(
             lifecycleOwner,
             cameraSelector,
             preview,

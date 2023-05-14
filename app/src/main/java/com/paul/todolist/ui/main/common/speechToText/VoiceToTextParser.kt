@@ -82,6 +82,7 @@ class VoiceToTextParser(private val app: Application) : RecognitionListener {
     }
 
     override fun onRmsChanged(rmsdB: Float) {
+    //TODO Implement when required
     }
 
     override fun onBufferReceived(buffer: ByteArray?) {
@@ -125,9 +126,11 @@ class VoiceToTextParser(private val app: Application) : RecognitionListener {
     }
 
     override fun onPartialResults(partialResults: Bundle?) {
+        //TODO Implement when required
     }
 
     override fun onEvent(eventType: Int, params: Bundle?) {
+        //TODO Implement when required
     }
 }
 

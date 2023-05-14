@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,8 +63,7 @@ fun ToDoListView(model: ToDoListModel) {
                     model.getListTitle()
                 ) {
                     model.saveListId(it)
-
-                    model.getToDoList(MainView.listId)
+                    model.getToDoList(it)
 
                     isAddButtonVisible.value = model.isNormalList()
                     isDeleteAllowed.value = model.isFinishedList()
@@ -87,6 +87,7 @@ fun ToDoListView(model: ToDoListModel) {
                     Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
+                        .clip(RoundedCornerShape(40.dp))
                         .padding(7.dp)
                         .border(
                             width = 2.dp,
@@ -135,7 +136,7 @@ fun ToDoListView(model: ToDoListModel) {
                             },
                             onRowDetails = { todoItem: ToDoDataItem ->
                                 if (todoItem.finishedDate == "0") {
-                                    MainView.itemID = todoItem.itemId
+                                    MainView.itemId = todoItem.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }
                             }

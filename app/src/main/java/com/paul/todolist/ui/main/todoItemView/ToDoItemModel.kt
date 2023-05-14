@@ -35,7 +35,7 @@ open class ToDoItemModel @Inject constructor(
 
     fun loadData() {
         runBlocking {
-            if (MainView.itemID.isBlank()) {
+            if (MainView.itemId.isBlank()) {
                 todoDataItem = ToDoDataItem(
                     UUID.randomUUID().toString(),
                     "",
@@ -47,7 +47,7 @@ open class ToDoItemModel @Inject constructor(
                 todoItemExists = false
             } else {
                 todoItemExists = true
-                todoDataItem = dataBaseProvider.getToDoItem(MainView.itemID)
+                todoDataItem = dataBaseProvider.getToDoItem(MainView.itemId)
             }
         }
     }
@@ -116,7 +116,7 @@ open class ToDoItemModel @Inject constructor(
     fun getListOfLists(): HashMap<String, String> {
         val list: HashMap<String, String> = HashMap<String, String>()
         runBlocking {
-            var toDoListList = dataBaseProvider.getListOfLists()
+            val toDoListList = dataBaseProvider.getListOfLists()
             toDoListList.forEach {
                 list.put(it.listId, it.title)
             }

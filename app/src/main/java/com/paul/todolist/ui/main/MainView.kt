@@ -2,6 +2,7 @@ package com.paul.todolist.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -34,6 +35,8 @@ class MainView : ComponentActivity() {
         val toDoListModel: ToDoListModel by viewModels()
         val listItemsModel: ListItemsModel by viewModels()
         val toDoItemModel: ToDoItemModel by viewModels()
+
+        context = this.applicationContext
 
         toDoListModel.getListId {
             listId = it
@@ -76,18 +79,27 @@ class MainView : ComponentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        //TODO Destroy camera and Nav host controller
+
+        //Clear any objects created bby the composite views
+        context = null
+        navHostController = null
+        cameraProvider = null
+        image = null
+        listId = ""
+        itemId = ""
     }
 
     companion object {
-        lateinit var navHostController: NavHostController
-        lateinit var cameraProvider: ProcessCameraProvider
+        var navHostController: NavHostController? = null
+        var cameraProvider: ProcessCameraProvider? = null
+        var context: Context? = null
+        var image: Bitmap? = null
 
         val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
         var listId: String = ""
-        var itemID: String = ""
-        lateinit var image: Bitmap
+        var itemId: String = ""
+
     }
 }
 

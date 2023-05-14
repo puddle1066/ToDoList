@@ -31,7 +31,7 @@ fun ToDoImageListItem(
                 model.deleteImage(item.key)
 
                 toDoImageData.clear()
-                toDoImageData.swapList(model.getToDoImages(MainView.itemID))
+                toDoImageData.swapList(model.getToDoImages(MainView.itemId))
                 if (model.hasDescription()) {
                     addUpdateButtonVisibility.value = true
                 }

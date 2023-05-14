@@ -39,7 +39,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
 
     toDoImageData.clear()
-    toDoImageData.swapList(model.getToDoImages(MainView.itemID))
+    toDoImageData.swapList(model.getToDoImages(MainView.itemId))
 
     model.loadData()
 

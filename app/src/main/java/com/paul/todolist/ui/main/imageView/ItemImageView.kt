@@ -37,7 +37,9 @@ fun ItemImageView() {
     val screenWidth = dpToPx(configuration.screenWidthDp.toFloat()).toInt()
 
     val image =
-        Bitmap.createScaledBitmap(imageState.value, screenHeight, screenWidth, false).rotate(90f)
+        imageState.value?.let {
+            Bitmap.createScaledBitmap(it, screenHeight, screenWidth, false).rotate(90f)
+        }
 
     ToDoListTheme {
         Column(
@@ -48,19 +50,21 @@ fun ItemImageView() {
             ImageHeadingView()
 
             ZoomableBox {
-                Image(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth()
-                        .graphicsLayer(
-                            scaleX = scale,
-                            scaleY = scale,
-                            translationX = offsetX,
-                            translationY = offsetY
-                        ),
-                    bitmap = image.asImageBitmap(),
-                    contentDescription = stringResource(id = R.string.missing_resource)
-                )
+                if (image != null) {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth()
+                            .graphicsLayer(
+                                scaleX = scale,
+                                scaleY = scale,
+                                translationX = offsetX,
+                                translationY = offsetY
+                            ),
+                        bitmap = image.asImageBitmap(),
+                        contentDescription = stringResource(id = R.string.missing_resource)
+                    )
+                }
             }
         }
     }

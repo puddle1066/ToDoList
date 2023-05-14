@@ -38,7 +38,7 @@ fun CreateAddButton(isAddEnabled: MutableState<Boolean>) {
                 ),
             backgroundColor = MaterialTheme.colorScheme.primary,
             onClick = {
-                MainView.itemID = ""   //Clear Item ID as its a new item
+                MainView.itemId = ""   //Clear Item ID as its a new item
                 showViewWithBackStack(ToDoScreens.ToDoItemView.name)
             }
         )

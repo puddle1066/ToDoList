@@ -27,7 +27,7 @@ fun NavigationFactory(
     MainView.navHostController = rememberAnimatedNavController()
 
     AnimatedNavHost(
-        MainView.navHostController,
+        MainView.navHostController!!,
         startDestination = ToDoScreens.ToDoListView.name
 
     ) {
@@ -40,10 +40,10 @@ fun NavigationFactory(
 }
 
 fun showView(screenId: String) {
-    MainView.navHostController.popBackStack()
-    MainView.navHostController.navigate(screenId)
+    MainView.navHostController?.popBackStack()
+    MainView.navHostController?.navigate(screenId)
 }
 
 fun showViewWithBackStack(screenId: String) {
-    MainView.navHostController.navigate(screenId)
+    MainView.navHostController?.navigate(screenId)
 }
