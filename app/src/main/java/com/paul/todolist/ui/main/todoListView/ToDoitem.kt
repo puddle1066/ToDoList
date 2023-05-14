@@ -36,20 +36,20 @@ import com.paul.todolist.util.getCurrentDateAsString
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ToDoItem(
-    todoItem: ToDoDataItem,
+    item: ToDoDataItem,
     listName: String = "",
     isDeleteEnabled: MutableState<Boolean>,
     isMoveAllowed: MutableState<Boolean>,
     isPreSelected: Boolean,
     listType: String,
     onRowDelete: (ToDoDataItem, Boolean) -> Unit,
-    onRowDetails: (ToDoDataItem, Boolean) -> Unit,
+    onRowDetails: (ToDoDataItem) -> Unit,
     onCheckChanged: (ToDoDataItem, Boolean) -> Unit,
 ) {
-    val TAG = object {}::class.java.enclosingMethod.name
+    val TAG = object {}::class.java.enclosingMethod?.name
 
     val isChecked = remember { mutableStateOf(false) }
-    val isVisible = remember { mutableStateOf(true) }
+    val isVisible = remember { mutableStateOf(false) }
     val isSelectedItem = remember { mutableStateOf(isPreSelected) }
 
     val colorUnSelected = MaterialTheme.colorScheme.primary
@@ -58,23 +58,21 @@ fun ToDoItem(
 
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
-    Log.e(TAG, "item = $todoItem")
-
-    isChecked.value = todoItem.finishedDate != "0"
+    isChecked.value = item.finishedDate != "0"
 
     backgroundColor.value = colorUnSelected
     when (listType) {
         listState_all_incomplete ->
-            if (todoItem.finishedDate == "0") isVisible.value = true else false
+            if (item.finishedDate == "0") isVisible.value = true
 
         listState_Finished -> {
-            if (todoItem.finishedDate != "0") isVisible.value = true else false
+            if (item.finishedDate != "0") isVisible.value = true
             if (isSelectedItem.value) backgroundColor.value = colorDeleteSelected
         }
 
         else -> {
             isVisible.value = true
-            if (todoItem.display_sequence == 999) backgroundColor.value = colorMoveSelected
+            if (item.display_sequence == 999) backgroundColor.value = colorMoveSelected
         }
     }
 
@@ -104,9 +102,9 @@ fun ToDoItem(
                             Log.e(TAG, "onTAP")
                             if (isDeleteEnabled.value) {
                                 isSelectedItem.value = !isSelectedItem.value
-                                onRowDelete(todoItem, isSelectedItem.value)
+                                onRowDelete(item, isSelectedItem.value)
                             } else {
-                                onRowDetails(todoItem, isSelectedItem.value)
+                                onRowDetails(item)
                             }
                         }
                     )
@@ -130,14 +128,14 @@ fun ToDoItem(
                     onCheckedChange = {
                         isChecked.value = it
                         isVisible.value = false     //Always false hear as transition between lists
-                        todoItem.finishedDate =
+                        item.finishedDate =
                             if (isChecked.value) getCurrentDateAsString() else "0"
-                        onCheckChanged(todoItem, isChecked.value)
+                        onCheckChanged(item, isChecked.value)
                     },
                 )
                 Text(
                     modifier = Modifier.weight(1.5f),
-                    text = todoItem.description,
+                    text = item.description,
                     style = typography.bodyLarge,
                     color = MaterialTheme.colorScheme.secondary,
                 )

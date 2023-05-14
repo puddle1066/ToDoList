@@ -26,7 +26,6 @@ import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.ui.main.MainView
 import com.paul.todolist.ui.main.common.draganddrop.DragDropColumn
 import com.paul.todolist.ui.main.common.showViewWithBackStack
-import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.theme.ToDoListTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -35,14 +34,12 @@ fun ToDoListView(model: ToDoListModel) {
 
     val scaffoldState = rememberScaffoldState()
 
-    val displayListofData = remember { mutableStateListOf<ToDoDataItem>() }
     val deleteList = remember { mutableStateListOf<ToDoDataItem>() }
 
-    val isFalse = false
     val isAddButtonVisible = remember { mutableStateOf(true) }
-    val isDeleteButtonVisible = remember { mutableStateOf(isFalse) }
+    val isDeleteButtonVisible = remember { mutableStateOf(false) }
 
-    val isMoveAllowed = remember { mutableStateOf(isFalse) }
+    val isMoveAllowed = remember { mutableStateOf(false) }
     val isDeleteAllowed = remember { mutableStateOf(true) }
 
     val uiState = model.uiState.collectAsState()
@@ -54,9 +51,9 @@ fun ToDoListView(model: ToDoListModel) {
         model.saveListId(model.getAllSortedASC()[0].listId)
     }
 
-    displayListofData.clear()
-    displayListofData.swapList(model.getToDoList(MainView.listId))
+    model.getToDoList(MainView.listId)
     deleteList.clear()
+
     isAddButtonVisible.value = model.isNormalList()
     isDeleteAllowed.value = model.isFinishedList()
     isMoveAllowed.value = model.isNormalList()
@@ -70,8 +67,8 @@ fun ToDoListView(model: ToDoListModel) {
                 ) {
                     model.saveListId(it)
 
-                    displayListofData.clear()
-                    displayListofData.swapList(model.getToDoList(it))
+                    model.getToDoList(MainView.listId)
+
                     isAddButtonVisible.value = model.isNormalList()
                     isDeleteAllowed.value = model.isFinishedList()
                     isMoveAllowed.value = model.isNormalList()
@@ -81,7 +78,7 @@ fun ToDoListView(model: ToDoListModel) {
             scaffoldState = scaffoldState,
             floatingActionButton = {
                 CreateAddButton(isAddButtonVisible)
-                CreateDeleteButton(model, displayListofData, deleteList, isDeleteButtonVisible)
+                CreateDeleteButton(model, deleteList, isDeleteButtonVisible)
             }
 
         ) {
@@ -116,8 +113,7 @@ fun ToDoListView(model: ToDoListModel) {
                             uiState.value.get(startDragIndex.value).display_sequence = it
                             model.updateSequence()
 
-                            displayListofData.clear()
-                            displayListofData.swapList(model.getToDoList(MainView.listId))
+                            model.getToDoList(MainView.listId)
                         }
                     ) { item ->
 
@@ -142,9 +138,9 @@ fun ToDoListView(model: ToDoListModel) {
                                 }
                                 isDeleteButtonVisible.value = deleteList.size != 0
                             },
-                            onRowDetails = { todoItem: ToDoDataItem, _ ->
+                            onRowDetails = { todoItem: ToDoDataItem ->
                                 if (todoItem.finishedDate == "0") {
-                                    MainView.itemID = item.itemId
+                                    MainView.itemID = todoItem.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }
                             },
@@ -154,8 +150,8 @@ fun ToDoListView(model: ToDoListModel) {
                                     todoItem.finishedDate
                                 )
 
-                                displayListofData.clear()
-                                displayListofData.swapList(model.getToDoList(MainView.listId))
+                                model.getToDoList(MainView.listId)
+
                             }
                         )
                     }
@@ -194,7 +190,6 @@ fun CreateAddButton(isAddEnabled: MutableState<Boolean>) {
 fun CreateDeleteButton(
     model: ToDoListModel,
     deleteList: SnapshotStateList<ToDoDataItem>,
-    listDataItems: SnapshotStateList<ToDoDataItem>,
     deleteButtonVisible: MutableState<Boolean>
 ) {
     AnimatedVisibility(
@@ -216,8 +211,7 @@ fun CreateDeleteButton(
                     model.deleteItem(it.itemId)
                 }
                 deleteList.clear()
-                listDataItems.clear()
-                listDataItems.swapList(model.getToDoList(MainView.listId))
+                model.getToDoList(MainView.listId)
                 deleteButtonVisible.value = false
             }
         )
