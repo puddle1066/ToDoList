@@ -70,7 +70,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                 }
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor.value),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.surface),
             shape = RoundedCornerShape(25), // = 50% percent
 
         ) {

@@ -37,7 +37,7 @@ import java.util.concurrent.Executors
 @Composable
 fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
 
-    val TAG = object {}::class.java.enclosingMethod.name
+    val TAG = object {}::class.java.enclosingMethod?.name
 
     val animationDuration = 100
     val scaleDown = 0.9f
@@ -100,7 +100,7 @@ fun ToDoItemCameraButton(onPictureTaken: (image: Bitmap) -> Unit) {
                     }
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colorScheme.primary),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.surface),
                 shape = RoundedCornerShape(25),
 
                 ) {

@@ -48,7 +48,7 @@ fun ToDoInputText(
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
                 .border(
-                    width = 4.dp,
+                    width = 2.dp,
                     color = MaterialTheme.colorScheme.surface,
                     shape = RoundedCornerShape(15.dp)
                 ),
