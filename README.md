@@ -1,28 +1,42 @@
-# ToDo Application
+# ToDo Lists Application
 
-Package: [`com.paul.ToDoList'][1]
+This application allow the user to build and manage one or many ToDo list(s).
 
-Jetsurvey is a sample survey app, built with
-[Jetpack Compose](https://developer.android.com/jetpack/compose). The goal of the sample is to
-showcase text input, validation and state capabilities of Compose.
+## Do List
 
-To try out this sample app, you need to use
-[Android Studio Chipmunk](https://developer.android.com/studio).
-You can clone this repository or import the
-project from Android Studio following the steps
-[here](https://developer.android.com/jetpack/compose/setup#sample).
-  
-## Screenshots
+<img src="screenshots/screenshot_1.png"/> 
 
-<img src="screenshots/screenshots.png"/>  
+Once an item has been completed the checkbox should be ticked and teh item will be moved to the
+Finished list.
 
-## Features
+The user can switch between lists using the drop down list which is shown by clicking on the the
+current list shown in the top bar of the application.
 
-This sample contains several screens: a welcome screen, where the user can enter their email, sign in and sign up screens and a survey screen. The app has light and dark themes.
+## ToDo Item
 
-### Data
-Default data can be found in Hatch "app/src/main/assets" within this project.
+<img src="screenshots/screenshot_2.png"/>
 
+The task description can either be entered as text or recorded and translated to text using the
+button with the microphone on it.
+
+If you wish to move the current ToDo item to a different list, this can be achieved using the 'Move
+To List' dropdown to select the new list.
+
+You can add multiple images as supporting information for your current ToDo Item by pressing the
+camera Button.
+
+The screen grab shown has one image added, which an be deleted using the delete button overlayed on
+the image. The other button shown as an overlay on the image will show
+an enlarged version of the image using which the user may zoom in or out.
+
+## Adding New Lists
+
+<img src="screenshots/screenshot_3.png"/>
+
+To add a new ToDo list simply enter the list name in the input field and press the 'done' button on
+the keyboard when completed.
+Only lists with no tasks can be selected for deletion. To select a ToDo List just click on the
+item (Which turns red) and then press the delete button that has appeared.
 
 
 
