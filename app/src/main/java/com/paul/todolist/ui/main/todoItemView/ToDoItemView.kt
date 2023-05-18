@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.todoItemView
 
+import ToDoDatePicker
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -21,7 +22,6 @@ import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonProcessing
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoSpeechButton
-import com.paul.todolist.ui.main.todoItemView.datePicker.ToDoDatePicker
 import com.paul.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
 import com.paul.todolist.ui.main.todoItemView.imageList.ToDoNewImage
 import com.paul.todolist.ui.main.todoItemView.inputName.ToDoInputName
@@ -61,7 +61,7 @@ fun ToDoItemView(model: ToDoItemModel) {
                     ToDoChangeListDropDown(model, addUpdateButtonVisibility)
                 }
                 item {
-                    ToDoDatePicker()
+                    ToDoDatePicker(onDateChange = {})
                 }
 
                 if (model.isSpeechToTextEnabled) {

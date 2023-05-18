@@ -20,7 +20,7 @@ interface ToDoItemsDao {
     @Query("SELECT * FROM ToDoItem where FinishedDate <> '0'")
     fun getAllFinished(): List<ToDoDataItem>
 
-    @Query("SELECT * FROM ToDoItem Order By display_sequence")
+    @Query("SELECT * FROM ToDoItem Order By display_sequence DESC")
     fun getLastSequence(): ToDoDataItem
 
     @Query("DELETE FROM ToDoItem where itemId = :itemId")

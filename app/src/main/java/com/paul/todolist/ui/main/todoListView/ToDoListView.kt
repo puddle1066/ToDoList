@@ -44,9 +44,7 @@ fun ToDoListView(model: ToDoListModel) {
 
     //If we don't have a first entry in the list use the first
     //entry in the list as a default
-    if (model.isListKnown()) {
-        model.saveListId(model.getAllSortedASC()[0].listId)
-    }
+    if (model.isListKnown()) model.saveListId(model.getAllSortedASC()[0].listId)
 
     model.getToDoList(MainView.listId)
     deleteList.clear()
@@ -127,15 +125,13 @@ fun ToDoListView(model: ToDoListModel) {
                             isMoveAllowed,
 
                             onRowDelete = { todoItem: ToDoDataItem, isSelected: Boolean ->
-                                if (isSelected) {
-                                    deleteList.add(todoItem)
-                                } else {
-                                    deleteList.remove(todoItem)
-                                }
+                                if (isSelected)
+                                    deleteList.add(todoItem) else deleteList.remove(todoItem)
+
                                 isDeleteButtonVisible.value = deleteList.size != 0
                             },
                             onRowDetails = { todoItem: ToDoDataItem ->
-                                if (todoItem.finishedDate == "0") {
+                                if (model.isFinshed(todoItem.finishedDate)) {
                                     MainView.itemId = todoItem.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }
@@ -155,8 +151,6 @@ fun ToDoListView(model: ToDoListModel) {
         }
     }
 }
-
-
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)

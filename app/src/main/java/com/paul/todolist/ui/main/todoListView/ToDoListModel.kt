@@ -89,6 +89,10 @@ open class ToDoListModel @Inject constructor(
         return getItemType().equals(listState_all_incomplete)
     }
 
+    fun isFinshed(finishedDate: String): Boolean {
+        return finishedDate == "0"
+    }
+
     fun getItemType(): String {
         var type = "0"
         runBlocking {
