@@ -38,7 +38,7 @@ fun ItemImageView() {
 
     val image =
         imageState.value?.let {
-            Bitmap.createScaledBitmap(it, screenHeight, screenWidth, false).rotate(90f)
+            Bitmap.createScaledBitmap(it, screenHeight, screenWidth, false).rotate(270f)
         }
 
     ToDoListTheme {
