@@ -1,6 +1,5 @@
 package com.paul.todolist.ui.main.todoItemView
 
-import ToDoDatePicker
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -8,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -28,6 +28,7 @@ import com.paul.todolist.ui.main.todoItemView.inputName.ToDoInputName
 import com.paul.todolist.ui.main.todoItemView.listPicker.ToDoChangeListDropDown
 import com.paul.todolist.ui.theme.ToDoListTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ToDoItemView(model: ToDoItemModel) {
@@ -60,9 +61,9 @@ fun ToDoItemView(model: ToDoItemModel) {
                 item {
                     ToDoChangeListDropDown(model, addUpdateButtonVisibility)
                 }
-                item {
-                    ToDoDatePicker(onDateChange = {})
-                }
+//                item {
+//                    ToDoDatePicker(onDateChange = {},  onCancel = {})
+//                }
 
                 if (model.isSpeechToTextEnabled) {
                     item {
@@ -72,7 +73,7 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
 
                 if (model.isPhotoCaptureEnabled) {
-                    //Add cached images from disk
+                    //Add cached images from disk∆
                     itemsIndexed(toDoImageData) { _, item ->
                         ToDoImageListItem(
                             model,
