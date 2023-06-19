@@ -5,7 +5,7 @@ import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.di.database.worker.DataBaseManager
-import com.paul.todolist.ui.main.MainView.Companion.dispatcher
+import com.paul.todolist.ui.main.MainActivity.Companion.dispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getLIstItemsCount(listId: String): Int {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().getListCount(listId)
+            DataBaseManager.getInstance().ToDoItemsDao().getListCount(listId)
         }
     }
 
@@ -138,7 +138,7 @@ class RoomDataProvider @Inject constructor() {
     suspend fun getLastSequence(): Int {
         return withContext(dispatcher) {
             try {
-                DataBaseManager.getInstance().ToDoItemsDao().getLastSequence().display_sequence
+                DataBaseManager.getInstance().ToDoItemsDao().getLastSequence().sequence
             } catch (e: Exception) {
                 Log.e(TAG, "getLastSequence - $e")
             }

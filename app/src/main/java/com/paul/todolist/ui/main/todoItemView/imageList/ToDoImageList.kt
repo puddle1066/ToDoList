@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.database.data.ToDoImageData
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
@@ -31,14 +31,14 @@ fun ToDoImageListItem(
                 model.deleteImage(item.key)
 
                 toDoImageData.clear()
-                toDoImageData.swapList(model.getToDoImages(MainView.itemId))
+                toDoImageData.swapList(model.getToDoImages(MainActivity.itemId))
                 if (model.hasDescription()) {
                     addUpdateButtonVisibility.value = true
                 }
             },
             onExpandClick = {
                 decodeBase64(item.image)?.let {
-                    MainView.image = it
+                    MainActivity.image = it
                 }
                 showViewWithBackStack(ToDoScreens.ImageItemView.name)
             }

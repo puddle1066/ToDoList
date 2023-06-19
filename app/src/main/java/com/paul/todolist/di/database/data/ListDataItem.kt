@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.paul.todolist.listState_Normal
 
-@Entity(tableName = "Lists")
+@Entity(tableName = "ListsData")
 data class ListDataItem(
     @PrimaryKey val listId: String,
     @ColumnInfo(name = "title") val title: String,

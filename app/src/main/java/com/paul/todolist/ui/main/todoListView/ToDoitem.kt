@@ -72,7 +72,7 @@ fun ToDoItem(
 
         else -> {
             isVisible.value = true
-            if (item.display_sequence == 999) backgroundColor.value = colorMoveSelected
+            if (item.sequence == 999) backgroundColor.value = colorMoveSelected
         }
     }
 

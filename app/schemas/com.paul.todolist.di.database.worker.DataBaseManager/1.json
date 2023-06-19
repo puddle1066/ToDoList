@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "12ec9b2cff36e8fad32f592c1110ae79",
+    "identityHash": "384a70aa748bc780f50c3258f65dfc72",
     "entities": [
       {
-        "tableName": "Lists",
+        "tableName": "ListsData",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`listId` TEXT NOT NULL, `title` TEXT NOT NULL, `type` TEXT NOT NULL, PRIMARY KEY(`listId`))",
         "fields": [
           {
@@ -37,8 +37,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "ToDoItem",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `ListId` TEXT NOT NULL, `description` TEXT NOT NULL, `DueDate` TEXT NOT NULL, `FinishedDate` TEXT NOT NULL, `display_sequence` INTEGER NOT NULL, PRIMARY KEY(`itemId`))",
+        "tableName": "ToDoDataItem",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `listId` TEXT NOT NULL, `description` TEXT NOT NULL, `dueDate` TEXT NOT NULL, `finishedDate` TEXT NOT NULL, `lastupdated` TEXT NOT NULL, `sequence` INTEGER NOT NULL, PRIMARY KEY(`itemId`))",
         "fields": [
           {
             "fieldPath": "itemId",
@@ -48,7 +48,7 @@
           },
           {
             "fieldPath": "listID",
-            "columnName": "ListId",
+            "columnName": "listId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -60,19 +60,25 @@
           },
           {
             "fieldPath": "dueDate",
-            "columnName": "DueDate",
+            "columnName": "dueDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdate",
+            "columnName": "finishedDate",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "finishedDate",
-            "columnName": "FinishedDate",
+            "columnName": "lastupdated",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "display_sequence",
-            "columnName": "display_sequence",
+            "fieldPath": "sequence",
+            "columnName": "sequence",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -122,7 +128,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '12ec9b2cff36e8fad32f592c1110ae79')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '384a70aa748bc780f50c3258f65dfc72')"
     ]
   }
 }

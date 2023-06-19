@@ -11,25 +11,28 @@ interface ToDoItemsDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(toDoDataItem: ToDoDataItem)
 
-    @Query("SELECT * FROM ToDoItem where listId = :listId AND FinishedDate = '0' Order by display_sequence")
+    @Query("SELECT * FROM ToDoDataItem where listId = :listId AND finishedDate = '0' Order by sequence")
     fun getAllForListId(listId: String): List<ToDoDataItem>
 
-    @Query("SELECT * FROM ToDoItem where FinishedDate = '0'")
+    @Query("SELECT * FROM ToDoDataItem where finishedDate = '0'")
     fun getAll(): List<ToDoDataItem>
 
-    @Query("SELECT * FROM ToDoItem where FinishedDate <> '0'")
+    @Query("SELECT * FROM ToDoDataItem where finishedDate <> '0'")
     fun getAllFinished(): List<ToDoDataItem>
 
-    @Query("SELECT * FROM ToDoItem Order By display_sequence DESC")
+    @Query("SELECT * FROM ToDoDataItem Order By sequence DESC")
     fun getLastSequence(): ToDoDataItem
 
-    @Query("DELETE FROM ToDoItem where itemId = :itemId")
+    @Query("DELETE FROM ToDoDataItem where itemId = :itemId")
     fun deleteItem(itemId: String)
 
-    @Query("UPDATE ToDoItem SET FinishedDate = :finishedDate where itemId = :itemId")
+    @Query("UPDATE ToDoDataItem SET FinishedDate = :finishedDate where itemId = :itemId")
     fun setFinishedDate(itemId: String, finishedDate: String)
 
-    @Query("SELECT * FROM ToDoItem where itemId = :itemId")
+    @Query("SELECT * FROM ToDoDataItem where itemId = :itemId")
     fun getToDoItem(itemId: String): ToDoDataItem
+
+    @Query(value = "SELECT count(*) FROM ToDoDataItem where listId = :listId")
+    fun getListCount(listId: String): Int
 
 }

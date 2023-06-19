@@ -26,7 +26,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 @AndroidEntryPoint
-class MainView : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {

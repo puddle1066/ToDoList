@@ -4,13 +4,14 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "ToDoItem")
+@Entity(tableName = "ToDoDataItem")
 data class ToDoDataItem(
     @PrimaryKey var itemId: String,
-    @ColumnInfo(name = "ListId") var listID: String,
+    @ColumnInfo(name = "listId") var listID: String,
     @ColumnInfo(name = "description") var description: String = "",
-    @ColumnInfo(name = "DueDate") var dueDate: String = "",
-    @ColumnInfo(name = "FinishedDate") var finishedDate: String = "",
-    @ColumnInfo(name = "display_sequence") var display_sequence: Int = 0
+    @ColumnInfo(name = "dueDate") var dueDate: String = "",
+    @ColumnInfo(name = "finishedDate") var finishedDate: String = "",
+    @ColumnInfo(name = "lastupdated") var lastupdated: String = "",
+    @ColumnInfo(name = "sequence") var sequence: Int = 0
 )
 

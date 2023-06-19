@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.paul.todoList.R
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.ZoomableBox
 import com.paul.todolist.util.dpToPx
@@ -30,7 +30,7 @@ import com.paul.todolist.util.rotate
 @Composable
 fun ItemImageView() {
 
-    val imageState = remember { mutableStateOf(MainView.image) }
+    val imageState = remember { mutableStateOf(MainActivity.image) }
 
     val configuration = LocalConfiguration.current
     val screenHeight = dpToPx(dp = configuration.screenHeightDp.toFloat()).toInt() - 200

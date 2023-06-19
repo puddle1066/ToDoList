@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name="com.paul.todolist.ui.main.MainView"
+            android:name="com.paul.todolist.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

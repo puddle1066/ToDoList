@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoImageData
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonProcessing
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
@@ -26,6 +26,7 @@ import com.paul.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
 import com.paul.todolist.ui.main.todoItemView.imageList.ToDoNewImage
 import com.paul.todolist.ui.main.todoItemView.inputName.ToDoInputName
 import com.paul.todolist.ui.main.todoItemView.listPicker.ToDoChangeListDropDown
+import com.paul.todolist.ui.main.todoItemView.textView.LastUpdatedText
 import com.paul.todolist.ui.theme.ToDoListTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,7 +41,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
 
     toDoImageData.clear()
-    toDoImageData.swapList(model.getToDoImages(MainView.itemId))
+    toDoImageData.swapList(model.getToDoImages(MainActivity.itemId))
 
     model.loadData()
 
@@ -99,6 +100,11 @@ fun ToDoItemView(model: ToDoItemModel) {
                         ToDoItemAddButton(model, toDoImagesNew, voiceState)
                     }
                 }
+
+                item {
+                    LastUpdatedText(model)
+                }
+
             }
         }
     }

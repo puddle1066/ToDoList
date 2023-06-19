@@ -31,7 +31,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todoList.R
 import com.paul.todolist.imageHeight
 import com.paul.todolist.imageWidth
-import com.paul.todolist.ui.main.MainView.Companion.cameraProvider
+import com.paul.todolist.ui.main.MainActivity.Companion.cameraProvider
 import java.util.concurrent.Executor
 
 @SuppressLint("RestrictedApi")

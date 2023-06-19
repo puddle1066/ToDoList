@@ -12,7 +12,7 @@ import com.paul.todolist.di.database.data.*
 import com.paul.todolist.listState_Finished
 import com.paul.todolist.listState_Normal
 import com.paul.todolist.listState_all_incomplete
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import java.util.*
 
 @Database(
@@ -37,7 +37,7 @@ abstract class DataBaseManager : RoomDatabase() {
         @Synchronized
         fun getInstance(): DataBaseManager {
             if (instance == null)
-                instance = MainView.context?.let {
+                instance = MainActivity.context?.let {
                     Room.databaseBuilder(
                         it, DataBaseManager::class.java,
                         DATABASE_NAME
@@ -56,14 +56,14 @@ abstract class DataBaseManager : RoomDatabase() {
 
                 try {
                     db.execSQL(
-                        "INSERT INTO Lists(listId, title, type) VALUES('" + UUID.randomUUID()
+                        "INSERT INTO ListsData(listId, title, type) VALUES('" + UUID.randomUUID()
                             .toString() + "','ToDo', '" + listState_Normal + "');"
                     )
                     db.execSQL(
-                        "INSERT INTO Lists(listId, title, type) VALUES('" + UUID.randomUUID()
+                        "INSERT INTO ListsData(listId, title, type) VALUES('" + UUID.randomUUID()
                             .toString() + "','Finished', '" + listState_Finished + "');"
                     )
-                    db.execSQL("INSERT INTO Lists(listId, title, type) VALUES('0','All', '" + listState_all_incomplete + "');")
+                    db.execSQL("INSERT INTO ListsData(listId, title, type) VALUES('0','All', '" + listState_all_incomplete + "');")
 
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)

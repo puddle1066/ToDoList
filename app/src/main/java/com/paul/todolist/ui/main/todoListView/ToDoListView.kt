@@ -20,7 +20,7 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.util.ResourcesProvider
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.common.draganddrop.DragDropColumn
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 import com.paul.todolist.ui.main.todoListView.buttons.CreateAddButton
@@ -44,9 +44,9 @@ fun ToDoListView(model: ToDoListModel) {
 
     //If we don't have a first entry in the list use the first
     //entry in the list as a default
-    if (model.isListKnown()) model.saveListId(model.getAllSortedASC()[0].listId)
+    if (model.isListNotKnown()) model.saveListId(model.getAllSortedASC()[0].listId)
 
-    model.getToDoList(MainView.listId)
+    model.getToDoList(MainActivity.listId)
     deleteList.clear()
 
     isAddButtonVisible.value = model.isNormalList()
@@ -100,14 +100,14 @@ fun ToDoListView(model: ToDoListModel) {
                         isMoveAllowed.value,
                         onDragStart = {
                             startDragIndex.value = it
-                            uiState.value.get(startDragIndex.value).display_sequence = 999
+                            uiState.value.get(startDragIndex.value).sequence = 999
                         },
                         onDragEnd = {
                             startDragIndex.value = it
-                            uiState.value.get(startDragIndex.value).display_sequence = it
+                            uiState.value.get(startDragIndex.value).sequence = it
                             model.updateSequence()
 
-                            model.getToDoList(MainView.listId)
+                            model.getToDoList(MainActivity.listId)
                         }
                     ) { item ->
 
@@ -132,7 +132,7 @@ fun ToDoListView(model: ToDoListModel) {
                             },
                             onRowDetails = { todoItem: ToDoDataItem ->
                                 if (model.isFinshed(todoItem.finishedDate)) {
-                                    MainView.itemId = todoItem.itemId
+                                    MainActivity.itemId = todoItem.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }
                             }
@@ -142,7 +142,7 @@ fun ToDoListView(model: ToDoListModel) {
                                 todoItem.finishedDate
                             )
 
-                            model.getToDoList(MainView.listId)
+                            model.getToDoList(MainActivity.listId)
 
                         }
                     }

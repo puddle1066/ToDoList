@@ -10,7 +10,7 @@ import com.paul.todolist.di.util.ResourcesProvider
 import com.paul.todolist.listState_Finished
 import com.paul.todolist.listState_Normal
 import com.paul.todolist.listState_all_incomplete
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,8 +49,8 @@ open class ToDoListModel @Inject constructor(
         return listDataItems
     }
 
-    fun isListKnown(): Boolean {
-        return MainView.listId.isBlank()
+    fun isListNotKnown(): Boolean {
+        return MainActivity.listId.isBlank()
     }
 
     fun getToDoList(listId: String) {
@@ -96,7 +96,7 @@ open class ToDoListModel @Inject constructor(
     fun getItemType(): String {
         var type = "0"
         runBlocking {
-            type = dataBaseProvider.getListItem(MainView.listId).type
+            type = dataBaseProvider.getListItem(MainActivity.listId).type
         }
         return type
     }
@@ -104,7 +104,7 @@ open class ToDoListModel @Inject constructor(
     fun getListTitle(): String {
         var title = ""
         runBlocking {
-            title = dataBaseProvider.getListTitle(MainView.listId)
+            title = dataBaseProvider.getListTitle(MainActivity.listId)
         }
         return when (title) {
             null -> resourcesProvider.getString(R.string.please_select)
@@ -118,7 +118,7 @@ open class ToDoListModel @Inject constructor(
         _uiState.value.forEach {
             runBlocking {
                 val todoitem = dataBaseProvider.getToDoItem(it.itemId)
-                todoitem.display_sequence = seq
+                todoitem.sequence = seq
                 seq++
                 dataBaseProvider.updateToDo(todoitem)
             }

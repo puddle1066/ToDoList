@@ -19,7 +19,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.database.data.ToDoDataItem
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.todoListView.ToDoListModel
 
 @Composable
@@ -47,7 +47,7 @@ fun CreateDeleteButton(
                     model.deleteItem(it.itemId)
                 }
                 deleteList.clear()
-                model.getToDoList(MainView.listId)
+                model.getToDoList(MainActivity.listId)
                 deleteButtonVisible.value = false
             }
         )

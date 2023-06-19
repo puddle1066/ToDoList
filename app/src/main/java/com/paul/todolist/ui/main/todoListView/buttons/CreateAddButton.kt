@@ -18,7 +18,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.ToDoScreens
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.common.showViewWithBackStack
 
 @Composable
@@ -38,7 +38,7 @@ fun CreateAddButton(isAddEnabled: MutableState<Boolean>) {
                 ),
             backgroundColor = MaterialTheme.colorScheme.primary,
             onClick = {
-                MainView.itemId = ""   //Clear Item ID as its a new item
+                MainActivity.itemId = ""   //Clear Item ID as its a new item
                 showViewWithBackStack(ToDoScreens.ToDoItemView.name)
             }
         )

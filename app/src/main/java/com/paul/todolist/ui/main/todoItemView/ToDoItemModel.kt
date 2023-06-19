@@ -7,10 +7,11 @@ import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.data.ToDoImageData
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.common.StorageViewModel
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paul.todolist.util.encodeTobase64
+import com.paul.todolist.util.getCurrentDateAsString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
@@ -25,7 +26,15 @@ open class ToDoItemModel @Inject constructor(
 
     private var TAG = this::class.simpleName
 
-    var todoDataItem = ToDoDataItem(UUID.randomUUID().toString(), "", "", "0", "0", 0)
+    var todoDataItem = ToDoDataItem(
+        UUID.randomUUID().toString(),
+        "",
+        "",
+        "0",
+        getCurrentDateAsString(),
+        "0",
+        0
+    )
 
     var todoItemExists: Boolean = true
     var isSpeechToTextEnabled = false
@@ -35,19 +44,20 @@ open class ToDoItemModel @Inject constructor(
 
     fun loadData() {
         runBlocking {
-            if (MainView.itemId.isBlank()) {
+            if (MainActivity.itemId.isBlank()) {
                 todoDataItem = ToDoDataItem(
                     UUID.randomUUID().toString(),
                     "",
                     "",
                     "0",
                     "0",
+                    getCurrentDateAsString(),
                     dataBaseProvider.getLastSequence() + 1
                 )
                 todoItemExists = false
             } else {
                 todoItemExists = true
-                todoDataItem = dataBaseProvider.getToDoItem(MainView.itemId)
+                todoDataItem = dataBaseProvider.getToDoItem(MainActivity.itemId)
             }
         }
     }
@@ -77,23 +87,25 @@ open class ToDoItemModel @Inject constructor(
     fun getListTitle(): String {
         var title = ""
         runBlocking {
-            title = dataBaseProvider.getListTitle(MainView.listId)
+            title = dataBaseProvider.getListTitle(MainActivity.listId)
         }
         return title
     }
 
     fun insert() {
         todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
-        todoDataItem.listID = MainView.listId
+        todoDataItem.listID = MainActivity.listId
         todoDataItem.itemId = UUID.randomUUID().toString()
+        todoDataItem.lastupdated = getCurrentDateAsString()
         runBlocking {
-            todoDataItem.display_sequence = dataBaseProvider.getLastSequence() + 1
+            todoDataItem.sequence = dataBaseProvider.getLastSequence() + 1
             dataBaseProvider.insertToDo(todoDataItem)
         }
     }
 
     fun update() {
         todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
+        todoDataItem.lastupdated = getCurrentDateAsString()
         runBlocking {
             dataBaseProvider.updateToDo(todoDataItem)
         }

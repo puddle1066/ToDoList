@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.paul.todolist.ToDoScreens
-import com.paul.todolist.ui.main.MainView
+import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.imageView.ItemImageView
 import com.paul.todolist.ui.main.listItemsView.ListItemsModel
 import com.paul.todolist.ui.main.listItemsView.ListItemsView
@@ -24,10 +24,10 @@ fun NavigationFactory(
     toDoItemModel: ToDoItemModel
 ) {
 
-    MainView.navHostController = rememberAnimatedNavController()
+    MainActivity.navHostController = rememberAnimatedNavController()
 
     AnimatedNavHost(
-        MainView.navHostController!!,
+        MainActivity.navHostController!!,
         startDestination = ToDoScreens.ToDoListView.name
 
     ) {
@@ -40,10 +40,10 @@ fun NavigationFactory(
 }
 
 fun showView(screenId: String) {
-    MainView.navHostController?.popBackStack()
-    MainView.navHostController?.navigate(screenId)
+    MainActivity.navHostController?.popBackStack()
+    MainActivity.navHostController?.navigate(screenId)
 }
 
 fun showViewWithBackStack(screenId: String) {
-    MainView.navHostController?.navigate(screenId)
+    MainActivity.navHostController?.navigate(screenId)
 }
