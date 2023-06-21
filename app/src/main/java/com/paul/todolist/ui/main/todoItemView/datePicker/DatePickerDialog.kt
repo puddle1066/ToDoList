@@ -76,7 +76,7 @@ fun DatePickerDialog(
                         AndroidView(
                             modifier = Modifier
                                 .width(columnWidth)
-                                .clickable { }
+                                .clickable(enabled = false, onClick = {})
                                 .background(MaterialTheme.colorScheme.primary),
                             update = {
                                 it.invalidate()
@@ -96,6 +96,7 @@ fun DatePickerDialog(
                         AndroidView(
                             modifier = Modifier
                                 .width(columnWidth)
+                                .clickable(enabled = false, onClick = {})
                                 .background(MaterialTheme.colorScheme.primary),
                             factory = { context ->
                                 CustomNumberPicker(context).apply {
@@ -128,6 +129,7 @@ fun DatePickerDialog(
                         AndroidView(
                             modifier = Modifier
                                 .width(columnWidth)
+                                .clickable(enabled = false, onClick = {})
                                 .background(MaterialTheme.colorScheme.primary),
                             factory = { context ->
                                 CustomNumberPicker(context).apply {
