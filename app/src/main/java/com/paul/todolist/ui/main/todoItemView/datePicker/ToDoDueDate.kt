@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,9 +35,9 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todoList.R
+import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,9 +45,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoDueDate(
-    dueDate: String,
-    onDateChange: (String) -> Unit,
-    onCancel: () -> Unit
+    model: ToDoItemModel,
+    addButtonVisibility: MutableState<Boolean>
 ) {
     val animationDuration = 100
     val scaleDown = 0.9f
@@ -57,9 +57,21 @@ fun ToDoDueDate(
 
     var backgroundColor: Color = MaterialTheme.colorScheme.primary
 
+    var currentDueTime = stringResource(R.string.none_specified)
+    val dateState = remember { mutableStateOf(currentDueTime) }
+
+    if (!model.todoDataItem.dueDate.equals("0")) {
+        dateState.value = model.todoDataItem.dueDate
+    }
+
     DatePickerDialog(
         openDialog,
-        onDateChange = {},
+        model.todoDataItem.dueDate,
+        onDateChange = {
+            addButtonVisibility.value = true
+            dateState.value = it
+            model.todoDataItem.dueDate = it
+        },
         onCancel = {}
     )
 
@@ -119,7 +131,7 @@ fun ToDoDueDate(
                         modifier = Modifier
                             .padding(3.dp, 0.dp, 0.dp, 0.dp)
                             .fillMaxWidth(),
-                        text = stringResource(R.string.none_specified),
+                        text = dateState.value,
                         style = typography.bodyLarge,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.onPrimary
@@ -138,18 +150,3 @@ fun ToDoDueDate(
         }
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun SpinnerPreview() {
-    MaterialTheme {
-        ToDoDueDate(
-            "",
-            onDateChange = {},
-            onCancel = {}
-        )
-    }
-}
-
-

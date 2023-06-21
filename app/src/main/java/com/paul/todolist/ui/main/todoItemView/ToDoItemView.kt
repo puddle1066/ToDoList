@@ -63,12 +63,9 @@ fun ToDoItemView(model: ToDoItemModel) {
                 item {
                     ToDoChangeListDropDown(model, addUpdateButtonVisibility)
                 }
+
                 item {
-                    ToDoDueDate(
-                        model.todoDataItem.dueDate,
-                        onDateChange = {},
-                        onCancel = {}
-                    )
+                    ToDoDueDate(model, addUpdateButtonVisibility)
                 }
 
                 if (model.isSpeechToTextEnabled) {

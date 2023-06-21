@@ -1,6 +1,7 @@
 package com.paul.todolist.ui.main.todoItemView.datePicker
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todoList.R
 import com.paul.todolist.ui.widgets.AppButton
 import com.paul.todolist.ui.widgets.CustomNumberPicker
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.GregorianCalendar
 
@@ -32,12 +34,20 @@ import java.util.GregorianCalendar
 @Composable
 fun DatePickerDialog(
     openDialog: MutableState<Boolean>,
-    initialDate: Calendar = Calendar.getInstance(),
-    onDateChange: (Calendar) -> Unit,
+    currentDate: String,
+    onDateChange: (String) -> Unit,
     onCancel: () -> Unit
 ) {
 
     val columnWidth: Dp = ((LocalConfiguration.current.screenWidthDp - 50) / 3).dp
+    val dateFormatter = SimpleDateFormat("dd/MMM/yyyy hh:MM a")
+
+    //User current date if we don't have one
+    val initialDate = Calendar.getInstance()
+    if (!currentDate.equals("0")) {
+        initialDate.time = dateFormatter.parse(currentDate)
+    }
+
     val maxDaysInMonth = getLastDayOfMonth(initialDate)
     val maxDaysInMonthState = remember { mutableStateOf(maxDaysInMonth) }
 
@@ -66,6 +76,7 @@ fun DatePickerDialog(
                         AndroidView(
                             modifier = Modifier
                                 .width(columnWidth)
+                                .clickable { }
                                 .background(MaterialTheme.colorScheme.primary),
                             update = {
                                 it.invalidate()
@@ -74,7 +85,6 @@ fun DatePickerDialog(
                                 CustomNumberPicker(context).apply {
                                     setOnValueChangedListener { _, _, newVal ->
                                         initialDate.set(Calendar.DAY_OF_MONTH, newVal)
-                                        onDateChange(initialDate)
                                     }
                                     minValue = 1
                                     maxValue = maxDaysInMonthState.value
@@ -93,7 +103,6 @@ fun DatePickerDialog(
                                         initialDate.set(Calendar.MONTH, newVal)
                                         maxDaysInMonthState.value =
                                             getLastDayOfMonth(initialDate)
-                                        onDateChange(initialDate)
                                     }
                                     minValue = 1
                                     maxValue = 12
@@ -126,7 +135,6 @@ fun DatePickerDialog(
                                         initialDate.set(Calendar.YEAR, newVal)
                                         maxDaysInMonthState.value =
                                             getLastDayOfMonth(initialDate)
-                                        onDateChange(initialDate)
                                     }
                                     minValue = initialDate.get(Calendar.YEAR)
                                     maxValue = initialDate.get(Calendar.YEAR) + 5
@@ -139,6 +147,7 @@ fun DatePickerDialog(
                     AppButton(
                         onButtonPressed = {
                             openDialog.value = false
+                            onDateChange(dateFormatter.format(initialDate.time))
                         },
                         textID = R.string.ok
                     )
