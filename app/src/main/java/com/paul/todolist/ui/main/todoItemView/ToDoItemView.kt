@@ -22,6 +22,7 @@ import com.paul.todolist.ui.main.listItemsView.swapList
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonProcessing
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
 import com.paul.todolist.ui.main.todoItemView.buttons.ToDoSpeechButton
+import com.paul.todolist.ui.main.todoItemView.datePicker.ToDoDueDate
 import com.paul.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
 import com.paul.todolist.ui.main.todoItemView.imageList.ToDoNewImage
 import com.paul.todolist.ui.main.todoItemView.inputName.ToDoInputName
@@ -62,9 +63,13 @@ fun ToDoItemView(model: ToDoItemModel) {
                 item {
                     ToDoChangeListDropDown(model, addUpdateButtonVisibility)
                 }
-//                item {
-//                    ToDoDatePicker(onDateChange = {},  onCancel = {})
-//                }
+                item {
+                    ToDoDueDate(
+                        model.todoDataItem.dueDate,
+                        onDateChange = {},
+                        onCancel = {}
+                    )
+                }
 
                 if (model.isSpeechToTextEnabled) {
                     item {
