@@ -39,3 +39,5 @@ const val listState_all_incomplete = "2"
 
 const val imageWidth = 480
 const val imageHeight = 640
+
+const val dateFormat = "dd/MMM/yyyy hh:MM a"

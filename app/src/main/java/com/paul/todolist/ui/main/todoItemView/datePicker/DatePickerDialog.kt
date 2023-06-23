@@ -14,44 +14,51 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todoList.R
+import com.paul.todolist.dateFormat
+import com.paul.todolist.ui.theme.typography
 import com.paul.todolist.ui.widgets.AppButton
 import com.paul.todolist.ui.widgets.CustomNumberPicker
+import com.paul.todolist.util.playClick
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.GregorianCalendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerDialog(
     openDialog: MutableState<Boolean>,
-    currentDate: String,
+    currentDueDate: String,
     onDateChange: (String) -> Unit,
     onCancel: () -> Unit
 ) {
+    val ctx = LocalContext.current
 
     val columnWidth: Dp = ((LocalConfiguration.current.screenWidthDp - 50) / 3).dp
-    val dateFormatter = SimpleDateFormat("dd/MMM/yyyy hh:MM a")
+    val dateFormatter = SimpleDateFormat(dateFormat)
 
-    //User current date if we don't have one
-    val initialDate = Calendar.getInstance()
-    if (!currentDate.equals("0")) {
-        initialDate.time = dateFormatter.parse(currentDate)
-    }
+    val errorMessageState = remember { mutableStateOf("") }
 
-    val maxDaysInMonth = getLastDayOfMonth(initialDate)
-    val maxDaysInMonthState = remember { mutableStateOf(maxDaysInMonth) }
+    var initialDate = Calendar.getInstance()
+    val backgoundColor = MaterialTheme.colorScheme.primary
+    var buttonBackgroundColor = remember { mutableStateOf(backgoundColor) }
 
     if (openDialog.value) {
+        if (!currentDueDate.equals("0")) {
+            initialDate.time = dateFormatter.parse(currentDueDate)
+        }
+        errorMessageState.value = ""
+
         AlertDialog(
             onDismissRequest = {
                 openDialog.value = false
@@ -85,9 +92,11 @@ fun DatePickerDialog(
                                 CustomNumberPicker(context).apply {
                                     setOnValueChangedListener { _, _, newVal ->
                                         initialDate.set(Calendar.DAY_OF_MONTH, newVal)
+                                        errorMessageState.value = validation(initialDate)
+                                        playClick(ctx)
                                     }
                                     minValue = 1
-                                    maxValue = maxDaysInMonthState.value
+                                    maxValue = 31
                                     value = initialDate.get(Calendar.DAY_OF_MONTH)
                                 }
                             }
@@ -101,27 +110,14 @@ fun DatePickerDialog(
                             factory = { context ->
                                 CustomNumberPicker(context).apply {
                                     setOnValueChangedListener { _, _, newVal ->
-                                        initialDate.set(Calendar.MONTH, newVal)
-                                        maxDaysInMonthState.value =
-                                            getLastDayOfMonth(initialDate)
+                                        initialDate.set(Calendar.MONTH, newVal - 1)
+                                        errorMessageState.value = validation(initialDate)
+                                        playClick(ctx)
                                     }
                                     minValue = 1
                                     maxValue = 12
                                     value = getAdjustedMonth(initialDate)
-                                    displayedValues = arrayOf(
-                                        "Jan",
-                                        "Feb",
-                                        "Mar",
-                                        "Apr",
-                                        "May",
-                                        "Jun",
-                                        "Jul",
-                                        "Aug",
-                                        "Sep",
-                                        "Oct",
-                                        "Nov",
-                                        "Dec"
-                                    )
+                                    displayedValues = resources.getStringArray(R.array.month_names)
                                 }
                             }
                         )
@@ -135,8 +131,8 @@ fun DatePickerDialog(
                                 CustomNumberPicker(context).apply {
                                     setOnValueChangedListener { _, _, newVal ->
                                         initialDate.set(Calendar.YEAR, newVal)
-                                        maxDaysInMonthState.value =
-                                            getLastDayOfMonth(initialDate)
+                                        errorMessageState.value = validation(initialDate)
+                                        playClick(ctx)
                                     }
                                     minValue = initialDate.get(Calendar.YEAR)
                                     maxValue = initialDate.get(Calendar.YEAR) + 5
@@ -146,14 +142,36 @@ fun DatePickerDialog(
                         )
                     }
                     Spacer(Modifier.height(1.dp))
+
+                    Text(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background)
+                            .padding(20.dp, 0.dp, 0.dp, 0.dp),
+                        text = errorMessageState.value,
+                        style = typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Spacer(Modifier.height(1.dp))
+
+                    //Button enabled or not
+                    if (errorMessageState.value.isEmpty()) {
+                        buttonBackgroundColor.value = MaterialTheme.colorScheme.primary
+                    } else {
+                        buttonBackgroundColor.value = MaterialTheme.colorScheme.background
+                    }
+
                     AppButton(
                         onButtonPressed = {
-                            openDialog.value = false
-                            onDateChange(dateFormatter.format(initialDate.time))
+                            if (errorMessageState.value.isEmpty()) {
+                                openDialog.value = false
+                                onDateChange(dateFormatter.format(initialDate.time))
+                            }
                         },
+                        backgroundColor = buttonBackgroundColor.value,
                         textID = R.string.ok
                     )
                     Spacer(Modifier.height(1.dp))
+
                     AppButton(
                         onButtonPressed = {
                             openDialog.value = false
@@ -168,18 +186,20 @@ fun DatePickerDialog(
     }
 }
 
-fun getLastDayOfMonth(initialDate: Calendar): Int {
-    val daysInMonth = arrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-    val cal: GregorianCalendar = initialDate as GregorianCalendar
-    if (cal.isLeapYear(initialDate.get(Calendar.YEAR))) daysInMonth[1] = 29
-
-    return daysInMonth[initialDate.get(Calendar.MONTH)]
+fun validation(initDate: Calendar): String {
+    if (initDate.before(Calendar.getInstance())) {
+        return "Due Date cannot be in the past"
+    }
+    if (initDate.get(Calendar.MONTH) == 1) {
+        if (initDate.get(Calendar.DAY_OF_MONTH) > 28) {
+            return "Invalid Date"
+        }
+    }
+    return ""
 }
 
 fun getAdjustedMonth(initialDate: Calendar): Int {
     return initialDate.get(Calendar.MONTH) + 1
 }
-
-
 
 
