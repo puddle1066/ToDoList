@@ -87,6 +87,14 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
+    suspend fun isValidListItem(listId: String): Int {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().listItemsDao().getListItemCount(listId)
+        }
+    }
+
+    @Singleton
+    @Provides
     suspend fun getToDoItems(listId: String): List<ToDoDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().ToDoItemsDao().getAllForListId(listId)

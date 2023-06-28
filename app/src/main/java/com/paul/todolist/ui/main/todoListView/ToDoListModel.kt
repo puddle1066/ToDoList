@@ -32,11 +32,9 @@ open class ToDoListModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     fun swapSections(from: Int, to: Int) {
-        val fromItem = _uiState.value[from]
-        val toItem = _uiState.value[to]
         val newList = _uiState.value.toMutableList()
-        newList[from] = toItem
-        newList[to] = fromItem
+        newList[from] = _uiState.value[to]
+        newList[to] = _uiState.value[from]
 
         _uiState.value = newList
     }
@@ -50,11 +48,15 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun isListNotKnown(): Boolean {
-        return MainActivity.listId.isBlank()
+        var found: Boolean
+        runBlocking {
+            found = dataBaseProvider.isValidListItem(MainActivity.listId) != 0
+        }
+        return found
     }
 
     fun getToDoList(listId: String) {
-        var toDoDataItems = listOf<ToDoDataItem>()
+        var toDoDataItems: List<ToDoDataItem>
 
         runBlocking {
             try {
@@ -78,31 +80,32 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun isFinishedList(): Boolean {
-        return getItemType().equals(listState_Finished)
+        return getCurrentItemType() == listState_Finished
     }
 
     fun isNormalList(): Boolean {
-        return getItemType().equals(listState_Normal)
+        return getCurrentItemType() == listState_Normal
     }
 
     fun isFullList(): Boolean {
-        return getItemType().equals(listState_all_incomplete)
+        return getCurrentItemType() == listState_all_incomplete
     }
 
-    fun isFinshed(finishedDate: String): Boolean {
+    fun isFinished(finishedDate: String): Boolean {
         return finishedDate == "0"
     }
 
-    fun getItemType(): String {
-        var type = "0"
+    fun getCurrentItemType(): String {
+        var type = listState_Normal
         runBlocking {
-            type = dataBaseProvider.getListItem(MainActivity.listId).type
+            val item = dataBaseProvider.getListItem(MainActivity.listId)
+            if (item != null) type = item.type // Else type has been removed
         }
         return type
     }
 
     fun getListTitle(): String {
-        var title = ""
+        var title: String
         runBlocking {
             title = dataBaseProvider.getListTitle(MainActivity.listId)
         }

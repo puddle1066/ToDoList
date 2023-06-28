@@ -23,4 +23,7 @@ interface ListItemsDao {
 
     @Query(value = "SELECT * FROM ListsData where listId = :listId")
     fun getListItem(listId: String): ListDataItem
+
+    @Query(value = "SELECT Count() FROM ListsData where listId = :listId")
+    fun getListItemCount(listId: String): Int
 }

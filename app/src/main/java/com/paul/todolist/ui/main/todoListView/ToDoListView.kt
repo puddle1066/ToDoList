@@ -44,7 +44,10 @@ fun ToDoListView(model: ToDoListModel) {
 
     //If we don't have a first entry in the list use the first
     //entry in the list as a default
-    if (model.isListNotKnown()) model.saveListId(model.getAllSortedASC()[0].listId)
+    if (model.isListNotKnown()) {
+        MainActivity.listId = model.getAllSortedASC()[0].listId
+        model.saveListId(MainActivity.listId)
+    }
 
     model.getToDoList(MainActivity.listId)
     deleteList.clear()
@@ -60,6 +63,7 @@ fun ToDoListView(model: ToDoListModel) {
                     model.getAllSortedASC(),
                     model.getListTitle()
                 ) {
+                    MainActivity.listId = it
                     model.saveListId(it)
                     model.getToDoList(it)
 
@@ -119,7 +123,7 @@ fun ToDoListView(model: ToDoListModel) {
                         ToDoItem(
                             item,
                             listName,
-                            model.getItemType(),
+                            model.getCurrentItemType(),
                             deleteList,
                             isDeleteAllowed,
                             isMoveAllowed,
@@ -131,7 +135,7 @@ fun ToDoListView(model: ToDoListModel) {
                                 isDeleteButtonVisible.value = deleteList.size != 0
                             },
                             onRowDetails = { todoItem: ToDoDataItem ->
-                                if (model.isFinshed(todoItem.finishedDate)) {
+                                if (model.isFinished(todoItem.finishedDate)) {
                                     MainActivity.itemId = todoItem.itemId
                                     showViewWithBackStack(ToDoScreens.ToDoItemView.name)
                                 }

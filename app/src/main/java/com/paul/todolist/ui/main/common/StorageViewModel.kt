@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.paul.todolist.LIST_ID_KEY
 import com.paul.todolist.base.BaseViewModel
 import com.paul.todolist.di.dataStorage.DataStoreProvider
-import com.paul.todolist.ui.main.MainActivity
 import kotlinx.coroutines.launch
 
 open class StorageViewModel(private val dataStoreProvider: DataStoreProvider) : BaseViewModel() {
     fun saveListId(listId: String) {
-        MainActivity.listId = listId
         viewModelScope.launch {
             dataStoreProvider.storeValue(LIST_ID_KEY, listId)
         }

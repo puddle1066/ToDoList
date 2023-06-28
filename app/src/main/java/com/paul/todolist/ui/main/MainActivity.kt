@@ -99,7 +99,6 @@ class MainActivity : ComponentActivity() {
 
         var listId: String = ""
         var itemId: String = ""
-
     }
 }
 
