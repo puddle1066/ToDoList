@@ -18,7 +18,7 @@ fun ToDoCameraButtonProcessing(
 ) {
     ToDoItemCameraButton { bitmap ->
         //rotate the bitmap as the screen is fixed portrait
-        var image = Bitmap.createScaledBitmap(bitmap, imageWidth, imageHeight, false).rotate(90f)
+        val image = Bitmap.createScaledBitmap(bitmap, imageWidth, imageHeight, false).rotate(90f)
         toDoImages.add(image)
 
         if (model.hasDescription()) {

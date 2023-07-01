@@ -1,5 +1,6 @@
 package com.paul.todolist.ui.main.todoItemView.datePicker
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -33,6 +35,7 @@ import com.paul.todolist.ui.widgets.CustomNumberPicker
 import com.paul.todolist.util.playClick
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,16 +48,16 @@ fun DatePickerDialog(
     val ctx = LocalContext.current
 
     val columnWidth: Dp = ((LocalConfiguration.current.screenWidthDp - 50) / 3).dp
-    val dateFormatter = SimpleDateFormat(dateFormat)
+    val dateFormatter = SimpleDateFormat(dateFormat, Locale.getDefault())
 
     val errorMessageState = remember { mutableStateOf("") }
 
-    var initialDate = Calendar.getInstance()
+    val initialDate = Calendar.getInstance()
     val backgoundColor = MaterialTheme.colorScheme.primary
-    var buttonBackgroundColor = remember { mutableStateOf(backgoundColor) }
+    val buttonBackgroundColor = remember { mutableStateOf(backgoundColor) }
 
     if (openDialog.value) {
-        if (!currentDueDate.equals("0")) {
+        if (currentDueDate != "0") {
             initialDate.time = dateFormatter.parse(currentDueDate)
         }
         errorMessageState.value = ""
@@ -141,7 +144,51 @@ fun DatePickerDialog(
                             }
                         )
                     }
-                    Spacer(Modifier.height(1.dp))
+
+                    Row(
+                        modifier = Modifier
+                            .padding(70.dp, 0.dp, 0.dp, 0.dp)
+                            .background(MaterialTheme.colorScheme.onPrimary)
+                    ) {
+                        AndroidView(
+                            modifier = Modifier
+                                .width(columnWidth)
+                                .clickable(enabled = false, onClick = {})
+                                .background(MaterialTheme.colorScheme.primary),
+                            update = {
+                                it.invalidate()
+                            },
+                            factory = { context ->
+                                CustomNumberPicker(context).apply {
+                                    setOnValueChangedListener { _, _, newVal ->
+                                        initialDate.set(Calendar.HOUR_OF_DAY, newVal)
+                                    }
+                                    minValue = 1
+                                    maxValue = 24
+                                    value = initialDate.get(Calendar.HOUR_OF_DAY)
+                                }
+                            }
+                        )
+
+                        AndroidView(
+                            modifier = Modifier
+                                .width(columnWidth)
+                                .clickable(enabled = false, onClick = {})
+                                .background(MaterialTheme.colorScheme.primary),
+                            factory = { context ->
+                                CustomNumberPicker(context).apply {
+                                    setOnValueChangedListener { _, _, newVal ->
+                                        initialDate.set(Calendar.MINUTE, newVal)
+
+                                    }
+                                    minValue = 1
+                                    maxValue = 50
+                                    value = initialDate.get(Calendar.MINUTE)
+                                }
+                            }
+                        )
+                    }
+
 
                     Text(
                         modifier = Modifier
@@ -190,10 +237,10 @@ fun validation(initDate: Calendar): String {
     if (initDate.before(Calendar.getInstance())) {
         return "Due Date cannot be in the past"
     }
-    if (initDate.get(Calendar.MONTH) == 1) {
-        if (initDate.get(Calendar.DAY_OF_MONTH) > 28) {
-            return "Invalid Date"
-        }
+    if (initDate.get(Calendar.MONTH) == 1 &&
+        initDate.get(Calendar.DAY_OF_MONTH) > 28
+    ) {
+        return "Invalid Date"
     }
     return ""
 }
@@ -202,4 +249,10 @@ fun getAdjustedMonth(initialDate: Calendar): Int {
     return initialDate.get(Calendar.MONTH) + 1
 }
 
-
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun MeasurePreview() {
+    val openDialog = remember { mutableStateOf(true) }
+    DatePickerDialog(openDialog, "01/JAN/2023 23:59 AM", onDateChange = {}, onCancel = {})
+}
