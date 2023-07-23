@@ -3,10 +3,8 @@ package com.paul.todolist
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.paul.todoList.R
 import com.paul.todolist.ui.main.common.drawMenu.DrawItem
 
 /**
@@ -22,7 +20,6 @@ enum class ToDoScreens(@StringRes val title: Int) {
 
 val menuOptionSettings =
     DrawItem(Icons.Filled.Settings, R.string.settings, ToDoScreens.SettingsView.name)
-val menuOptionLists = DrawItem(Icons.Filled.Menu, R.string.lists, ToDoScreens.listsView.name)
 val menuOptionToDoList =
     DrawItem(Icons.Filled.Home, R.string.ToDo_Lists, ToDoScreens.ToDoListView.name)
 

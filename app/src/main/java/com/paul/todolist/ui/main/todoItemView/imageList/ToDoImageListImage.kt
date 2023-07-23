@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.imageHeight
 import com.paul.todolist.imageWidth
 

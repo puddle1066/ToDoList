@@ -4,16 +4,19 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.paul.todolist.DATABASE_NAME
-import com.paul.todolist.di.database.dao.*
-import com.paul.todolist.di.database.data.*
+import com.paul.todolist.di.database.dao.ImageDataDao
+import com.paul.todolist.di.database.dao.ListItemsDao
+import com.paul.todolist.di.database.dao.ToDoItemsDao
+import com.paul.todolist.di.database.data.ListDataItem
+import com.paul.todolist.di.database.data.ToDoDataItem
+import com.paul.todolist.di.database.data.ToDoImageData
 import com.paul.todolist.listState_Finished
 import com.paul.todolist.listState_Normal
 import com.paul.todolist.listState_all_incomplete
 import com.paul.todolist.ui.main.MainActivity
-import java.util.*
+import java.util.UUID
 
 @Database(
     entities = [
@@ -22,7 +25,6 @@ import java.util.*
         ToDoImageData::class
     ], version = 1
 )
-@TypeConverters(Converters::class)
 
 abstract class DataBaseManager : RoomDatabase() {
     abstract fun listItemsDao(): ListItemsDao

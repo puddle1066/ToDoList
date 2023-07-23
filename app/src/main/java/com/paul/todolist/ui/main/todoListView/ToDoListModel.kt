@@ -1,7 +1,7 @@
 package com.paul.todolist.ui.main.todoListView
 
 import android.util.Log
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.di.database.data.ListDataItem

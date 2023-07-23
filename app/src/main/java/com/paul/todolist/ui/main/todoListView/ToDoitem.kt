@@ -111,7 +111,6 @@ fun ToDoItem(
                     .fillMaxWidth()
                     .height(60.dp)
                     .clickable {
-                        Log.e(TAG, "clickable")
                         if (isDeleteEnabled.value) {
                             isSelectedItem.value = !isSelectedItem.value
                             onRowDelete(item, isSelectedItem.value)

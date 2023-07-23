@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ui.theme.typography
 
 @Composable
@@ -24,7 +24,7 @@ fun ToDoItemHeader(model: ToDoItemModel) {
     ) {
         Text(
             modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
-            text = stringResource(R.string.ToDo_item) + " -  " + model.getListTitle(),
+            text = stringResource(R.string.ToDo_item) + " -  " + model.getListTitle(model.todoDataItem.listID),
             style = typography.titleLarge,
             color = MaterialTheme.colorScheme.secondary,
         )

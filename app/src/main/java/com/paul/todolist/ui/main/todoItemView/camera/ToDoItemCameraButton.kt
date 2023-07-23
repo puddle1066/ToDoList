@@ -27,7 +27,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ui.main.common.camera.CameraView
 import com.paul.todolist.util.convertImageProxyToBitmap
 import kotlinx.coroutines.delay

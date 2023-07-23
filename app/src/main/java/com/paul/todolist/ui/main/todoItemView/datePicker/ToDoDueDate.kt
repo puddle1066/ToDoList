@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.delay

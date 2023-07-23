@@ -28,7 +28,7 @@ open class ToDoItemModel @Inject constructor(
 
     var todoDataItem = ToDoDataItem(
         UUID.randomUUID().toString(),
-        "",
+        MainActivity.listId,
         "",
         "0",
         getCurrentDateAsString(),
@@ -36,7 +36,7 @@ open class ToDoItemModel @Inject constructor(
         0
     )
 
-    var todoItemExists: Boolean = true
+    var todoItemIsNew: Boolean = false
     var isSpeechToTextEnabled = false
     var isPhotoCaptureEnabled = true
 
@@ -47,16 +47,16 @@ open class ToDoItemModel @Inject constructor(
             if (MainActivity.itemId.isBlank()) {
                 todoDataItem = ToDoDataItem(
                     UUID.randomUUID().toString(),
-                    "",
+                    MainActivity.listId,
                     "",
                     "0",
                     "0",
                     getCurrentDateAsString(),
                     dataBaseProvider.getLastSequence() + 1
                 )
-                todoItemExists = false
+                todoItemIsNew = true
             } else {
-                todoItemExists = true
+                todoItemIsNew = false
                 todoDataItem = dataBaseProvider.getToDoItem(MainActivity.itemId)
             }
         }
@@ -77,24 +77,23 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun isNewItem(): Boolean {
-        return todoDataItem.listID.isEmpty()
+        return todoItemIsNew
     }
 
     fun hasDescription(): Boolean {
         return todoDataItem.description.isNotEmpty()
     }
 
-    fun getListTitle(): String {
+    fun getListTitle(ListId: String): String {
         var title = ""
         runBlocking {
-            title = dataBaseProvider.getListTitle(MainActivity.listId)
+            title = dataBaseProvider.getListTitle(ListId)
         }
         return title
     }
 
     fun insert() {
         todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
-        todoDataItem.listID = MainActivity.listId
         todoDataItem.itemId = UUID.randomUUID().toString()
         todoDataItem.lastupdated = getCurrentDateAsString()
         runBlocking {

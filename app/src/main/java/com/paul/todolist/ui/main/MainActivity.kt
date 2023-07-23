@@ -38,8 +38,10 @@ class MainActivity : ComponentActivity() {
 
         context = this.applicationContext
 
-        toDoListModel.getListId {
-            listId = it
+        if (listId.isBlank()) {
+            toDoListModel.getListId {
+                listId = it
+            }
         }
 
         setContent {

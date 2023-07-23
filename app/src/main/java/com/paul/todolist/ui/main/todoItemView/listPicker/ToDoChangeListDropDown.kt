@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 
 @Composable
@@ -36,7 +36,7 @@ fun ToDoChangeListDropDown(model: ToDoItemModel, addButtonVisibility: MutableSta
         ) {
             Spinner(
                 model.getListOfLists(),
-                model.getListTitle(),
+                model.getListTitle(model.todoDataItem.listID),
                 {
                     model.todoDataItem.listID = it
                     addButtonVisibility.value = model.hasDataChanges()

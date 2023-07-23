@@ -37,6 +37,3 @@ To add a new ToDo list simply enter the list name in the input field and press t
 the keyboard when completed.
 Only lists with no tasks can be selected for deletion. To select a ToDo List just click on the
 item (Which turns red) and then press the delete button that has appeared.
-
-
-

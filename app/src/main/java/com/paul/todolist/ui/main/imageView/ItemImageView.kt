@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.widgets.ZoomableBox

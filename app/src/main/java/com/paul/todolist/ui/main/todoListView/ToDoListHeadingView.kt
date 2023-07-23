@@ -17,7 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.ui.main.common.AppMenu

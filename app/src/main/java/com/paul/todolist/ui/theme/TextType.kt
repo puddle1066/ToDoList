@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.paul.todoList.R
+import com.paul.todolist.R
 
 val MontserratFontFamily = FontFamily(
     listOf(

@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.main.common.showView
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParserState
@@ -17,10 +17,10 @@ fun ToDoItemAddButton(
     toDoImages: SnapshotStateList<Bitmap>,
     voiceState: VoiceToTextParserState
 ) {
-    var buttonStringId = R.string.add_todo
+    var buttonStringId = R.string.update_todo
 
-    if (model.todoItemExists) {
-        buttonStringId = R.string.update_todo
+    if (model.todoItemIsNew) {
+        buttonStringId = R.string.add_todo
     }
 
     Row {

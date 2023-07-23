@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.paul.todoList.R
+import com.paul.todolist.R
 import com.paul.todolist.imageHeight
 import com.paul.todolist.imageWidth
 import com.paul.todolist.ui.main.MainActivity.Companion.cameraProvider

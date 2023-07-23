@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.core.content.res.ResourcesCompat
-import com.paul.todoList.R
+import com.paul.todolist.R
 
 class CustomNumberPicker(val ctx: Context) : NumberPicker(ctx, null) {
-    val tfs: Typeface? = ResourcesCompat.getFont(context, R.font.montserrat_medium);
+    val tfs: Typeface? = ResourcesCompat.getFont(context, R.font.montserrat_medium)
 
     override fun addView(child: View) {
         super.addView(child)
@@ -28,7 +28,7 @@ class CustomNumberPicker(val ctx: Context) : NumberPicker(ctx, null) {
     }
 
     private fun updateView(view: View) {
-        var txtColor: Int = 0xFFFFFFFF.toInt()
+        val txtColor: Int = 0xFFFFFFFF.toInt()
 
         if (view is EditText) {
             view.setTypeface(tfs)
