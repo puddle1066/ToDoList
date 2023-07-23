@@ -48,11 +48,11 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun isListNotKnown(): Boolean {
-        var found: Boolean
+        var notFound: Boolean
         runBlocking {
-            found = dataBaseProvider.isValidListItem(MainActivity.listId) != 0
+            notFound = dataBaseProvider.isValidListItem(MainActivity.listId) == 0
         }
-        return found
+        return notFound
     }
 
     fun getToDoList(listId: String) {

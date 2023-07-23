@@ -38,6 +38,7 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
     }
 
     suspend fun <T> storeValue(key: Preferences.Key<T>, value: T) {
+        Log.e(TAG, "storeValue  {$key} {$value}")
         context.dataStore.edit {
             it[key] = value
         }

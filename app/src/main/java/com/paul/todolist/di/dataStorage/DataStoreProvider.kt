@@ -1,6 +1,7 @@
 package com.paul.todolist.di.dataStorage
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.Preferences
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +13,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ViewModelComponent::class)
 class DataStoreProvider @Inject constructor(@ApplicationContext ctx: Context) {
+    private var TAG = DataStoreManager::class.simpleName
 
     val context = ctx
 
@@ -24,6 +26,7 @@ class DataStoreProvider @Inject constructor(@ApplicationContext ctx: Context) {
                 onCompleted.invoke(defaultValue)
             } else {
                 onCompleted.invoke(this)
+                Log.e(TAG, "storeValue  {$key} {$this}")
             }
         }
     }
