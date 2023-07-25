@@ -44,16 +44,16 @@ fun SettingsView() {
                     .background(MaterialTheme.colorScheme.background)
             ) {
 
-
-                Text(
-                    modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
-                    text = stringResource(R.string.alerts_title),
-                    style = typography.titleLarge,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                settingsAlertPicker()
-                settingsAlertPicker()
-                settingsAlertPicker()
+//TODO Not yet implemented
+//                Text(
+//                    modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
+//                    text = stringResource(R.string.alerts_title),
+//                    style = typography.titleLarge,
+//                    color = MaterialTheme.colorScheme.secondary,
+//                )
+//                settingsAlertPicker()
+//                settingsAlertPicker()
+//                settingsAlertPicker()
 
                 Spacer(modifier = Modifier.weight(1f))
 
