@@ -38,6 +38,8 @@ fun ImageHeadingView() {
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showSystemUi = true, device = "id:8in Foldable")
+@Preview(showSystemUi = true, device = "spec:width=800dp,height=1280dp, dpi=480")
 @Composable
 fun Preview() {
     ImageHeadingView()
