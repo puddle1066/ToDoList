@@ -28,8 +28,8 @@ import java.util.UUID
 
 abstract class DataBaseManager : RoomDatabase() {
     abstract fun listItemsDao(): ListItemsDao
-    abstract fun ToDoItemsDao(): ToDoItemsDao
-    abstract fun ImageDataDao(): ImageDataDao
+    abstract fun toDoItemsDao(): ToDoItemsDao
+    abstract fun imageDataDao(): ImageDataDao
 
     companion object {
         private val TAG = DataBaseManager::class.java.name

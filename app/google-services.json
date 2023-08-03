@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "618966168339",
-    "project_id": "hatch-85e2a",
-    "storage_bucket": "hatch-85e2a.appspot.com"
+    "project_number": "321192432786",
+    "project_id": "todo-28d26",
+    "storage_bucket": "todo-28d26.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:618966168339:android:a216c769a7f814eec420e6",
+        "mobilesdk_app_id": "1:321192432786:android:7000e6dee56cc7bfab424b",
         "android_client_info": {
-          "package_name": "com.paul.hatch"
+          "package_name": "com.paul.todolist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "618966168339-73vts609mt5nafe88bdir6dksbevk2i5.apps.googleusercontent.com",
+          "client_id": "321192432786-husbf107debjdkpdjl1mvbjbou9tf6cp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCjTicTcWw-BPIvYDTpW7utzIFk5tqpnQ8"
+          "current_key": "AIzaSyDzHCG_TJ0iPtfSbmZ7ITNrbqGrA7qhH6g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "618966168339-73vts609mt5nafe88bdir6dksbevk2i5.apps.googleusercontent.com",
+              "client_id": "321192432786-husbf107debjdkpdjl1mvbjbou9tf6cp.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
