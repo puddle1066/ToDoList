@@ -25,7 +25,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getAllListsSorted(): List<ListDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().getAllSortedASC()
+            DataBaseManager.getInstance().getlistItemsDao().getAllSortedASC()
         }
     }
 
@@ -33,7 +33,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getListOfLists(): List<ListDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().getUserDefinedLists()
+            DataBaseManager.getInstance().getlistItemsDao().getUserDefinedLists()
         }
     }
 
@@ -41,7 +41,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getLIstItemsCount(listId: String): Int {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().getListCount(listId)
+            DataBaseManager.getInstance().getToDoItemsDao().getListCount(listId)
         }
     }
 
@@ -49,7 +49,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun insertList(list: ListDataItem) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().insert(list)
+            DataBaseManager.getInstance().getlistItemsDao().insert(list)
         }
     }
 
@@ -57,7 +57,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun deleteList(listId: String) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().deleteList(listId)
+            DataBaseManager.getInstance().getlistItemsDao().deleteList(listId)
         }
     }
 
@@ -65,7 +65,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun deleteItem(itemId: String) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().deleteItem(itemId)
+            DataBaseManager.getInstance().getToDoItemsDao().deleteItem(itemId)
         }
     }
 
@@ -73,7 +73,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getListTitle(listId: String): String {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().getListTitle(listId)
+            DataBaseManager.getInstance().getlistItemsDao().getListTitle(listId)
         }
     }
 
@@ -81,7 +81,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getListItem(listId: String): ListDataItem {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().getListItem(listId)
+            DataBaseManager.getInstance().getlistItemsDao().getListItem(listId)
         }
     }
 
@@ -89,7 +89,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun isValidListItem(listId: String): Int {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().listItemsDao().getListItemCount(listId)
+            DataBaseManager.getInstance().getlistItemsDao().getListItemCount(listId)
         }
     }
 
@@ -97,7 +97,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getToDoItems(listId: String): List<ToDoDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().getAllForListId(listId)
+            DataBaseManager.getInstance().getToDoItemsDao().getAllForListId(listId)
         }
     }
 
@@ -105,7 +105,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getAllIncompleteItems(): List<ToDoDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().getAll()
+            DataBaseManager.getInstance().getToDoItemsDao().getAll()
         }
     }
 
@@ -113,7 +113,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getFinishedItems(): List<ToDoDataItem> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().getAllFinished()
+            DataBaseManager.getInstance().getToDoItemsDao().getAllFinished()
         }
     }
 
@@ -121,7 +121,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun insertToDo(toDoItem: ToDoDataItem) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().insert(toDoItem)
+            DataBaseManager.getInstance().getToDoItemsDao().insert(toDoItem)
         }
     }
 
@@ -129,7 +129,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun updateToDo(toDoItem: ToDoDataItem) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().update(toDoItem)
+            DataBaseManager.getInstance().getToDoItemsDao().update(toDoItem)
         }
     }
 
@@ -137,7 +137,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun setFinishedDate(itemId: String, finishedDate: String) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().setFinishedDate(itemId, finishedDate)
+            DataBaseManager.getInstance().getToDoItemsDao().setFinishedDate(itemId, finishedDate)
         }
     }
 
@@ -146,7 +146,7 @@ class RoomDataProvider @Inject constructor() {
     suspend fun getLastSequence(): Int {
         return withContext(dispatcher) {
             try {
-                DataBaseManager.getInstance().toDoItemsDao().getLastSequence().sequence
+                DataBaseManager.getInstance().getToDoItemsDao().getLastSequence().sequence
             } catch (e: Exception) {
                 Log.e(TAG, "getLastSequence - $e")
             }
@@ -157,7 +157,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getToDoItem(itemId: String): ToDoDataItem {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().toDoItemsDao().getToDoItem(itemId)
+            DataBaseManager.getInstance().getToDoItemsDao().getToDoItem(itemId)
         }
     }
 
@@ -165,7 +165,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun insertToDoImage(toDoImage: ToDoImageData) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().imageDataDao().insert(toDoImage)
+            DataBaseManager.getInstance().getImageDataDao().insert(toDoImage)
         }
     }
 
@@ -173,7 +173,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun getToDoImages(itemId: String): List<ToDoImageData> {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().imageDataDao().getItemImages(itemId)
+            DataBaseManager.getInstance().getImageDataDao().getItemImages(itemId)
         }
     }
 
@@ -181,7 +181,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun deleteAllToDoImages(itemId: String) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().imageDataDao().deleteAllImagesForItem(itemId)
+            DataBaseManager.getInstance().getImageDataDao().deleteAllImagesForItem(itemId)
         }
     }
 
@@ -189,7 +189,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun deleteToDoImage(key: String) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().imageDataDao().deleteImage(key)
+            DataBaseManager.getInstance().getImageDataDao().deleteImage(key)
         }
     }
 }

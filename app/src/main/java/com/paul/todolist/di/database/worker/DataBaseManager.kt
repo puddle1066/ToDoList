@@ -27,9 +27,9 @@ import java.util.UUID
 )
 
 abstract class DataBaseManager : RoomDatabase() {
-    abstract fun listItemsDao(): ListItemsDao
-    abstract fun toDoItemsDao(): ToDoItemsDao
-    abstract fun imageDataDao(): ImageDataDao
+    abstract fun getlistItemsDao(): ListItemsDao
+    abstract fun getToDoItemsDao(): ToDoItemsDao
+    abstract fun getImageDataDao(): ImageDataDao
 
     companion object {
         private val TAG = DataBaseManager::class.java.name
@@ -65,7 +65,7 @@ abstract class DataBaseManager : RoomDatabase() {
                         "INSERT INTO ListsData(listId, title, type) VALUES('" + UUID.randomUUID()
                             .toString() + "','Finished', '" + listState_Finished + "');"
                     )
-                    db.execSQL("INSERT INTO ListsData(listId, title, type) VALUES('0','All', '" + listState_all_incomplete + "');")
+                    db.execSQL("INSERT INTO ListsData(listId, title, type) VALUES('0','All', '$listState_all_incomplete');")
 
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)
