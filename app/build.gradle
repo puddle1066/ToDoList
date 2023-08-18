@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'de.mannodermaus.android-junit5'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
@@ -71,6 +70,8 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += 'META-INF/LICENSE.md'
+            excludes += 'META-INF/LICENSE-notice.md'
         }
     }
 
@@ -103,6 +104,7 @@ dependencies {
     implementation 'androidx.test:core-ktx:1.5.0'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.4.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     // UI Tests
