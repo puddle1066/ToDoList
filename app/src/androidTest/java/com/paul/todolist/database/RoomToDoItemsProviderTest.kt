@@ -1,4 +1,4 @@
-package com.paul.todolist
+package com.paul.todolist.database
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.paul.todolist.di.database.data.ToDoDataItem

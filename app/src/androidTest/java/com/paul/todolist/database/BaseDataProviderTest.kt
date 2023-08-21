@@ -1,4 +1,4 @@
-package com.paul.todolist
+package com.paul.todolist.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -8,6 +8,9 @@ import com.paul.todolist.di.database.dao.ImageDataDao
 import com.paul.todolist.di.database.dao.ListItemsDao
 import com.paul.todolist.di.database.dao.ToDoItemsDao
 import com.paul.todolist.di.database.worker.DataBaseManager
+import com.paul.todolist.listState_Finished
+import com.paul.todolist.listState_Normal
+import com.paul.todolist.listState_all_incomplete
 import org.junit.After
 import org.junit.Before
 
