@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
@@ -44,16 +45,17 @@ fun SettingsView() {
                     .background(MaterialTheme.colorScheme.background)
             ) {
 
-//TODO Not yet implemented
-//                Text(
-//                    modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
-//                    text = stringResource(R.string.alerts_title),
-//                    style = typography.titleLarge,
-//                    color = MaterialTheme.colorScheme.secondary,
-//                )
-//                settingsAlertPicker()
-//                settingsAlertPicker()
-//                settingsAlertPicker()
+                Text(
+                    modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
+                    text = stringResource(R.string.alerts_screen_title),
+                    style = typography.titleLarge,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+
+                SettingsAlertPicker(stringResource(R.string.alerts_overdue), {}, {})
+                Spacer(modifier = Modifier.height(20.dp))
+
+                SettingsAlertPicker(stringResource(R.string.alerts_late), {}, {})
 
                 Spacer(modifier = Modifier.weight(1f))
 

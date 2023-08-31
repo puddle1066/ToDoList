@@ -136,7 +136,9 @@ fun ToDoItem(
                     },
                 )
                 Text(
-                    modifier = Modifier.weight(1.5f),
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .padding(0.dp, 0.dp, 15.dp, 0.dp),
                     text = item.description,
                     style = typography.bodyLarge,
                     color = MaterialTheme.colorScheme.secondary,

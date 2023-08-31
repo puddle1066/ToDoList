@@ -32,7 +32,7 @@ class CustomNumberPicker(val ctx: Context) : NumberPicker(ctx, null) {
 
         if (view is EditText) {
             view.setTypeface(tfs)
-            view.textSize = 20f
+            view.textSize = 18f
             view.setTextColor(txtColor)
         }
     }

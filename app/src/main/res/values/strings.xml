@@ -23,7 +23,7 @@
     <string name="none_specified">None Specified</string>
     <string name="due_date">Due Date</string>
 
-    <string name="alerts_title">Alerts</string>
+    <string name="alerts_screen_title">Alerts</string>
 
     <string-array name="month_names">
         <item>Jan</item>
@@ -40,5 +40,8 @@
         <item>Dec</item>
     </string-array>
 
-
+    <string name="alerts_late">Late</string>
+    <string name="alerts_overdue">Overdue</string>
+    <string name="alerts_body_text1">Please selected the number of days and color to highlight</string>
+    <string name="alerts_body_text2"> in the list.</string>
 </resources>
