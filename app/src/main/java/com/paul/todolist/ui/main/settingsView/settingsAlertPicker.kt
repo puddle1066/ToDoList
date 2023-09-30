@@ -20,11 +20,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todolist.R
-import com.paul.todolist.ui.theme.typography
 import com.paul.todolist.ui.widgets.CustomNumberPicker
 
 @Composable
@@ -34,14 +38,50 @@ fun SettingsAlertPicker(
     onColorChanged: (item: Color) -> Unit
 ) {
 
+    var instructions = buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(
+                fontSize = 15.sp,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+        ) {
+            append(stringResource(R.string.alerts_body_text1))
+        }
+
+        withStyle(
+            style = SpanStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 17.sp,
+                color = MaterialTheme.colorScheme.error,
+            )
+        ) {
+            append(" " + title.uppercase() + " ")
+        }
+
+        withStyle(
+            style = SpanStyle(
+                fontSize = 15.sp,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+        ) {
+            append(stringResource(R.string.alerts_body_text2))
+        }
+    }
+
+
     Text(
         modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
-        text = stringResource(R.string.alerts_body_text1) +
-                title.uppercase() +
-                stringResource(R.string.alerts_body_text2),
-        style = typography.titleMedium,
-        color = MaterialTheme.colorScheme.secondary,
+        text = instructions
     )
+
+//    Text(
+//        modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
+//        text = stringResource(R.string.alerts_body_text1) +
+//               " "+ title.uppercase() + " " +
+//                stringResource(R.string.alerts_body_text2),
+//        style = typography.titleMedium,
+//        color = MaterialTheme.colorScheme.secondary,
+//    )
 
     Row(
         modifier = Modifier

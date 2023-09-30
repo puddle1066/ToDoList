@@ -23,6 +23,7 @@ import com.paul.todolist.ToDoScreens
 import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.theme.typography
+import com.paul.todolist.ui.widgets.AppButton
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -58,6 +59,17 @@ fun SettingsView() {
                 SettingsAlertPicker(stringResource(R.string.alerts_late), {}, {})
 
                 Spacer(modifier = Modifier.weight(1f))
+
+                AppButton(
+                    onButtonPressed = {},
+                    textID = R.string.todo_backup
+                )
+
+                AppButton(
+                    onButtonPressed = {},
+                    textID = R.string.todo_restore,
+                    buttonVisible = false
+                )
 
                 Text(
                     modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),

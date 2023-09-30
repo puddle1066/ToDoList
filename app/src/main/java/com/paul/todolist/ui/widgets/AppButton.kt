@@ -10,8 +10,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -70,21 +68,6 @@ fun PreviewAppButtonImage() {
         onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
         imageVector = Icons.Filled.Mic,
     )
-}
-
-
-@Composable
-fun PreviewAppButton() {
-    Box(
-        modifier = Modifier
-            .scale(scale = 1f)
-            .border(BorderStroke(1.dp, Color.LightGray), RoundedCornerShape(25))
-            .fillMaxWidth()
-            .height(90.dp)
-
-    ) {}
-
-    Spacer(modifier = Modifier.height(20.dp))
 }
 
 @Composable

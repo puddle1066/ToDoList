@@ -44,4 +44,7 @@
     <string name="alerts_overdue">Overdue</string>
     <string name="alerts_body_text1">Please selected the number of days and color to highlight</string>
     <string name="alerts_body_text2"> in the list.</string>
+
+    <string name="todo_backup">ToDo Backup</string>
+    <string name="todo_restore">ToDo Restore</string>
 </resources>
