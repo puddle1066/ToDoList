@@ -1,7 +1,6 @@
 package com.paul.todolist.ui.main.settingsView
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,13 +23,18 @@ import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.theme.typography
 import com.paul.todolist.ui.widgets.AppButton
+import com.paul.todolist.util.DB_PATH
+import com.paul.todolist.util.copyFile
+import com.paul.todolist.util.deleteFile
+import java.io.File
+import java.text.SimpleDateFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun SettingsView() {
     val menuItems = hashMapOf<Int, String>(
         R.string.ToDo_Lists to ToDoScreens.ToDoListView.name,
-        R.string.settings to ToDoScreens.SettingsView.name
+        R.string.lists to ToDoScreens.listsView.name
     )
 
     ToDoListTheme {
@@ -61,14 +65,42 @@ fun SettingsView() {
                 Spacer(modifier = Modifier.weight(1f))
 
                 AppButton(
-                    onButtonPressed = {},
+                    onButtonPressed = {
+                        copyFile(File(DB_PATH + "tools-db"), File(DB_PATH + "tools-db-back"))
+                        copyFile(
+                            File(DB_PATH + "tools-db-shm"),
+                            File(DB_PATH + "tools-db-shm-back")
+                        )
+                        copyFile(
+                            File(DB_PATH + "tools-db-wal"),
+                            File(DB_PATH + "tools-db-wal-back")
+                        )
+                    },
                     textID = R.string.todo_backup
                 )
+                val file = File(DB_PATH + "tools-db-back")
+                val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
+
+                var buttonText = stringResource(R.string.todo_restore) + "\n$formatedDate"
 
                 AppButton(
-                    onButtonPressed = {},
-                    textID = R.string.todo_restore,
-                    buttonVisible = false
+                    onButtonPressed = {
+                        deleteFile(DB_PATH, "tools-db")
+                        deleteFile(DB_PATH, "tools-db-shm")
+                        deleteFile(DB_PATH, "tools-db-wal")
+
+                        copyFile(File(DB_PATH + "tools-db-back"), File(DB_PATH + "tools-db"))
+                        copyFile(
+                            File(DB_PATH + "tools-db-shm-back"),
+                            File(DB_PATH + "tools-db-shm")
+                        )
+                        copyFile(
+                            File(DB_PATH + "tools-db-wal-back"),
+                            File(DB_PATH + "tools-db-wal")
+                        )
+                    },
+                    textString = buttonText,
+                    buttonVisible = file.exists()
                 )
 
                 Text(
@@ -83,7 +115,6 @@ fun SettingsView() {
 }
 
 @Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SettingsViewPreview() {
     SettingsView()

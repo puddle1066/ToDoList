@@ -74,15 +74,6 @@ fun SettingsAlertPicker(
         text = instructions
     )
 
-//    Text(
-//        modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
-//        text = stringResource(R.string.alerts_body_text1) +
-//               " "+ title.uppercase() + " " +
-//                stringResource(R.string.alerts_body_text2),
-//        style = typography.titleMedium,
-//        color = MaterialTheme.colorScheme.secondary,
-//    )
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
