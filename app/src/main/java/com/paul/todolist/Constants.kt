@@ -24,6 +24,9 @@ val menuOptionToDoList =
     DrawItem(Icons.Filled.Home, R.string.ToDo_Lists, ToDoScreens.ToDoListView.name)
 
 const val DATABASE_NAME = "tools-db"
+const val DATABASE_NAME_SHM = "$DATABASE_NAME-shm"
+const val DATABASE_NAME_WAL = "$DATABASE_NAME-wal"
+
 const val PREFERENCES_NAME = "user_preferences"
 
 val LIST_ID_KEY = stringPreferencesKey("selectedlistId")
