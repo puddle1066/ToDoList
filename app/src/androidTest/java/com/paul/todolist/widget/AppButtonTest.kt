@@ -11,7 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class AppButtonKtTest {
+class AppButtonTest {
 
     @get: Rule
     val composeTestTextButton = createComposeRule()
@@ -25,6 +25,18 @@ class AppButtonKtTest {
             )
         }
         composeTestTextButton.onNodeWithText("Continue").assertIsDisplayed()
+    }
+
+    @Test
+    fun previewAppButtonFreeFormatText() {
+        var buttonText = "Free Format Text"
+        composeTestTextButton.setContent {
+            AppButton(
+                onButtonPressed = {},
+                textString = buttonText
+            )
+        }
+        composeTestTextButton.onNodeWithText(buttonText).assertIsDisplayed()
     }
 
 }

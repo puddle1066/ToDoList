@@ -42,33 +42,6 @@ import com.paul.todolist.ui.theme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PreviewAppButtonIcon() {
-    AppButton(
-        drawingID = com.google.android.material.R.drawable.ic_clock_black_24dp,
-        onButtonPressed = { showView(ToDoScreens.ToDoListView.name) }
-    )
-}
-
-@Preview
-@Composable
-fun PreviewAppButtonText() {
-    AppButton(
-        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
-        textID = R.string.Continue
-    )
-}
-
-@Preview
-@Composable
-fun PreviewAppButtonImage() {
-    AppButton(
-        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
-        imageVector = Icons.Filled.Mic,
-    )
-}
 
 @Composable
 fun AppButton(
@@ -76,6 +49,7 @@ fun AppButton(
     imageVector: ImageVector? = null,
     onButtonPressed: () -> Unit,
     textID: Int = -1,
+    textString: String = "",
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
     buttonVisible: Boolean = true
 ) {
@@ -145,8 +119,57 @@ fun AppButton(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
+
+            if (textString.isNotEmpty()) {
+                Text(
+                    modifier = Modifier.padding(10.dp),
+                    text = textString,
+                    style = typography.titleLarge,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
     }
 }
+
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewAppButtonIcon() {
+    AppButton(
+        drawingID = com.google.android.material.R.drawable.ic_clock_black_24dp,
+        onButtonPressed = { showView(ToDoScreens.ToDoListView.name) }
+    )
+}
+
+@Preview
+@Composable
+fun PreviewAppButtonText() {
+    AppButton(
+        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
+        textID = R.string.Continue
+    )
+}
+
+@Preview
+@Composable
+fun PreviewAppButtonImage() {
+    AppButton(
+        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
+        imageVector = Icons.Filled.Mic,
+    )
+}
+
+@Preview
+@Composable
+fun PreviewAppButtonFreeFornatText() {
+    AppButton(
+        onButtonPressed = { showView(ToDoScreens.SettingsView.name) },
+        textString = "Free Format Text"
+    )
+}
+
