@@ -1,0 +1,25 @@
+[versions]
+androidJunit5 = "1.8.2.1"
+firebaseCrashlyticsGradle = "2.9.9"
+googleServices = "4.4.0"
+gradleVersion = "7.2.2"
+kotlin = "1.9.10"
+hilt = "2.48"
+kspVersion = "1.9.10-1.0.13"
+libraryVersion = "8.1.2"
+appVersion = "8.1.2"
+
+[libraries]
+android-junit5 = { module = "de.mannodermaus.gradle.plugins:android-junit5", version.ref = "androidJunit5" }
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
+kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "appVersion" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+android-library = { id = "com.android.library", version.ref = "libraryVersion" }
+#devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
