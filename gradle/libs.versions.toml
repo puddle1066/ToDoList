@@ -22,4 +22,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "appVersion" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 android-library = { id = "com.android.library", version.ref = "libraryVersion" }
-#devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
