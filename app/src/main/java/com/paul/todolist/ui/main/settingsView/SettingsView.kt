@@ -17,8 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paul.todolist.BuildConfig
+import com.paul.todolist.DATABASE_NAME
 import com.paul.todolist.R
 import com.paul.todolist.ToDoScreens
+import com.paul.todolist.di.database.RoomDataProvider
 import com.paul.todolist.ui.main.common.StandardTopBar
 import com.paul.todolist.ui.theme.ToDoListTheme
 import com.paul.todolist.ui.theme.typography
@@ -31,7 +33,7 @@ import java.text.SimpleDateFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun SettingsView() {
+fun SettingsView(model: SettingsModel) {
     val menuItems = hashMapOf<Int, String>(
         R.string.ToDo_Lists to ToDoScreens.ToDoListView.name,
         R.string.lists to ToDoScreens.listsView.name
@@ -62,46 +64,13 @@ fun SettingsView() {
 
                 SettingsAlertPicker(stringResource(R.string.alerts_late), {}, {})
 
+
+                //Only show backup restore options for Debug Builds
+                if (BuildConfig.BUILD_TYPE == "debug") {
+                    ShowBackupRestoreButtons(model)
+                }
+
                 Spacer(modifier = Modifier.weight(1f))
-
-                AppButton(
-                    onButtonPressed = {
-                        copyFile(File(DB_PATH + "tools-db"), File(DB_PATH + "tools-db-back"))
-                        copyFile(
-                            File(DB_PATH + "tools-db-shm"),
-                            File(DB_PATH + "tools-db-shm-back")
-                        )
-                        copyFile(
-                            File(DB_PATH + "tools-db-wal"),
-                            File(DB_PATH + "tools-db-wal-back")
-                        )
-                    },
-                    textID = R.string.todo_backup
-                )
-                val file = File(DB_PATH + "tools-db-back")
-                val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
-
-                var buttonText = stringResource(R.string.todo_restore) + "\n$formatedDate"
-
-                AppButton(
-                    onButtonPressed = {
-                        deleteFile(DB_PATH, "tools-db")
-                        deleteFile(DB_PATH, "tools-db-shm")
-                        deleteFile(DB_PATH, "tools-db-wal")
-
-                        copyFile(File(DB_PATH + "tools-db-back"), File(DB_PATH + "tools-db"))
-                        copyFile(
-                            File(DB_PATH + "tools-db-shm-back"),
-                            File(DB_PATH + "tools-db-shm")
-                        )
-                        copyFile(
-                            File(DB_PATH + "tools-db-wal-back"),
-                            File(DB_PATH + "tools-db-wal")
-                        )
-                    },
-                    textString = buttonText,
-                    buttonVisible = file.exists()
-                )
 
                 Text(
                     modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
@@ -114,10 +83,57 @@ fun SettingsView() {
     }
 }
 
+@SuppressLint("SimpleDateFormat")
+@Composable
+fun ShowBackupRestoreButtons(model: SettingsModel) {
+    AppButton(
+        onButtonPressed = {
+            model.closeDatabase()
+            copyFile(File(DB_PATH + DATABASE_NAME), File("$DB_PATH$DATABASE_NAME-back"))
+            copyFile(
+                File("$DB_PATH$DATABASE_NAME-shm"),
+                File(DB_PATH + DATABASE_NAME + "shm-back")
+            )
+            copyFile(
+                File("$DB_PATH$DATABASE_NAME-wal"),
+                File("$DB_PATH$DATABASE_NAME-wal-back")
+            )
+            model.openDatabase()
+        },
+        textID = R.string.todo_backup
+    )
+    val file = File("$DB_PATH$DATABASE_NAME-back")
+    val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
+
+    val buttonText = stringResource(R.string.todo_restore) + "\n$formatedDate"
+
+    AppButton(
+        onButtonPressed = {
+            model.closeDatabase()
+            deleteFile(DB_PATH, DATABASE_NAME)
+            deleteFile(DB_PATH, "$DATABASE_NAME-shm")
+            deleteFile(DB_PATH, "$DATABASE_NAME-wal")
+
+            copyFile(File("$DB_PATH$DATABASE_NAME-back"), File(DB_PATH + DATABASE_NAME))
+            copyFile(
+                File("$DB_PATH$DATABASE_NAME-shm-back"),
+                File("$DB_PATH$DATABASE_NAME-shm")
+            )
+            copyFile(
+                File("$DB_PATH$DATABASE_NAME-wal-back"),
+                File("$DB_PATH$DATABASE_NAME-wal")
+            )
+            model.openDatabase()
+        },
+        textString = buttonText,
+        buttonVisible = file.exists()
+    )
+}
+
 @Preview
 @Composable
 fun SettingsViewPreview() {
-    SettingsView()
+    SettingsView(SettingsModel(RoomDataProvider()))
 }
 
 

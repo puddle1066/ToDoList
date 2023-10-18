@@ -11,4 +11,11 @@ open class SettingsModel @Inject constructor(
 
 ) : BaseViewModel() {
 
+    fun closeDatabase() {
+        dataBaseProvider.closeDatabase()
+    }
+
+    fun openDatabase() {
+        dataBaseProvider.openDatabase()
+    }
 }

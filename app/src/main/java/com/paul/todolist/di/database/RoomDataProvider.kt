@@ -11,7 +11,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import kotlinx.coroutines.withContext
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,6 +19,18 @@ import javax.inject.Singleton
 class RoomDataProvider @Inject constructor() {
 
     private var TAG = RoomDataProvider::class.simpleName
+
+    fun closeDatabase() {
+        if (DataBaseManager.getInstance().isOpen) {
+            DataBaseManager.getInstance().openHelper.close()
+        }
+    }
+
+    fun openDatabase() {
+        if (!DataBaseManager.getInstance().isOpen) {
+            DataBaseManager.getInstance().openHelper.writableDatabase
+        }
+    }
 
     @Singleton
     @Provides

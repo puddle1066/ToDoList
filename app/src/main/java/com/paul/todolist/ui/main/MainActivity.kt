@@ -11,13 +11,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.compose.animation.*
-import androidx.compose.material.*
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import com.paul.todolist.ui.main.common.NavigationFactory
 import com.paul.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paul.todolist.ui.main.listItemsView.ListItemsModel
+import com.paul.todolist.ui.main.settingsView.SettingsModel
 import com.paul.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paul.todolist.ui.main.todoListView.ToDoListModel
 import com.paul.todolist.ui.theme.ToDoListTheme
@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
         val toDoListModel: ToDoListModel by viewModels()
         val listItemsModel: ListItemsModel by viewModels()
         val toDoItemModel: ToDoItemModel by viewModels()
+        val settingsModel: SettingsModel by viewModels()
 
         context = this.applicationContext
 
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ToDoListTheme {
-                NavigationFactory(toDoListModel, listItemsModel, toDoItemModel)
+                NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
 
                 //Permissions for TEXT TO SPEECH PROCESSING
                 val recordAudioLauncher = rememberLauncherForActivityResult(
