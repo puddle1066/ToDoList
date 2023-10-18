@@ -14,7 +14,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.screen(
     route: String,
     arguments: List<NamedNavArgument> = listOf(),
@@ -27,25 +27,23 @@ fun NavGraphBuilder.screen(
         arguments = arguments,
         enterTransition = {
             slideInHorizontally(
-                initialOffsetX = { screenWidth -> screenWidth },
                 animationSpec = animSpec
             )
         },
         popEnterTransition = {
             slideInHorizontally(
-                initialOffsetX = { screenWidth -> -screenWidth },
                 animationSpec = animSpec
             )
         },
         exitTransition = {
             slideOutHorizontally(
-                targetOffsetX = { screenWidth -> -screenWidth },
+
                 animationSpec = animSpec
             )
         },
         popExitTransition = {
             slideOutHorizontally(
-                targetOffsetX = { screenWidth -> screenWidth },
+
                 animationSpec = animSpec
             )
         },
