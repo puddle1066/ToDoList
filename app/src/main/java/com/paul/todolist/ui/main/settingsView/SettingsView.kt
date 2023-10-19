@@ -59,11 +59,22 @@ fun SettingsView(model: SettingsModel) {
                     color = MaterialTheme.colorScheme.secondary,
                 )
 
-                SettingsAlertPicker(stringResource(R.string.alerts_overdue), {}, {})
+                SettingsAlertPicker(
+                    stringResource(R.string.alerts_overdue),
+                    model.getOverdueDays(),
+                    model.getOverdueColor(),
+                    { model.setOverdueDays(it) },
+                    { model.setOverdueColor(it) }
+                )
                 Spacer(modifier = Modifier.height(20.dp))
 
-                SettingsAlertPicker(stringResource(R.string.alerts_late), {}, {})
-
+                SettingsAlertPicker(
+                    stringResource(R.string.alerts_late),
+                    model.getLateDays(),
+                    model.getLateColor(),
+                    { model.setLateDays(it) },
+                    { model.setLateColor(it) }
+                )
 
                 //Only show backup restore options for Debug Builds
                 if (BuildConfig.BUILD_TYPE == "debug") {

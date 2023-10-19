@@ -1,6 +1,7 @@
 package com.paul.todolist.di.database
 
 import android.util.Log
+import com.paul.todolist.di.database.data.Config
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.di.database.data.ToDoImageData
@@ -34,11 +35,28 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
+    suspend fun getConfigValue(key: String): String {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getConfigDao().getConfigValue(key)
+        }
+    }
+
+    @Singleton
+    @Provides
+    suspend fun setConfigValue(key: String, value: String) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getConfigDao().setConfigValue(Config(key, value))
+        }
+    }
+
+    @Singleton
+    @Provides
     suspend fun getAllListsSorted(): List<ListDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().getAllSortedASC()
         }
     }
+
 
     @Singleton
     @Provides

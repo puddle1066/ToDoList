@@ -34,11 +34,13 @@ import com.paul.todolist.ui.widgets.CustomNumberPicker
 @Composable
 fun SettingsAlertPicker(
     title: String,
-    onDaysChanged: (days: Int) -> Unit,
-    onColorChanged: (item: Color) -> Unit
+    currentDays: Int,
+    currentColor: Color,
+    onDaysChanged: (Int) -> Unit,
+    onColorChanged: (Color) -> Unit
 ) {
 
-    var instructions = buildAnnotatedString {
+    val instructions = buildAnnotatedString {
         withStyle(
             style = SpanStyle(
                 fontSize = 15.sp,
@@ -96,26 +98,36 @@ fun SettingsAlertPicker(
                     }
                     minValue = 0
                     maxValue = 24
-                    value = 0
+                    value = currentDays
                 }
             }
         )
 
         Spacer(modifier = Modifier.width(20.dp))
-        val list = listOf(Color.Red, Color.Green, Color.Magenta, Color.Yellow, Color.LightGray)
+
+        //Fill the list with various colors to pick from
+        val list = mutableListOf(Color.White)
+        var i = 4278190080
+        while (i < 4294967295) {
+            i += 40000
+            if (Color(i) != Color.White) {
+                list.add(Color(i))
+            }
+        }
 
         LazyColumn(
             modifier = Modifier
                 .width(100.dp)
                 .height(100.dp)
-                .clickable(enabled = false, onClick = {})
         ) {
             items(items = list) { item ->
                 Box(
                     modifier = Modifier
                         .width(100.dp)
                         .height(50.dp)
-                        .clickable(enabled = false, onClick = { onColorChanged(item) })
+                        .clickable(onClick = {
+                            onColorChanged(item)
+                        })
                         .border(width = 1.dp, color = Color.Black)
                         .background(item)
                 )
@@ -126,9 +138,10 @@ fun SettingsAlertPicker(
     }
 }
 
+
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun settingsAlertPickerPreview() {
-    SettingsAlertPicker("Warning", {}, {})
+fun SettingsAlertPickerPreview() {
+    SettingsAlertPicker("Warning", currentDays = 10, currentColor = Color.Red, {}, {})
 }
