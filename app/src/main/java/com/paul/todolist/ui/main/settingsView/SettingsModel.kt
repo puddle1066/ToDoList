@@ -1,6 +1,8 @@
 package com.paul.todolist.ui.main.settingsView
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.toColorInt
 import com.paul.todolist.base.BaseViewModel
 import com.paul.todolist.di.database.RoomDataProvider
@@ -43,10 +45,11 @@ open class SettingsModel @Inject constructor(
     fun getOverdueColor(): Color {
         var color: Color
         runBlocking {
-            color = try {
-                Color(dataBaseProvider.getConfigValue("OverdueColor").toColorInt())
+            try {
+                color = Color(dataBaseProvider.getConfigValue("OverdueColor").toColorInt())
             } catch (e: Exception) {
-                Color.Green
+                color = Color.White
+                Log.e("color", "getOverdueColor - Exception  = ${e.message}")
             }
         }
         return color
@@ -54,8 +57,12 @@ open class SettingsModel @Inject constructor(
 
     fun setOverdueColor(color: Color) {
         runBlocking {
-            dataBaseProvider.setConfigValue("OverdueColor", color.toString())
+            dataBaseProvider.setConfigValue(
+                "OverdueColor",
+                "#" + Integer.toHexString(color.toArgb()).uppercase()
+            )
         }
+
     }
 
     fun getLateDays(): Int {
@@ -79,10 +86,11 @@ open class SettingsModel @Inject constructor(
     fun getLateColor(): Color {
         var lateColor: Color
         runBlocking {
-            lateColor = try {
-                Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
+            try {
+                lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
             } catch (e: Exception) {
-                Color.Green
+                lateColor = Color.White
+                Log.e("color", "getLateColor - Exception  = ${e.message}")
             }
         }
         return lateColor
@@ -90,7 +98,10 @@ open class SettingsModel @Inject constructor(
 
     fun setLateColor(color: Color) {
         runBlocking {
-            dataBaseProvider.setConfigValue("LateColor", color.toString())
+            dataBaseProvider.setConfigValue(
+                "LateColor",
+                "#" + Integer.toHexString(color.toArgb()).uppercase()
+            )
         }
     }
 }

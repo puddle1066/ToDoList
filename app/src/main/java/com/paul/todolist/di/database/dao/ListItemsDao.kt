@@ -1,6 +1,9 @@
 package com.paul.todolist.di.database.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.paul.todolist.di.database.data.ListDataItem
 import com.paul.todolist.listState_Normal
 

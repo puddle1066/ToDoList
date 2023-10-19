@@ -12,6 +12,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,24 +99,29 @@ fun SettingsView(model: SettingsModel) {
 @SuppressLint("SimpleDateFormat")
 @Composable
 fun ShowBackupRestoreButtons(model: SettingsModel) {
+
+    val buttonVisible = remember { mutableStateOf<Boolean>(false) }
+    val file = File("$DB_PATH$DATABASE_NAME-back")
+    val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
+
     AppButton(
         onButtonPressed = {
             model.closeDatabase()
             copyFile(File(DB_PATH + DATABASE_NAME), File("$DB_PATH$DATABASE_NAME-back"))
             copyFile(
                 File("$DB_PATH$DATABASE_NAME-shm"),
-                File(DB_PATH + DATABASE_NAME + "shm-back")
+                File("$DB_PATH$DATABASE_NAME-shm-back")
             )
             copyFile(
                 File("$DB_PATH$DATABASE_NAME-wal"),
                 File("$DB_PATH$DATABASE_NAME-wal-back")
             )
             model.openDatabase()
+
+            buttonVisible.value = file.exists()
         },
         textID = R.string.todo_backup
     )
-    val file = File("$DB_PATH$DATABASE_NAME-back")
-    val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
 
     val buttonText = stringResource(R.string.todo_restore) + "\n$formatedDate"
 
@@ -137,7 +144,7 @@ fun ShowBackupRestoreButtons(model: SettingsModel) {
             model.openDatabase()
         },
         textString = buttonText,
-        buttonVisible = file.exists()
+        buttonVisible = buttonVisible.value
     )
 }
 
