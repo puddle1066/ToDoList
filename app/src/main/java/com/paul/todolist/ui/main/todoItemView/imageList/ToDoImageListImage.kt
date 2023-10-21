@@ -23,6 +23,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -69,12 +70,13 @@ fun ToDoImageDisplayImage(
                     .align(Alignment.TopStart)
                     .border(
                         width = 2.dp,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = Color.White,
                         shape = RoundedCornerShape(15.dp)
                     ),
             ) {
                 Icon(
-                    Icons.Filled.Delete,
+                    imageVector = Icons.Filled.Delete,
+                    tint = Color.White,
                     contentDescription = stringResource(id = R.string.missing_resource)
                 )
             }
@@ -90,12 +92,13 @@ fun ToDoImageDisplayImage(
                     .align(Alignment.TopEnd)
                     .border(
                         width = 2.dp,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = Color.White,
                         shape = RoundedCornerShape(15.dp)
                     ),
             ) {
                 Icon(
-                    Icons.Filled.OpenInFull,
+                    imageVector = Icons.Filled.OpenInFull,
+                    tint = Color.White,
                     contentDescription = stringResource(id = R.string.missing_resource)
                 )
             }
