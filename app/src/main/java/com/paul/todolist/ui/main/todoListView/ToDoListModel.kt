@@ -1,6 +1,8 @@
 package com.paul.todolist.ui.main.todoListView
 
 import android.util.Log
+import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 import com.paul.todolist.R
 import com.paul.todolist.di.dataStorage.DataStoreProvider
 import com.paul.todolist.di.database.RoomDataProvider
@@ -12,6 +14,7 @@ import com.paul.todolist.listState_Normal
 import com.paul.todolist.listState_all_incomplete
 import com.paul.todolist.ui.main.MainActivity
 import com.paul.todolist.ui.main.common.StorageViewModel
+import com.paul.todolist.ui.main.todoItemView.ListItemAlertsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -156,6 +159,66 @@ open class ToDoListModel @Inject constructor(
         runBlocking {
             dataBaseProvider.setFinishedDate(itemId, finishedDate)
         }
+    }
+
+    fun getAlertValues(): ListItemAlertsData {
+        return ListItemAlertsData(
+            getOverdueDaysThreshold(),
+            getOverdueColor(),
+            getLateDaysTHreshold(),
+            getLateColor()
+        )
+    }
+
+
+    private fun getOverdueDaysThreshold(): Int {
+        var days: Int
+        runBlocking {
+            days = try {
+                dataBaseProvider.getConfigValue("OverdueDays").toInt()
+            } catch (e: Exception) {
+                0
+            }
+        }
+        return days
+    }
+
+    private fun getOverdueColor(): Color {
+        var color: Color
+        runBlocking {
+            try {
+                color = Color(dataBaseProvider.getConfigValue("OverdueColor").toColorInt())
+            } catch (e: Exception) {
+                color = Color.White
+                Log.e("color", "getOverdueColor - Exception  = ${e.message}")
+            }
+        }
+        return color
+    }
+
+    private fun getLateDaysTHreshold(): Int {
+        var days: Int
+        runBlocking {
+            days = try {
+                dataBaseProvider.getConfigValue("LateDays").toInt()
+            } catch (e: Exception) {
+                0
+            }
+        }
+        return days
+    }
+
+    private fun getLateColor(): Color {
+        var lateColor: Color
+        runBlocking {
+            try {
+                lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
+            } catch (e: Exception) {
+                lateColor = Color.White
+                Log.e("color", "getLateColor - Exception  = ${e.message}")
+            }
+        }
+        return lateColor
     }
 }
 

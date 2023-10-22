@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.paul.todolist.di.database.data.ToDoDataItem
 import com.paul.todolist.listState_Finished
 import com.paul.todolist.listState_all_incomplete
+import com.paul.todolist.ui.main.todoItemView.ListItemAlertsData
 import com.paul.todolist.ui.theme.typography
 import com.paul.todolist.util.getCurrentDateAsString
 
@@ -39,6 +40,7 @@ fun ToDoItem(
     item: ToDoDataItem,
     listName: String = "",
     listType: String,
+    alerts: ListItemAlertsData,
     deleteList: SnapshotStateList<ToDoDataItem>,
     isDeleteEnabled: MutableState<Boolean>,
     isMoveAllowed: MutableState<Boolean>,
@@ -57,6 +59,8 @@ fun ToDoItem(
     val colorDeleteSelected = MaterialTheme.colorScheme.error
 
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
+
+    val textColor = checkOverdueOrLate(alerts, item)
 
     isChecked.value = item.finishedDate != "0"
 
@@ -141,7 +145,7 @@ fun ToDoItem(
                         .padding(0.dp, 0.dp, 15.dp, 0.dp),
                     text = item.description,
                     style = typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = textColor,
                 )
 
                 if (listName.isNotBlank()) {
@@ -165,3 +169,4 @@ fun ToDoItem(
         }
     }
 }
+

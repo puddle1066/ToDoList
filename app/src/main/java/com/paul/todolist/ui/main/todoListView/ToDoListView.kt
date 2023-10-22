@@ -14,6 +14,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +48,8 @@ fun ToDoListView(model: ToDoListModel) {
 
     val uiState = model.uiState.collectAsState()
 
-    val startDragIndex = remember { mutableStateOf(-1) }
+    val startDragIndex = remember { mutableIntStateOf(-1) }
+    val alertThresholds = model.getAlertValues()
 
     //If we don't have a first entry in the list use the first
     //entry in the list as a default
@@ -131,6 +133,7 @@ fun ToDoListView(model: ToDoListModel) {
                             item,
                             listName,
                             model.getCurrentItemType(),
+                            alertThresholds,
                             deleteList,
                             isDeleteAllowed,
                             isMoveAllowed,

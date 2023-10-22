@@ -23,7 +23,7 @@ import com.paul.todolist.ui.theme.typography
 
 @Composable
 fun ListItem(
-    list: ListDataItem,
+    item: ListDataItem,
     count: Int,
     onItemClick: (ListDataItem, Boolean) -> Unit
 ) {
@@ -43,7 +43,7 @@ fun ListItem(
                 backgroundColor.value = colorSelected
                 selected = true
             }
-            onItemClick(list, selected)
+            onItemClick(item, selected)
         }
         .fillMaxSize()
         .height(70.dp)
@@ -52,7 +52,7 @@ fun ListItem(
         contentAlignment = Alignment.TopStart) {
         Column {
             Text(
-                text = list.title,
+                text = item.title,
                 style = typography.titleLarge,
                 color = MaterialTheme.colorScheme.secondary,
             )

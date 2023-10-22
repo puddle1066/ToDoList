@@ -55,5 +55,4 @@ open class ListItemsModel @Inject constructor(
             )
         }
     }
-
 }

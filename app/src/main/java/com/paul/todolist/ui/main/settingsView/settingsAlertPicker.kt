@@ -2,7 +2,6 @@ package com.paul.todolist.ui.main.settingsView
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -35,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.paul.todolist.R
 import com.paul.todolist.ui.widgets.CustomNumberPicker
+import com.paul.todolist.ui.widgets.getListOfColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -116,29 +116,14 @@ fun SettingsAlertPicker(
 
         Spacer(modifier = Modifier.width(20.dp))
 
-        //Fill the list with various colors to pick from
-        val list = mutableListOf(Color.White)
-        var selectedIndex = 0
-        var index = 4278190080
-        var count = 0
-        while (index < 4294967295) {
-            index += 40000
-            count++
-            if (Color(index) != Color.White) {
-                list.add(Color(index))
-            }
-            if (Color(index) == currentColor) {
-                selectedIndex = count
-                Log.e("Color", "Selected index = $selectedIndex Color $currentColor")
-            }
-        }
 
+        //Position to current selected color
         val state = rememberLazyListState()
+        val listOfColors = getListOfColors()
+        val selectedIndex = listOfColors.indexOf(currentColor)
 
-        if (selectedIndex > 0) {
-            CoroutineScope(Dispatchers.Main).launch {
-                state.scrollToItem(selectedIndex)
-            }
+        CoroutineScope(Dispatchers.Main).launch {
+            state.scrollToItem(selectedIndex)
         }
 
         LazyColumn(
@@ -147,7 +132,7 @@ fun SettingsAlertPicker(
                 .height(100.dp),
             state = state
         ) {
-            items(items = list) { item ->
+            items(items = listOfColors) { item ->
                 Box(
                     modifier = Modifier
                         .width(100.dp)
