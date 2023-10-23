@@ -20,6 +20,7 @@ int getCommitCount() {
 }
 
 android {
+    namespace "com.paul.todolist"
     compileSdk 34
 
     defaultConfig {
@@ -41,10 +42,12 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
+            debuggable true
         }
     }
 
@@ -68,8 +71,6 @@ android {
             excludes += 'META-INF/LICENSE-notice.md'
         }
     }
-
-    namespace "com.paul.todolist"
 }
 
 dependencies {
