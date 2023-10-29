@@ -20,11 +20,11 @@ int getCommitCount() {
 }
 
 android {
-    namespace "com.paul.todolist"
+    namespace "com.paullanducci.todolist"
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.paul.todolist"
+        applicationId "com.paullanducci.todolist"
         minSdk 29
         targetSdk 34
         versionCode = getCommitCount()
@@ -43,11 +43,13 @@ android {
         release {
             minifyEnabled true
             debuggable false
+            crunchPngs true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
             debuggable true
+            crunchPngs false
         }
     }
 
