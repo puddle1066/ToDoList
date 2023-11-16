@@ -1,6 +1,5 @@
 package com.paullanducci.todolist.ui.main.settingsView
 
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.toColorInt
@@ -27,11 +26,8 @@ open class SettingsModel @Inject constructor(
     fun getOverdueDays(): Int {
         var days: Int
         runBlocking {
-            days = try {
-                dataBaseProvider.getConfigValue("OverdueDays").toInt()
-            } catch (e: Exception) {
-                0
-            }
+            val daysAsString = dataBaseProvider.getConfigValue("OverdueDays")
+            days = daysAsString.toInt()
         }
         return days
     }
@@ -45,12 +41,7 @@ open class SettingsModel @Inject constructor(
     fun getOverdueColor(): Color {
         var color: Color
         runBlocking {
-            try {
-                color = Color(dataBaseProvider.getConfigValue("OverdueColor").toColorInt())
-            } catch (e: Exception) {
-                color = Color.White
-                Log.e("color", "getOverdueColor - Exception  = ${e.message}")
-            }
+            color = Color(dataBaseProvider.getConfigValue("OverdueColor").toColorInt())
         }
         return color
     }
@@ -68,11 +59,7 @@ open class SettingsModel @Inject constructor(
     fun getLateDays(): Int {
         var days: Int
         runBlocking {
-            days = try {
-                dataBaseProvider.getConfigValue("LateDays").toInt()
-            } catch (e: Exception) {
-                0
-            }
+            days = dataBaseProvider.getConfigValue("LateDays").toInt()
         }
         return days
     }
@@ -86,12 +73,7 @@ open class SettingsModel @Inject constructor(
     fun getLateColor(): Color {
         var lateColor: Color
         runBlocking {
-            try {
-                lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
-            } catch (e: Exception) {
-                lateColor = Color.White
-                Log.e("color", "getLateColor - Exception  = ${e.message}")
-            }
+            lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
         }
         return lateColor
     }

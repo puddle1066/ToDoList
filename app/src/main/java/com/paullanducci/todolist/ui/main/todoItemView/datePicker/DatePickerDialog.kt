@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -43,7 +45,8 @@ fun DatePickerDialog(
     openDialog: MutableState<Boolean>,
     currentDueDate: String,
     onDateChange: (String) -> Unit,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    onDelete: () -> Unit
 ) {
     val ctx = LocalContext.current
 
@@ -58,7 +61,7 @@ fun DatePickerDialog(
 
     if (openDialog.value) {
         if (currentDueDate != "0") {
-            initialDate.time = dateFormatter.parse(currentDueDate)
+            initialDate.time = dateFormatter.parse(currentDueDate)!!
         }
         errorMessageState.value = ""
 
@@ -75,6 +78,7 @@ fun DatePickerDialog(
             ) {
                 Column(
                     modifier = Modifier
+                        .verticalScroll(rememberScrollState())
                         .background(MaterialTheme.colorScheme.background)
                 )
                 {
@@ -219,6 +223,17 @@ fun DatePickerDialog(
                     )
                     Spacer(Modifier.height(1.dp))
 
+                    if (currentDueDate != "0") {
+                        AppButton(
+                            onButtonPressed = {
+                                openDialog.value = false
+                                onDelete()
+                            },
+                            textID = R.string.remove
+                        )
+                        Spacer(Modifier.height(1.dp))
+                    }
+
                     AppButton(
                         onButtonPressed = {
                             openDialog.value = false
@@ -254,5 +269,10 @@ fun getAdjustedMonth(initialDate: Calendar): Int {
 @Composable
 fun MeasurePreview() {
     val openDialog = remember { mutableStateOf(true) }
-    DatePickerDialog(openDialog, "01/JAN/2023 23:59 AM", onDateChange = {}, onCancel = {})
+    DatePickerDialog(
+        openDialog,
+        "01/JAN/2023 23:59 AM",
+        onDateChange = {},
+        onCancel = {},
+        onDelete = {})
 }
