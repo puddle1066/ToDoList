@@ -41,6 +41,9 @@ fun ToDoInputName(
                 } else {
                     addButtonVisibility.value = model.hasDataChanges()
                 }
+            },
+            onTextChanged = {
+                addButtonVisibility.value = true
             }
         )
     }

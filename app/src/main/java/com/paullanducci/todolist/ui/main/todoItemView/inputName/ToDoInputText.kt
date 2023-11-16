@@ -31,7 +31,8 @@ fun ToDoInputText(
     model: ToDoItemModel,
     fieldTitle: String,
     voiceState: VoiceToTextParserState,
-    onFinished: (String) -> Unit
+    onFinished: (String) -> Unit,
+    onTextChanged: () -> Unit
 ) {
     ToDoListTheme {
         val textValue = model.todoDataItem.description
@@ -84,6 +85,7 @@ fun ToDoInputText(
             value = textState.value,
             onValueChange = {
                 textState.value = it
+                onTextChanged()
             },
         )
     }
