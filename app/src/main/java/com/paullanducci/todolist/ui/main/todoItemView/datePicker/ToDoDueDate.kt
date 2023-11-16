@@ -20,7 +20,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,7 +41,6 @@ import com.paullanducci.todolist.ui.theme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ToDoDueDate(
     model: ToDoItemModel,
@@ -55,12 +53,12 @@ fun ToDoDueDate(
 
     val openDialog = remember { mutableStateOf(false) }
 
-    var backgroundColor: Color = MaterialTheme.colorScheme.primary
+    val backgroundColor: Color = MaterialTheme.colorScheme.primary
 
-    var currentDueTime = stringResource(R.string.none_specified)
+    val currentDueTime = stringResource(R.string.none_specified)
     val dateState = remember { mutableStateOf(currentDueTime) }
 
-    if (!model.todoDataItem.dueDate.equals("0")) {
+    if (model.todoDataItem.dueDate != "0") {
         dateState.value = model.todoDataItem.dueDate
     }
 
@@ -72,7 +70,11 @@ fun ToDoDueDate(
             dateState.value = it
             model.todoDataItem.dueDate = it
         },
-        onCancel = {}
+        onCancel = {},
+        onDelete = {
+            model.todoDataItem.dueDate = "0"
+            dateState.value = currentDueTime
+        }
     )
 
     AnimatedVisibility(

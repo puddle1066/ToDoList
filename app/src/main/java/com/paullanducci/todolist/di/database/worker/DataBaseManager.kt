@@ -81,6 +81,11 @@ abstract class DataBaseManager : RoomDatabase() {
                     )
                     db.execSQL("INSERT INTO ListsData(listId, title, type) VALUES('0','All', '$listState_all_incomplete');")
 
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('OverdueDays','0');")
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('OverdueColor','#000000');")
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('LateDays','0');")
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('LateColor','#000000');")
+
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)
                 }
