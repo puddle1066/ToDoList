@@ -74,6 +74,7 @@ fun ToDoDueDate(
         onDelete = {
             model.todoDataItem.dueDate = "0"
             dateState.value = currentDueTime
+            addButtonVisibility.value = true
         }
     )
 
@@ -100,8 +101,8 @@ fun ToDoDueDate(
             Column {
                 Text(
                     modifier = Modifier
-                        .height(20.dp)
-                        .width(100.dp)
+                        .height(25.dp)
+                        .weight(0.95f)
                         .padding(20.dp, 3.dp, 0.dp, 0.dp),
                     text = stringResource(R.string.due_date),
                     style = typography.bodyLarge,
@@ -145,10 +146,13 @@ fun ToDoDueDate(
                 null,
                 modifier = Modifier
                     .padding(0.dp, 17.dp, 0.dp, 0.dp)
-                    .width(30.dp)
-                    .height(30.dp)
+                    .weight(0.05F)
+                    .width(40.dp)
+                    .height(40.dp)
                     .background(MaterialTheme.colorScheme.primary),
             )
         }
     }
 }
+
+
