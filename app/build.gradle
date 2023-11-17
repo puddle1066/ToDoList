@@ -99,6 +99,7 @@ dependencies {
     implementation libs.firebase.crashlytics.ktx
     implementation libs.firebase.analytics.ktx
     implementation libs.junit.ktx
+    implementation libs.androidx.foundation.android
     debugImplementation libs.androidx.ui.tooling
 
     // Optional - Included automatically by material, only add when you need
