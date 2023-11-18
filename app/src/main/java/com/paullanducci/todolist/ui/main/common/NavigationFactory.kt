@@ -16,6 +16,7 @@ import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemView
 import com.paullanducci.todolist.ui.main.todoListView.ToDoListModel
 import com.paullanducci.todolist.ui.main.todoListView.ToDoListView
 import com.paullanducci.todolist.util.screen
+import tutorialCarousel
 
 @ExperimentalAnimationApi
 @Composable
@@ -30,7 +31,8 @@ fun NavigationFactory(
 
     AnimatedNavHost(
         MainActivity.navHostController!!,
-        startDestination = ToDoScreens.ToDoListView.name
+        //  startDestination = ToDoScreens.ToDoListView.name
+        startDestination = ToDoScreens.TutorialCarousel.name
 
     ) {
         screen(ToDoScreens.ToDoListView.name) { ToDoListView(toDoListModel) }
@@ -38,6 +40,7 @@ fun NavigationFactory(
         screen(ToDoScreens.SettingsView.name) { SettingsView(settingsModel) }
         screen(ToDoScreens.listsView.name) { ListItemsView(listItemsModel) }
         screen(ToDoScreens.ImageItemView.name) { ItemImageView() }
+        screen(ToDoScreens.TutorialCarousel.name) { tutorialCarousel() }
     }
 }
 

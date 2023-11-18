@@ -7,7 +7,7 @@
     <string name="ToDo_Task_description">ToDo Task description"</string>
     <string name="move_to_list">"Move To List"</string>
     <string name="image_view">Image View</string>
-
+    <string name="tutoral_carousel">Tutorial Carousel</string>
 
     <string name="ToDo_item">ToDo Item</string>
     <string name="please_select">Please Select</string>
@@ -18,11 +18,14 @@
     <string name="lists">Lists Maintenance</string>
     <string name="ToDo_Lists">ToDo Lists</string>
 
+    <string name="tutorial_title">Tutorial</string>
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="remove">Delete</string>
     <string name="none_specified">None Specified</string>
     <string name="due_date">Due Date</string>
+    <string name="finished">Start Application</string>
 
     <string name="alerts_screen_title">Alerts</string>
 
