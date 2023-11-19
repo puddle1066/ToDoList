@@ -19,6 +19,7 @@
     <string name="ToDo_Lists">ToDo Lists</string>
 
     <string name="tutorial_title">Tutorial</string>
+    <string name="show_tutorial">Don\'t Show Tutorial on Startup</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

@@ -33,7 +33,6 @@ fun screen_last() {
                 onButtonPressed = {
                     showView(ToDoScreens.ToDoListView.name)
                 },
-                //    backgroundColor = buttonBackgroundColor.value,
                 textID = R.string.finished
             )
 

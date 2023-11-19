@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
+import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 import com.paullanducci.todolist.ui.main.tutorial.tutorialContainer
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
@@ -31,7 +32,7 @@ import com.paullanducci.todolist.ui.theme.typography
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 
-fun tutorialCarousel() {
+fun tutorialCarousel(model: SettingsModel) {
     val count = 4
 
     val pagerState = rememberPagerState(pageCount = { count })
@@ -52,7 +53,7 @@ fun tutorialCarousel() {
                 )
             },
             content = {
-                tutorialContainer(pagerState, count)
+                tutorialContainer(model, pagerState, count)
             },
             bottomBar = {
                 Row(

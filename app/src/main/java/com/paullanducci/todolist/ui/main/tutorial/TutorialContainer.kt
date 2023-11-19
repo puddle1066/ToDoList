@@ -6,6 +6,7 @@ import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerSnapDistance
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
+import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 
 import com.paullanducci.todolist.ui.main.tutorial.pages.screen_1
 import com.paullanducci.todolist.ui.main.tutorial.pages.screen_2
@@ -14,7 +15,7 @@ import com.paullanducci.todolist.ui.main.tutorial.pages.screen_last
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun tutorialContainer(pagerState: PagerState, count: Int) {
+fun tutorialContainer(model: SettingsModel, pagerState: PagerState, count: Int) {
 
     val fling = PagerDefaults.flingBehavior(
         state = pagerState,
@@ -24,6 +25,7 @@ fun tutorialContainer(pagerState: PagerState, count: Int) {
     HorizontalPager(
         state = pagerState,
         beyondBoundsPageCount = count,
+
         flingBehavior = fling
     ) { page ->
         when (page) {
@@ -41,6 +43,7 @@ fun tutorialContainer(pagerState: PagerState, count: Int) {
 
             3 -> {
                 screen_last()
+                model.setShowInstructions(true)
             }
         }
     }
