@@ -26,21 +26,23 @@ fun NavigationFactory(
     toDoItemModel: ToDoItemModel,
     settingsModel: SettingsModel
 ) {
+    var startscreen = ToDoScreens.TutorialCarousel.name
+    if (settingsModel.showInstructions()) {
+        startscreen = ToDoScreens.ToDoListView.name
+    }
 
     MainActivity.navHostController = rememberNavController()
 
     AnimatedNavHost(
         MainActivity.navHostController!!,
-        //  startDestination = ToDoScreens.ToDoListView.name
-        startDestination = ToDoScreens.TutorialCarousel.name
-
+        startDestination = startscreen
     ) {
         screen(ToDoScreens.ToDoListView.name) { ToDoListView(toDoListModel) }
         screen(ToDoScreens.ToDoItemView.name) { ToDoItemView(toDoItemModel) }
         screen(ToDoScreens.SettingsView.name) { SettingsView(settingsModel) }
         screen(ToDoScreens.listsView.name) { ListItemsView(listItemsModel) }
         screen(ToDoScreens.ImageItemView.name) { ItemImageView() }
-        screen(ToDoScreens.TutorialCarousel.name) { tutorialCarousel() }
+        screen(ToDoScreens.TutorialCarousel.name) { tutorialCarousel(settingsModel) }
     }
 }
 

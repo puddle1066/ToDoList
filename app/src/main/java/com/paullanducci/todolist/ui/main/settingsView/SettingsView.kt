@@ -78,6 +78,10 @@ fun SettingsView(model: SettingsModel) {
                     { model.setLateColor(it) }
                 )
 
+                //check box so show carousel
+                Spacer(modifier = Modifier.weight(1f))
+                SettingsShowCarousel(model)
+
                 //Only show backup restore options for Debug Builds
                 if (BuildConfig.BUILD_TYPE == "debug") {
                     ShowBackupRestoreButtons(model)

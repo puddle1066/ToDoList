@@ -15,6 +15,21 @@ open class SettingsModel @Inject constructor(
 
 ) : BaseViewModel() {
 
+    fun showInstructions(): Boolean {
+        var showInstructions: String
+        runBlocking {
+            showInstructions = dataBaseProvider.getConfigValue("showInstructions")
+        }
+        if (showInstructions == null) return false else return showInstructions.toBoolean()
+    }
+
+    fun setShowInstructions(flag: Boolean) {
+        runBlocking {
+            dataBaseProvider.setConfigValue("showInstructions", flag.toString())
+        }
+    }
+
+
     fun closeDatabase() {
         dataBaseProvider.closeDatabase()
     }
