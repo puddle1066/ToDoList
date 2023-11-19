@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.DropdownMenuItem
@@ -38,7 +39,7 @@ fun ListItemsDropDown(
     selectedOptionText: String
 ) {
     val expanded = remember { mutableStateOf(showExpanded) }
-    val chosedText = remember { mutableStateOf(selectedOptionText) }
+    val choseText = remember { mutableStateOf(selectedOptionText) }
 
     val localStyle = typography.titleLarge
     val mergedStyle = localStyle.merge(TextStyle(color = MaterialTheme.colorScheme.secondary))
@@ -68,9 +69,10 @@ fun ListItemsDropDown(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 BasicTextField(
-                    modifier = Modifier.width(200.dp),
+                    modifier = Modifier
+                        .weight(0.80f),
                     readOnly = true,
-                    value = chosedText.value,
+                    value = choseText.value,
                     onValueChange = { },
                     singleLine = true,
                     enabled = true,
@@ -79,8 +81,9 @@ fun ListItemsDropDown(
 
                 Icon(
                     modifier = Modifier
-                        .width(40.dp)
+                        .weight(0.20f)
                         .height(40.dp)
+                        .padding(0.dp)
                         .background(MaterialTheme.colorScheme.primary),
                     imageVector = Icons.Filled.ExpandMore,
                     contentDescription = stringResource(id = R.string.missing_resource),
@@ -99,7 +102,7 @@ fun ListItemsDropDown(
                 list.forEach { listItem ->
                     DropdownMenuItem(
                         onClick = {
-                            chosedText.value = listItem.title
+                            choseText.value = listItem.title
                             expanded.value = false
                             onValueChanged(listItem)
                         },

@@ -7,7 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class DataStoreManagerTest {
-    private val testPreferenceKey = stringPreferencesKey("TEST _STORE_VALUE")
+    private val testPreferenceKey = stringPreferencesKey("TEST_STORE_VALUE")
     private val testPreferenceValue = "AA"
 
     @Test
