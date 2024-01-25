@@ -122,8 +122,10 @@ fun SettingsAlertPicker(
         val listOfColors = getListOfColors()
         val selectedIndex = listOfColors.indexOf(currentColor)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            state.scrollToItem(selectedIndex)
+        if (selectedIndex > -1) {
+            CoroutineScope(Dispatchers.Main).launch {
+                state.scrollToItem(selectedIndex)
+            }
         }
 
         LazyColumn(
