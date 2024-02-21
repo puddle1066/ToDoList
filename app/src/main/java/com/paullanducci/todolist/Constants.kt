@@ -42,3 +42,18 @@ const val imageWidth = 480
 const val imageHeight = 640
 
 const val dateFormat = "dd/MMM/yyyy hh:MM a"
+
+//Key values for settings fields in Database
+const val SHOW_INSTRUCTIONS = "showInstructions"
+const val OVERDUE_DAYS = "OverdueDays"
+const val LATE_DAYS = "LateDays"
+const val OVERDUE_COLOR = "OverdueColor"
+const val LATE_COLOR = "LateColor"
+
+
+
+
+
+
+
+

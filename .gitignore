@@ -2,3 +2,6 @@
 /.gradle/
 /.idea/
 /app/schemas/
+/buildSrc/
+/gradle/wrapper/
+

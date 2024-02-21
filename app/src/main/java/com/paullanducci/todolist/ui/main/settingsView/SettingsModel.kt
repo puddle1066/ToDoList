@@ -15,17 +15,49 @@ open class SettingsModel @Inject constructor(
 
 ) : BaseViewModel() {
 
-    fun showInstructions(): Boolean {
+
+    fun getOption(key: String): Boolean {
         var showInstructions: String
         runBlocking {
-            showInstructions = dataBaseProvider.getConfigValue("showInstructions")
+            showInstructions = dataBaseProvider.getConfigValue(key)
         }
-        if (showInstructions == null) return false else return showInstructions.toBoolean()
+        return showInstructions.toBoolean()
     }
 
-    fun setShowInstructions(flag: Boolean) {
+    fun getOptionInt(key: String): Int {
+        var value: String
         runBlocking {
-            dataBaseProvider.setConfigValue("showInstructions", flag.toString())
+            value = dataBaseProvider.getConfigValue(key)
+        }
+        return value.toInt()
+    }
+
+    fun getOptionColor(key: String): Color {
+        var lateColor: Color
+        runBlocking {
+            lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
+        }
+        return lateColor
+    }
+
+    fun setOption(key: String, value: Color) {
+        runBlocking {
+            dataBaseProvider.setConfigValue(
+                key,
+                "#" + Integer.toHexString(value.toArgb()).uppercase()
+            )
+        }
+    }
+
+    fun setOption(key: String, value: Int) {
+        runBlocking {
+            dataBaseProvider.setConfigValue(key, value.toString())
+        }
+    }
+
+    fun setOption(key: String, flag: Boolean) {
+        runBlocking {
+            dataBaseProvider.setConfigValue(key, flag.toString())
         }
     }
 
@@ -36,69 +68,5 @@ open class SettingsModel @Inject constructor(
 
     fun openDatabase() {
         dataBaseProvider.openDatabase()
-    }
-
-    fun getOverdueDays(): Int {
-        var days: Int
-        runBlocking {
-            val daysAsString = dataBaseProvider.getConfigValue("OverdueDays")
-            days = daysAsString.toInt()
-        }
-        return days
-    }
-
-    fun setOverdueDays(days: Int) {
-        runBlocking {
-            dataBaseProvider.setConfigValue("OverdueDays", days.toString())
-        }
-    }
-
-    fun getOverdueColor(): Color {
-        var color: Color
-        runBlocking {
-            color = Color(dataBaseProvider.getConfigValue("OverdueColor").toColorInt())
-        }
-        return color
-    }
-
-    fun setOverdueColor(color: Color) {
-        runBlocking {
-            dataBaseProvider.setConfigValue(
-                "OverdueColor",
-                "#" + Integer.toHexString(color.toArgb()).uppercase()
-            )
-        }
-
-    }
-
-    fun getLateDays(): Int {
-        var days: Int
-        runBlocking {
-            days = dataBaseProvider.getConfigValue("LateDays").toInt()
-        }
-        return days
-    }
-
-    fun setLateDays(days: Int) {
-        runBlocking {
-            dataBaseProvider.setConfigValue("LateDays", days.toString())
-        }
-    }
-
-    fun getLateColor(): Color {
-        var lateColor: Color
-        runBlocking {
-            lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
-        }
-        return lateColor
-    }
-
-    fun setLateColor(color: Color) {
-        runBlocking {
-            dataBaseProvider.setConfigValue(
-                "LateColor",
-                "#" + Integer.toHexString(color.toArgb()).uppercase()
-            )
-        }
     }
 }

@@ -20,13 +20,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.BuildConfig
 import com.paullanducci.todolist.DATABASE_NAME
+import com.paullanducci.todolist.LATE_COLOR
+import com.paullanducci.todolist.LATE_DAYS
+import com.paullanducci.todolist.OVERDUE_COLOR
+import com.paullanducci.todolist.OVERDUE_DAYS
 import com.paullanducci.todolist.R
+import com.paullanducci.todolist.SHOW_INSTRUCTIONS
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.ui.main.common.StandardTopBar
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
 import com.paullanducci.todolist.ui.widgets.AppButton
+import com.paullanducci.todolist.ui.widgets.SettingsButton
 import com.paullanducci.todolist.util.DB_PATH
 import com.paullanducci.todolist.util.copyFile
 import com.paullanducci.todolist.util.deleteFile
@@ -63,24 +69,24 @@ fun SettingsView(model: SettingsModel) {
 
                 SettingsAlertPicker(
                     stringResource(R.string.alerts_overdue),
-                    model.getOverdueDays(),
-                    model.getOverdueColor(),
-                    { model.setOverdueDays(it) },
-                    { model.setOverdueColor(it) }
+                    model.getOptionInt(OVERDUE_DAYS),
+                    model.getOptionColor(OVERDUE_COLOR),
+                    { model.setOption(OVERDUE_DAYS, it) },
+                    { model.setOption(OVERDUE_COLOR, it) }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
 
                 SettingsAlertPicker(
                     stringResource(R.string.alerts_late),
-                    model.getLateDays(),
-                    model.getLateColor(),
-                    { model.setLateDays(it) },
-                    { model.setLateColor(it) }
+                    model.getOptionInt(LATE_DAYS),
+                    model.getOptionColor(LATE_COLOR),
+                    { model.setOption(LATE_DAYS, it) },
+                    { model.setOption(LATE_COLOR, it) }
                 )
 
                 //check box so show carousel
                 Spacer(modifier = Modifier.weight(1f))
-                SettingsShowCarousel(model)
+                SettingsButton(model, R.string.show_tutorial, SHOW_INSTRUCTIONS)
 
                 //Only show backup restore options for Debug Builds
                 if (BuildConfig.BUILD_TYPE == "debug") {

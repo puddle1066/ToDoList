@@ -6,6 +6,7 @@ import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerSnapDistance
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
+import com.paullanducci.todolist.SHOW_INSTRUCTIONS
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 
 import com.paullanducci.todolist.ui.main.tutorial.pages.screen_1
@@ -43,7 +44,7 @@ fun tutorialContainer(model: SettingsModel, pagerState: PagerState, count: Int) 
 
             3 -> {
                 screen_last()
-                model.setShowInstructions(true)
+                model.setOption(SHOW_INSTRUCTIONS, true)
             }
         }
     }
