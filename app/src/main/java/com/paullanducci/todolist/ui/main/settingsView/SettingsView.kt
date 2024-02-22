@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paullanducci.todolist.ADD_TO_TOP
 import com.paullanducci.todolist.BuildConfig
 import com.paullanducci.todolist.DATABASE_NAME
 import com.paullanducci.todolist.LATE_COLOR
@@ -87,6 +88,7 @@ fun SettingsView(model: SettingsModel) {
                 //check box so show carousel
                 Spacer(modifier = Modifier.weight(1f))
                 SettingsButton(model, R.string.show_tutorial, SHOW_INSTRUCTIONS)
+                SettingsButton(model, R.string.add_top_of_List, ADD_TO_TOP)
 
                 //Only show backup restore options for Debug Builds
                 if (BuildConfig.BUILD_TYPE == "debug") {

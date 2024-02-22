@@ -33,14 +33,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ToDoScreens
-import com.paullanducci.todolist.di.dataStorage.DataStoreProvider
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ListDataItem
 import com.paullanducci.todolist.ui.main.common.StandardTopBar
@@ -158,8 +156,7 @@ fun <T> SnapshotStateList<T>.swapList(newList: List<T>) {
 fun ListItemsViewPreview() {
     ListItemsView(
         ListItemsModel(
-            RoomDataProvider(),
-            DataStoreProvider(LocalContext.current)
+            RoomDataProvider()
         )
     )
 }

@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.paullanducci.todolist.DATABASE_NAME
+import com.paullanducci.todolist.LAST_LIST_ID
 import com.paullanducci.todolist.di.database.dao.ConfigDao
 import com.paullanducci.todolist.di.database.dao.ImageDataDao
 import com.paullanducci.todolist.di.database.dao.ListItemsDao
@@ -71,10 +72,12 @@ abstract class DataBaseManager : RoomDatabase() {
                 Log.e(TAG, "Create Database")
 
                 try {
+                    var todoListId = UUID.randomUUID().toString()
                     db.execSQL(
-                        "INSERT INTO ListsData(listId, title, type) VALUES('" + UUID.randomUUID()
-                            .toString() + "','ToDo', '" + listState_Normal + "');"
+                        "INSERT INTO ListsData(listId, title, type) VALUES('$todoListId','ToDo', '$listState_Normal');"
                     )
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('$LAST_LIST_ID','$todoListId');")
+
                     db.execSQL(
                         "INSERT INTO ListsData(listId, title, type) VALUES('" + UUID.randomUUID()
                             .toString() + "','Finished', '" + listState_Finished + "');"

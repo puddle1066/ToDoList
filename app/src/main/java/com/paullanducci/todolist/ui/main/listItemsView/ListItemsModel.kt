@@ -1,11 +1,10 @@
 package com.paullanducci.todolist.ui.main.listItemsView
 
-import com.paullanducci.todolist.di.dataStorage.DataStoreProvider
+import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ListDataItem
 import com.paullanducci.todolist.menuOptionSettings
 import com.paullanducci.todolist.menuOptionToDoList
-import com.paullanducci.todolist.ui.main.common.StorageViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
@@ -14,9 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class ListItemsModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
-    private val dataStoreProvider: DataStoreProvider
-
-) : StorageViewModel(dataStoreProvider) {
+) : BaseViewModel(dataBaseProvider) {
 
     val menuItems = listOf(menuOptionToDoList, menuOptionSettings)
     var deleteList = ArrayList<ListDataItem>()

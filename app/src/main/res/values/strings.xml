@@ -21,6 +21,7 @@
     <string name="tutorial_title">Tutorial</string>
     <string name="show_tutorial">Don\'t Show Tutorial on Startup</string>
 
+    <string name="add_top_of_List">Add new Items to top of list</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="remove">Delete</string>

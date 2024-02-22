@@ -3,12 +3,11 @@ package com.paullanducci.todolist.ui.main.todoItemView
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.paullanducci.todolist.di.dataStorage.DataStoreProvider
+import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.di.database.data.ToDoImageData
 import com.paullanducci.todolist.ui.main.MainActivity
-import com.paullanducci.todolist.ui.main.common.StorageViewModel
 import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paullanducci.todolist.util.encodeTobase64
 import com.paullanducci.todolist.util.getCurrentDateAsString
@@ -19,10 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class ToDoItemModel @Inject constructor(
-    private val dataBaseProvider: RoomDataProvider,
-    private val dataStoreProvider: DataStoreProvider
+    private val dataBaseProvider: RoomDataProvider
 
-) : StorageViewModel(dataStoreProvider) {
+) : BaseViewModel(dataBaseProvider) {
 
     private var TAG = this::class.simpleName
 

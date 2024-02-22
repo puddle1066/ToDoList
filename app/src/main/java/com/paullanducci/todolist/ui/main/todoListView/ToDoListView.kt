@@ -23,8 +23,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paullanducci.todolist.LAST_LIST_ID
 import com.paullanducci.todolist.ToDoScreens
-import com.paullanducci.todolist.di.dataStorage.DataStoreProvider
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.di.util.ResourcesProvider
@@ -55,7 +55,7 @@ fun ToDoListView(model: ToDoListModel) {
     //entry in the list as a default
     if (model.isListNotKnown()) {
         MainActivity.listId = model.getAllSortedASC()[0].listId
-        model.saveListId(MainActivity.listId)
+        model.setOption(LAST_LIST_ID, MainActivity.listId)
     }
 
     model.getToDoList(MainActivity.listId)
@@ -73,7 +73,7 @@ fun ToDoListView(model: ToDoListModel) {
                     model.getListTitle()
                 ) {
                     MainActivity.listId = it
-                    model.saveListId(it)
+                    model.setOption(LAST_LIST_ID, it)
                     model.getToDoList(it)
 
                     isAddButtonVisible.value = model.isNormalList()
@@ -173,7 +173,6 @@ fun MainViewMockLayout() {
     ToDoListView(
         ToDoListModel(
             RoomDataProvider(),
-            DataStoreProvider(LocalContext.current),
             ResourcesProvider(LocalContext.current)
         )
     )

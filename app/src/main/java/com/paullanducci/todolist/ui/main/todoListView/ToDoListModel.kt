@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.di.dataStorage.DataStoreProvider
+import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ListDataItem
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
@@ -13,7 +13,6 @@ import com.paullanducci.todolist.listState_Finished
 import com.paullanducci.todolist.listState_Normal
 import com.paullanducci.todolist.listState_all_incomplete
 import com.paullanducci.todolist.ui.main.MainActivity
-import com.paullanducci.todolist.ui.main.common.StorageViewModel
 import com.paullanducci.todolist.ui.main.todoItemView.ListItemAlertsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,10 +23,9 @@ import javax.inject.Inject
 @HiltViewModel
 open class ToDoListModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
-    private val dataStoreProvider: DataStoreProvider,
     private val resourcesProvider: ResourcesProvider
 
-) : StorageViewModel(dataStoreProvider) {
+) : BaseViewModel(dataBaseProvider) {
 
     private var TAG = this::class.simpleName
 

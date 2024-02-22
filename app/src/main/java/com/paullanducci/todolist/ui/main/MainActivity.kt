@@ -14,6 +14,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
+import com.paullanducci.todolist.LAST_LIST_ID
 import com.paullanducci.todolist.ui.main.common.NavigationFactory
 import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paullanducci.todolist.ui.main.listItemsView.ListItemsModel
@@ -40,9 +41,8 @@ class MainActivity : ComponentActivity() {
         context = this.applicationContext
 
         if (listId.isBlank()) {
-            toDoListModel.getListId {
-                listId = it
-            }
+           listId =  toDoListModel.getOptionString(LAST_LIST_ID)
+         //   listId = "066d8927-656e-4c5a-b0e8-c669fc061fb4"
         }
 
         setContent {
