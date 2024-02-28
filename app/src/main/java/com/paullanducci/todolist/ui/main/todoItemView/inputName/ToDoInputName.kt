@@ -36,7 +36,7 @@ fun ToDoInputName(
             onFinished = {
                 voiceState.spokenText = ""
                 model.todoDataItem.description = it
-                if (model.todoDataItem.description.isEmpty()) {
+                if (it.isNullOrBlank()) {
                     addButtonVisibility.value = false
                 } else {
                     addButtonVisibility.value = model.hasDataChanges()

@@ -3,6 +3,7 @@ package com.paullanducci.todolist.ui.main.todoItemView
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.paullanducci.todolist.LAST_LIST_ID
 import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
@@ -95,7 +96,18 @@ open class ToDoItemModel @Inject constructor(
         todoDataItem.itemId = UUID.randomUUID().toString()
         todoDataItem.lastupdated = getCurrentDateAsString()
         runBlocking {
-            todoDataItem.sequence = dataBaseProvider.getLastSequence() + 1
+            //Add new items to top or bottom of the list
+            if (getOption(LAST_LIST_ID)) {
+                todoDataItem.sequence = dataBaseProvider.getLastSequence() + 1
+                var x = todoDataItem.sequence
+                Log.e("AAAA", "opt .1. =" + getOption(LAST_LIST_ID) + " $x")
+            } else {
+                todoDataItem.sequence = dataBaseProvider.getFirstSequence() - 1
+                var x = todoDataItem.sequence
+                Log.e("AAAA", "opt .2. =" + getOption(LAST_LIST_ID) + " $x")
+            }
+
+
             dataBaseProvider.insertToDo(todoDataItem)
         }
     }

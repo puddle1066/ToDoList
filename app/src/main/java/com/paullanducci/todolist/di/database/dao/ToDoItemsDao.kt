@@ -27,6 +27,9 @@ interface ToDoItemsDao {
     @Query("SELECT * FROM ToDoDataItem Order By sequence DESC")
     fun getLastSequence(): ToDoDataItem
 
+    @Query("SELECT * FROM ToDoDataItem Order By sequence ASC")
+    fun getFirstSequence(): ToDoDataItem
+
     @Query("DELETE FROM ToDoDataItem where itemId = :itemId")
     fun deleteItem(itemId: String)
 

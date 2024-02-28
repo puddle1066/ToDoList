@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.di.database.RoomDataProvider
@@ -102,7 +101,7 @@ fun ToDoItemView(model: ToDoItemModel) {
                     }
                 }
 
-                if (addUpdateButtonVisibility.value && model.hasDescription()) {
+                if (addUpdateButtonVisibility.value) {
                     item {
                         ToDoItemAddButton(model, toDoImagesNew, voiceState)
                     }

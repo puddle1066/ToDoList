@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -58,6 +60,7 @@ fun SettingsView(model: SettingsModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
                     .background(MaterialTheme.colorScheme.background)
             ) {
 
@@ -116,6 +119,8 @@ fun ShowBackupRestoreButtons(model: SettingsModel) {
     val file = File("$DB_PATH$DATABASE_NAME-back")
     val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
 
+    buttonVisible.value = file.exists()
+
     AppButton(
         onButtonPressed = {
             model.closeDatabase()
@@ -129,7 +134,6 @@ fun ShowBackupRestoreButtons(model: SettingsModel) {
                 File("$DB_PATH$DATABASE_NAME-wal-back")
             )
             model.openDatabase()
-
             buttonVisible.value = file.exists()
         },
         textID = R.string.todo_backup

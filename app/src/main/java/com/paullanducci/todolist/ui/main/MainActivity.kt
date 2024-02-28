@@ -42,7 +42,6 @@ class MainActivity : ComponentActivity() {
 
         if (listId.isBlank()) {
            listId =  toDoListModel.getOptionString(LAST_LIST_ID)
-         //   listId = "066d8927-656e-4c5a-b0e8-c669fc061fb4"
         }
 
         setContent {
@@ -56,7 +55,6 @@ class MainActivity : ComponentActivity() {
                         toDoItemModel.isSpeechToTextEnabled = isGranted
                     }
                 )
-
 
                 //Check we have Camera and Storage Access
                 val cameraLauncher = rememberLauncherForActivityResult(

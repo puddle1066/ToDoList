@@ -1,7 +1,6 @@
 package com.paullanducci.todolist.di.database
 
 import android.util.Log
-import com.paullanducci.todolist.di.database.data.Config
 import com.paullanducci.todolist.di.database.data.ListDataItem
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.di.database.data.ToDoImageData
@@ -45,7 +44,7 @@ class RoomDataProvider @Inject constructor() {
     @Provides
     suspend fun setConfigValue(key: String, value: String) {
         return withContext(dispatcher) {
-            DataBaseManager.getInstance().getConfigDao().setConfigValue(Config(key, value))
+            DataBaseManager.getInstance().getConfigDao().setConfigValue(key, value)
         }
     }
 
@@ -178,6 +177,18 @@ class RoomDataProvider @Inject constructor() {
                 DataBaseManager.getInstance().getToDoItemsDao().getLastSequence().sequence
             } catch (e: Exception) {
                 Log.e(TAG, "getLastSequence - $e")
+            }
+        }
+    }
+
+    @Singleton
+    @Provides
+    suspend fun getFirstSequence(): Int {
+        return withContext(dispatcher) {
+            try {
+                DataBaseManager.getInstance().getToDoItemsDao().getFirstSequence().sequence
+            } catch (e: Exception) {
+                Log.e(TAG, "getFirstSequence - $e")
             }
         }
     }
