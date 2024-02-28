@@ -1,2 +1,8 @@
 /build
 /schemas/
+/.gradle/
+/.idea/
+/buildSrc/
+
+
+

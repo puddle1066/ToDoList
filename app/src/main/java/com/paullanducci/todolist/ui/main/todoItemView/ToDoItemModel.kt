@@ -3,7 +3,7 @@ package com.paullanducci.todolist.ui.main.todoItemView
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.paullanducci.todolist.LAST_LIST_ID
+import com.paullanducci.todolist.ADD_TO_TOP
 import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
@@ -83,10 +83,10 @@ open class ToDoItemModel @Inject constructor(
         return todoDataItem.description.isNotEmpty()
     }
 
-    fun getListTitle(ListId: String): String {
+    fun getListTitle(listId: String): String {
         var title = ""
         runBlocking {
-            title = dataBaseProvider.getListTitle(ListId)
+            title = dataBaseProvider.getListTitle(listId)
         }
         return title
     }
@@ -97,14 +97,10 @@ open class ToDoItemModel @Inject constructor(
         todoDataItem.lastupdated = getCurrentDateAsString()
         runBlocking {
             //Add new items to top or bottom of the list
-            if (getOption(LAST_LIST_ID)) {
+            if (getOption(ADD_TO_TOP)) {
                 todoDataItem.sequence = dataBaseProvider.getLastSequence() + 1
-                var x = todoDataItem.sequence
-                Log.e("AAAA", "opt .1. =" + getOption(LAST_LIST_ID) + " $x")
             } else {
                 todoDataItem.sequence = dataBaseProvider.getFirstSequence() - 1
-                var x = todoDataItem.sequence
-                Log.e("AAAA", "opt .2. =" + getOption(LAST_LIST_ID) + " $x")
             }
 
 
