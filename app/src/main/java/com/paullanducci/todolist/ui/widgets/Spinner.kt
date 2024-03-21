@@ -72,10 +72,12 @@ fun Spinner(
                         color = MaterialTheme.colorScheme.surface,
                     )
                 },
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedTextColor = MaterialTheme.colorScheme.secondary,
                     unfocusedTextColor = MaterialTheme.colorScheme.secondary,
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    focusedContainerColor = MaterialTheme.colorScheme.primary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.primary,
                     cursorColor = MaterialTheme.colorScheme.secondary
                 ),
                 trailingIcon = {

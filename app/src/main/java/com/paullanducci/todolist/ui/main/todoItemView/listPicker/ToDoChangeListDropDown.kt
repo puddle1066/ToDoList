@@ -21,7 +21,7 @@ import com.paullanducci.todolist.ui.widgets.Spinner
 
 @Composable
 fun ToDoChangeListDropDown(model: ToDoItemModel, addButtonVisibility: MutableState<Boolean>) {
-    Column() {
+    Column {
         Spacer(Modifier.height(1.dp))
         Row(
             modifier = Modifier

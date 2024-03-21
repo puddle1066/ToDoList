@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -54,10 +54,9 @@ fun DatePickerDialog(
         }
         errorMessageState.value = ""
 
-        AlertDialog(
-            onDismissRequest = {
-                openDialog.value = false
-            }
+        BasicAlertDialog(onDismissRequest = {
+            openDialog.value = false
+        }
         ) {
             Surface(
                 modifier = Modifier

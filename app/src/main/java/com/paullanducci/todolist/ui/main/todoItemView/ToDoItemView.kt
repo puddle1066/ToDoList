@@ -51,7 +51,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.loadData()
 
     ToDoListTheme {
-        Column() {
+        Column {
             ToDoItemHeader(model)
 
             LazyColumn(

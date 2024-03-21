@@ -15,7 +15,7 @@ import java.nio.ByteBuffer
 @Composable
 fun dpToPx(dp: Float): Float {
     val metrics: DisplayMetrics =
-        LocalContext.current.applicationContext.getResources().getDisplayMetrics()
+        LocalContext.current.applicationContext.resources.displayMetrics
     return dp * (metrics.densityDpi / 160f)
 }
 

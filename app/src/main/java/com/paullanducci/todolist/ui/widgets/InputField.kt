@@ -97,11 +97,12 @@ fun InputField(
                 }
             ),
 
-            colors = TextFieldDefaults.textFieldColors(
+            colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.surface,
                 unfocusedTextColor = MaterialTheme.colorScheme.surface,
-                containerColor = MaterialTheme.colorScheme.primary,
-                cursorColor = MaterialTheme.colorScheme.secondary
+                focusedContainerColor = MaterialTheme.colorScheme.primary,
+                unfocusedContainerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.primary
             ),
             textStyle = typography.bodyLarge,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),

@@ -8,7 +8,7 @@ import java.io.FileOutputStream
 
 var TAG = "FileUtils"
 
-var DB_PATH = context?.applicationInfo?.dataDir + "/databases/";
+var DB_PATH = context?.applicationInfo?.dataDir + "/databases/"
 
 
 fun copyFile(src: File?, dst: File?) {

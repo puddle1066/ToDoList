@@ -62,7 +62,7 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun hasDataChanges(): Boolean {
-        var hasChanges = true
+        var hasChanges: Boolean
         runBlocking {
             if (dataBaseProvider.getToDoItem(todoDataItem.itemId) == null) {
                 hasChanges = true
@@ -84,7 +84,7 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun getListTitle(listId: String): String {
-        var title = ""
+        var title: String
         runBlocking {
             title = dataBaseProvider.getListTitle(listId)
         }
