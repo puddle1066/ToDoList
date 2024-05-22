@@ -12,17 +12,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.paullanducci.speech.input.InputDevice
+import com.paullanducci.speech.input.VoiceEngineState
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoImageData
 import com.paullanducci.todolist.ui.main.MainActivity
+import com.paullanducci.todolist.ui.main.MainActivity.Companion.setState
 import com.paullanducci.todolist.ui.main.listItemsView.swapList
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonProcessing
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
@@ -40,15 +41,51 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 fun ToDoItemView(model: ToDoItemModel) {
 
     val addUpdateButtonVisibility = remember { mutableStateOf(false) }
+    val toggleSpeechButton = remember { mutableStateOf(false) }
 
-    val voiceState by model.voiceToText.state.collectAsState()
     val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
     val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
 
     toDoImageData.clear()
     toDoImageData.swapList(model.getToDoImages(MainActivity.itemId))
 
+    setState(VoiceEngineState.INACTIVE)
     model.loadData()
+
+    val voiceTextState = remember { mutableStateOf("") }
+
+    model.speechInputDevice.setInputDeviceListener(object : InputDevice.InputDeviceListener {
+        override fun onTryingToGetInput() {
+            model.speechOutputDevice.stopSpeaking()
+        }
+
+        override fun onPartialInputReceived(input: String) {
+            //DO Nothing
+        }
+
+        override fun onInputReceived(input: List<String>) {
+            model.speechInputDevice.cancelGettingInput()
+
+            voiceTextState.value = input[0]
+            model.todoDataItem.description = input[0]
+
+            toggleSpeechButton.value = false
+            addUpdateButtonVisibility.value = true
+        }
+
+        override fun onNoInputReceived() {
+            voiceTextState.value = ""
+            toggleSpeechButton.value = false
+            addUpdateButtonVisibility.value = false
+        }
+
+        override fun onError(e: Throwable) {
+            model.speechInputDevice.cancelGettingInput()
+            voiceTextState.value = ""
+            toggleSpeechButton.value = false
+            addUpdateButtonVisibility.value = false
+        }
+    })
 
     ToDoListTheme {
         Column {
@@ -61,7 +98,7 @@ fun ToDoItemView(model: ToDoItemModel) {
             )
             {
                 item {
-                    ToDoInputName(model, addUpdateButtonVisibility, voiceState)
+                    ToDoInputName(model, addUpdateButtonVisibility, voiceTextState)
                 }
 
                 item {
@@ -75,7 +112,7 @@ fun ToDoItemView(model: ToDoItemModel) {
                 if (model.isSpeechToTextEnabled) {
                     item {
                         Spacer(Modifier.height(1.dp))
-                        ToDoSpeechButton(model, voiceState)
+                        ToDoSpeechButton(model, toggleSpeechButton)
                     }
                 }
 
@@ -103,7 +140,7 @@ fun ToDoItemView(model: ToDoItemModel) {
 
                 if (addUpdateButtonVisibility.value) {
                     item {
-                        ToDoItemAddButton(model, toDoImagesNew, voiceState)
+                        ToDoItemAddButton(model, toDoImagesNew)
                     }
                 }
 

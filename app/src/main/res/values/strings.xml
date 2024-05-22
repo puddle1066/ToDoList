@@ -29,6 +29,22 @@
     <string name="due_date">Due Date</string>
     <string name="finished">Start Application</string>
 
+    <string name="android_tts_unsupported_language">Unsupported language requested</string>
+    <string name="android_tts_error">TTS Error</string>
+    <string name="listening">listening</string>
+
+    //TODO Add Strings
+    <string name="vosk_model_unsupported_language">"Unsupported Language Used"</string>
+    <string name="vosk_model_downloading">"Downloading Requested Language Model"</string>
+    <string name="vosk_model_notification_title">vosk_model_notification_title</string>
+    <string name="vosk_model_notification_description">Language: %1$s</string>
+    <string name="vosk_model_download_error">Cannot Download Language mode at this Time</string>
+    <string name="vosk_model_ready">Language Model Installed</string>
+    <string name="vosk_model_extraction_error">Error Extracting Language model</string>
+
+    <string name="vosk_model_extracting">Extracting Language Model</string>
+    <string name="pref_key_vosk_download_id">pref_key_vosk_download_id</string>
+
     <string name="alerts_screen_title">Alerts</string>
 
     <string-array name="month_names">

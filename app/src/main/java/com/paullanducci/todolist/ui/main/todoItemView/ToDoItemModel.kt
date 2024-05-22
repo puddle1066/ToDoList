@@ -3,13 +3,15 @@ package com.paullanducci.todolist.ui.main.todoItemView
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.paullanducci.speech.input.InputDevice.InputDeviceListener
+import com.paullanducci.speech.input.SpeechInputDevice
+import com.paullanducci.speech.output.speech.SpeechOutputDevice
 import com.paullanducci.todolist.ADD_TO_TOP
 import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.di.database.data.ToDoImageData
 import com.paullanducci.todolist.ui.main.MainActivity
-import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paullanducci.todolist.util.encodeTobase64
 import com.paullanducci.todolist.util.getCurrentDateAsString
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +41,8 @@ open class ToDoItemModel @Inject constructor(
     var isSpeechToTextEnabled = false
     var isPhotoCaptureEnabled = true
 
-    lateinit var voiceToText: VoiceToTextParser
+    lateinit var speechInputDevice: SpeechInputDevice
+    lateinit var speechOutputDevice: SpeechOutputDevice
 
     fun loadData() {
         runBlocking {
@@ -131,11 +134,11 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun getListOfLists(): HashMap<String, String> {
-        val list: HashMap<String, String> = HashMap<String, String>()
+        val list: HashMap<String, String> = HashMap()
         runBlocking {
             val toDoListList = dataBaseProvider.getListOfLists()
             toDoListList.forEach {
-                list.put(it.listId, it.title)
+                list[it.listId] = it.title
             }
         }
         return list
@@ -153,9 +156,14 @@ open class ToDoItemModel @Inject constructor(
         return list
     }
 
+
     fun deleteImage(key: String) {
         runBlocking {
             dataBaseProvider.deleteToDoImage(key)
         }
+    }
+
+    fun setupInputDeviceListeners(listener: InputDeviceListener?) {
+        speechInputDevice.setInputDeviceListener(listener)
     }
 }

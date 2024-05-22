@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.di.util
+package com.paullanducci.todolist.util
 
 import android.content.Context
 import androidx.annotation.StringRes

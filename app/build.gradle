@@ -30,6 +30,7 @@ android {
         versionCode = getCommitCount()
         versionName = "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         vectorDrawables {
             useSupportLibrary true
         }
@@ -168,5 +169,14 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
     implementation(libs.camera.view)
     implementation(libs.androidx.camera.lifecycle)
+
+
+    // RxJava3
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.2"
+
+    // Vosk
+    implementation 'net.java.dev.jna:jna:5.8.0@aar'
+    implementation 'com.alphacephei:vosk-android:0.3.32'
 
 }
