@@ -41,7 +41,7 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 fun ToDoItemView(model: ToDoItemModel) {
 
     val addUpdateButtonVisibility = remember { mutableStateOf(false) }
-    val toggleSpeechButton = remember { mutableStateOf(false) }
+    val toggleSpeechButton = remember { mutableStateOf(true) }
 
     val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
     val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
@@ -52,7 +52,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     setState(VoiceEngineState.INACTIVE)
     model.loadData()
 
-    val voiceTextState = remember { mutableStateOf("") }
+    val voiceTextState = remember { mutableStateOf(model.todoDataItem.description) }
 
     model.speechInputDevice.setInputDeviceListener(object : InputDevice.InputDeviceListener {
         override fun onTryingToGetInput() {
