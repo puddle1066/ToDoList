@@ -1,7 +1,6 @@
 package com.paullanducci.todolist.ui.main.todoItemView.buttons
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -19,6 +18,7 @@ import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,16 +27,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.SPEECH_LANGUAGE
-import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParserState
 import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
+fun ToDoSpeechButton(model: ToDoItemModel, toggleSpeechButton: MutableState<Boolean>) {
 
     val colorSelected = MaterialTheme.colorScheme.surface
     val colorUnSelected = MaterialTheme.colorScheme.primary
@@ -46,6 +42,15 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
     val scaleDown = 0.9f
     val coroutineScope = rememberCoroutineScope()
     val scale = remember { Animatable(1f) }
+
+    // button toggle actions
+    if (toggleSpeechButton.value) {
+        model.speechInputDevice.tryToGetInput(true)
+        backgroundColor.value = colorSelected
+    } else {
+        backgroundColor.value = colorUnSelected
+    }
+
 
     Row(modifier = Modifier.padding(10.dp)) {
         Button(
@@ -66,13 +71,10 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                     )
                     delay((animationDuration).toLong())    //Wait for anim to finish before launching
 
-                    if (voiceState.isSpeaking) {
-                        model.voiceToText.stopListening()
-                        backgroundColor.value = colorUnSelected
+                    if (toggleSpeechButton.value) {
+                        toggleSpeechButton.value = false
                     } else {
-                        model.voiceToText.startListening(SPEECH_LANGUAGE)
-                        voiceState.spokenText = ""
-                        backgroundColor.value = colorSelected
+                        toggleSpeechButton.value = true
                     }
                 }
             },
@@ -81,7 +83,8 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
             shape = RoundedCornerShape(25), // = 50% percent
 
         ) {
-            AnimatedContent(targetState = voiceState.isSpeaking) { isSpeaking ->
+            var targetState = (backgroundColor.value == colorSelected)
+            AnimatedContent(targetState = targetState, label = "") { isSpeaking ->
                 if (isSpeaking) {
                     Icon(
                         modifier = Modifier
@@ -103,6 +106,10 @@ fun ToDoSpeechButton(model: ToDoItemModel, voiceState: VoiceToTextParserState) {
                 }
             }
         }
+    }
+
+    fun checkButtonState() {
+
     }
 }
 

@@ -6,43 +6,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParserState
-import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ToDoInputText(
-    model: ToDoItemModel,
     fieldTitle: String,
-    voiceState: VoiceToTextParserState,
+    voiceTextState: MutableState<String>,
     onFinished: (String) -> Unit,
     onTextChanged: () -> Unit
 ) {
     ToDoListTheme {
-        val textValue = model.todoDataItem.description
-        val textState = remember { mutableStateOf(textValue) }
-        val keyboardController = LocalSoftwareKeyboardController.current
 
-        if (!voiceState.isSpeaking && !voiceState.spokenText.isEmpty()) {
-            textState.value = voiceState.spokenText
-            onFinished(textState.value)
-        }
+        val keyboardController = LocalSoftwareKeyboardController.current
 
         TextField(
             modifier = Modifier
@@ -69,7 +56,7 @@ fun ToDoInputText(
 
                 onDone = {
                     keyboardController?.hide()
-                    onFinished(textState.value)
+                    onFinished(voiceTextState.value)
                 },
             ),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
@@ -84,9 +71,9 @@ fun ToDoInputText(
             ),
             textStyle = typography.bodyLarge,
 
-            value = textState.value,
+            value = voiceTextState.value,
             onValueChange = {
-                textState.value = it
+                voiceTextState.value = it
                 onTextChanged()
             },
         )

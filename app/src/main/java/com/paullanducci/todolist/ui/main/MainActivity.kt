@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -14,9 +15,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
+import com.paullanducci.speech.input.SpeechInputDevice
+import com.paullanducci.speech.input.VoiceEngineState
+import com.paullanducci.speech.input.VoskInputDevice
+import com.paullanducci.speech.output.speech.AndroidTtsSpeechDevice
+import com.paullanducci.speech.output.speech.SpeechOutputDevice
 import com.paullanducci.todolist.LAST_LIST_ID
 import com.paullanducci.todolist.ui.main.common.NavigationFactory
-import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParser
 import com.paullanducci.todolist.ui.main.listItemsView.ListItemsModel
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
@@ -25,6 +30,7 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -75,7 +81,16 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        toDoItemModel.voiceToText = VoiceToTextParser(application)
+        toDoItemModel.speechInputDevice = buildSpeechInputDevice()
+        toDoItemModel.speechOutputDevice = buildSpeechOutputDevice()
+    }
+
+    private fun buildSpeechInputDevice(): SpeechInputDevice {
+        return VoskInputDevice(this, Locale.getDefault())
+    }
+
+    private fun buildSpeechOutputDevice(): SpeechOutputDevice {
+        return AndroidTtsSpeechDevice(this, Locale.getDefault())
     }
 
     override fun onDestroy() {
@@ -88,6 +103,7 @@ class MainActivity : ComponentActivity() {
         image = null
         listId = ""
         itemId = ""
+
     }
 
     companion object {
@@ -100,6 +116,19 @@ class MainActivity : ComponentActivity() {
 
         var listId: String = ""
         var itemId: String = ""
+
+        var voiceText = ""
+
+        private var state = VoiceEngineState.INACTIVE
+        fun setState(newState: VoiceEngineState) {
+            state = newState
+            Log.e("Companion", "setState = $newState")
+        }
+
+        fun getState(): VoiceEngineState {
+            Log.e("Companion", "getState() = $state")
+            return state
+        }
     }
 }
 

@@ -2,8 +2,8 @@ package com.paullanducci.todolist.ui.main.common
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.paullanducci.todolist.SHOW_INSTRUCTIONS
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.ui.main.MainActivity
@@ -34,7 +34,7 @@ fun NavigationFactory(
 
     MainActivity.navHostController = rememberNavController()
 
-    AnimatedNavHost(
+    NavHost(
         MainActivity.navHostController!!,
         startDestination = startscreen
     ) {

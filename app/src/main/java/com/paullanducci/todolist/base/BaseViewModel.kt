@@ -37,7 +37,7 @@ open class BaseViewModel(private val dataBaseProvider: RoomDataProvider) : ViewM
     fun getOptionColor(key: String): Color {
         var lateColor: Color
         runBlocking {
-            lateColor = Color(dataBaseProvider.getConfigValue("LateColor").toColorInt())
+            lateColor = Color(dataBaseProvider.getConfigValue(key).toColorInt())
         }
         return lateColor
     }

@@ -8,12 +8,12 @@ import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ListDataItem
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
-import com.paullanducci.todolist.di.util.ResourcesProvider
 import com.paullanducci.todolist.listState_Finished
 import com.paullanducci.todolist.listState_Normal
 import com.paullanducci.todolist.listState_all_incomplete
 import com.paullanducci.todolist.ui.main.MainActivity
 import com.paullanducci.todolist.ui.main.todoItemView.ListItemAlertsData
+import com.paullanducci.todolist.util.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

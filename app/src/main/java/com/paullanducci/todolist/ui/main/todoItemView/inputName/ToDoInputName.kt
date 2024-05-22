@@ -12,15 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.paullanducci.speech.input.VoiceEngineState
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.ui.main.common.speechToText.VoiceToTextParserState
+import com.paullanducci.todolist.ui.main.MainActivity.Companion.setState
 import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 
 @Composable
 fun ToDoInputName(
     model: ToDoItemModel,
     addButtonVisibility: MutableState<Boolean>,
-    voiceState: VoiceToTextParserState
+    voiceTextState: MutableState<String>
 ) {
     Row(
         modifier = Modifier
@@ -30,17 +31,17 @@ fun ToDoInputName(
             .background(MaterialTheme.colorScheme.background)
     ) {
         ToDoInputText(
-            model,
             stringResource(R.string.ToDo_Task_description),
-            voiceState,
+            voiceTextState,
             onFinished = {
-                voiceState.spokenText = ""
+                ""
                 model.todoDataItem.description = it
                 if (it.isNullOrBlank()) {
                     addButtonVisibility.value = false
                 } else {
                     addButtonVisibility.value = model.hasDataChanges()
                 }
+                setState(VoiceEngineState.INACTIVE)
             },
             onTextChanged = {
                 addButtonVisibility.value = true
