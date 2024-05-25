@@ -41,7 +41,7 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun getAllSortedASC(): List<ListDataItem> {
-        var listDataItems = listOf<ListDataItem>()
+        var listDataItems: List<ListDataItem>
         runBlocking {
             listDataItems = dataBaseProvider.getAllListsSorted()
         }
@@ -114,6 +114,24 @@ open class ToDoListModel @Inject constructor(
             null -> resourcesProvider.getString(R.string.please_select)
             "" -> resourcesProvider.getString(R.string.please_select)
             else -> title
+        }
+    }
+
+    fun getListType(): String {
+        var type: String
+        runBlocking {
+            type = dataBaseProvider.getListType(MainActivity.listId)
+        }
+        return when (type) {
+            null -> listState_Normal
+            "" -> listState_Normal
+            else -> type
+        }
+    }
+
+    fun removeAllFinished() {
+        runBlocking {
+            dataBaseProvider.removeAllFinished()
         }
     }
 

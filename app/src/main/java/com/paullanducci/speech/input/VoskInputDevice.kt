@@ -206,9 +206,7 @@ class VoskInputDevice(private var activity: Activity, useLocale: Locale) : Speec
                             result = text
                         }
 
-                        Log.e("AAA", "checking $text confidnce = $confidence")
-
-
+                        Log.e(TAG, "checking $text confidnce = $confidence")
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()

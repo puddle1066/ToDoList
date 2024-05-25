@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -16,7 +15,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import com.paullanducci.speech.input.SpeechInputDevice
-import com.paullanducci.speech.input.VoiceEngineState
 import com.paullanducci.speech.input.VoskInputDevice
 import com.paullanducci.speech.output.speech.AndroidTtsSpeechDevice
 import com.paullanducci.speech.output.speech.SpeechOutputDevice
@@ -117,18 +115,6 @@ class MainActivity : ComponentActivity() {
         var listId: String = ""
         var itemId: String = ""
 
-        var voiceText = ""
-
-        private var state = VoiceEngineState.INACTIVE
-        fun setState(newState: VoiceEngineState) {
-            state = newState
-            Log.e("Companion", "setState = $newState")
-        }
-
-        fun getState(): VoiceEngineState {
-            Log.e("Companion", "getState() = $state")
-            return state
-        }
     }
 }
 
