@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 fun <T : Any> DragDropColumn(
     items: List<T>,
     onSwap: (Int, Int) -> Unit,
-    moveAllowed: Boolean,
+    moveAllowed: MutableState<Boolean>,
     onDragStart: (index: Int) -> Unit,
     onDragEnd: (index: Int) -> Unit,
     itemContent: @Composable LazyItemScope.(item: T) -> Unit
@@ -54,7 +55,7 @@ fun <T : Any> DragDropColumn(
                 detectDragGesturesAfterLongPress(
                     onDrag = { change, offset ->
                         change.consume()
-                        if (moveAllowed) {
+                        if (moveAllowed.value) {
                             dragDropState.currentElement
                             dragDropState.previousIndexOfDraggedItem
                             dragDropState.onDrag(offset = offset)
@@ -77,13 +78,13 @@ fun <T : Any> DragDropColumn(
                             ?: run { overscrollJob?.cancel() }
                     },
                     onDragStart = {
-                        if (moveAllowed) {
+                        if (moveAllowed.value) {
                             Log.e(TAG, "onDragStart")
                             dragDropState.onDragStart(it)
                         }
                     },
                     onDragEnd = {
-                        if (moveAllowed) {
+                        if (moveAllowed.value) {
                             dragDropState.onDragInterrupted()
                             overscrollJob?.cancel()
                             isCurrentlyDragging.value = false
@@ -92,7 +93,7 @@ fun <T : Any> DragDropColumn(
                         }
                     },
                     onDragCancel = {
-                        if (moveAllowed) {
+                        if (moveAllowed.value) {
                             dragDropState.onDragInterrupted()
                             overscrollJob?.cancel()
                             isCurrentlyDragging.value = false
