@@ -3,6 +3,7 @@ package com.paullanducci.todolist.ui.main.todoItemView
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.speech.input.InputDevice
@@ -39,7 +41,7 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 fun ToDoItemView(model: ToDoItemModel) {
 
     val addUpdateButtonVisibility = remember { mutableStateOf(false) }
-    val toggleSpeechButton = remember { mutableStateOf(true) }
+    val toggleSpeechButton = remember { mutableStateOf(false) }
 
     val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
     val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
@@ -50,6 +52,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.loadData()
 
     val voiceTextState = remember { mutableStateOf(model.todoDataItem.description) }
+    val errorMessage = remember { mutableStateOf("") }
 
     model.speechInputDevice.setInputDeviceListener(object : InputDevice.InputDeviceListener {
         override fun onTryingToGetInput() {
@@ -81,8 +84,21 @@ fun ToDoItemView(model: ToDoItemModel) {
             voiceTextState.value = ""
             toggleSpeechButton.value = false
             addUpdateButtonVisibility.value = false
+            errorMessage.value = e.message.toString()
+
         }
     })
+
+    //Display a error if there is one
+    if (errorMessage.value.isNotBlank()) {
+        Toast.makeText(LocalContext.current, errorMessage.value, Toast.LENGTH_LONG).show()
+        errorMessage.value = ""
+    }
+
+    //Only listen for text if we dont have any
+    if (model.todoDataItem.description.isEmpty()) {
+        toggleSpeechButton.value = true
+    }
 
     ToDoListTheme {
         Column {
