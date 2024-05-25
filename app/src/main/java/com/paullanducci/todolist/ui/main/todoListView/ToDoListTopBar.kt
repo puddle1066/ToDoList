@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.listState_Finished
+import com.paullanducci.todolist.ui.main.MainActivity
 import com.paullanducci.todolist.ui.main.common.AppMenu
 import com.paullanducci.todolist.ui.main.listItemsView.ListItemsDropDown
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
@@ -75,7 +76,10 @@ fun ToDoListTopBar(
         buildMenuItemsList(menuItems, model.getListType())
         AppMenu(menuItemsState,
             expanded,
-            onClearList = { model.removeAllFinished() }
+            onClearList = {
+                model.removeAllFinished()
+                model.getToDoList(MainActivity.listId)
+            }
         )
 
     }
