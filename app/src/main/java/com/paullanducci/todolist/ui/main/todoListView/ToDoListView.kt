@@ -69,8 +69,8 @@ fun ToDoListView(model: ToDoListModel) {
         Scaffold(
             topBar = {
                 ToDoListTopBar(
-                    model.getAllSortedASC(),
-                    model.getListTitle()
+
+                    model
                 ) {
                     MainActivity.listId = it
                     model.setOption(LAST_LIST_ID, it)

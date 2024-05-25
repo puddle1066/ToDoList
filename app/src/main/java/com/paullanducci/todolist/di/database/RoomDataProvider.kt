@@ -107,11 +107,28 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
+    suspend fun getListType(listId: String): String {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getlistItemsDao().getListType(listId)
+        }
+    }
+
+    @Singleton
+    @Provides
     suspend fun getListItem(listId: String): ListDataItem {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().getListItem(listId)
         }
     }
+
+    @Singleton
+    @Provides
+    suspend fun removeAllFinished() {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getlistItemsDao().removeAllFinished()
+        }
+    }
+
 
     @Singleton
     @Provides

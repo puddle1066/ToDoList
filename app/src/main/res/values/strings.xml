@@ -17,6 +17,7 @@
     <string name="settings">Settings</string>
     <string name="lists">Lists Maintenance</string>
     <string name="ToDo_Lists">ToDo Lists</string>
+    <string name="Clear_Finished">Clear Finished</string>
 
     <string name="tutorial_title">Tutorial</string>
     <string name="show_tutorial">Show Tutorial on Startup</string>

@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.paullanducci.todolist.ui.main.common.drawMenu.DrawItem
 
 /**
@@ -17,6 +16,7 @@ enum class ToDoScreens(@StringRes val title: Int) {
     SettingsView(title = R.string.settings),
     ImageItemView(title = R.string.image_view),
     TutorialCarousel(title = R.string.tutoral_carousel),
+    Clear_Finished_List(title = -1)
 }
 
 val menuOptionSettings =
@@ -25,14 +25,6 @@ val menuOptionToDoList =
     DrawItem(Icons.Filled.Home, R.string.ToDo_Lists, ToDoScreens.ToDoListView.name)
 
 const val DATABASE_NAME = "tools-db"
-const val DATABASE_NAME_SHM = "$DATABASE_NAME-shm"
-const val DATABASE_NAME_WAL = "$DATABASE_NAME-wal"
-
-const val PREFERENCES_NAME = "user_preferences"
-
-val LIST_ID_KEY = stringPreferencesKey("selectedlistId")
-
-val SPEECH_LANGUAGE = "en"
 
 const val listState_Normal = "0"
 const val listState_Finished = "1"

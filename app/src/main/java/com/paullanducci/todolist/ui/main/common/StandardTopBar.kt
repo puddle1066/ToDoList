@@ -26,6 +26,7 @@ import com.paullanducci.todolist.ui.theme.typography
 @Composable
 fun StandardTopBar(title: String, menuItems: HashMap<Int, String>) {
     val expanded = remember { mutableStateOf(false) }
+    val menuItemsState = remember { mutableStateOf(menuItems) }
 
     Row(
         modifier = Modifier
@@ -61,5 +62,8 @@ fun StandardTopBar(title: String, menuItems: HashMap<Int, String>) {
         )
     }
 
-    AppMenu(menuItems, expanded)
+    AppMenu(menuItemsState,
+        expanded,
+        onClearList = {}
+    )
 }

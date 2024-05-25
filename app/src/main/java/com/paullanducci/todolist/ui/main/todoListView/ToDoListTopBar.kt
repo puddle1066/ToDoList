@@ -19,23 +19,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ToDoScreens
-import com.paullanducci.todolist.di.database.data.ListDataItem
+import com.paullanducci.todolist.listState_Finished
 import com.paullanducci.todolist.ui.main.common.AppMenu
 import com.paullanducci.todolist.ui.main.listItemsView.ListItemsDropDown
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 
 @Composable
 fun ToDoListTopBar(
-    lists: List<ListDataItem>,
-    selected: String,
+    model: ToDoListModel,
     onListChanged: (listId: String) -> Unit
 ) {
     val expanded = remember { mutableStateOf(false) }
-    val menuItems = hashMapOf<Int, String>(
-        R.string.lists to ToDoScreens.listsView.name,
-        R.string.settings to ToDoScreens.SettingsView.name
-    )
+    val menuItems = hashMapOf<Int, String>()
+    val menuItemsState = remember { mutableStateOf(menuItems) }
 
+    //Build Menu
+    var lists = model.getAllSortedASC()
+    var selected = model.getListTitle()
     ToDoListTheme {
         Row(
             modifier = Modifier
@@ -63,13 +63,34 @@ fun ToDoListTopBar(
 
             ListItemsDropDown(
                 lists,
-                onValueChanged = { onListChanged(it.listId) },
+                onValueChanged = {
+                    onListChanged(it.listId)
+                    buildMenuItemsList(menuItems, model.getListType())
+                },
                 false,
                 selected
             )
         }
 
-        AppMenu(menuItems, expanded)
+        buildMenuItemsList(menuItems, model.getListType())
+        AppMenu(menuItemsState,
+            expanded,
+            onClearList = { model.removeAllFinished() }
+        )
 
     }
 }
+
+fun buildMenuItemsList(menuItems: HashMap<Int, String>, listType: String) {
+    menuItems.clear()
+    menuItems[R.string.lists] = ToDoScreens.listsView.name
+
+    //Only if finished add clear finished option
+    if (listType == listState_Finished) {
+        menuItems[R.string.Clear_Finished] = ToDoScreens.Clear_Finished_List.name
+    }
+
+    menuItems[R.string.settings] = ToDoScreens.SettingsView.name
+
+}
+

@@ -1,18 +1,13 @@
 package com.paullanducci.speech.input
 
-import com.paullanducci.todolist.ui.main.MainActivity.Companion.setState
 
-abstract class SpeechInputDevice() : InputDevice() {
+abstract class SpeechInputDevice : InputDevice() {
 
     class UnableToAccessMicrophoneException internal constructor() : Exception(
         "Unable to access microphone."
                 + " Microphone might be already in use or the permission was not granted."
     )
 
-
-    override fun cleanup() {
-        super.cleanup()
-    }
 
     /**
      * Prepares the speech recognizer. If doing heavy work, run it in an asynchronous thread.
@@ -57,7 +52,6 @@ abstract class SpeechInputDevice() : InputDevice() {
      * called after a user action but automatically, which is equivalent to having `manual=false` for [tryToGetInput]). A download icon will be shown.
      */
     protected fun onRequiresDownload() {
-        setState(VoiceEngineState.REQUIRES_DOWNLOAD)
     }
 
     /**
@@ -65,7 +59,6 @@ abstract class SpeechInputDevice() : InputDevice() {
      * started listening, so that the microphone on icon can be shown.
      */
     protected fun onLoading() {
-        setState(VoiceEngineState.LOADING)
     }
 
     /**
@@ -74,7 +67,6 @@ abstract class SpeechInputDevice() : InputDevice() {
      * loading, so that the so that the microphone off icon can be shown.
      */
     protected fun onInactive() {
-        setState(VoiceEngineState.INACTIVE)
     }
 
     /**
@@ -82,11 +74,9 @@ abstract class SpeechInputDevice() : InputDevice() {
      * started listening, so that the microphone on icon can be shown.
      */
     protected fun onListening() {
-        setState(VoiceEngineState.LISTENING)
     }
 
     protected fun onError(error: String) {
-        setState(VoiceEngineState.ERROR)
     }
 
 }

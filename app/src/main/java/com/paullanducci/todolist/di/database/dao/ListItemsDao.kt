@@ -24,8 +24,14 @@ interface ListItemsDao {
     @Query(value = "SELECT title FROM ListsData where listId = :listId")
     fun getListTitle(listId: String): String
 
+    @Query(value = "SELECT type FROM ListsData where listId = :listId")
+    fun getListType(listId: String): String
+
     @Query(value = "SELECT * FROM ListsData where listId = :listId")
     fun getListItem(listId: String): ListDataItem
+
+    @Query(value = "DELETE From ToDoDataItem where finishedDate != 0")
+    fun removeAllFinished()
 
     @Query(value = "SELECT Count() FROM ListsData where listId = :listId")
     fun getListItemCount(listId: String): Int

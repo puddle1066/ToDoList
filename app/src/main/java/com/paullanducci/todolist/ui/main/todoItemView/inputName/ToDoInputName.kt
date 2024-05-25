@@ -12,9 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.paullanducci.speech.input.VoiceEngineState
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.ui.main.MainActivity.Companion.setState
 import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 
 @Composable
@@ -41,7 +39,6 @@ fun ToDoInputName(
                 } else {
                     addButtonVisibility.value = model.hasDataChanges()
                 }
-                setState(VoiceEngineState.INACTIVE)
             },
             onTextChanged = {
                 addButtonVisibility.value = true

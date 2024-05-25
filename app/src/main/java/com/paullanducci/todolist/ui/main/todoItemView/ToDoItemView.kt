@@ -19,11 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.speech.input.InputDevice
-import com.paullanducci.speech.input.VoiceEngineState
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoImageData
 import com.paullanducci.todolist.ui.main.MainActivity
-import com.paullanducci.todolist.ui.main.MainActivity.Companion.setState
 import com.paullanducci.todolist.ui.main.listItemsView.swapList
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonProcessing
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
@@ -49,7 +47,6 @@ fun ToDoItemView(model: ToDoItemModel) {
     toDoImageData.clear()
     toDoImageData.swapList(model.getToDoImages(MainActivity.itemId))
 
-    setState(VoiceEngineState.INACTIVE)
     model.loadData()
 
     val voiceTextState = remember { mutableStateOf(model.todoDataItem.description) }
