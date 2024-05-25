@@ -63,7 +63,11 @@ fun ToDoListView(model: ToDoListModel) {
 
     isAddButtonVisible.value = model.isNormalList()
     isDeleteAllowed.value = model.isFinishedList()
-    isMoveAllowed.value = model.isNormalList()
+    if (model.isFinishedList() || model.isFullList()) {
+        isMoveAllowed.value = false
+    } else {
+        isMoveAllowed.value = true
+    }
 
     ToDoListTheme {
         Scaffold(
@@ -110,7 +114,7 @@ fun ToDoListView(model: ToDoListModel) {
                     DragDropColumn(
                         items = uiState.value,
                         onSwap = model::swapSections,
-                        isMoveAllowed.value,
+                        isMoveAllowed,
                         onDragStart = {
                             startDragIndex.value = it
                             uiState.value.get(startDragIndex.value).sequence = 999
