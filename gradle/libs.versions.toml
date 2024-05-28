@@ -43,13 +43,17 @@ roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
 runner = "1.5.2"
 runtimeLivedataVersion = "1.6.3"
+rxjava = "3.1.8"
+rxandroid = "3.0.2"
 ui = "1.6.3"
 uiTestManifest = "1.6.3"
 uiTooling = "1.6.3"
 uiToolingPreview = "1.6.3"
 uiToolingPreviewVersion = "1.6.3"
+voskAndroid = "0.3.32"
 workRuntimeKtx = "2.9.0"
 foundationAndroid = "1.6.3"
+toolsCore = "1.0.0-alpha08"
 
 [libraries]
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanistNavigationAnimation" }
@@ -102,9 +106,13 @@ kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "
 hilt = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 test-core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
 ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
+androidx-tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
+vosk-android = { module = "com.alphacephei:vosk-android", version.ref = "voskAndroid" }
 
 [plugins]
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

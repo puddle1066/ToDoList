@@ -41,7 +41,6 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 fun ToDoItemView(model: ToDoItemModel) {
 
     val addUpdateButtonVisibility = remember { mutableStateOf(false) }
-    val toggleSpeechButton = remember { mutableStateOf(false) }
 
     val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
     val toDoImagesNew = remember { mutableStateListOf<Bitmap>() }
@@ -52,6 +51,9 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.loadData()
 
     val voiceTextState = remember { mutableStateOf(model.todoDataItem.description) }
+    val initialSpeechButton = voiceTextState.value.isEmpty()
+    val toggleSpeechButton = remember { mutableStateOf(initialSpeechButton) }
+
     val errorMessage = remember { mutableStateOf("") }
 
     model.speechInputDevice.setInputDeviceListener(object : InputDevice.InputDeviceListener {
@@ -95,10 +97,10 @@ fun ToDoItemView(model: ToDoItemModel) {
         errorMessage.value = ""
     }
 
-    //Only listen for text if we dont have any
-    if (model.todoDataItem.description.isEmpty()) {
-        toggleSpeechButton.value = true
-    }
+    //Only listen for text if we don't have any
+//    if (voiceTextState.value.isEmpty()) {
+//        toggleSpeechButton.value = true
+//    }
 
     ToDoListTheme {
         Column {
@@ -111,7 +113,18 @@ fun ToDoItemView(model: ToDoItemModel) {
             )
             {
                 item {
-                    ToDoInputName(model, addUpdateButtonVisibility, voiceTextState)
+                    ToDoInputName(model,
+                        addUpdateButtonVisibility,
+                        voiceTextState,
+                        onKeyboardDisabilityChange = {
+                            //Only when keyboard visible
+                            if (it) {
+                                model.speechInputDevice.cancelGettingInput()
+                                toggleSpeechButton.value = false
+                                voiceTextState.value = ""
+                            }
+                        }
+                    )
                 }
 
                 item {

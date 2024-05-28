@@ -102,6 +102,7 @@ dependencies {
     implementation libs.firebase.analytics.ktx
     implementation libs.junit.ktx
     implementation libs.androidx.foundation.android
+    implementation libs.androidx.tools.core
     debugImplementation libs.androidx.ui.tooling
 
     // Optional - Included automatically by material, only add when you need
@@ -172,11 +173,11 @@ dependencies {
 
 
     // RxJava3
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
-    implementation "io.reactivex.rxjava3:rxandroid:3.0.2"
+    implementation libs.rxjava
+    implementation libs.rxandroid
 
     // Vosk
     implementation 'net.java.dev.jna:jna:5.8.0@aar'
-    implementation 'com.alphacephei:vosk-android:0.3.32'
+    implementation libs.vosk.android
 
 }

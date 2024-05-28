@@ -2,6 +2,8 @@ package com.paullanducci.todolist.ui.main.todoItemView.inputName
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -11,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -25,11 +29,14 @@ fun ToDoInputText(
     fieldTitle: String,
     voiceTextState: MutableState<String>,
     onFinished: (String) -> Unit,
-    onTextChanged: () -> Unit
+    onTextChanged: () -> Unit,
+    onKeyboardStateChange: (Boolean) -> Unit
 ) {
+
     ToDoListTheme {
 
         val keyboardController = LocalSoftwareKeyboardController.current
+        var keyboardState = false
 
         TextField(
             modifier = Modifier
@@ -53,13 +60,28 @@ fun ToDoInputText(
 
             shape = RoundedCornerShape(50.dp),
             keyboardActions = KeyboardActions(
-
                 onDone = {
                     keyboardController?.hide()
+                    keyboardState = false
+                    onKeyboardStateChange(keyboardState)
                     onFinished(voiceTextState.value)
                 },
             ),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+
+            interactionSource = remember { MutableInteractionSource() }
+                .also { interactionSource ->
+                    LaunchedEffect(interactionSource) {
+                        interactionSource.interactions.collect {
+                            if (it is PressInteraction.Release) {
+                                if (!keyboardState) {
+                                    keyboardState = true
+                                    onKeyboardStateChange(keyboardState)
+                                }
+                            }
+                        }
+                    }
+                },
 
             colors = TextFieldDefaults.colors(
                 focusedTextColor = MaterialTheme.colorScheme.secondary,
