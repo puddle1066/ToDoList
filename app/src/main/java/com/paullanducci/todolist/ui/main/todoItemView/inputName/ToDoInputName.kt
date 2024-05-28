@@ -19,7 +19,8 @@ import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 fun ToDoInputName(
     model: ToDoItemModel,
     addButtonVisibility: MutableState<Boolean>,
-    voiceTextState: MutableState<String>
+    voiceTextState: MutableState<String>,
+    onKeyboardDisabilityChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -34,7 +35,7 @@ fun ToDoInputName(
             onFinished = {
                 ""
                 model.todoDataItem.description = it
-                if (it.isNullOrBlank()) {
+                if (it.isBlank()) {
                     addButtonVisibility.value = false
                 } else {
                     addButtonVisibility.value = model.hasDataChanges()
@@ -42,6 +43,9 @@ fun ToDoInputName(
             },
             onTextChanged = {
                 addButtonVisibility.value = true
+            },
+            onKeyboardStateChange = {
+                onKeyboardDisabilityChange(it)
             }
         )
     }

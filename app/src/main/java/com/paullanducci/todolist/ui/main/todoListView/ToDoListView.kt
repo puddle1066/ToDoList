@@ -63,6 +63,7 @@ fun ToDoListView(model: ToDoListModel) {
 
     isAddButtonVisible.value = model.isNormalList()
     isDeleteAllowed.value = model.isFinishedList()
+
     if (model.isFinishedList() || model.isFullList()) {
         isMoveAllowed.value = false
     } else {
