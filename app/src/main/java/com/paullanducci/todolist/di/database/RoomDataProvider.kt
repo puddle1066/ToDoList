@@ -164,6 +164,22 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
+    suspend fun searchFinishedItems(text: String): List<ToDoDataItem> {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getToDoItemsDao().searchAllFinished("$text%")
+        }
+    }
+
+    @Singleton
+    @Provides
+    suspend fun searchAllToDoItems(text: String): List<ToDoDataItem> {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getToDoItemsDao().searchToDoItem("$text%")
+        }
+    }
+
+    @Singleton
+    @Provides
     suspend fun insertToDo(toDoItem: ToDoDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getToDoItemsDao().insert(toDoItem)

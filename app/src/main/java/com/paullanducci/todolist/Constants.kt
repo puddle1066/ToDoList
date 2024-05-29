@@ -43,6 +43,7 @@ const val LATE_DAYS = "LateDays"
 const val OVERDUE_COLOR = "OverdueColor"
 const val LATE_COLOR = "LateColor"
 const val LAST_LIST_ID = "lastlistId"
+const val SPOKEN_LANGUAGE_OUTPUT = "enableSpokenLanguage"
 
 
 
