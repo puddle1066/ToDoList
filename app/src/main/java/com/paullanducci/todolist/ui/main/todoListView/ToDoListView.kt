@@ -63,18 +63,12 @@ fun ToDoListView(model: ToDoListModel) {
 
     isAddButtonVisible.value = model.isNormalList()
     isDeleteAllowed.value = model.isFinishedList()
-
-    if (model.isFinishedList() || model.isFullList()) {
-        isMoveAllowed.value = false
-    } else {
-        isMoveAllowed.value = true
-    }
+    isMoveAllowed.value = checkMoveAllowed(model)
 
     ToDoListTheme {
         Scaffold(
             topBar = {
                 ToDoListTopBar(
-
                     model
                 ) {
                     MainActivity.listId = it
@@ -83,7 +77,7 @@ fun ToDoListView(model: ToDoListModel) {
 
                     isAddButtonVisible.value = model.isNormalList()
                     isDeleteAllowed.value = model.isFinishedList()
-                    isMoveAllowed.value = model.isNormalList()
+                    isMoveAllowed.value = checkMoveAllowed(model)
                     deleteList.clear()
                 }
             },
@@ -99,6 +93,14 @@ fun ToDoListView(model: ToDoListModel) {
                     .fillMaxHeight()
                     .fillMaxWidth()
             ) {
+
+                //Search is only allowed against full lists (ie ALL and Finished)
+                if (!isMoveAllowed.value) {
+                    SearchBar(onTextChanged = {
+                        model.searchToDoList(MainActivity.listId, it)
+                    })
+                }
+
                 Box(
                     Modifier
                         .fillMaxWidth()
@@ -168,6 +170,14 @@ fun ToDoListView(model: ToDoListModel) {
                 }
             }
         }
+    }
+}
+
+fun checkMoveAllowed(model: ToDoListModel): Boolean {
+    if (model.isFinishedList() || model.isFullList()) {
+        return false
+    } else {
+        return true
     }
 }
 

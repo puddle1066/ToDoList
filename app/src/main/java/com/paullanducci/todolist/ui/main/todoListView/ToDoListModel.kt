@@ -80,6 +80,27 @@ open class ToDoListModel @Inject constructor(
         }
     }
 
+    fun searchToDoList(listId: String, searchText: String) {
+        var toDoDataItems: List<ToDoDataItem>
+
+        runBlocking {
+            try {
+                val todoListItem = dataBaseProvider.getListItem(listId)
+
+                toDoDataItems = when (todoListItem.type) {
+                    listState_Finished ->
+                        dataBaseProvider.searchFinishedItems(searchText)
+
+                    else ->
+                        dataBaseProvider.searchAllToDoItems(searchText)
+                }
+                _uiState.value = toDoDataItems
+            } catch (e: Exception) {
+                Log.e(TAG, "getToDoList = exception thrown $e")
+            }
+        }
+    }
+
     fun isFinishedList(): Boolean {
         return getCurrentItemType() == listState_Finished
     }

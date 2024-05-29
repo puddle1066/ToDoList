@@ -30,6 +30,8 @@
     <string name="due_date">Due Date</string>
     <string name="finished">Start Application</string>
 
+    <string name="enable_Spoken_Language_output">Enabled Spoken Language Output</string>
+
     <string name="android_tts_unsupported_language">Unsupported language requested</string>
     <string name="android_tts_error">TTS Error</string>
     <string name="listening">listening</string>

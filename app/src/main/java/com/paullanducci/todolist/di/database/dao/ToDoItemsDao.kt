@@ -42,4 +42,10 @@ interface ToDoItemsDao {
     @Query(value = "SELECT count(*) FROM ToDoDataItem where listId = :listId")
     fun getListCount(listId: String): Int
 
+    @Query("SELECT * FROM ToDoDataItem where finishedDate <> '0' and description like :text")
+    fun searchAllFinished(text: String): List<ToDoDataItem>
+
+    @Query("SELECT * FROM ToDoDataItem where finishedDate = '0' and description like :text")
+    fun searchToDoItem(text: String): List<ToDoDataItem>
+
 }
