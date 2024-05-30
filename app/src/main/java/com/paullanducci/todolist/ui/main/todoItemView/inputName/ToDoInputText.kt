@@ -29,7 +29,7 @@ fun ToDoInputText(
     fieldTitle: String,
     voiceTextState: MutableState<String>,
     onFinished: (String) -> Unit,
-    onTextChanged: () -> Unit,
+    onTextChanged: (String) -> Unit,
     onKeyboardStateChange: (Boolean) -> Unit
 ) {
 
@@ -95,8 +95,7 @@ fun ToDoInputText(
 
             value = voiceTextState.value,
             onValueChange = {
-                voiceTextState.value = it
-                onTextChanged()
+                onTextChanged(it)
             },
         )
     }
