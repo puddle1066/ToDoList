@@ -29,7 +29,6 @@ import com.paullanducci.todolist.OVERDUE_COLOR
 import com.paullanducci.todolist.OVERDUE_DAYS
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.SHOW_INSTRUCTIONS
-import com.paullanducci.todolist.SPOKEN_LANGUAGE_OUTPUT
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.ui.main.common.StandardTopBar
@@ -94,12 +93,13 @@ fun SettingsView(model: SettingsModel) {
                 SettingsButton(model, R.string.show_tutorial, SHOW_INSTRUCTIONS)
                 SettingsButton(model, R.string.add_top_of_List, ADD_TO_TOP)
 
-                Spacer(modifier = Modifier.weight(1f))
-                SettingsButton(
-                    model,
-                    R.string.enable_Spoken_Language_output,
-                    SPOKEN_LANGUAGE_OUTPUT
-                )
+                //TODO Not implemented
+//                Spacer(modifier = Modifier.weight(1f))
+//                SettingsButton(
+//                    model,
+//                    R.string.enable_Spoken_Language_output,
+//                    SPOKEN_LANGUAGE_OUTPUT
+//                )
 
                 //Only show backup restore options for Debug Builds
                 if (BuildConfig.BUILD_TYPE == "debug") {

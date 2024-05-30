@@ -69,7 +69,6 @@ fun ToDoItemView(model: ToDoItemModel) {
             model.speechInputDevice.cancelGettingInput()
 
             voiceTextState.value = input[0]
-            model.todoDataItem.description = input[0]
 
             toggleSpeechButton.value = false
             addUpdateButtonVisibility.value = true
@@ -97,10 +96,8 @@ fun ToDoItemView(model: ToDoItemModel) {
         errorMessage.value = ""
     }
 
-    //Only listen for text if we don't have any
-//    if (voiceTextState.value.isEmpty()) {
-//        toggleSpeechButton.value = true
-//    }
+    // Put valur from mutable var into update buffer
+    model.todoDataItem.description = voiceTextState.value
 
     ToDoListTheme {
         Column {
@@ -113,19 +110,32 @@ fun ToDoItemView(model: ToDoItemModel) {
             )
             {
                 item {
-                    ToDoInputName(model,
-                        addUpdateButtonVisibility,
+                    ToDoInputName(
                         voiceTextState,
-                        onKeyboardDisabilityChange = {
+                        onKeyboardVisabilityChange = {
                             //Only when keyboard visible
                             if (it) {
                                 model.speechInputDevice.cancelGettingInput()
                                 toggleSpeechButton.value = false
-                                voiceTextState.value = ""
                             }
+                        },
+                        onFinished = {
+                            if (it.isBlank()) {
+                                addUpdateButtonVisibility.value = false
+                            } else {
+                                model.todoDataItem.description = it
+                                addUpdateButtonVisibility.value = model.hasDataChanges()
+                            }
+                        },
+                        onTextChanged = {
+                            addUpdateButtonVisibility.value = true
+                            voiceTextState.value = it
+                            model.todoDataItem.description = it
                         }
                     )
                 }
+
+
 
                 item {
                     ToDoChangeListDropDown(model, addUpdateButtonVisibility)

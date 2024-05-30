@@ -13,14 +13,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 
 @Composable
 fun ToDoInputName(
-    model: ToDoItemModel,
-    addButtonVisibility: MutableState<Boolean>,
     voiceTextState: MutableState<String>,
-    onKeyboardDisabilityChange: (Boolean) -> Unit
+    onKeyboardVisabilityChange: (Boolean) -> Unit,
+    onFinished: (String) -> Unit,
+    onTextChanged: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -33,19 +32,13 @@ fun ToDoInputName(
             stringResource(R.string.ToDo_Task_description),
             voiceTextState,
             onFinished = {
-                ""
-                model.todoDataItem.description = it
-                if (it.isBlank()) {
-                    addButtonVisibility.value = false
-                } else {
-                    addButtonVisibility.value = model.hasDataChanges()
-                }
+                onFinished(it)
             },
             onTextChanged = {
-                addButtonVisibility.value = true
+                onTextChanged(it)
             },
             onKeyboardStateChange = {
-                onKeyboardDisabilityChange(it)
+                onKeyboardVisabilityChange(it)
             }
         )
     }
