@@ -97,7 +97,7 @@ fun ToDoItemView(model: ToDoItemModel) {
     }
 
     // Put valur from mutable var into update buffer
-    model.todoDataItem.description = voiceTextState.value
+    model.setDescription(voiceTextState.value)
 
     ToDoListTheme {
         Column {

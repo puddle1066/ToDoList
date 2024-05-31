@@ -95,7 +95,7 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun insert() {
-        todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
+        setDescription(todoDataItem.description)
         todoDataItem.itemId = UUID.randomUUID().toString()
         todoDataItem.lastupdated = getCurrentDateAsString()
         runBlocking {
@@ -112,11 +112,17 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun update() {
-        todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
+
         todoDataItem.lastupdated = getCurrentDateAsString()
+        setDescription(todoDataItem.description)
         runBlocking {
             dataBaseProvider.updateToDo(todoDataItem)
         }
+    }
+
+    fun setDescription(desc: String) {
+        todoDataItem.description.trim()
+        todoDataItem.description = desc.replaceFirstChar(Char::uppercase)
     }
 
     fun addPhotos(toDoImages: SnapshotStateList<Bitmap>) {
