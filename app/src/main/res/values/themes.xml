@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><!-- Use these setting to styleise the notifcation and the navigtion bar  -->
+<resources>
     <style name="ToDoListTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowSplashScreenBackground">#FF0727f4</item>
-        <item name="android:windowSplashScreenIconBackgroundColor">#FF0727f4</item>
     </style>
 
+    <style name="Theme.AppSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FF0727f4</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_screen</item>
+        <item name="postSplashScreenTheme">@style/ToDoListTheme</item>
+    </style>
 </resources>

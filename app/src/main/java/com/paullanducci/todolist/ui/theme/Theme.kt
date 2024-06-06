@@ -4,7 +4,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -18,6 +17,8 @@ fun ToDoListTheme(
         else -> LightColorScheme
     }
 
+    var barColor = MaterialTheme.colorScheme.background
+
     MaterialTheme(
         colorScheme = selectedColorScheme,
         typography = typography,
@@ -29,22 +30,22 @@ fun ToDoListTheme(
 
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = Color.LightGray,
-            darkIcons = true
+            color = barColor,
+            darkIcons = darkTheme
         )
     }
 
     SideEffect {
         systemUiController.setNavigationBarColor(
-            color = Color.LightGray,
-            darkIcons = true
+            color = barColor,
+            darkIcons = darkTheme
         )
     }
 
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color.LightGray,
-            darkIcons = true
+            color = barColor,
+            darkIcons = darkTheme
         )
     }
 
