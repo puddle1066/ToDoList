@@ -18,7 +18,7 @@
 
         <activity
             android:name="com.paullanducci.todolist.ui.main.MainActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:configChanges="orientation"
             android:theme="@style/Theme.AppSplash"
             android:exported="true">
