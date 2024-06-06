@@ -2,9 +2,16 @@ package com.paullanducci.todolist.ui.main.todoItemView.buttons
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.InfiniteRepeatableSpec
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +29,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
@@ -36,6 +44,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, toggleSpeechButton: MutableState<Bool
 
     val colorSelected = MaterialTheme.colorScheme.surface
     val colorUnSelected = MaterialTheme.colorScheme.primary
+    val colorPulse = MaterialTheme.colorScheme.primary
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
 
     val animationDuration = 100
@@ -51,8 +60,8 @@ fun ToDoSpeechButton(model: ToDoItemModel, toggleSpeechButton: MutableState<Bool
         backgroundColor.value = colorUnSelected
     }
 
-
     Row(modifier = Modifier.padding(10.dp)) {
+
         Button(
             modifier = Modifier
                 .scale(scale = scale.value)
@@ -71,11 +80,7 @@ fun ToDoSpeechButton(model: ToDoItemModel, toggleSpeechButton: MutableState<Bool
                     )
                     delay((animationDuration).toLong())    //Wait for anim to finish before launching
 
-                    if (toggleSpeechButton.value) {
-                        toggleSpeechButton.value = false
-                    } else {
-                        toggleSpeechButton.value = true
-                    }
+                    toggleSpeechButton.value = !toggleSpeechButton.value
                 }
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor.value),
@@ -86,13 +91,33 @@ fun ToDoSpeechButton(model: ToDoItemModel, toggleSpeechButton: MutableState<Bool
             var targetState = (backgroundColor.value == colorSelected)
             AnimatedContent(targetState = targetState, label = "") { isSpeaking ->
                 if (isSpeaking) {
-                    Icon(
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(50.dp),
-                        imageVector = Icons.Rounded.Stop,
-                        contentDescription = stringResource(id = R.string.missing_resource)
+                    val infiniteTransition = rememberInfiniteTransition(label = "")
+
+                    val radius = infiniteTransition.animateFloat(
+                        initialValue = 50f,
+                        targetValue = 130f,
+                        animationSpec = InfiniteRepeatableSpec(
+                            animation = tween(1000),
+                            repeatMode = RepeatMode.Restart
+                        ), label = ""
                     )
+
+                    Box(
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Canvas(Modifier.fillMaxSize(),
+                            onDraw = {
+                                drawCircle(color = colorPulse, radius.value)
+                            })
+                        Icon(
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(50.dp),
+                            imageVector = Icons.Rounded.Stop,
+                            contentDescription = stringResource(id = R.string.missing_resource)
+                        )
+                    }
+
                     backgroundColor.value = colorSelected
                 } else {
                     Icon(
@@ -107,10 +132,4 @@ fun ToDoSpeechButton(model: ToDoItemModel, toggleSpeechButton: MutableState<Bool
             }
         }
     }
-
-    fun checkButtonState() {
-
-    }
 }
-
-

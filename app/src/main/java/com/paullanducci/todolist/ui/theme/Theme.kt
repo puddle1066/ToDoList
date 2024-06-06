@@ -17,7 +17,7 @@ fun ToDoListTheme(
         else -> LightColorScheme
     }
 
-    var barColor = MaterialTheme.colorScheme.background
+    var barColor = MaterialTheme.colorScheme.primary
 
     MaterialTheme(
         colorScheme = selectedColorScheme,
