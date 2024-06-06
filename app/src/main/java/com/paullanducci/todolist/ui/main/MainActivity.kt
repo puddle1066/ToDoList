@@ -1,10 +1,12 @@
 package com.paullanducci.todolist.ui.main
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -13,6 +15,8 @@ import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import com.paullanducci.speech.input.SpeechInputDevice
 import com.paullanducci.speech.input.VoskInputDevice
@@ -35,6 +39,9 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        buildAnimatedSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         val toDoListModel: ToDoListModel by viewModels()
@@ -83,6 +90,33 @@ class MainActivity : ComponentActivity() {
         toDoItemModel.speechOutputDevice = buildSpeechOutputDevice()
     }
 
+    private fun buildAnimatedSplashScreen() {
+        installSplashScreen().apply {
+            setOnExitAnimationListener { viewProvider ->
+                ObjectAnimator.ofFloat(
+                    viewProvider.view,
+                    "scaleX",
+                    0.5f, 0f
+                ).apply {
+                    interpolator = OvershootInterpolator()
+                    duration = 300
+                    doOnEnd { viewProvider.remove() }
+                    start()
+                }
+                ObjectAnimator.ofFloat(
+                    viewProvider.view,
+                    "scaleY",
+                    0.5f, 0f
+                ).apply {
+                    interpolator = OvershootInterpolator()
+                    duration = 300
+                    doOnEnd { viewProvider.remove() }
+                    start()
+                }
+            }
+        }
+    }
+
     private fun buildSpeechInputDevice(): SpeechInputDevice {
         return VoskInputDevice(this, Locale.getDefault())
     }
@@ -90,6 +124,7 @@ class MainActivity : ComponentActivity() {
     private fun buildSpeechOutputDevice(): SpeechOutputDevice {
         return AndroidTtsSpeechDevice(this, Locale.getDefault())
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

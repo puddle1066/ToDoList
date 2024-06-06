@@ -121,7 +121,7 @@ open class ToDoListModel @Inject constructor(
         var type = listState_Normal
         runBlocking {
             val item = dataBaseProvider.getListItem(MainActivity.listId)
-            if (item != null) type = item.type // Else type has been removed
+            type = item.type // Else type has been removed
         }
         return type
     }
@@ -144,7 +144,6 @@ open class ToDoListModel @Inject constructor(
             type = dataBaseProvider.getListType(MainActivity.listId)
         }
         return when (type) {
-            null -> listState_Normal
             "" -> listState_Normal
             else -> type
         }
@@ -175,8 +174,9 @@ open class ToDoListModel @Inject constructor(
         }
 
         when (title) {
-            null -> return resourcesProvider.getString(R.string.please_select)
-            "" -> return resourcesProvider.getString(R.string.please_select)
+            "" -> {
+                return resourcesProvider.getString(R.string.please_select)
+            }
             else -> return title
         }
     }
