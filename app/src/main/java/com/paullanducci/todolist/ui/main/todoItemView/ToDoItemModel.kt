@@ -67,13 +67,9 @@ open class ToDoItemModel @Inject constructor(
     fun hasDataChanges(): Boolean {
         var hasChanges: Boolean
         runBlocking {
-            if (dataBaseProvider.getToDoItem(todoDataItem.itemId) == null) {
-                hasChanges = true
-            } else {
-                hasChanges =
-                    !dataBaseProvider.getToDoItem(todoDataItem.itemId)
-                        .equals(todoDataItem.toString())
-            }
+            hasChanges =
+                !dataBaseProvider.getToDoItem(todoDataItem.itemId)
+                    .equals(todoDataItem.toString())
         }
         return hasChanges
     }
