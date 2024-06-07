@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -23,12 +25,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
-import com.paullanducci.todolist.ui.main.tutorial.tutorialContainer
+import com.paullanducci.todolist.ui.main.tutorial.TutorialContainer
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
+import kotlinx.coroutines.launch
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint(
+    "UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter",
+    "CoroutineCreationDuringComposition"
+)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 
@@ -37,23 +43,38 @@ fun tutorialCarousel(model: SettingsModel) {
 
     val pagerState = rememberPagerState(pageCount = { count })
 
+    //TODO Remove after Dev
+    val coroutineScope = rememberCoroutineScope()
+    coroutineScope.launch {
+        // Call scroll to on pagerState
+        pagerState.scrollToPage(2)
+    }
+
     ToDoListTheme {
         Scaffold(
             topBar = {
-
-                Text(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .height(70.dp)
                         .background(MaterialTheme.colorScheme.background),
-                    text = stringResource(id = R.string.tutorial_title),
-                    style = typography.titleLarge,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Text(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .background(MaterialTheme.colorScheme.background),
+                        text = stringResource(id = R.string.tutorial_title),
+                        style = typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
             },
             content = {
-                tutorialContainer(model, pagerState, count)
+                TutorialContainer(model, pagerState, count)
             },
             bottomBar = {
                 Row(

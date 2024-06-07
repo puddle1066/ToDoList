@@ -16,7 +16,7 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.widgets.AppButton
 
 @Composable
-fun screen_last() {
+fun Screen_last() {
     val configuration = LocalConfiguration.current
 
     val screenHeight = configuration.screenHeightDp.dp
