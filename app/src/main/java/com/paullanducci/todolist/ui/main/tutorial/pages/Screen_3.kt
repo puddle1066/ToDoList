@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 
 @Composable
-fun screen_3() {
+fun Screen_3() {
     val configuration = LocalConfiguration.current
 
     val screenHeight = configuration.screenHeightDp.dp

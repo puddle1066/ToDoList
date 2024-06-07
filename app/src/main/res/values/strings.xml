@@ -19,7 +19,7 @@
     <string name="ToDo_Lists">ToDo Lists</string>
     <string name="Clear_Finished">Clear Finished</string>
 
-    <string name="tutorial_title">Tutorial</string>
+    <string name="tutorial_title">Using ToDo</string>
     <string name="show_tutorial">Show Tutorial on Startup</string>
 
     <string name="add_top_of_List">Add New Items to top of list</string>
@@ -72,4 +72,13 @@
 
     <string name="todo_backup">ToDo Backup</string>
     <string name="todo_restore">ToDo Restore</string>
+
+    <string name="screen_1_1">This Application allows you to create multiple list of jobs or tasks which need to be actioned.</string>
+    <string name="screen_1_2">Clicking the three dot\'s display the menu. You can manage ToDo Lists using the "List Maintenance" option.</string>
+    <string name="screen_1_3">The down arrow lists of all ToDo item list defined.</string>
+
+    <string name="screen_2_1">Click the check box in a ToDo Item to mark it as complete. All completed items are moved to the "Finished" list.</string>
+    <string name="screen_2_2">Individual Items can be removed from the "FINISHED" by clicking on the item and pressing the Delete button. The menu has an option to clear the whole "FINISHED" list.</string>
+    <string name="screen_2_3">You may search for specific items matching characters by entering them in the search field.</string>
+    <string name="screen_2_4">This option is only available on the "FINISHED" and  "ALL" lists.</string>
 </resources>

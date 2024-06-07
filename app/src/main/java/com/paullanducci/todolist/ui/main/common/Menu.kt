@@ -41,7 +41,7 @@ fun AppMenu(
                         .background(MaterialTheme.colorScheme.primary),
                     onClick = {
                         expanded.value = false
-                        if (value == ToDoScreens.Clear_Finished_List.name) {
+                        if (value == ToDoScreens.ClearFinishedList.name) {
                             onClearList()
                         } else {
                             showView(value)

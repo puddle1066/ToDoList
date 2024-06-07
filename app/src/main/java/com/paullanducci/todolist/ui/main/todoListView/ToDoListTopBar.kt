@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -35,8 +35,8 @@ fun ToDoListTopBar(
     val menuItemsState = remember { mutableStateOf(menuItems) }
 
     //Build Menu
-    var lists = model.getAllSortedASC()
-    var selected = model.getListTitle()
+    val lists = model.getAllSortedASC()
+    val selected = model.getListTitle()
     ToDoListTheme {
         Row(
             modifier = Modifier
@@ -91,7 +91,7 @@ fun buildMenuItemsList(menuItems: HashMap<Int, String>, listType: String) {
 
     //Only if finished add clear finished option
     if (listType == listState_Finished) {
-        menuItems[R.string.Clear_Finished] = ToDoScreens.Clear_Finished_List.name
+        menuItems[R.string.Clear_Finished] = ToDoScreens.ClearFinishedList.name
     }
 
     menuItems[R.string.settings] = ToDoScreens.SettingsView.name

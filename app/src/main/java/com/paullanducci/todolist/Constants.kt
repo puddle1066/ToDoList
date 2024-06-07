@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.ui.main.common.drawMenu.DrawItem
 
 /**
@@ -16,7 +17,7 @@ enum class ToDoScreens(@StringRes val title: Int) {
     SettingsView(title = R.string.settings),
     ImageItemView(title = R.string.image_view),
     TutorialCarousel(title = R.string.tutoral_carousel),
-    Clear_Finished_List(title = -1)
+    ClearFinishedList(title = -1)
 }
 
 val menuOptionSettings =
@@ -44,6 +45,10 @@ const val OVERDUE_COLOR = "OverdueColor"
 const val LATE_COLOR = "LateColor"
 const val LAST_LIST_ID = "lastlistId"
 const val SPOKEN_LANGUAGE_OUTPUT = "enableSpokenLanguage"
+
+val carousel_text_left_margin = 10.dp
+
+
 
 
 
