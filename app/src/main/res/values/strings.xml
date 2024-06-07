@@ -81,4 +81,11 @@
     <string name="screen_2_2">Individual Items can be removed from the "FINISHED" by clicking on the item and pressing the Delete button. The menu has an option to clear the whole "FINISHED" list.</string>
     <string name="screen_2_3">You may search for specific items matching characters by entering them in the search field.</string>
     <string name="screen_2_4">This option is only available on the "FINISHED" and  "ALL" lists.</string>
+
+    <string name="screen_3_1">You can use either the keyboard by tapping on this field or speech button to enter a description of the ToDo task in this field.</string>
+    <string name="screen_3_2">Clicking the button show below will start listening for speech.</string>
+    <string name="screen_3_3">While listening for speech to translate the button changes to.</string>
+    <string name="screen_3_4">Using this drop down list yu can move items between your current ToDo Lists.</string>
+    <string name="screen_3_5">Pressing this button allows you to add or manage any photos you have taken, associated with this task.</string>
+    <string name="screen_3_6">All of the function shown below are on the + screen which can be accesses via the add button at the bottom.</string>
 </resources>
