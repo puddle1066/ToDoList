@@ -92,7 +92,7 @@
     <string name="screen_4_2">This screen will then appear, which allows you to set the due date and time.</string>
     <string name="screen_4_3">You can set the Late and/or overdue limits and colors on the settings screen.</string>
 
-    <string name="screen_5_1">Pressing this button allows you to add or manage any photos you have taken, associated with this task.</string>
-    <string name="screen_5_2"></string>
+    <string name="screen_5_1">Pressing this button allows you to add photos associated with this task.</string>
+    <string name="screen_5_2">Once a picture has been taken it will be added to your ToDo list and look like.</string>
     <string name="screen_5_3">Lets Start Todo</string>
 </resources>

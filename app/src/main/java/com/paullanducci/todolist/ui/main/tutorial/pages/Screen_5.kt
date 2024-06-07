@@ -51,10 +51,30 @@ fun Screen_last() {
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.secondary,
             )
-//TODO Update Names
+
             Image(
                 painterResource(R.drawable.menu_5_1),
-                contentDescription = "menu_3_5",
+                contentDescription = "menu_5_1",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(100.dp)
+                    .padding(40.dp, 0.dp, 30.dp, 0.dp)
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
+                    .background(MaterialTheme.colorScheme.background),
+                text = stringResource(id = R.string.screen_5_2),
+                style = typography.bodyMedium,
+                textAlign = TextAlign.Left,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+
+            Image(
+                painterResource(R.drawable.menu_5_3),
+                contentDescription = "menu_5_3",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(350.dp)
