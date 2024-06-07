@@ -3,6 +3,7 @@ package com.paullanducci.todolist.ui.main.tutorial.pages
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -39,9 +40,11 @@ fun Screen_3() {
                 .verticalScroll(rememberScrollState())
                 .background(MaterialTheme.colorScheme.background)
         ) {
+            Spacer(Modifier.height(50.dp))
+
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 10.dp, 50.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 0.dp, 10.dp, 10.dp)
                     .background(MaterialTheme.colorScheme.background),
                 text = stringResource(id = R.string.screen_3_6),
                 style = typography.bodyLarge,
@@ -127,25 +130,6 @@ fun Screen_3() {
                     .padding(40.dp, 0.dp, 30.dp, 0.dp)
             )
 
-            Text(
-                modifier = Modifier
-                    .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
-                    .background(MaterialTheme.colorScheme.background),
-                text = stringResource(id = R.string.screen_3_5),
-                style = typography.bodyMedium,
-                textAlign = TextAlign.Left,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-
-            Image(
-                painterResource(R.drawable.menu_3_5),
-                contentDescription = "menu_3_5",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .width(350.dp)
-                    .height(100.dp)
-                    .padding(40.dp, 0.dp, 30.dp, 0.dp)
-            )
         }
     }
 }

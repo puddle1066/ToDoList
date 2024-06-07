@@ -86,6 +86,13 @@
     <string name="screen_3_2">Clicking the button show below will start listening for speech.</string>
     <string name="screen_3_3">While listening for speech to translate the button changes to.</string>
     <string name="screen_3_4">Using this drop down list yu can move items between your current ToDo Lists.</string>
-    <string name="screen_3_5">Pressing this button allows you to add or manage any photos you have taken, associated with this task.</string>
     <string name="screen_3_6">All of the function shown below are on the + screen which can be accesses via the add button at the bottom.</string>
+
+    <string name="screen_4_1">You can optionally set a due date, by clicking this field.</string>
+    <string name="screen_4_2">This screen will then appear, which allows you to set the due date and time.</string>
+    <string name="screen_4_3">You can set the Late and/or overdue limits and colors on the settings screen.</string>
+
+    <string name="screen_5_1">Pressing this button allows you to add or manage any photos you have taken, associated with this task.</string>
+    <string name="screen_5_2"></string>
+    <string name="screen_5_3">Lets Start Todo</string>
 </resources>
