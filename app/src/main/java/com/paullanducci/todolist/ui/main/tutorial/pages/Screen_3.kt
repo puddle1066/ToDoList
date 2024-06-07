@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,7 +41,7 @@ fun Screen_3() {
         ) {
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 10.dp, 50.dp, 10.dp)
                     .background(MaterialTheme.colorScheme.background),
                 text = stringResource(id = R.string.screen_3_6),
                 style = typography.bodyLarge,
