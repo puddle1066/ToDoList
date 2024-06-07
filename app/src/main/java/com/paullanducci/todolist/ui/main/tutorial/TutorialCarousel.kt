@@ -15,7 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,7 +27,6 @@ import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 import com.paullanducci.todolist.ui.main.tutorial.TutorialContainer
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
-import kotlinx.coroutines.launch
 
 
 @SuppressLint(
@@ -42,13 +40,6 @@ fun tutorialCarousel(model: SettingsModel) {
     val count = 5
 
     val pagerState = rememberPagerState(pageCount = { count })
-
-    //TODO Remove after Dev
-    val coroutineScope = rememberCoroutineScope()
-    coroutineScope.launch {
-        // Call scroll to on pagerState
-        pagerState.scrollToPage(4)
-    }
 
     ToDoListTheme {
         Scaffold(

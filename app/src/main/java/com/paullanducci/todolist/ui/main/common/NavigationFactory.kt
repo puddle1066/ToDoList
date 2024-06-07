@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.paullanducci.todolist.SHOW_INSTRUCTIONS
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.ui.main.MainActivity
 import com.paullanducci.todolist.ui.main.imageView.ItemImageView
@@ -26,11 +27,10 @@ fun NavigationFactory(
     toDoItemModel: ToDoItemModel,
     settingsModel: SettingsModel
 ) {
-    val startscreen = ToDoScreens.TutorialCarousel.name
-    //TODO Add back
-    //  if (settingsModel.getOption(SHOW_INSTRUCTIONS)) {
-//        startscreen = ToDoScreens.ToDoListView.name
-//    }
+    var startscreen = ToDoScreens.TutorialCarousel.name
+    if (settingsModel.getOption(SHOW_INSTRUCTIONS)) {
+        startscreen = ToDoScreens.ToDoListView.name
+    }
 
     MainActivity.navHostController = rememberNavController()
 
