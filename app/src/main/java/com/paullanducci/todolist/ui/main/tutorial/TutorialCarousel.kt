@@ -32,14 +32,14 @@ import kotlinx.coroutines.launch
 
 
 @SuppressLint(
-    "UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter",
-    "CoroutineCreationDuringComposition"
+    "UnusedMaterialScaffoldPaddingParameter",
+    "CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter"
 )
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 
 fun tutorialCarousel(model: SettingsModel) {
-    val count = 4
+    val count = 5
 
     val pagerState = rememberPagerState(pageCount = { count })
 
@@ -47,7 +47,7 @@ fun tutorialCarousel(model: SettingsModel) {
     val coroutineScope = rememberCoroutineScope()
     coroutineScope.launch {
         // Call scroll to on pagerState
-        pagerState.scrollToPage(2)
+        pagerState.scrollToPage(4)
     }
 
     ToDoListTheme {
@@ -56,15 +56,15 @@ fun tutorialCarousel(model: SettingsModel) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(70.dp)
-                        .background(MaterialTheme.colorScheme.background),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                        .height(50.dp)
+                        .background(MaterialTheme.colorScheme.background)
                 ) {
 
                     Text(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .height(50.dp)
+                            .wrapContentHeight(Alignment.CenterVertically)
                             .background(MaterialTheme.colorScheme.background),
                         text = stringResource(id = R.string.tutorial_title),
                         style = typography.titleLarge,

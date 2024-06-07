@@ -38,7 +38,7 @@ fun Screen_2() {
         ) {
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 0.dp, 10.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 50.dp, 10.dp, 10.dp)
                     .background(MaterialTheme.colorScheme.background),
                 text = stringResource(id = R.string.screen_2_1),
                 style = typography.bodyMedium,
@@ -76,7 +76,7 @@ fun Screen_2() {
 
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 20.dp, 10.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 50.dp, 10.dp, 10.dp)
                     .background(MaterialTheme.colorScheme.background),
                 text = stringResource(id = R.string.screen_2_3),
                 style = typography.bodyMedium,

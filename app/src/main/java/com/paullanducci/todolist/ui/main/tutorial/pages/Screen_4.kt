@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +26,7 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
 
 @Composable
-fun Screen_1() {
+fun Screen_4() {
     val configuration = LocalConfiguration.current
 
     val screenHeight = configuration.screenHeightDp.dp
@@ -35,63 +37,66 @@ fun Screen_1() {
             modifier = Modifier
                 .width(screenWidth)
                 .height(screenHeight)
+                .verticalScroll(rememberScrollState())
                 .background(MaterialTheme.colorScheme.background)
         ) {
             Spacer(Modifier.height(50.dp))
 
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 0.dp, 0.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                     .background(MaterialTheme.colorScheme.background),
-                text = stringResource(id = R.string.screen_1_1),
+                text = stringResource(id = R.string.screen_4_1),
                 style = typography.bodyMedium,
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.secondary,
             )
             Image(
-                painterResource(R.drawable.menu_1_1),
-                contentDescription = "menu_1_1",
+                painterResource(R.drawable.menu_4_1),
+                contentDescription = "menu_4_1",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(350.dp)
-                    .height(200.dp)
+                    .height(100.dp)
+                    .padding(40.dp, 10.dp, 30.dp, 0.dp)
             )
 
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 10.dp, 10.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                     .background(MaterialTheme.colorScheme.background),
-                text = stringResource(id = R.string.screen_1_2),
+                text = stringResource(id = R.string.screen_4_2),
                 style = typography.bodyMedium,
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.secondary,
             )
+
             Image(
-                painterResource(R.drawable.menu_1_2),
-                contentDescription = "menu_1_2",
-                contentScale = ContentScale.Fit,
+                painterResource(R.drawable.screenshot_5),
+                contentDescription = "screenshot_5",
+                contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .width(350.dp)
-                    .height(200.dp)
-                    .padding(60.dp, 0.dp, 60.dp, 0.dp)
+                    .height(410.dp)
+                    .padding(40.dp, 10.dp, 10.dp, 0.dp)
             )
 
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 10.dp, 10.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                     .background(MaterialTheme.colorScheme.background),
-                text = stringResource(id = R.string.screen_1_3),
+                text = stringResource(id = R.string.screen_4_3),
                 style = typography.bodyMedium,
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.secondary,
             )
+
         }
     }
 }
 
 @Preview
 @Composable
-fun Preview_1() {
-    Screen_1()
+fun Preview_4() {
+    Screen_4()
 }
-
