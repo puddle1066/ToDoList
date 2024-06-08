@@ -31,7 +31,8 @@ import com.paullanducci.todolist.ui.theme.typography
 
 @SuppressLint(
     "UnusedMaterialScaffoldPaddingParameter",
-    "CoroutineCreationDuringComposition", "UnusedMaterial3ScaffoldPaddingParameter"
+    "CoroutineCreationDuringComposition",
+    "UnusedMaterial3ScaffoldPaddingParameter"
 )
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
