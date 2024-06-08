@@ -50,7 +50,7 @@ fun ToDoItemView(model: ToDoItemModel) {
 
     model.loadData()
 
-    val voiceTextState = remember { mutableStateOf(model.todoDataItem.description) }
+    val voiceTextState = remember { mutableStateOf(model.getDescription()) }
     val initialSpeechButton = voiceTextState.value.isEmpty()
     val toggleSpeechButton = remember { mutableStateOf(initialSpeechButton) }
 
@@ -123,19 +123,17 @@ fun ToDoItemView(model: ToDoItemModel) {
                             if (it.isBlank()) {
                                 addUpdateButtonVisibility.value = false
                             } else {
-                                model.todoDataItem.description = it
+                                model.setDescription(it)
                                 addUpdateButtonVisibility.value = model.hasDataChanges()
                             }
                         },
                         onTextChanged = {
                             addUpdateButtonVisibility.value = true
                             voiceTextState.value = it
-                            model.todoDataItem.description = it
+                            model.setDescription(it)
                         }
                     )
                 }
-
-
 
                 item {
                     ToDoChangeListDropDown(model, addUpdateButtonVisibility)
