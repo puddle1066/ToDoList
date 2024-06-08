@@ -3,6 +3,7 @@ package com.paullanducci.todolist.ui.main
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,11 +11,15 @@ import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
@@ -51,13 +56,16 @@ class MainActivity : ComponentActivity() {
 
         context = this.applicationContext
 
+
         if (listId.isBlank()) {
            listId =  toDoListModel.getOptionString(LAST_LIST_ID)
         }
 
+
         setContent {
             ToDoListTheme {
-                NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
+
+            NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
 
                 //Permissions for TEXT TO SPEECH PROCESSING
                 val recordAudioLauncher = rememberLauncherForActivityResult(
