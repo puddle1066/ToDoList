@@ -67,9 +67,12 @@ open class ToDoItemModel @Inject constructor(
     fun hasDataChanges(): Boolean {
         var hasChanges: Boolean
         runBlocking {
-            hasChanges =
-                !dataBaseProvider.getToDoItem(todoDataItem.itemId)
-                    .equals(todoDataItem.toString())
+            val databaseItem = dataBaseProvider.getToDoItem(todoDataItem.itemId)
+            if (databaseItem != null) {
+                hasChanges = databaseItem.equals(todoDataItem.toString())
+            } else {
+                hasChanges = true  //New record so has changes
+            }
         }
         return hasChanges
     }
@@ -116,9 +119,15 @@ open class ToDoItemModel @Inject constructor(
         }
     }
 
+    fun getDescription(): String {
+        return todoDataItem.description
+    }
+
     fun setDescription(desc: String) {
-        todoDataItem.description.trim()
-        todoDataItem.description = desc.replaceFirstChar(Char::uppercase)
+        runBlocking {
+            todoDataItem.description = desc.trim()
+            todoDataItem.description = todoDataItem.description.replaceFirstChar(Char::uppercase)
+        }
     }
 
     fun addPhotos(toDoImages: SnapshotStateList<Bitmap>) {
