@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -13,12 +11,12 @@
         android:name="com.paullanducci.todolist.ToDoList"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/ToDoListTheme"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/ToDoListTheme">
 
         <activity
             android:name="com.paullanducci.todolist.ui.main.MainActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation"
             android:theme="@style/Theme.AppSplash"
             android:exported="true">

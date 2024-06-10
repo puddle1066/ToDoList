@@ -3,12 +3,15 @@ package com.paullanducci.todolist.ui.main
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -16,10 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
@@ -45,9 +45,29 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        buildAnimatedSplashScreen()
+        actionBar?.hide()
+
+        //TODO Setting Status Bar and Nav bar color don't work
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val sb = when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> SystemBarStyle.light(Color.RED, Color.RED)
+            Configuration.UI_MODE_NIGHT_YES -> SystemBarStyle.dark(Color.RED)
+            else -> error("Illegal State, current mode is $currentNightMode")
+        }
+
+
+        enableEdgeToEdge(
+            statusBarStyle = sb,
+            navigationBarStyle = sb,
+        )
+        if (Build.VERSION.SDK_INT >= 29) {
+            window.isNavigationBarContrastEnforced = false
+        }
 
         super.onCreate(savedInstanceState)
+
+        buildAnimatedSplashScreen()
+
 
         val toDoListModel: ToDoListModel by viewModels()
         val listItemsModel: ListItemsModel by viewModels()
@@ -56,16 +76,15 @@ class MainActivity : ComponentActivity() {
 
         context = this.applicationContext
 
-
         if (listId.isBlank()) {
            listId =  toDoListModel.getOptionString(LAST_LIST_ID)
         }
 
-
         setContent {
+
             ToDoListTheme {
 
-            NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
+                NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
 
                 //Permissions for TEXT TO SPEECH PROCESSING
                 val recordAudioLauncher = rememberLauncherForActivityResult(
@@ -132,7 +151,6 @@ class MainActivity : ComponentActivity() {
     private fun buildSpeechOutputDevice(): SpeechOutputDevice {
         return AndroidTtsSpeechDevice(this, Locale.getDefault())
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
