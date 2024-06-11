@@ -1,27 +1,19 @@
 package com.paullanducci.todolist.ui.main
 
 import android.Manifest
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
-import androidx.core.animation.doOnEnd
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import com.paullanducci.speech.input.SpeechInputDevice
 import com.paullanducci.speech.input.VoskInputDevice
@@ -44,30 +36,10 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
-
         actionBar?.hide()
 
-        //TODO Setting Status Bar and Nav bar color don't work
-        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        val sb = when (currentNightMode) {
-            Configuration.UI_MODE_NIGHT_NO -> SystemBarStyle.light(Color.RED, Color.RED)
-            Configuration.UI_MODE_NIGHT_YES -> SystemBarStyle.dark(Color.RED)
-            else -> error("Illegal State, current mode is $currentNightMode")
-        }
-
-
-        enableEdgeToEdge(
-            statusBarStyle = sb,
-            navigationBarStyle = sb,
-        )
-        if (Build.VERSION.SDK_INT >= 29) {
-            window.isNavigationBarContrastEnforced = false
-        }
-
         super.onCreate(savedInstanceState)
-
-        buildAnimatedSplashScreen()
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         val toDoListModel: ToDoListModel by viewModels()
         val listItemsModel: ListItemsModel by viewModels()
@@ -115,33 +87,6 @@ class MainActivity : ComponentActivity() {
 
         toDoItemModel.speechInputDevice = buildSpeechInputDevice()
         toDoItemModel.speechOutputDevice = buildSpeechOutputDevice()
-    }
-
-    private fun buildAnimatedSplashScreen() {
-        installSplashScreen().apply {
-            setOnExitAnimationListener { viewProvider ->
-                ObjectAnimator.ofFloat(
-                    viewProvider.view,
-                    "scaleX",
-                    0.5f, 0f
-                ).apply {
-                    interpolator = OvershootInterpolator()
-                    duration = 300
-                    doOnEnd { viewProvider.remove() }
-                    start()
-                }
-                ObjectAnimator.ofFloat(
-                    viewProvider.view,
-                    "scaleY",
-                    0.5f, 0f
-                ).apply {
-                    interpolator = OvershootInterpolator()
-                    duration = 300
-                    doOnEnd { viewProvider.remove() }
-                    start()
-                }
-            }
-        }
     }
 
     private fun buildSpeechInputDevice(): SpeechInputDevice {

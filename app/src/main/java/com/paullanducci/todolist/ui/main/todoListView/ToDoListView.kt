@@ -6,11 +6,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
@@ -66,9 +70,14 @@ fun ToDoListView(model: ToDoListModel) {
     isAddButtonVisible.value = model.isNormalList()
     isDeleteAllowed.value = model.isFinishedList()
     isMoveAllowed.value = checkMoveAllowed(model)
+    val contentPadding = WindowInsets
+        .systemBars
+        .add(WindowInsets(left = 16.dp, top = 16.dp, right = 16.dp, bottom = 16.dp))
+        .asPaddingValues()
 
     ToDoListTheme {
         Scaffold(
+
             topBar = {
                 ToDoListTopBar(
                     model
