@@ -196,7 +196,7 @@ fun ToDoItemView(model: ToDoItemModel) {
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun Preview() {
+fun PreviewList() {
     ToDoItemView(
         ToDoItemModel(
             RoomDataProvider()
