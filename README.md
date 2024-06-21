@@ -4,7 +4,7 @@ This application allow the user to build and manage one or many ToDo list(s).
 
 ## Do List
 
-<img src="app/screenshots/screenshot_1.png" width="400" height="600"/> 
+<img src="app/screenshots/screenshot_1.png" width="400" height="800"/> 
 
 Once an item has been completed the checkbox should be ticked and teh item will be moved to the
 Finished list.
@@ -14,7 +14,7 @@ current list shown in the top bar of the application.
 
 ## ToDo Item
 
-<img src="app/screenshots/screenshot_2.png"/>
+<img src="app/screenshots/screenshot_2.png" width="400" height="800"/>
 
 The task description can either be entered as text or recorded and translated to text using the
 button with the microphone on it.
@@ -31,7 +31,7 @@ an enlarged version of the image using which the user may zoom in or out.
 
 ## Adding New Lists
 
-<img src="app/screenshots/screenshot_3.png"/>
+<img src="app/screenshots/screenshot_3.png" width="400" height="800"/>
 
 To add a new ToDo list simply enter the list name in the input field and press the 'done' button on
 the keyboard when completed.
