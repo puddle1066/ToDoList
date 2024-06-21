@@ -118,19 +118,15 @@ fun ToDoItemView(model: ToDoItemModel) {
                 item {
                     ToDoInputName(
                         voiceTextState,
-                        onKeyboardVisabilityChange = {
+                        onKeyboardVisibilityChange = { showKeyboard, text ->
                             //Only when keyboard visible
-                            if (it) {
+                            if (showKeyboard) {
                                 model.speechInputDevice.cancelGettingInput()
                                 toggleSpeechButton.value = false
-                            }
-                        },
-                        onFinished = {
-                            if (it.isBlank()) {
-                                addUpdateButtonVisibility.value = false
                             } else {
-                                model.setDescription(it)
-                                addUpdateButtonVisibility.value = model.hasDataChanges()
+                                addUpdateButtonVisibility.value = true
+                                voiceTextState.value = text
+                                model.setDescription(text)
                             }
                         },
                         onTextChanged = {

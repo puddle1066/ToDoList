@@ -17,8 +17,7 @@ import com.paullanducci.todolist.R
 @Composable
 fun ToDoInputName(
     voiceTextState: MutableState<String>,
-    onKeyboardVisabilityChange: (Boolean) -> Unit,
-    onFinished: (String) -> Unit,
+    onKeyboardVisibilityChange: (show: Boolean, text: String) -> Unit,
     onTextChanged: (String) -> Unit
 ) {
     Row(
@@ -31,14 +30,11 @@ fun ToDoInputName(
         ToDoInputText(
             stringResource(R.string.ToDo_Task_description),
             voiceTextState,
-            onFinished = {
-                onFinished(it)
-            },
             onTextChanged = {
                 onTextChanged(it)
             },
-            onKeyboardStateChange = {
-                onKeyboardVisabilityChange(it)
+            onKeyboardStateChange = { showKeyboard, text ->
+                onKeyboardVisibilityChange(showKeyboard, text)
             }
         )
     }

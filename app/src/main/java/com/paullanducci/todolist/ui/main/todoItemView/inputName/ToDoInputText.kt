@@ -28,9 +28,8 @@ import com.paullanducci.todolist.ui.theme.typography
 fun ToDoInputText(
     fieldTitle: String,
     voiceTextState: MutableState<String>,
-    onFinished: (String) -> Unit,
     onTextChanged: (String) -> Unit,
-    onKeyboardStateChange: (Boolean) -> Unit
+    onKeyboardStateChange: (showKeyboard: Boolean, text: String) -> Unit
 ) {
 
     ToDoListTheme {
@@ -63,8 +62,7 @@ fun ToDoInputText(
                 onDone = {
                     keyboardController?.hide()
                     keyboardState = false
-                    onKeyboardStateChange(keyboardState)
-                    onFinished(voiceTextState.value)
+                    onKeyboardStateChange(keyboardState, voiceTextState.value)
                 },
             ),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
@@ -76,7 +74,7 @@ fun ToDoInputText(
                             if (it is PressInteraction.Release) {
                                 if (!keyboardState) {
                                     keyboardState = true
-                                    onKeyboardStateChange(keyboardState)
+                                    onKeyboardStateChange(keyboardState, voiceTextState.value)
                                 }
                             }
                         }
