@@ -4,7 +4,7 @@ This application allow the user to build and manage one or many ToDo list(s).
 
 ## Do List
 
-<img src="app/screenshots/screenshot_1.png" width="100" height="100"/> 
+<img src="app/screenshots/screenshot_1.png" width="400" height="600"/> 
 
 Once an item has been completed the checkbox should be ticked and teh item will be moved to the
 Finished list.
