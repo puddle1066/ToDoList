@@ -10,17 +10,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paullanducci.todolist.ui.widgets.Spinner
 
 @Composable
-fun ToDoChangeListDropDown(model: ToDoItemModel, addButtonVisibility: MutableState<Boolean>) {
+fun ToDoChangeListDropDown(
+    list: HashMap<String, String>,
+    selected: String,
+    onSelectionChanged: (text: String) -> Unit
+) {
     Column {
         Spacer(Modifier.height(1.dp))
         Row(
@@ -35,11 +37,10 @@ fun ToDoChangeListDropDown(model: ToDoItemModel, addButtonVisibility: MutableSta
                 ),
         ) {
             Spinner(
-                model.getListOfLists(),
-                model.getListTitle(model.todoDataItem.listID),
-                {
-                    model.todoDataItem.listID = it
-                    addButtonVisibility.value = model.hasDataChanges()
+                list,
+                preselected = selected,
+                onSelectionChanged = {
+                    onSelectionChanged(it)
                 },
                 listTitle = stringResource(R.string.move_to_list)
             )

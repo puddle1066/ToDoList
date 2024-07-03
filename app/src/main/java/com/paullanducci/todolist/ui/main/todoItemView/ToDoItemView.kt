@@ -138,7 +138,14 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
 
                 item {
-                    ToDoChangeListDropDown(model, addUpdateButtonVisibility)
+                    ToDoChangeListDropDown(
+                        model.getListOfLists(),
+                        model.getListTitle(model.todoDataItem.listID),
+                        onSelectionChanged = {
+                            model.todoDataItem.listID = it
+                            addUpdateButtonVisibility.value = true
+                        }
+                    )
                 }
 
                 item {
