@@ -149,7 +149,12 @@ fun ToDoItemView(model: ToDoItemModel) {
                 }
 
                 item {
-                    ToDoDueDate(model, addUpdateButtonVisibility)
+                    ToDoDueDate(
+                        model.todoDataItem.dueDate,
+                        onDateChange = {
+                            addUpdateButtonVisibility.value = true
+                            model.todoDataItem.dueDate = it
+                        })
                 }
 
                 if (model.isSpeechToTextEnabled) {

@@ -24,7 +24,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -36,15 +35,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paullanducci.todolist.ui.theme.typography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun ToDoDueDate(
-    model: ToDoItemModel,
-    addButtonVisibility: MutableState<Boolean>
+    dueDate: String,
+    onDateChange: (String) -> Unit,
 ) {
     val animationDuration = 100
     val scaleDown = 0.9f
@@ -58,23 +56,21 @@ fun ToDoDueDate(
     val currentDueTime = stringResource(R.string.none_specified)
     val dateState = remember { mutableStateOf(currentDueTime) }
 
-    if (model.todoDataItem.dueDate != "0") {
-        dateState.value = model.todoDataItem.dueDate
+    if (dueDate != "0") {
+        dateState.value = dueDate
     }
 
     DatePickerDialog(
         openDialog,
-        model.todoDataItem.dueDate,
+        dueDate,
         onDateChange = {
-            addButtonVisibility.value = true
+            onDateChange(it)
             dateState.value = it
-            model.todoDataItem.dueDate = it
         },
         onCancel = {},
         onDelete = {
-            model.todoDataItem.dueDate = "0"
-            dateState.value = currentDueTime
-            addButtonVisibility.value = true
+            onDateChange("0")
+            dateState.value = "0"
         }
     )
 
