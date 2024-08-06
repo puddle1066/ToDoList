@@ -148,7 +148,7 @@ fun ToDoItem(
                     color = textColor,
                 )
 
-                if (listName.isNotBlank()) {
+                if (!listName.isNullOrBlank()) {
                     Text(
                         modifier = Modifier
                             .weight(0.5f)
