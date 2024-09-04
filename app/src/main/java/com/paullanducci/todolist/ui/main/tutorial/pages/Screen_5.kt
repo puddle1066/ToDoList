@@ -4,15 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,24 +29,17 @@ import com.paullanducci.todolist.ui.theme.typography
 import com.paullanducci.todolist.ui.widgets.AppButton
 
 @Composable
-fun Screen_last() {
-    val configuration = LocalConfiguration.current
-
-    val screenHeight = configuration.screenHeightDp.dp
-    val screenWidth = configuration.screenWidthDp.dp
-
+fun Screen_5() {
     ToDoListTheme {
         Column(
             modifier = Modifier
-                .width(screenWidth)
-                .height(screenHeight)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            Spacer(Modifier.height(50.dp))
-
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 0.dp, 0.dp, 10.dp)
                     .background(MaterialTheme.colorScheme.background),
                 text = stringResource(id = R.string.screen_5_1),
                 style = typography.bodyMedium,
@@ -82,6 +77,29 @@ fun Screen_last() {
                     .padding(40.dp, 0.dp, 30.dp, 0.dp)
             )
 
+            Text(
+                modifier = Modifier
+                    .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
+                    .background(MaterialTheme.colorScheme.background),
+                text = stringResource(id = R.string.screen_5_4),
+                style = typography.bodyMedium,
+                textAlign = TextAlign.Left,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+
+            Image(
+                painterResource(R.drawable.menu_5_4),
+                contentDescription = "menu_5_4",
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(100.dp)
+                    .padding(40.dp, 0.dp, 30.dp, 0.dp)
+            )
+
+
+            Spacer(Modifier.height(70.dp))
+
             AppButton(
                 onButtonPressed = {
                     showView(ToDoScreens.ToDoListView.name)
@@ -97,5 +115,5 @@ fun Screen_last() {
 @Preview
 @Composable
 fun Preview_5() {
-    Screen_last()
+    Screen_5()
 }

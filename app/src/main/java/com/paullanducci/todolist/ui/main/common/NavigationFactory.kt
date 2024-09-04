@@ -16,8 +16,9 @@ import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemModel
 import com.paullanducci.todolist.ui.main.todoItemView.ToDoItemView
 import com.paullanducci.todolist.ui.main.todoListView.ToDoListModel
 import com.paullanducci.todolist.ui.main.todoListView.ToDoListView
+import com.paullanducci.todolist.ui.main.tutorial.tutorialCarousel
 import com.paullanducci.todolist.util.screen
-import tutorialCarousel
+
 
 @ExperimentalAnimationApi
 @Composable

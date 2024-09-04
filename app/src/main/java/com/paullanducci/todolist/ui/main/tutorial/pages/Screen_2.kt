@@ -3,6 +3,7 @@ package com.paullanducci.todolist.ui.main.tutorial.pages
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -11,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -24,21 +24,15 @@ import com.paullanducci.todolist.ui.theme.typography
 
 @Composable
 fun Screen_2() {
-    val configuration = LocalConfiguration.current
-
-    val screenHeight = configuration.screenHeightDp.dp
-    val screenWidth = configuration.screenWidthDp.dp
-
     ToDoListTheme {
         Column(
             modifier = Modifier
-                .width(screenWidth)
-                .height(screenHeight)
+                .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.background)
         ) {
             Text(
                 modifier = Modifier
-                    .padding(carousel_text_left_margin, 50.dp, 10.dp, 10.dp)
+                    .padding(carousel_text_left_margin, 10.dp, 10.dp, 10.dp)
                     .background(MaterialTheme.colorScheme.background),
                 text = stringResource(id = R.string.screen_2_1),
                 style = typography.bodyMedium,

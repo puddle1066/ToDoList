@@ -1,3 +1,5 @@
+package com.paullanducci.todolist.ui.main.tutorial
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -24,17 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
-import com.paullanducci.todolist.ui.main.tutorial.TutorialContainer
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
 
-
-@SuppressLint(
-    "UnusedMaterialScaffoldPaddingParameter",
-    "CoroutineCreationDuringComposition",
-    "UnusedMaterial3ScaffoldPaddingParameter"
-)
 @OptIn(ExperimentalFoundationApi::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 
 fun tutorialCarousel(model: SettingsModel) {
@@ -48,14 +44,14 @@ fun tutorialCarousel(model: SettingsModel) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .height(70.dp)
                         .background(MaterialTheme.colorScheme.background)
                 ) {
-
                     Text(
                         modifier = Modifier
+                            .padding(top = 30.dp)
                             .fillMaxWidth()
-                            .height(50.dp)
+                            .height(40.dp)
                             .wrapContentHeight(Alignment.CenterVertically)
                             .background(MaterialTheme.colorScheme.background),
                         text = stringResource(id = R.string.tutorial_title),

@@ -12,7 +12,7 @@ import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_1
 import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_2
 import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_3
 import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_4
-import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_last
+import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_5
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -36,7 +36,7 @@ fun TutorialContainer(model: SettingsModel, pagerState: PagerState, count: Int) 
             2 -> Screen_3()
             3 -> Screen_4()
             4 -> {
-                Screen_last()
+                Screen_5()
                 model.setOption(SHOW_INSTRUCTIONS, true)
             }
         }
