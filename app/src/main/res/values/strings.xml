@@ -95,4 +95,5 @@
     <string name="screen_5_1">Pressing this button allows you to add photos associated with this task.</string>
     <string name="screen_5_2">Once a picture has been taken it will be added to your ToDo list and look like.</string>
     <string name="screen_5_3">Lets Start Todo</string>
+    <string name="screen_5_4">You can re-order ToDo Items in a list by taping on and holding an item until it turns gray and then dragging it to the new position in the list.</string>
 </resources>
