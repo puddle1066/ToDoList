@@ -47,7 +47,6 @@ abstract class DataBaseManager : RoomDatabase() {
 
         private var instance: DataBaseManager? = null
 
-
         @Synchronized
         fun getInstance(): DataBaseManager {
             if (instance == null)

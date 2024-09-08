@@ -31,6 +31,7 @@ import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonPr
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoSpeechButton
 import com.paullanducci.todolist.ui.main.todoItemView.datePicker.ToDoDueDate
+import com.paullanducci.todolist.ui.main.todoItemView.dialog.ToDoAddDialog
 import com.paullanducci.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
 import com.paullanducci.todolist.ui.main.todoItemView.imageList.ToDoNewImage
 import com.paullanducci.todolist.ui.main.todoItemView.inputName.ToDoInputName
@@ -41,7 +42,6 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ToDoItemView(model: ToDoItemModel) {
-
     val addUpdateButtonVisibility = remember { mutableStateOf(false) }
 
     val toDoImageData = remember { mutableStateListOf<ToDoImageData>() }
@@ -53,10 +53,12 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.loadData()
 
     val voiceTextState = remember { mutableStateOf(model.getDescription()) }
+
     val initialSpeechButton = voiceTextState.value.isEmpty()
     val toggleSpeechButton = remember { mutableStateOf(initialSpeechButton) }
 
     val errorMessage = remember { mutableStateOf("") }
+    val textToAdd = remember { mutableStateOf("") }
 
     model.speechInputDevice.setInputDeviceListener(object : InputDevice.InputDeviceListener {
         override fun onTryingToGetInput() {
@@ -70,7 +72,12 @@ fun ToDoItemView(model: ToDoItemModel) {
         override fun onInputReceived(input: List<String>) {
             model.speechInputDevice.cancelGettingInput()
 
-            voiceTextState.value = input[0]
+            //If there is existing text then prompt or add to or overwrite existing text
+            if (voiceTextState.value.isNotBlank()) {
+                textToAdd.value = input[0]
+            } else {
+                voiceTextState.value = input[0]
+            }
 
             toggleSpeechButton.value = false
             addUpdateButtonVisibility.value = true
@@ -102,12 +109,31 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.setDescription(voiceTextState.value)
 
     ToDoListTheme {
+        //Ask user if add to or replace existing text
+        when {
+            textToAdd.value.isNotBlank() -> {
+                ToDoAddDialog(
+                    onDismiss = {
+                        textToAdd.value = ""
+                    },
+                    onConfirmation = {
+                        voiceTextState.value += " "
+                        voiceTextState.value += textToAdd.value
+                        textToAdd.value = ""
+                    },
+                    textToAdd.value
+                )
+            }
+        }
+
         Column(
             modifier = Modifier
                 .statusBarsPadding()
                 .navigationBarsPadding()
         ) {
             ToDoItemHeader(model)
+
+
 
             LazyColumn(
                 modifier = Modifier
@@ -130,9 +156,9 @@ fun ToDoItemView(model: ToDoItemModel) {
                             }
                         },
                         onTextChanged = {
-                            addUpdateButtonVisibility.value = true
                             voiceTextState.value = it
                             model.setDescription(it)
+                            addUpdateButtonVisibility.value = true
                         }
                     )
                 }
