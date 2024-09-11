@@ -3,6 +3,7 @@ package com.paullanducci.todolist.ui.main.tutorial.pages
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,9 +19,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
+import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.carousel_text_left_margin
+import com.paullanducci.todolist.ui.main.common.showView
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
+import com.paullanducci.todolist.ui.widgets.AppButton
 
 @Composable
 fun Screen_1() {
@@ -75,6 +79,15 @@ fun Screen_1() {
                 style = typography.bodyMedium,
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.secondary,
+            )
+
+            Spacer(Modifier.height(70.dp))
+
+            AppButton(
+                onButtonPressed = {
+                    showView(ToDoScreens.ToDoListView.name)
+                },
+                textID = R.string.screen_1_4
             )
         }
     }

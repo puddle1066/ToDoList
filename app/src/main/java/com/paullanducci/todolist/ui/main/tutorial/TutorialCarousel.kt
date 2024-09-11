@@ -44,7 +44,7 @@ fun tutorialCarousel(model: SettingsModel) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(70.dp)
+                        .height(90.dp)
                         .background(MaterialTheme.colorScheme.background)
                 ) {
                     Text(

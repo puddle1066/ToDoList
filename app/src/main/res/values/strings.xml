@@ -76,6 +76,7 @@
     <string name="screen_1_1">This Application allows you to create multiple list of jobs or tasks which need to be actioned.</string>
     <string name="screen_1_2">Clicking the three dot\'s display the menu. You can manage ToDo Lists using the "List Maintenance" option.</string>
     <string name="screen_1_3">The down arrow lists of all ToDo item list defined.</string>
+    <string name="screen_1_4">Skip Tutorial</string>
 
     <string name="screen_2_1">Click the check box in a ToDo Item to mark it as complete. All completed items are moved to the "Finished" list.</string>
     <string name="screen_2_2">Individual Items can be removed from the "FINISHED" by clicking on the item and pressing the Delete button. The menu has an option to clear the whole "FINISHED" list.</string>
