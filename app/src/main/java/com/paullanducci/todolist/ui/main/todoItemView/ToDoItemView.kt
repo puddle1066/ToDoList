@@ -133,8 +133,6 @@ fun ToDoItemView(model: ToDoItemModel) {
         ) {
             ToDoItemHeader(model)
 
-
-
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()

@@ -12,7 +12,7 @@ interface ListItemsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(list: ListDataItem)
 
-    @Query("SELECT * FROM ListsData Order BY type ASC")
+    @Query("SELECT * FROM ListsData Order BY type ASC, title")
     fun getAllSortedASC(): List<ListDataItem>
 
     @Query(value = "SELECT * FROM ListsData where type = '$listState_Normal'")

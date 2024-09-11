@@ -48,7 +48,7 @@ fun Spinner(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp)
+            .height(70.dp)
             .background(
                 MaterialTheme.colorScheme.background,
                 shape = RoundedCornerShape(4.dp)
