@@ -98,18 +98,11 @@ fun SettingsView(model: SettingsModel) {
                 SettingsButton(model, R.string.show_tutorial, SHOW_INSTRUCTIONS)
                 SettingsButton(model, R.string.add_top_of_List, ADD_TO_TOP)
 
-                //TODO Not implemented
-//                Spacer(modifier = Modifier.weight(1f))
-//                SettingsButton(
-//                    model,
-//                    R.string.enable_Spoken_Language_output,
-//                    SPOKEN_LANGUAGE_OUTPUT
-//                )
 
-                //Only show backup restore options for Debug Builds
-                if (BuildConfig.BUILD_TYPE == "debug") {
-                    ShowBackupRestoreButtons(model)
-                }
+//                //Only show backup restore options for Debug Builds
+//                if (BuildConfig.BUILD_TYPE == "debug") {
+//                    ShowBackupRestoreButtons(model)
+//                }
 
                 Spacer(modifier = Modifier.weight(1f))
 
