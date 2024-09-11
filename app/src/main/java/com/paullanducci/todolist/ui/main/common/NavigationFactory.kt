@@ -1,5 +1,6 @@
 package com.paullanducci.todolist.ui.main.common
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -19,6 +20,10 @@ import com.paullanducci.todolist.ui.main.todoListView.ToDoListView
 import com.paullanducci.todolist.ui.main.tutorial.tutorialCarousel
 import com.paullanducci.todolist.util.screen
 
+private var lastScreenLaunchedTimeMs: Long = 0
+private val now: Long get() = System.currentTimeMillis()
+
+const val debounceDelayTimeMs = 1000L
 
 @ExperimentalAnimationApi
 @Composable
@@ -49,10 +54,19 @@ fun NavigationFactory(
 }
 
 fun showView(screenId: String) {
-    MainActivity.navHostController?.popBackStack()
-    MainActivity.navHostController?.navigate(screenId)
+    //Debounce logic to stop multiple screen launches using double tap
+    Log.e("AAAAA", "Delay = ${now - lastScreenLaunchedTimeMs}")
+    if (now - lastScreenLaunchedTimeMs >= debounceDelayTimeMs) {
+        MainActivity.navHostController?.popBackStack()
+        MainActivity.navHostController?.navigate(screenId)
+        lastScreenLaunchedTimeMs = now
+    }
 }
 
 fun showViewWithBackStack(screenId: String) {
-    MainActivity.navHostController?.navigate(screenId)
+    Log.e("AAAAA", "Delay = ${now - lastScreenLaunchedTimeMs}")
+    if (now - lastScreenLaunchedTimeMs >= debounceDelayTimeMs) {
+        MainActivity.navHostController?.navigate(screenId)
+        lastScreenLaunchedTimeMs = now
+    }
 }
