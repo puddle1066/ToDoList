@@ -8,6 +8,7 @@
     <string name="move_to_list">"Move To List"</string>
     <string name="image_view">Image View</string>
     <string name="tutoral_carousel">Tutorial Carousel</string>
+    <string name="Privacy_Policy">Privacy Policy</string>
 
     <string name="ToDo_item">ToDo Item</string>
     <string name="please_select">Please Select</string>
@@ -97,4 +98,7 @@
     <string name="screen_5_2">Once a picture has been taken it will be added to your ToDo list and look like.</string>
     <string name="screen_5_3">Lets Start Todo</string>
     <string name="screen_5_4">You can re-order ToDo Items in a list by taping on and holding an item until it turns gray and then dragging it to the new position in the list.</string>
+
+
+    <string name="legal_Text_finished">OK</string>
 </resources>

@@ -17,6 +17,7 @@ enum class ToDoScreens(@StringRes val title: Int) {
     SettingsView(title = R.string.settings),
     ImageItemView(title = R.string.image_view),
     TutorialCarousel(title = R.string.tutoral_carousel),
+    ShowPrivacyPolicy(title = R.string.Privacy_Policy),
     ClearFinishedList(title = -1)
 }
 

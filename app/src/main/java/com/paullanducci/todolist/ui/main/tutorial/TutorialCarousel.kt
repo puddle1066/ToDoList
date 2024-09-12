@@ -33,7 +33,7 @@ import com.paullanducci.todolist.ui.theme.typography
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 
-fun tutorialCarousel(model: SettingsModel) {
+fun TutorialCarousel(model: SettingsModel) {
     val count = 5
 
     val pagerState = rememberPagerState(pageCount = { count })
