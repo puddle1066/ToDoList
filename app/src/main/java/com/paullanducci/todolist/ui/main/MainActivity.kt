@@ -12,7 +12,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import com.paullanducci.speech.input.SpeechInputDevice
@@ -53,35 +58,38 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-
             ToDoListTheme {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary)
+                ) {
 
-                NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
+                    NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
 
-                //Permissions for TEXT TO SPEECH PROCESSING
-                val recordAudioLauncher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.RequestPermission(),
-                    onResult = { isGranted ->
-                        toDoItemModel.isSpeechToTextEnabled = isGranted
+                    val recordAudioLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.RequestPermission(),
+                        onResult = { isGranted ->
+                            toDoItemModel.isSpeechToTextEnabled = isGranted
+                        }
+                    )
+
+                    //Check we have Camera and Storage Access
+                    val cameraLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.RequestPermission(),
+                        onResult = { isGranted ->
+                            toDoItemModel.isPhotoCaptureEnabled = isGranted
+                        }
+                    )
+
+                    LaunchedEffect(key1 = recordAudioLauncher) {
+                        recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
                     }
-                )
 
-                //Check we have Camera and Storage Access
-                val cameraLauncher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.RequestPermission(),
-                    onResult = { isGranted ->
-                        toDoItemModel.isPhotoCaptureEnabled = isGranted
+                    LaunchedEffect(key1 = cameraLauncher) {
+                        cameraLauncher.launch(Manifest.permission.CAMERA)
                     }
-                )
-
-                LaunchedEffect(key1 = recordAudioLauncher) {
-                    recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
                 }
-
-                LaunchedEffect(key1 = cameraLauncher) {
-                    cameraLauncher.launch(Manifest.permission.CAMERA)
-                }
-
             }
         }
 
