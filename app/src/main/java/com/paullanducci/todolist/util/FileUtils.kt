@@ -1,12 +1,14 @@
 package com.paullanducci.todolist.util
 
+import android.os.FileUtils
 import android.util.Log
 import com.paullanducci.todolist.ui.main.MainActivity.Companion.context
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-var TAG = "FileUtils"
+
+private val TAG = FileUtils::class.java.simpleName
 
 var DB_PATH = context?.applicationInfo?.dataDir + "/databases/"
 
@@ -29,7 +31,7 @@ fun copyFile(src: File?, dst: File?) {
 
 fun deleteFile(inputPath: String, inputFile: String) {
     try {
-        File(inputPath + inputFile).delete()
+        assert(File(inputPath + inputFile).delete())
     } catch (e: Exception) {
         Log.e(TAG, "Cannot Delete File because $e.message")
     }
