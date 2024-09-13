@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.paullanducci.todolist.R
 import com.paullanducci.todolist.R.string.legal_Text_finished
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.ui.main.common.showView
@@ -34,7 +36,7 @@ fun LegalTextView(model: LegalTextModel) {
                     .weight(0.09f)
                     .padding(90.dp, 20.dp, 0.dp, 0.dp)
                     .background(MaterialTheme.colorScheme.primary),
-                text = "Privacy",
+                text = stringResource(id = R.string.title_privacy),
                 style = typography.headlineSmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.secondary

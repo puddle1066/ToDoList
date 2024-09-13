@@ -16,15 +16,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.ADD_TO_TOP
 import com.paullanducci.todolist.BuildConfig
-import com.paullanducci.todolist.DATABASE_NAME
 import com.paullanducci.todolist.LATE_COLOR
 import com.paullanducci.todolist.LATE_DAYS
 import com.paullanducci.todolist.OVERDUE_COLOR
@@ -36,13 +33,7 @@ import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.ui.main.common.StandardTopBar
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
-import com.paullanducci.todolist.ui.widgets.AppButton
 import com.paullanducci.todolist.ui.widgets.SettingsButton
-import com.paullanducci.todolist.util.DB_PATH
-import com.paullanducci.todolist.util.copyFile
-import com.paullanducci.todolist.util.deleteFile
-import java.io.File
-import java.text.SimpleDateFormat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -98,13 +89,9 @@ fun SettingsView(model: SettingsModel) {
                 SettingsButton(model, R.string.show_tutorial, SHOW_INSTRUCTIONS)
                 SettingsButton(model, R.string.add_top_of_List, ADD_TO_TOP)
 
+                SettingsLink("Read Our Privacy Policy", ToDoScreens.ShowPrivacyPolicy.name)
 
-//                //Only show backup restore options for Debug Builds
-//                if (BuildConfig.BUILD_TYPE == "debug") {
-//                    ShowBackupRestoreButtons(model)
-//                }
-
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
                     modifier = Modifier.padding(40.dp, 10.dp, 10.dp, 10.dp),
@@ -114,61 +101,9 @@ fun SettingsView(model: SettingsModel) {
                 )
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
-}
-
-@SuppressLint("SimpleDateFormat")
-@Composable
-fun ShowBackupRestoreButtons(model: SettingsModel) {
-
-    val buttonVisible = remember { mutableStateOf<Boolean>(false) }
-    val file = File("$DB_PATH$DATABASE_NAME-back")
-    val formatedDate = SimpleDateFormat("dd-MMM-yyyy").format(file.lastModified())
-
-    buttonVisible.value = file.exists()
-
-    AppButton(
-        onButtonPressed = {
-            model.closeDatabase()
-            copyFile(File(DB_PATH + DATABASE_NAME), File("$DB_PATH$DATABASE_NAME-back"))
-            copyFile(
-                File("$DB_PATH$DATABASE_NAME-shm"),
-                File("$DB_PATH$DATABASE_NAME-shm-back")
-            )
-            copyFile(
-                File("$DB_PATH$DATABASE_NAME-wal"),
-                File("$DB_PATH$DATABASE_NAME-wal-back")
-            )
-            model.openDatabase()
-            buttonVisible.value = file.exists()
-        },
-        textID = R.string.todo_backup
-    )
-
-    val buttonText = stringResource(R.string.todo_restore) + "\n$formatedDate"
-
-    AppButton(
-        onButtonPressed = {
-            model.closeDatabase()
-            deleteFile(DB_PATH, DATABASE_NAME)
-            deleteFile(DB_PATH, "$DATABASE_NAME-shm")
-            deleteFile(DB_PATH, "$DATABASE_NAME-wal")
-
-            copyFile(File("$DB_PATH$DATABASE_NAME-back"), File(DB_PATH + DATABASE_NAME))
-            copyFile(
-                File("$DB_PATH$DATABASE_NAME-shm-back"),
-                File("$DB_PATH$DATABASE_NAME-shm")
-            )
-            copyFile(
-                File("$DB_PATH$DATABASE_NAME-wal-back"),
-                File("$DB_PATH$DATABASE_NAME-wal")
-            )
-            model.openDatabase()
-        },
-        textString = buttonText,
-        buttonVisible = buttonVisible.value
-    )
 }
 
 @Preview
