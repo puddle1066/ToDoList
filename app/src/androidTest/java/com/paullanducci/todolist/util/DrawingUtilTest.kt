@@ -17,7 +17,8 @@ class DrawingUtilTest {
     @Test
     fun imageRotation() {
         val im = bm.rotate(180f)
-        assertTrue(im.width == 200)
+        assertTrue(im.width == 100)
+        assertTrue(im.height == 200)
     }
 
     @Test

@@ -8,5 +8,6 @@ class DateUtilTest {
     @Test
     fun testGetCurrentDateAsString() {
         assertTrue(getCurrentDateAsString() != "")
+        assertTrue(getCurrentDateAsString().length == 18)
     }
 }
