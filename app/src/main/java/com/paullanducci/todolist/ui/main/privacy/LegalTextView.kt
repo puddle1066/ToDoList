@@ -33,7 +33,7 @@ fun LegalTextView(model: LegalTextModel) {
         ) {
             Text(
                 modifier = Modifier
-                    .weight(0.09f)
+                    .weight(0.12f)
                     .padding(90.dp, 20.dp, 0.dp, 0.dp)
                     .background(MaterialTheme.colorScheme.primary),
                 text = stringResource(id = R.string.title_privacy),
