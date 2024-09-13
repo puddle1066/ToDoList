@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.database
+package com.paullanducci.todolist.di.database
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.paullanducci.todolist.di.database.data.ToDoImageData

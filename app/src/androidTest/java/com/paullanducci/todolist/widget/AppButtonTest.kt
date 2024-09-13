@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ui.widgets.AppButton
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +21,7 @@ class AppButtonTest {
         composeTestTextButton.setContent {
             AppButton(
                 onButtonPressed = {},
-                textID = com.paullanducci.todolist.R.string.Continue
+                textID = R.string.Continue
             )
         }
         composeTestTextButton.onNodeWithText("Continue").assertIsDisplayed()
@@ -28,7 +29,7 @@ class AppButtonTest {
 
     @Test
     fun previewAppButtonFreeFormatText() {
-        var buttonText = "Free Format Text"
+        val buttonText = "Free Format Text"
         composeTestTextButton.setContent {
             AppButton(
                 onButtonPressed = {},
