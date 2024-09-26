@@ -31,7 +31,7 @@ fun copyFile(src: File?, dst: File?) {
 
 fun deleteFile(inputPath: String, inputFile: String) {
     try {
-        assert(File(inputPath + inputFile).delete())
+        File(inputPath + inputFile).delete()
     } catch (e: Exception) {
         Log.e(TAG, "Cannot Delete File because $e.message")
     }

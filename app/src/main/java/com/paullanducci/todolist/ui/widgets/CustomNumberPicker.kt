@@ -9,7 +9,7 @@ import android.widget.NumberPicker
 import androidx.core.content.res.ResourcesCompat
 import com.paullanducci.todolist.R
 
-class CustomNumberPicker(val ctx: Context) : NumberPicker(ctx, null) {
+class CustomNumberPicker(context: Context) : NumberPicker(context, null) {
     val tfs: Typeface? = ResourcesCompat.getFont(context, R.font.montserrat_medium)
 
     override fun addView(child: View) {

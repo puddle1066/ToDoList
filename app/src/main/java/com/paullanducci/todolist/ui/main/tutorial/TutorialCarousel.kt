@@ -7,27 +7,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
-import com.paullanducci.todolist.ui.theme.typography
 
 @OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -40,27 +32,6 @@ fun TutorialCarousel(model: SettingsModel) {
 
     ToDoListTheme {
         Scaffold(
-            topBar = {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(90.dp)
-                        .background(MaterialTheme.colorScheme.background)
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 30.dp)
-                            .fillMaxWidth()
-                            .height(40.dp)
-                            .wrapContentHeight(Alignment.CenterVertically)
-                            .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.tutorial_title),
-                        style = typography.titleLarge,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
-            },
             content = {
                 TutorialContainer(model, pagerState, count)
             },
@@ -80,7 +51,7 @@ fun TutorialCarousel(model: SettingsModel) {
                                 .padding(4.dp)
                                 .clip(CircleShape)
                                 .background(color)
-                                .size(16.dp)
+                                .size(7.dp)
                         )
                     }
                 }
