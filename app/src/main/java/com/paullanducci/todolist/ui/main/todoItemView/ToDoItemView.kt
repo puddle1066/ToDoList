@@ -31,7 +31,7 @@ import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoCameraButtonPr
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoItemAddButton
 import com.paullanducci.todolist.ui.main.todoItemView.buttons.ToDoSpeechButton
 import com.paullanducci.todolist.ui.main.todoItemView.datePicker.ToDoDueDate
-import com.paullanducci.todolist.ui.main.todoItemView.dialog.ToDoAddDialog
+import com.paullanducci.todolist.ui.main.todoItemView.dialog.ToDoUpdateTextDialog
 import com.paullanducci.todolist.ui.main.todoItemView.imageList.ToDoImageListItem
 import com.paullanducci.todolist.ui.main.todoItemView.imageList.ToDoNewImage
 import com.paullanducci.todolist.ui.main.todoItemView.inputName.ToDoInputName
@@ -59,6 +59,8 @@ fun ToDoItemView(model: ToDoItemModel) {
 
     val errorMessage = remember { mutableStateOf("") }
     val textToAdd = remember { mutableStateOf("") }
+
+    val dialogState = remember { mutableStateOf(true) }
 
     model.speechInputDevice.setInputDeviceListener(object : InputDevice.InputDeviceListener {
         override fun onTryingToGetInput() {
@@ -105,25 +107,30 @@ fun ToDoItemView(model: ToDoItemModel) {
         errorMessage.value = ""
     }
 
-    // Put valur from mutable var into update buffer
+    // Put value from mutable var into update buffer
     model.setDescription(voiceTextState.value)
 
     ToDoListTheme {
         //Ask user if add to or replace existing text
-        when {
-            textToAdd.value.isNotBlank() -> {
-                ToDoAddDialog(
-                    onDismiss = {
-                        textToAdd.value = ""
-                    },
-                    onConfirmation = {
-                        voiceTextState.value += " "
-                        voiceTextState.value += textToAdd.value
-                        textToAdd.value = ""
-                    },
-                    textToAdd.value
-                )
-            }
+
+        if (textToAdd.value.length > 0) {
+            ToDoUpdateTextDialog(
+                dialogText = textToAdd.value,
+                onIgnore = {
+                    textToAdd.value = ""
+                },
+                onAppend = {
+                    voiceTextState.value += " "
+                    voiceTextState.value += textToAdd.value
+                    textToAdd.value = ""
+                },
+                onReplace = {
+                    voiceTextState.value = textToAdd.value
+                    textToAdd.value = ""
+                },
+                dialogState = dialogState
+            )
+
         }
 
         Column(

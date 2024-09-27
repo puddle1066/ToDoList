@@ -103,4 +103,11 @@
     <string name="legal_Text_finished">OK</string>
 
     <string name="title_privacy">Privacy</string>
+    <string name="dialog_info_icon">info Icon</string>
+    <string name="dialog_update_current_text">Update Current Text By</string>
+    <string name="replace">Replace</string>
+    <string name="append">Append</string>
+    <string name="ignore">Ignore</string>
+
+
 </resources>
