@@ -8,11 +8,11 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import com.paullanducci.todolist.SHOW_INSTRUCTIONS
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
-import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_1
-import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_2
-import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_3
-import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_4
-import com.paullanducci.todolist.ui.main.tutorial.pages.Screen_5
+import com.paullanducci.todolist.ui.main.tutorial.pages.TutorialPageFive
+import com.paullanducci.todolist.ui.main.tutorial.pages.TutorialPageFour
+import com.paullanducci.todolist.ui.main.tutorial.pages.TutorialPageOne
+import com.paullanducci.todolist.ui.main.tutorial.pages.TutorialPageThree
+import com.paullanducci.todolist.ui.main.tutorial.pages.TutorialPageTwo
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -31,12 +31,12 @@ fun TutorialContainer(model: SettingsModel, pagerState: PagerState, count: Int) 
         flingBehavior = fling
     ) { page ->
         when (page) {
-            0 -> Screen_1()
-            1 -> Screen_2()
-            2 -> Screen_3()
-            3 -> Screen_4()
+            0 -> TutorialPageOne()
+            1 -> TutorialPageTwo()
+            2 -> TutorialPageThree()
+            3 -> TutorialPageFour()
             4 -> {
-                Screen_5()
+                TutorialPageFive()
                 model.setOption(SHOW_INSTRUCTIONS, true)
             }
         }

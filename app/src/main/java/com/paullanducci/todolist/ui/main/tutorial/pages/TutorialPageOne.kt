@@ -3,8 +3,9 @@ package com.paullanducci.todolist.ui.main.tutorial.pages
 import TutorialScreenContainer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -27,11 +28,14 @@ import com.paullanducci.todolist.ui.theme.typography
 import com.paullanducci.todolist.ui.widgets.AppButton
 
 @Composable
-fun Screen_1() {
+fun TutorialPageOne() {
     ToDoListTheme {
         TutorialScreenContainer(
             {
-                Column() {
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top
+                ) {
                     Text(
                         modifier = Modifier
                             .padding(carousel_text_left_margin, 0.dp, 0.dp, 10.dp)
@@ -47,7 +51,7 @@ fun Screen_1() {
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             .width(350.dp)
-                            .height(200.dp)
+                            .height(180.dp)
                     )
 
                     Text(
@@ -65,21 +69,19 @@ fun Screen_1() {
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             .width(350.dp)
-                            .height(200.dp)
-                            .padding(60.dp, 0.dp, 60.dp, 0.dp)
+                            .height(180.dp)
+                            .padding(60.dp, 0.dp, 0.dp, 0.dp)
                     )
 
                     Text(
                         modifier = Modifier
-                            .padding(carousel_text_left_margin, 10.dp, 10.dp, 10.dp)
+                            .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                             .background(MaterialTheme.colorScheme.background),
                         text = stringResource(id = R.string.screen_1_3),
                         style = typography.bodyMedium,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.secondary,
                     )
-
-                    Spacer(Modifier.height(10.dp))
 
                     AppButton(
                         onButtonPressed = {
@@ -95,7 +97,7 @@ fun Screen_1() {
 
 @Preview
 @Composable
-fun Preview_1() {
-    Screen_1()
+fun TutorialPageOnePreview() {
+    TutorialPageOne()
 }
 

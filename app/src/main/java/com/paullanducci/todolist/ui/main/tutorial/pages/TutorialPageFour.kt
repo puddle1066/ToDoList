@@ -25,7 +25,7 @@ import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
 
 @Composable
-fun Screen_3() {
+fun TutorialPageFour() {
     ToDoListTheme {
         TutorialScreenContainer(
             {
@@ -35,100 +35,61 @@ fun Screen_3() {
                 ) {
                     Text(
                         modifier = Modifier
-                            .padding(carousel_text_left_margin, 0.dp, 10.dp, 10.dp)
+                            .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                             .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.screen_3_6),
-                        style = typography.bodyLarge,
+                        text = stringResource(id = R.string.screen_4_1),
+                        style = typography.bodyMedium,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.secondary,
+                    )
+                    Image(
+                        painterResource(R.drawable.menu_4_1),
+                        contentDescription = "menu_4_1",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .width(350.dp)
+                            .height(100.dp)
+                            .padding(40.dp, 10.dp, 30.dp, 0.dp)
                     )
 
                     Text(
                         modifier = Modifier
                             .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                             .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.screen_3_1),
+                        text = stringResource(id = R.string.screen_4_2),
                         style = typography.bodyMedium,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.secondary,
                     )
+
                     Image(
-                        painterResource(R.drawable.menu_3_1),
-                        contentDescription = "menu_3_1",
-                        contentScale = ContentScale.Fit,
+                        painterResource(R.drawable.screenshot_5),
+                        contentDescription = "screenshot_5",
+                        contentScale = ContentScale.FillWidth,
                         modifier = Modifier
                             .width(350.dp)
-                            .height(50.dp)
-                            .padding(40.dp, 10.dp, 30.dp, 0.dp)
+                            .height(410.dp)
+                            .padding(40.dp, 10.dp, 10.dp, 0.dp)
                     )
 
                     Text(
                         modifier = Modifier
-                            .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
+                            .padding(carousel_text_left_margin, 0.dp, 10.dp, 0.dp)
                             .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.screen_3_2),
+                        text = stringResource(id = R.string.screen_4_3),
                         style = typography.bodyMedium,
                         textAlign = TextAlign.Left,
                         color = MaterialTheme.colorScheme.secondary,
                     )
 
-                    Image(
-                        painterResource(R.drawable.menu_3_6),
-                        contentDescription = "menu_3_6",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .width(350.dp)
-                            .height(100.dp)
-                            .padding(40.dp, 0.dp, 30.dp, 0.dp)
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
-                            .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.screen_3_3),
-                        style = typography.bodyMedium,
-                        textAlign = TextAlign.Left,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                    Image(
-                        painterResource(R.drawable.menu_3_4),
-                        contentDescription = "menu_3_4",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .width(350.dp)
-                            .height(100.dp)
-                            .padding(40.dp, 0.dp, 30.dp, 0.dp)
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .padding(carousel_text_left_margin, 10.dp, 0.dp, 10.dp)
-                            .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.screen_3_4),
-                        style = typography.bodyMedium,
-                        textAlign = TextAlign.Left,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-
-                    Image(
-                        painterResource(R.drawable.menu_3_2),
-                        contentDescription = "menu_3_2",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .width(350.dp)
-                            .height(100.dp)
-                            .padding(40.dp, 0.dp, 30.dp, 0.dp)
-                    )
                 }
             }
         )
     }
 }
 
-
 @Preview
 @Composable
-fun Preview_3() {
-    Screen_3()
+fun TutorialPageFourPreview() {
+    TutorialPageFour()
 }
