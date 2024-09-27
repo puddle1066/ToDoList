@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ui.widgets.CustomNumberPicker
-import com.paullanducci.todolist.ui.widgets.getListOfColors
+import com.paullanducci.todolist.ui.widgets.ListOfColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -119,7 +119,7 @@ fun SettingsAlertPicker(
 
         //Position to current selected color
         val state = rememberLazyListState()
-        val listOfColors = getListOfColors()
+        val listOfColors = ListOfColors()
         val selectedIndex = listOfColors.indexOf(currentColor)
 
         if (selectedIndex > -1) {

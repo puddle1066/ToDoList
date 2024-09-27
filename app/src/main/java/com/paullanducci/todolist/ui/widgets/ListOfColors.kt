@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun getListOfColors(): ArrayList<Color> {
+fun ListOfColors(): ArrayList<Color> {
     val list = ArrayList<Color>()
 
     var red = 0
