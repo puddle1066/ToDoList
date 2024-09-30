@@ -13,6 +13,8 @@ The UI has been stylised using android Material Design tools.
 The speech recognition uses a LLM supplied by https://alphacephei.com/vosk/ instead of using the 
 google API.
 
+The Application uses Googles Crashlytics as a maintenance tool. 
+
 
 
 
