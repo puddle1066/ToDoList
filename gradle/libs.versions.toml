@@ -46,6 +46,7 @@ runtimeLivedataVersion = "1.6.8"
 rxjava = "3.1.8"
 rxandroid = "3.0.2"
 ui = "1.6.8"
+uiTestJunit4 = "1.7.2"
 uiTestManifest = "1.6.8"
 uiTooling = "1.6.8"
 uiToolingPreview = "1.6.8"
@@ -81,6 +82,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedataVersion" }
 androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiToolingPreview" }
+androidx-ui-test-junit4-v172 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifest" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreviewVersion" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }

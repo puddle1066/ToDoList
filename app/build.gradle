@@ -40,13 +40,27 @@ android {
         }
     }
 
+    signingConfigs {
+
+        release {
+            storeFile file("/Users/Paul/WORKSPACE/Google Signing Keys/OldFarts.keystore")
+            storePassword "Eric1B00"
+            keyAlias "Eric"
+            keyPassword "Eric1B00"
+
+            // Optional, specify signing versions used
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             debuggable false
             crunchPngs true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
@@ -104,7 +118,6 @@ dependencies {
     implementation libs.junit.ktx
     implementation libs.androidx.foundation.android
     implementation libs.androidx.tools.core
-    implementation libs.firebase.crashlytics.buildtools
     debugImplementation libs.androidx.ui.tooling
 
     // Optional - Included automatically by material, only add when you need
@@ -141,14 +154,17 @@ dependencies {
     implementation libs.accompanist.pager.indicators
     implementation libs.androidx.work.runtime.ktx
 
-    //Testing
+    //Integration Testing
     testImplementation libs.junit
-
-    // UI Tests
     androidTestImplementation libs.androidx.ui.test.junit4
     debugImplementation libs.androidx.ui.test.manifest
-
     androidTestImplementation(libs.androidx.runner)
+
+    // UI Tests for Compose
+    // Test rules and transitive dependencies:
+    androidTestImplementation(libs.androidx.ui.test.junit4.v172)
+    // Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     //Room Database support Libraries
     implementation libs.androidx.room.runtime
