@@ -1,6 +1,5 @@
 package com.paullanducci.todolist.di.database
 
-import android.util.Log
 import com.paullanducci.todolist.di.database.data.ListDataItem
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.di.database.data.ToDoImageData
@@ -209,7 +208,7 @@ class RoomDataProvider @Inject constructor() {
             try {
                 DataBaseManager.getInstance().getToDoItemsDao().getLastSequence().sequence
             } catch (e: Exception) {
-                Log.e(TAG, "getLastSequence - $e")
+                return@withContext 0
             }
         }
     }
@@ -221,7 +220,7 @@ class RoomDataProvider @Inject constructor() {
             try {
                 DataBaseManager.getInstance().getToDoItemsDao().getFirstSequence().sequence
             } catch (e: Exception) {
-                Log.e(TAG, "getFirstSequence - $e")
+                return@withContext 0
             }
         }
     }
