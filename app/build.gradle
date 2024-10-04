@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId "com.paullanducci.todolist"
-        minSdk 29
+        minSdkVersion 21
         targetSdk 34
         versionCode = getCommitCount()
         versionName = "1.0.0"
@@ -195,7 +195,7 @@ dependencies {
     implementation libs.rxandroid
 
     // Vosk
-    implementation 'net.java.dev.jna:jna:5.14.0@aar'
+    implementation libs.jna
     implementation libs.vosk.android
 
 }
