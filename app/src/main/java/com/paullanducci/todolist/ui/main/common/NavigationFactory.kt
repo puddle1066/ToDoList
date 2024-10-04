@@ -2,6 +2,8 @@ package com.paullanducci.todolist.ui.main.common
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.paullanducci.todolist.SHOW_INSTRUCTIONS
@@ -34,6 +36,25 @@ fun NavigationFactory(
     toDoItemModel: ToDoItemModel,
     settingsModel: SettingsModel
 ) {
+    val hasPermission = remember { mutableStateOf(false) }
+
+    CheckPermissions(hasPermission, toDoItemModel)
+
+    if (hasPermission.value) {
+        BuildNavHost(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
+    } else {
+        //TODO Display app cannot run screen
+    }
+}
+
+@Composable
+fun BuildNavHost(
+    toDoListModel: ToDoListModel,
+    listItemsModel: ListItemsModel,
+    toDoItemModel: ToDoItemModel,
+    settingsModel: SettingsModel
+) {
+
     var startScreen = ToDoScreens.TutorialCarousel.name
     if (!settingsModel.getOption(SHOW_INSTRUCTIONS)) {
         startScreen = ToDoScreens.ToDoListView.name

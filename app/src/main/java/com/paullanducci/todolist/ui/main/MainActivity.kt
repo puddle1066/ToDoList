@@ -5,9 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -38,8 +36,8 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalAnimationApi::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MissingPermission")
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         actionBar?.hide()
@@ -66,32 +64,7 @@ class MainActivity : ComponentActivity() {
                         .navigationBarsPadding()
                         .background(MaterialTheme.colorScheme.primary)
                 ) {
-
                     NavigationFactory(toDoListModel, listItemsModel, toDoItemModel, settingsModel)
-
-                    val recordAudioLauncher = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.RequestPermission(),
-                        onResult = { isGranted ->
-                            toDoItemModel.isSpeechToTextEnabled = isGranted
-                        }
-                    )
-
-
-//                    //Check we have Camera and Storage Access
-//                    val cameraLauncher = rememberLauncherForActivityResult(
-//                        contract = ActivityResultContracts.RequestPermission(),
-//                        onResult = { isGranted ->
-//                            toDoItemModel.isPhotoCaptureEnabled = isGranted
-//                        }
-//                    )
-//
-//                    LaunchedEffect(key1 = recordAudioLauncher) {
-//                        recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
-//                    }
-//
-//                    LaunchedEffect(key1 = cameraLauncher) {
-//                        cameraLauncher.launch(Manifest.permission.CAMERA)
-//                    }
                 }
             }
         }
@@ -106,43 +79,6 @@ class MainActivity : ComponentActivity() {
 
     private fun buildSpeechOutputDevice(): SpeechOutputDevice {
         return AndroidTtsSpeechDevice(this, Locale.getDefault())
-    }
-
-    private fun requestPermissions() {
-        launch {
-            //CoroutineScope
-
-            val permissionResult =
-                PermissionManager.requestPermissions(           //Suspends the coroutine
-                    this@Fragment,
-                    REQUEST_ID,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_CONTACTS,
-                    Manifest.permission.CAMERA
-                )
-
-            //Resume coroutine once result is ready
-            when (permissionResult) {
-                is PermissionResult.PermissionGranted -> {
-                    //Add your logic here after user grants permission(s)
-                }
-
-                is PermissionResult.PermissionDenied -> {
-                    //Add your logic to handle permission denial
-                }
-
-                is PermissionResult.PermissionDeniedPermanently -> {
-                    //Add your logic here if user denied permission(s) permanently.
-                    //Ideally you should ask user to manually go to settings and enable permission(s)
-                }
-
-                is PermissionResult.ShowRational -> {
-                    //If user denied permission frequently then she/he is not clear about why you are asking this permission.
-                    //This is your chance to explain them why you need permission.
-                }
-            }
-
-        }
     }
 
     override fun onDestroy() {

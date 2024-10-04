@@ -47,6 +47,7 @@ open class ToDoItemModel @Inject constructor(
     fun loadData() {
         runBlocking {
             if (MainActivity.itemId.isBlank()) {
+                var seq = dataBaseProvider.getLastSequence()
                 todoDataItem = ToDoDataItem(
                     UUID.randomUUID().toString(),
                     MainActivity.listId,
@@ -54,7 +55,7 @@ open class ToDoItemModel @Inject constructor(
                     "0",
                     "0",
                     getCurrentDateAsString(),
-                    dataBaseProvider.getLastSequence() + 1
+                    seq + 1
                 )
                 todoItemIsNew = true
             } else {
@@ -62,19 +63,6 @@ open class ToDoItemModel @Inject constructor(
                 todoDataItem = dataBaseProvider.getToDoItem(MainActivity.itemId)
             }
         }
-    }
-
-    fun hasDataChanges(): Boolean {
-        var hasChanges: Boolean
-        runBlocking {
-            val databaseItem = dataBaseProvider.getToDoItem(todoDataItem.itemId)
-            if (databaseItem != null) {
-                hasChanges = databaseItem.equals(todoDataItem.toString())
-            } else {
-                hasChanges = true  //New record so has changes
-            }
-        }
-        return hasChanges
     }
 
     fun isNewItem(): Boolean {

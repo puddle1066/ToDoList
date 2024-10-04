@@ -198,6 +198,4 @@ dependencies {
     //  implementation libs.jna
     implementation libs.vosk.android
 
-    implementation 'com.sagar:coroutinespermission:[latest_version]'
-
-
+}
