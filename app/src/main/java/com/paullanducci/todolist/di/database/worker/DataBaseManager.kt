@@ -71,7 +71,7 @@ abstract class DataBaseManager : RoomDatabase() {
                 Log.e(TAG, "Create Database")
 
                 try {
-                    var todoListId = UUID.randomUUID().toString()
+                    val todoListId = UUID.randomUUID().toString()
                     db.execSQL(
                         "INSERT INTO ListsData(listId, title, type) VALUES('$todoListId','ToDo', '$listState_Normal');"
                     )
@@ -87,6 +87,9 @@ abstract class DataBaseManager : RoomDatabase() {
                     db.execSQL("INSERT INTO Config(id, value) VALUES('OverdueColor','#000000');")
                     db.execSQL("INSERT INTO Config(id, value) VALUES('LateDays','0');")
                     db.execSQL("INSERT INTO Config(id, value) VALUES('LateColor','#000000');")
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('showInstructions','true');")
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('addToTop','true');")
+                    db.execSQL("INSERT INTO Config(id, value) VALUES('enableSpokenLanguage','true');")
 
                 } catch (ex: Exception) {
                     Log.e(TAG, "Error seeding database", ex)

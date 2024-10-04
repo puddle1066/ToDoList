@@ -1,6 +1,5 @@
 package com.paullanducci.todolist.ui.main
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
@@ -43,8 +41,8 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
-        actionBar?.hide()
 
+        actionBar?.hide()
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -78,21 +76,22 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
-                    //Check we have Camera and Storage Access
-                    val cameraLauncher = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.RequestPermission(),
-                        onResult = { isGranted ->
-                            toDoItemModel.isPhotoCaptureEnabled = isGranted
-                        }
-                    )
 
-                    LaunchedEffect(key1 = recordAudioLauncher) {
-                        recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
-                    }
-
-                    LaunchedEffect(key1 = cameraLauncher) {
-                        cameraLauncher.launch(Manifest.permission.CAMERA)
-                    }
+//                    //Check we have Camera and Storage Access
+//                    val cameraLauncher = rememberLauncherForActivityResult(
+//                        contract = ActivityResultContracts.RequestPermission(),
+//                        onResult = { isGranted ->
+//                            toDoItemModel.isPhotoCaptureEnabled = isGranted
+//                        }
+//                    )
+//
+//                    LaunchedEffect(key1 = recordAudioLauncher) {
+//                        recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
+//                    }
+//
+//                    LaunchedEffect(key1 = cameraLauncher) {
+//                        cameraLauncher.launch(Manifest.permission.CAMERA)
+//                    }
                 }
             }
         }
@@ -107,6 +106,43 @@ class MainActivity : ComponentActivity() {
 
     private fun buildSpeechOutputDevice(): SpeechOutputDevice {
         return AndroidTtsSpeechDevice(this, Locale.getDefault())
+    }
+
+    private fun requestPermissions() {
+        launch {
+            //CoroutineScope
+
+            val permissionResult =
+                PermissionManager.requestPermissions(           //Suspends the coroutine
+                    this@Fragment,
+                    REQUEST_ID,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.CAMERA
+                )
+
+            //Resume coroutine once result is ready
+            when (permissionResult) {
+                is PermissionResult.PermissionGranted -> {
+                    //Add your logic here after user grants permission(s)
+                }
+
+                is PermissionResult.PermissionDenied -> {
+                    //Add your logic to handle permission denial
+                }
+
+                is PermissionResult.PermissionDeniedPermanently -> {
+                    //Add your logic here if user denied permission(s) permanently.
+                    //Ideally you should ask user to manually go to settings and enable permission(s)
+                }
+
+                is PermissionResult.ShowRational -> {
+                    //If user denied permission frequently then she/he is not clear about why you are asking this permission.
+                    //This is your chance to explain them why you need permission.
+                }
+            }
+
+        }
     }
 
     override fun onDestroy() {

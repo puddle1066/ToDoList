@@ -35,7 +35,7 @@ fun NavigationFactory(
     settingsModel: SettingsModel
 ) {
     var startScreen = ToDoScreens.TutorialCarousel.name
-    if (settingsModel.getOption(SHOW_INSTRUCTIONS)) {
+    if (!settingsModel.getOption(SHOW_INSTRUCTIONS)) {
         startScreen = ToDoScreens.ToDoListView.name
     }
 

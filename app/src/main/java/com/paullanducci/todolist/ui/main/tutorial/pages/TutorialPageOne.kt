@@ -20,15 +20,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
+import com.paullanducci.todolist.SHOW_INSTRUCTIONS
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.carousel_text_left_margin
+import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.ui.main.common.showView
+import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
 import com.paullanducci.todolist.ui.widgets.AppButton
 
 @Composable
-fun TutorialPageOne() {
+fun TutorialPageOne(model: SettingsModel) {
     ToDoListTheme {
         TutorialScreenContainer(
             {
@@ -85,6 +88,7 @@ fun TutorialPageOne() {
 
                     AppButton(
                         onButtonPressed = {
+                            model.setOption(SHOW_INSTRUCTIONS, false)
                             showView(ToDoScreens.ToDoListView.name)
                         },
                         textID = R.string.screen_1_4
@@ -98,6 +102,6 @@ fun TutorialPageOne() {
 @Preview
 @Composable
 fun TutorialPageOnePreview() {
-    TutorialPageOne()
+    TutorialPageOne(SettingsModel(RoomDataProvider()))
 }
 

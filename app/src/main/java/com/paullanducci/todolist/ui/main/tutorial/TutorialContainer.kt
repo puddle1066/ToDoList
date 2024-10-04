@@ -31,13 +31,13 @@ fun TutorialContainer(model: SettingsModel, pagerState: PagerState, count: Int) 
         flingBehavior = fling
     ) { page ->
         when (page) {
-            0 -> TutorialPageOne()
+            0 -> TutorialPageOne(model)
             1 -> TutorialPageTwo()
             2 -> TutorialPageThree()
             3 -> TutorialPageFour()
             4 -> {
                 TutorialPageFive()
-                model.setOption(SHOW_INSTRUCTIONS, true)
+                model.setOption(SHOW_INSTRUCTIONS, false)
             }
         }
     }
