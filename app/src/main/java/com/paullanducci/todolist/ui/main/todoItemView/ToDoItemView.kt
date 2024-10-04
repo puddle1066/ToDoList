@@ -211,9 +211,15 @@ fun ToDoItemView(model: ToDoItemModel) {
                         ToDoNewImage(model, item, toDoImagesNew, addUpdateButtonVisibility)
                     }
 
-                    item {
-                        Spacer(Modifier.height(1.dp))
-                        ToDoCameraButtonProcessing(model, toDoImagesNew, addUpdateButtonVisibility)
+                    if (model.isPhotoCaptureEnabled) {
+                        item {
+                            Spacer(Modifier.height(1.dp))
+                            ToDoCameraButtonProcessing(
+                                model,
+                                toDoImagesNew,
+                                addUpdateButtonVisibility
+                            )
+                        }
                     }
                 }
 

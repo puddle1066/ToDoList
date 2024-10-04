@@ -39,7 +39,7 @@ open class ToDoItemModel @Inject constructor(
 
     var todoItemIsNew: Boolean = false
     var isSpeechToTextEnabled = false
-    var isPhotoCaptureEnabled = true
+    var isPhotoCaptureEnabled = false
 
     lateinit var speechInputDevice: SpeechInputDevice
     lateinit var speechOutputDevice: SpeechOutputDevice
