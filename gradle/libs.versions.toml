@@ -23,6 +23,7 @@ gradleVersion = "8.4.2"
 gson = "2.11.0"
 hiltAndroid = "2.51.1"
 hiltCompiler = "2.51.1"
+jna = "5.14.0"
 junit = "4.13.2"
 junitKtx = "1.2.1"
 kotlin = "1.9.10"
@@ -102,6 +103,7 @@ hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", vers
 hilt-android-v248 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler-v248 = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 jetbrains-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+jna = { module = "net.java.dev.jna:jna", version.ref = "jna" }
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
