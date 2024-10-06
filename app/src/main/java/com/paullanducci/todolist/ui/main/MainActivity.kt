@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import com.paullanducci.speech.input.SpeechInputDevice
@@ -43,6 +44,8 @@ class MainActivity : ComponentActivity() {
         actionBar?.hide()
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        installSplashScreen()
 
         val toDoListModel: ToDoListModel by viewModels()
         val listItemsModel: ListItemsModel by viewModels()
