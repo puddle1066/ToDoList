@@ -1,7 +1,7 @@
 package com.paullanducci.todolist.util
 
 import androidx.core.os.LocaleListCompat
-import com.paullanducci.speech.input.VoskInputDevice.Companion.MODEL_URLS
+import com.paullanducci.todolist.speech.input.VoskInputDevice.Companion.MODEL_URLS
 import org.junit.Assert
 import org.junit.Test
 import java.util.Locale

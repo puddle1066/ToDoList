@@ -1,4 +1,4 @@
-package com.paullanducci.speech.output.speech
+package com.paullanducci.todolist.speech.output.speech
 
 interface SpeechOutputDevice {
     fun speak(speechOutput: String)

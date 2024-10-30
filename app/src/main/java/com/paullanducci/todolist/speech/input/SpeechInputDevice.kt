@@ -1,4 +1,4 @@
-package com.paullanducci.speech.input
+package com.paullanducci.todolist.speech.input
 
 
 abstract class SpeechInputDevice : InputDevice() {

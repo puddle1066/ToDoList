@@ -3,14 +3,14 @@ package com.paullanducci.todolist.ui.main.todoItemView
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.paullanducci.speech.input.InputDevice.InputDeviceListener
-import com.paullanducci.speech.input.SpeechInputDevice
-import com.paullanducci.speech.output.speech.SpeechOutputDevice
 import com.paullanducci.todolist.ADD_TO_TOP
 import com.paullanducci.todolist.base.BaseViewModel
 import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.di.database.data.ToDoImageData
+import com.paullanducci.todolist.speech.input.InputDevice.InputDeviceListener
+import com.paullanducci.todolist.speech.input.SpeechInputDevice
+import com.paullanducci.todolist.speech.output.speech.SpeechOutputDevice
 import com.paullanducci.todolist.ui.main.MainActivity
 import com.paullanducci.todolist.util.encodeTobase64
 import com.paullanducci.todolist.util.getCurrentDateAsString

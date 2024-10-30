@@ -40,7 +40,10 @@ fun ToDoUpdateTextDialog(
     onIgnore: () -> Unit,
     dialogState: MutableState<Boolean>
 ) {
-    Dialog(onDismissRequest = { dialogState.value = false }) {
+    Dialog(onDismissRequest = {
+        dialogState.value = false
+        onIgnore()
+    }) {
         TextDialog(dialogText, onReplace, onAppend, onIgnore, dialogState)
     }
 }

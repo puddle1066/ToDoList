@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
-import com.paullanducci.speech.input.SpeechInputDevice
-import com.paullanducci.speech.input.VoskInputDevice
-import com.paullanducci.speech.output.speech.AndroidTtsSpeechDevice
-import com.paullanducci.speech.output.speech.SpeechOutputDevice
 import com.paullanducci.todolist.LAST_LIST_ID
+import com.paullanducci.todolist.speech.input.SpeechInputDevice
+import com.paullanducci.todolist.speech.input.VoskInputDevice
+import com.paullanducci.todolist.speech.output.speech.AndroidTtsSpeechDevice
+import com.paullanducci.todolist.speech.output.speech.SpeechOutputDevice
 import com.paullanducci.todolist.ui.main.common.NavigationFactory
 import com.paullanducci.todolist.ui.main.listItemsView.ListItemsModel
 import com.paullanducci.todolist.ui.main.settingsView.SettingsModel
