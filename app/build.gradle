@@ -6,6 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.google.devtools.ksp'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 int getCommitCount() {
@@ -21,14 +22,14 @@ int getCommitCount() {
 
 android {
     namespace "com.paullanducci.todolist"
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.paullanducci.todolist"
         minSdkVersion 21
-        targetSdk 34
+        targetSdk 36
         versionCode = getCommitCount()
-        versionName = "1.1.0"
+        versionName = "1.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables {
@@ -90,6 +91,10 @@ android {
             excludes += 'META-INF/LICENSE-notice.md'
         }
     }
+    dependenciesInfo {
+        includeInBundle false
+        includeInApk false
+    }
 }
 
 dependencies {
@@ -130,8 +135,6 @@ dependencies {
     // Optional - Integration with LiveData
     implementation libs.androidx.runtime.livedata
 
-    // Optional - Integration with activities
-    implementation libs.androidx.activity.compose
     // Optional - Integration with ViewModels
     implementation libs.androidx.lifecycle.viewmodel.compose
 
@@ -156,7 +159,6 @@ dependencies {
 
     //Integration Testing
     testImplementation libs.junit
-    androidTestImplementation libs.androidx.ui.test.junit4
     debugImplementation libs.androidx.ui.test.manifest
     androidTestImplementation(libs.androidx.runner)
 
