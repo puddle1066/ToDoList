@@ -26,8 +26,6 @@ fun TutorialContainer(model: SettingsModel, pagerState: PagerState, count: Int) 
 
     HorizontalPager(
         state = pagerState,
-        beyondBoundsPageCount = count,
-
         flingBehavior = fling
     ) { page ->
         when (page) {

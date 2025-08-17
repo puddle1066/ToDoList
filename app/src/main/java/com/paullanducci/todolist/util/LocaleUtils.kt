@@ -1,6 +1,7 @@
 package com.paullanducci.todolist.util
 
 import androidx.core.os.LocaleListCompat
+import com.paullanducci.todolist.util.LocaleUtils.resolveSupportedLocale
 import java.util.Locale
 
 object LocaleUtils {

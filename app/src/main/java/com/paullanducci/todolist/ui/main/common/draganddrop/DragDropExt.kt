@@ -1,8 +1,6 @@
 package com.paullanducci.todolist.ui.main.common.draganddrop
 
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -62,17 +60,12 @@ fun LazyItemScope.DraggableItem(
                 translationY = current
             }
 
-    } else if (index == dragDropState.previousIndexOfDraggedItem) {
+    } else {
         Modifier
             .zIndex(1f)
             .graphicsLayer {
                 translationY = previous
             }
-    } else {
-        Modifier
-            .animateItemPlacement(
-                tween(easing = FastOutLinearInEasing)
-            )
     }
     Column(modifier = modifier.then(draggingModifier)) {
         content(dragging)
