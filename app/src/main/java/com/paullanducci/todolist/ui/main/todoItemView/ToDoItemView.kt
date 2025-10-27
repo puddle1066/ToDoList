@@ -1,7 +1,7 @@
 package com.paullanducci.todolist.ui.main.todoItemView
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
+import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -20,9 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.paullanducci.todolist.di.database.RoomDataProvider
 import com.paullanducci.todolist.di.database.data.ToDoImageData
 import com.paullanducci.todolist.speech.input.InputDevice
 import com.paullanducci.todolist.ui.main.MainActivity
@@ -38,6 +36,7 @@ import com.paullanducci.todolist.ui.main.todoItemView.inputName.ToDoInputName
 import com.paullanducci.todolist.ui.main.todoItemView.listPicker.ToDoChangeListDropDown
 import com.paullanducci.todolist.ui.main.todoItemView.textView.LastUpdatedText
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
+import com.paullanducci.todolist.util.LockScreenOrientation
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -111,6 +110,8 @@ fun ToDoItemView(model: ToDoItemModel) {
     model.setDescription(voiceTextState.value)
 
     ToDoListTheme {
+        LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        
         //Ask user if add to or replace existing text
 
         if (textToAdd.value.length > 0) {
@@ -237,15 +238,3 @@ fun ToDoItemView(model: ToDoItemModel) {
         }
     }
 }
-
-
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PreviewList() {
-    ToDoItemView(
-        ToDoItemModel(
-            RoomDataProvider()
-        )
-    )
-}
-

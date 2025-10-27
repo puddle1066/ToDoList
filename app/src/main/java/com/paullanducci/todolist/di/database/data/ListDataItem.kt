@@ -7,7 +7,7 @@ import com.paullanducci.todolist.listState_Normal
 
 @Entity(tableName = "ListsData")
 data class ListDataItem(
-    @PrimaryKey val listId: String,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "type") val type: String = listState_Normal
+    @PrimaryKey var listId: String,
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name = "type") var type: String = listState_Normal
 )

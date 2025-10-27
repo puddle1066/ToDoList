@@ -16,9 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ViewModelComponent::class)
 class RoomDataProvider @Inject constructor() {
-
-    private var TAG = RoomDataProvider::class.simpleName
-
     fun closeDatabase() {
         if (DataBaseManager.getInstance().isOpen) {
             DataBaseManager.getInstance().openHelper.close()
@@ -77,6 +74,15 @@ class RoomDataProvider @Inject constructor() {
     suspend fun insertList(list: ListDataItem) {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().insert(list)
+        }
+    }
+
+    @Singleton
+    @Provides
+    suspend fun updateList(listDataItem: ListDataItem) {
+        return withContext(dispatcher) {
+            DataBaseManager.getInstance().getlistItemsDao()
+                .updateList(listDataItem.listId, listDataItem.title)
         }
     }
 

@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
         actionBar?.hide()
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         installSplashScreen()
 

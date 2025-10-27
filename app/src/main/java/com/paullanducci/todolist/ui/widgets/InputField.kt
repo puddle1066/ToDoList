@@ -1,6 +1,5 @@
 package com.paullanducci.todolist.ui.widgets
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,16 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
@@ -30,15 +25,13 @@ import com.paullanducci.todolist.ui.theme.typography
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun InputField(
-    text: String,
-    onTextChanged: (String) -> Unit,
+    textValue: MutableState<String>,
     fieldTitle: String = "",
     keyboardType: KeyboardType = KeyboardType.Number,
-    onFinished: (String) -> Unit,
+    onFinished: () -> Unit,
     clearFieldOnKeyboard: Boolean = true,
 ) {
     ToDoListTheme {
-        var rememberText by remember { mutableStateOf(text) }
         val keyboardController = LocalSoftwareKeyboardController.current
 
         TextField(
@@ -67,60 +60,52 @@ fun InputField(
 
                 onDone = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
-                    if (clearFieldOnKeyboard) rememberText = ""
+                    onFinished()
+                    if (clearFieldOnKeyboard) textValue.value = ""
                 },
                 onGo = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
-                    if (clearFieldOnKeyboard) rememberText = ""
+                    onFinished()
+                    if (clearFieldOnKeyboard) textValue.value = ""
                 },
                 onNext = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
-                    if (clearFieldOnKeyboard) rememberText = ""
+                    onFinished()
+                    if (clearFieldOnKeyboard) textValue.value = ""
                 },
                 onPrevious = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
-                    if (clearFieldOnKeyboard) rememberText = ""
+                    onFinished()
+                    if (clearFieldOnKeyboard) textValue.value = ""
                 },
                 onSearch = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
-                    if (clearFieldOnKeyboard) rememberText = ""
+                    onFinished()
+                    if (clearFieldOnKeyboard) textValue.value = ""
                 },
                 onSend = {
                     keyboardController?.hide()
-                    onFinished(rememberText)
-                    if (clearFieldOnKeyboard) rememberText = ""
+                    onFinished()
+                    if (clearFieldOnKeyboard) textValue.value = ""
                 }
             ),
 
             colors = TextFieldDefaults.colors(
-                focusedTextColor = MaterialTheme.colorScheme.surface,
-                unfocusedTextColor = MaterialTheme.colorScheme.surface,
+                focusedTextColor = MaterialTheme.colorScheme.secondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.secondary,
                 focusedContainerColor = MaterialTheme.colorScheme.primary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.primary,
-                disabledContainerColor = MaterialTheme.colorScheme.primary
+                disabledContainerColor = MaterialTheme.colorScheme.primary,
+                cursorColor = MaterialTheme.colorScheme.secondary
             ),
             textStyle = typography.bodyLarge,
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
-            value = rememberText,
+            value = textValue.value,
             onValueChange = {
-                rememberText = it
-                onTextChanged.invoke(rememberText)
+                textValue.value = it
             },
             singleLine = true,
         )
 
     }
 }
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun MeasurePreview() {
-    InputField("", onTextChanged = { }, "Field Title", KeyboardType.Number, onFinished = {})
-}
-

@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,25 +24,22 @@ import com.paullanducci.todolist.ui.theme.typography
 fun ListItem(
     item: ListDataItem,
     count: Int,
-    onItemClick: (ListDataItem, Boolean) -> Unit
+    selected: MutableState<ListDataItem>,
+    onItemClick: (ListDataItem) -> Unit
 ) {
-
-    val colorSelected = MaterialTheme.colorScheme.error
+    val colorSelected = MaterialTheme.colorScheme.surface
     val colorUnSelected = MaterialTheme.colorScheme.primary
-    val isSelected = false
     val backgroundColor = remember { mutableStateOf(colorUnSelected) }
-    var selected by remember { mutableStateOf(isSelected) }
+
+    if (item.listId == selected.value.listId) {
+        backgroundColor.value = colorSelected
+    } else {
+        backgroundColor.value = colorUnSelected
+    }
 
     Box(modifier = Modifier
         .clickable {
-            if (selected) {
-                backgroundColor.value = colorUnSelected
-                selected = false
-            } else {
-                backgroundColor.value = colorSelected
-                selected = true
-            }
-            onItemClick(item, selected)
+            onItemClick(item)
         }
         .fillMaxSize()
         .height(70.dp)

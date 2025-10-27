@@ -35,4 +35,7 @@ interface ListItemsDao {
 
     @Query(value = "SELECT Count() FROM ListsData where listId = :listId")
     fun getListItemCount(listId: String): Int
+
+    @Query("UPDATE ListsData SET title = :listTitle where listId = :listId")
+    fun updateList(listId: String, listTitle: String)
 }

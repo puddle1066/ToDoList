@@ -1,5 +1,6 @@
 package com.paullanducci.todolist.ui.main.imageView
 
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -16,10 +17,13 @@ import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.theme.typography
+import com.paullanducci.todolist.util.LockScreenOrientation
 
 @Composable
 fun ImageHeadingView() {
     ToDoListTheme {
+        LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
