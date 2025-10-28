@@ -135,7 +135,7 @@ open class ToDoItemModel @Inject constructor(
     fun getListOfLists(): HashMap<String, String> {
         val list: HashMap<String, String> = HashMap()
         runBlocking {
-            val toDoListList = dataBaseProvider.getListOfLists()
+            val toDoListList = dataBaseProvider.getUserDefinedLists()
             toDoListList.forEach {
                 list[it.listId] = it.title
             }

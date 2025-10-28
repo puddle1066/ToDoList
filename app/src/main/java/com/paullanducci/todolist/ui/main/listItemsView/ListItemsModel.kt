@@ -13,18 +13,16 @@ open class ListItemsModel @Inject constructor(
     private val dataBaseProvider: RoomDataProvider,
 ) : BaseViewModel(dataBaseProvider) {
 
-
-    private var count = 0
-
-    fun getListOfLists(): List<ListDataItem> {
+    fun getUserDefinedLists(): List<ListDataItem> {
         var lists: List<ListDataItem>
         runBlocking {
-            lists = dataBaseProvider.getListOfLists()
+            lists = dataBaseProvider.getUserDefinedLists()
         }
         return lists
     }
 
     fun getListCount(listId: String): Int {
+        var count = 0
         runBlocking {
             count = dataBaseProvider.getLIstItemsCount(listId)
         }

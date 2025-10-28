@@ -55,7 +55,7 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getListOfLists(): List<ListDataItem> {
+    suspend fun getUserDefinedLists(): List<ListDataItem> {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().getUserDefinedLists()
         }

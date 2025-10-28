@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.di.database.data.ListDataItem
+import com.paullanducci.todolist.di.database.data.ListDataItemInitail
 import com.paullanducci.todolist.ui.main.common.StandardTopBar
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.ui.widgets.InputField
@@ -46,15 +47,7 @@ import com.paullanducci.todolist.util.LockScreenOrientation
 fun ListItemsView(model: ListItemsModel) {
 
     val listDataItems = remember { mutableStateListOf<ListDataItem>() }
-    val selected = remember {
-        mutableStateOf(
-            ListDataItem(
-                listId = "",
-                title = "",
-                type = ""
-            )
-        )
-    }
+    val selected = remember { mutableStateOf(ListDataItemInitail()) }
     val menuItems = hashMapOf<Int, String>(
         R.string.ToDo_Lists to ToDoScreens.ToDoListView.name,
         R.string.settings to ToDoScreens.SettingsView.name
@@ -118,7 +111,7 @@ fun EditEntry(
         if (!selected.value.listId.isEmpty()) {
             inputText.value = selected.value.title
             listDataItems.clear()
-            listDataItems.swapList(model.getListOfLists())
+            listDataItems.swapList(model.getUserDefinedLists())
         }
 
         Column {
@@ -137,7 +130,7 @@ fun EditEntry(
                         }
 
                         listDataItems.clear()
-                        listDataItems.swapList(model.getListOfLists())
+                        listDataItems.swapList(model.getUserDefinedLists())
                         inputText.value = ""
                     }
                 )
@@ -194,7 +187,7 @@ fun insertTask(
     if (!inputText.value.isEmpty()) {
         model.insertListItem(inputText.value)
         listDataItems.clear()
-        listDataItems.swapList(model.getListOfLists())
+        listDataItems.swapList(model.getUserDefinedLists())
         inputText.value = ""
     }
 }
@@ -208,7 +201,7 @@ fun updateTask(
     selected.value.title = inputText.value
     model.updateListItem(selected.value)
     listDataItems.clear()
-    listDataItems.swapList(model.getListOfLists())
+    listDataItems.swapList(model.getUserDefinedLists())
     inputText.value = ""
     selected.value.listId = ""
 }
@@ -224,7 +217,7 @@ fun deleteTask(
     if (model.getListCount(selected.value.listId) == 0) {
         model.deleteListId(selected.value.listId)
         listDataItems.clear()
-        listDataItems.swapList(model.getListOfLists())
+        listDataItems.swapList(model.getUserDefinedLists())
         inputText.value = ""
         selected.value.listId = ""
     } else {
@@ -238,7 +231,7 @@ fun DrawListOfGroups(
     listDataItems: SnapshotStateList<ListDataItem>,
     selected: MutableState<ListDataItem>
 ) {
-    listDataItems.swapList(model.getListOfLists())
+    listDataItems.swapList(model.getUserDefinedLists())
     Box(
         Modifier
             .border(
@@ -255,7 +248,7 @@ fun DrawListOfGroups(
                 ListItem(item, count, selected) { selectedListData: ListDataItem ->
                     selected.value = selectedListData
                     listDataItems.clear()
-                    listDataItems.swapList(model.getListOfLists())
+                    listDataItems.swapList(model.getUserDefinedLists())
                 }
             }
         }

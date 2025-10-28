@@ -17,15 +17,16 @@ fun ListItemsDeleteDialog(openDialog: MutableState<Boolean>) {
 
     if (openDialog.value) {
         AlertDialog(
+            modifier = Modifier.padding(20.dp),
             onDismissRequest = {
                 openDialog.value = false
             },
             title = {
-                Text(text = "Title")
+                Text(text = "Cannot Delete")
             },
             text = {
                 Text(
-                    "You cannot delete this list as it has Tasks associated with It.."
+                    "You cannot delete this list as it has Tasks associated with It. Please check the Finished List.."
                 )
             },
             buttons = {
@@ -37,7 +38,7 @@ fun ListItemsDeleteDialog(openDialog: MutableState<Boolean>) {
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { openDialog.value = false }
                     ) {
-                        Text("Dismiss")
+                        Text("OK")
                     }
                 }
             }

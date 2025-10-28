@@ -15,7 +15,7 @@ interface ListItemsDao {
     @Query("SELECT * FROM ListsData Order BY type ASC, title")
     fun getAllSortedASC(): List<ListDataItem>
 
-    @Query(value = "SELECT * FROM ListsData where type = '$listState_Normal'")
+    @Query(value = "SELECT * FROM ListsData where type = '$listState_Normal' ORDER BY title ASC")
     fun getUserDefinedLists(): List<ListDataItem>
 
     @Query("DELETE FROM ListsData where listId = :listId")

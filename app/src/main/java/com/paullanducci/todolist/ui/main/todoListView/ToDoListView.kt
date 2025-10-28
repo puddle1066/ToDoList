@@ -34,7 +34,7 @@ import com.paullanducci.todolist.ui.main.todoListView.buttons.CreateDeleteButton
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.util.LockScreenOrientation
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ToDoListView(model: ToDoListModel) {
 
@@ -98,6 +98,7 @@ fun ToDoListView(model: ToDoListModel) {
             Column(
                 Modifier
                     .background(MaterialTheme.colorScheme.background)
+                    .padding(0.dp, 50.dp, 0.dp, 0.dp)
                     .fillMaxHeight()
                     .fillMaxWidth()
             ) {
