@@ -112,6 +112,9 @@
     <string name="list_add">Add</string>
     <string name="list_update">Update</string>
     <string name="list_delete">Delete</string>
+    <string name="add_button">Add Button</string>
+    <string name="update_button">Update Button</string>
+    <string name="delete_button">Delete Button</string>
 
 
 </resources>

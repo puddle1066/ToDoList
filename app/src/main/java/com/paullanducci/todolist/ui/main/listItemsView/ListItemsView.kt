@@ -88,12 +88,21 @@ fun EditEntry(
     listDataItems: SnapshotStateList<ListDataItem>,
     selected: MutableState<ListDataItem>
 ) {
-    val inputText = remember { mutableStateOf(selected.value.title) }
     val openDialog = remember { mutableStateOf(false) }
-    val iconWeight = (LocalConfiguration.current.screenWidthDp.dp - 40.dp) / 3
+    val hasTitle = remember { mutableStateOf(false) }
+    val titleText = remember { mutableStateOf("") }
 
     if (openDialog.value) {
         ListItemsDeleteDialog(openDialog)
+    }
+
+    hasTitle.value = titleText.value.isNotEmpty()
+
+    if (nonSelected(selected)) {
+        listDataItems.clear()
+        listDataItems.swapList(model.getUserDefinedLists())
+    } else {
+        titleText.value = selected.value.title
     }
 
     Box(
@@ -105,71 +114,56 @@ fun EditEntry(
             )
             .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth()
-            .height(150.dp)
     ) {
-
-        if (!selected.value.listId.isEmpty()) {
-            inputText.value = selected.value.title
-            listDataItems.clear()
-            listDataItems.swapList(model.getUserDefinedLists())
-        }
-
         Column {
-            Row(Modifier.padding(10.dp)) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .height(90.dp)
+                    .padding(10.dp)
+            ) {
                 InputField(
-                    inputText,
+                    titleText,
                     fieldTitle = stringResource(id = R.string.input_list_name),
                     keyboardType = KeyboardType.Text,
                     onFinished = {
-                        if (nonSelected(selected)) {
-                            if (!inputText.value.isEmpty()) {
-                                insertTask(model, listDataItems, inputText)
-                            }
+                        if (isSelected(selected)) {
+                            updateTask(model, listDataItems, selected, titleText)
                         } else {
-                            updateTask(model, listDataItems, inputText, selected)
+                            if (haveTitle(selected)) {
+                                insertTask(model, listDataItems, titleText)
+                            }
                         }
 
                         listDataItems.clear()
                         listDataItems.swapList(model.getUserDefinedLists())
-                        inputText.value = ""
-                    }
-                )
+                        selected.value.listId = ""
+                        selected.value.title = ""
+                        titleText.value = ""
+                    })
             }
 
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .padding(10.dp, 20.dp, 10.dp, 20.dp),
-            ) {
-                //No List Id its new
-                if (nonSelected(selected)) {
-                    IconButton(
-                        Icons.Default.AddTask,
-                        onClick = {
-                            insertTask(model, listDataItems, inputText)
-                        },
-                        iconWeight,
-                        "Add"
-                    )
-                } else {
-                    IconButton(
-                        Icons.Default.Update,
-                        onClick = {
-                            updateTask(model, listDataItems, inputText, selected)
-                        },
-                        iconWeight,
-                        "Update"
-                    )
-                    IconButton(
-                        Icons.Default.DeleteForever,
-                        onClick = {
-                            deleteTask(model, listDataItems, inputText, selected, openDialog)
-                        },
-                        iconWeight,
-                        "Delete"
-                    )
-                }
+            if (hasTitle.value || isSelected(selected)) {
+                ShowButtons(selected, onPressed = {
+                    when (it) {
+                        R.string.add_button -> {
+                            insertTask(model, listDataItems, titleText)
+                        }
+
+                        R.string.update_button -> {
+                            updateTask(model, listDataItems, selected, titleText)
+                        }
+
+                        R.string.delete_button -> {
+                            deleteTask(model, listDataItems, selected, openDialog)
+                        }
+                    }
+                    titleText.value = ""
+                    selected.value.listId = ""
+                    selected.value.title = ""
+                    listDataItems.clear()
+                    listDataItems.swapList(model.getUserDefinedLists())
+                })
             }
         }
     }
@@ -179,49 +173,93 @@ fun nonSelected(selected: MutableState<ListDataItem>): Boolean {
     return selected.value.listId.isEmpty()
 }
 
+fun isSelected(selected: MutableState<ListDataItem>): Boolean {
+    return !selected.value.listId.isEmpty()
+}
+
+fun haveTitle(selected: MutableState<ListDataItem>): Boolean {
+    return !selected.value.title.isEmpty()
+}
+
 fun insertTask(
     model: ListItemsModel,
     listDataItems: SnapshotStateList<ListDataItem>,
-    inputText: MutableState<String>
+    title: MutableState<String>
 ) {
-    if (!inputText.value.isEmpty()) {
-        model.insertListItem(inputText.value)
+    if (!title.value.isEmpty()) {
+        model.insertListItem(title.value)
         listDataItems.clear()
         listDataItems.swapList(model.getUserDefinedLists())
-        inputText.value = ""
     }
 }
 
 fun updateTask(
     model: ListItemsModel,
     listDataItems: SnapshotStateList<ListDataItem>,
-    inputText: MutableState<String>,
-    selected: MutableState<ListDataItem>
+    selected: MutableState<ListDataItem>,
+    title: MutableState<String>
 ) {
-    selected.value.title = inputText.value
+    selected.value.title = title.value
     model.updateListItem(selected.value)
     listDataItems.clear()
     listDataItems.swapList(model.getUserDefinedLists())
-    inputText.value = ""
-    selected.value.listId = ""
 }
 
 fun deleteTask(
     model: ListItemsModel,
     listDataItems: SnapshotStateList<ListDataItem>,
-    inputText: MutableState<String>,
     selected: MutableState<ListDataItem>,
     openDialog: MutableState<Boolean>
 ) {
-    //TODO We should implement and confirm then delete all tasks
     if (model.getListCount(selected.value.listId) == 0) {
         model.deleteListId(selected.value.listId)
         listDataItems.clear()
         listDataItems.swapList(model.getUserDefinedLists())
-        inputText.value = ""
-        selected.value.listId = ""
     } else {
         openDialog.value = true
+    }
+}
+
+@Composable
+fun ShowButtons(
+    selected: MutableState<ListDataItem>,
+    onPressed: (Int) -> Unit
+) {
+    val iconWeight = (LocalConfiguration.current.screenWidthDp.dp - 40.dp) / 3
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .padding(10.dp, 20.dp, 10.dp, 20.dp),
+    ) {
+        if (nonSelected(selected)) {
+            IconButton(
+                Icons.Default.AddTask,
+                onClick = {
+                    onPressed(R.string.add_button)
+                },
+                iconWeight,
+                stringResource(R.string.add_button)
+            )
+        } else {
+            IconButton(
+                Icons.Default.Update,
+                onClick = {
+                    onPressed(R.string.update_button)
+                },
+                iconWeight,
+                stringResource(R.string.update_button)
+            )
+            IconButton(
+                Icons.Default.DeleteForever,
+                onClick = {
+                    onPressed(R.string.delete_button)
+                },
+                iconWeight,
+                stringResource(R.string.delete_button)
+            )
+        }
     }
 }
 

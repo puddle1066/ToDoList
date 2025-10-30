@@ -22,7 +22,6 @@ import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.listState_Finished
 import com.paullanducci.todolist.ui.main.MainActivity
 import com.paullanducci.todolist.ui.main.common.AppMenu
-import com.paullanducci.todolist.ui.main.listItemsView.ListItemsDropDown
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 
 @Composable

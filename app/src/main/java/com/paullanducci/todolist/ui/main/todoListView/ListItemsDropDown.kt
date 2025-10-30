@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.ui.main.listItemsView
+package com.paullanducci.todolist.ui.main.todoListView
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
