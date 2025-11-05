@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.ui.main.common.camera
+package com.paullanducci.todolist.ui.main.camera
 
 import android.annotation.SuppressLint
 import android.util.Size

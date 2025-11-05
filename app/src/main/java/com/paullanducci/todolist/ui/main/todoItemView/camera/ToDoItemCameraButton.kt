@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.paullanducci.todolist.R
-import com.paullanducci.todolist.ui.main.common.camera.CameraView
+import com.paullanducci.todolist.ui.main.camera.CameraView
 import com.paullanducci.todolist.util.convertImageProxyToBitmap
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

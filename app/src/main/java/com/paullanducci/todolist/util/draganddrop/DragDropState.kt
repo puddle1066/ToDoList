@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.ui.main.common.draganddrop
+package com.paullanducci.todolist.util.draganddrop
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutLinearInEasing

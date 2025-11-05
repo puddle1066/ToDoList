@@ -27,12 +27,12 @@ import com.paullanducci.todolist.LAST_LIST_ID
 import com.paullanducci.todolist.ToDoScreens
 import com.paullanducci.todolist.di.database.data.ToDoDataItem
 import com.paullanducci.todolist.ui.main.MainActivity
-import com.paullanducci.todolist.ui.main.common.draganddrop.DragDropColumn
 import com.paullanducci.todolist.ui.main.common.showViewWithBackStack
 import com.paullanducci.todolist.ui.main.todoListView.buttons.CreateAddButton
 import com.paullanducci.todolist.ui.main.todoListView.buttons.CreateDeleteButton
 import com.paullanducci.todolist.ui.theme.ToDoListTheme
 import com.paullanducci.todolist.util.LockScreenOrientation
+import com.paullanducci.todolist.util.draganddrop.DragDropColumn
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

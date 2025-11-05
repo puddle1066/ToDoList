@@ -4,7 +4,6 @@ plugins {
     id 'kotlin-android'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
     id 'com.google.devtools.ksp'
     id 'org.jetbrains.kotlin.plugin.compose'
 }
@@ -101,7 +100,7 @@ dependencies {
     /** Compose **/
     //   implementation "androidx.compose.material:material$compose_version"
     // or skip Material Design and build directly on top of foundational components
-    implementation libs.foundation
+    implementation libs.androidx.foundation.android
     // or only import the main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
     implementation libs.ui
@@ -110,11 +109,13 @@ dependencies {
     implementation libs.androidx.ui.tooling.preview
     implementation libs.androidbrowserhelper
     implementation libs.test.core.ktx
-    implementation libs.firebase.crashlytics.ktx
     implementation libs.firebase.analytics.ktx
     implementation libs.junit.ktx
     implementation libs.androidx.foundation.android
     implementation libs.androidx.tools.core
+    implementation libs.androidx.material3
+    implementation libs.androidx.foundation
+    implementation libs.androidx.ui
     debugImplementation libs.androidx.ui.tooling
 
     // Optional - Included automatically by material, only add when you need

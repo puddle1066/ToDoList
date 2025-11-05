@@ -5,7 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.unit.dp
-import com.paullanducci.todolist.ui.main.common.drawMenu.DrawItem
+import com.paullanducci.todolist.util.drawMenu.DrawItem
 
 /**
  * enum values that represent the screens in the app

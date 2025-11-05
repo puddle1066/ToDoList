@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.ui.main.common.camera
+package com.paullanducci.todolist.ui.main.camera
 
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException

@@ -1,4 +1,4 @@
-package com.paullanducci.todolist.ui.main.common.camera
+package com.paullanducci.todolist.ui.main.camera
 
 import android.content.Context
 import androidx.camera.lifecycle.ProcessCameraProvider

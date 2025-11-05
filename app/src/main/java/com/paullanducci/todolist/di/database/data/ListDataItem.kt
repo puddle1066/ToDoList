@@ -12,6 +12,6 @@ data class ListDataItem(
     @ColumnInfo(name = "type") var type: String = listState_Normal
 )
 
-fun ListDataItemInitail(): ListDataItem {
+fun listDataItemInitail(): ListDataItem {
     return ListDataItem("", "", "")
 }
