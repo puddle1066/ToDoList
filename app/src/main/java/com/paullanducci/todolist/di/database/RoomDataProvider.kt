@@ -104,7 +104,7 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getListTitle(listId: String): String {
+    suspend fun getListTitle(listId: String): String? {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().getListTitle(listId)
         }
@@ -112,7 +112,7 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getListType(listId: String): String {
+    suspend fun getListType(listId: String): String? {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().getListType(listId)
         }
@@ -120,7 +120,7 @@ class RoomDataProvider @Inject constructor() {
 
     @Singleton
     @Provides
-    suspend fun getListItem(listId: String): ListDataItem {
+    suspend fun getListItem(listId: String): ListDataItem? {
         return withContext(dispatcher) {
             DataBaseManager.getInstance().getlistItemsDao().getListItem(listId)
         }

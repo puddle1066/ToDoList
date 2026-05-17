@@ -46,7 +46,7 @@ class RoomListIItemsProviderTest : BaseDataProviderTest() {
 
     @Test
     fun getListItem() {
-        assert(listItemsDao.getListItem("1").listId == "1")
+        assert(listItemsDao.getListItem("1")?.listId == "1")
     }
 
     @Test

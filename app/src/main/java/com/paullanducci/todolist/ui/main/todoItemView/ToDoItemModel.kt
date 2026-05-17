@@ -74,11 +74,11 @@ open class ToDoItemModel @Inject constructor(
     }
 
     fun getListTitle(listId: String): String {
-        var title: String
+        var title: String?
         runBlocking {
             title = dataBaseProvider.getListTitle(listId)
         }
-        return title
+        return title ?: ""
     }
 
     fun insert() {

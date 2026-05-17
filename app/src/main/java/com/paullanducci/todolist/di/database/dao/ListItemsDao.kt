@@ -22,13 +22,13 @@ interface ListItemsDao {
     fun deleteList(listId: String)
 
     @Query(value = "SELECT title FROM ListsData where listId = :listId")
-    fun getListTitle(listId: String): String
+    fun getListTitle(listId: String): String?
 
     @Query(value = "SELECT type FROM ListsData where listId = :listId")
-    fun getListType(listId: String): String
+    fun getListType(listId: String): String?
 
     @Query(value = "SELECT * FROM ListsData where listId = :listId")
-    fun getListItem(listId: String): ListDataItem
+    fun getListItem(listId: String): ListDataItem?
 
     @Query(value = "DELETE From ToDoDataItem where finishedDate != 0")
     fun removeAllFinished()

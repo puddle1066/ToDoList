@@ -63,7 +63,7 @@ open class ToDoListModel @Inject constructor(
             try {
                 val todoListItem = dataBaseProvider.getListItem(listId)
 
-                toDoDataItems = when (todoListItem.type) {
+                toDoDataItems = when (todoListItem?.type) {
                     listState_all_incomplete ->
                         dataBaseProvider.getAllIncompleteItems()
 
@@ -87,7 +87,7 @@ open class ToDoListModel @Inject constructor(
             try {
                 val todoListItem = dataBaseProvider.getListItem(listId)
 
-                toDoDataItems = when (todoListItem.type) {
+                toDoDataItems = when (todoListItem?.type) {
                     listState_Finished ->
                         dataBaseProvider.searchFinishedItems(searchText)
 
@@ -121,31 +121,32 @@ open class ToDoListModel @Inject constructor(
         var type = listState_Normal
         runBlocking {
             val item = dataBaseProvider.getListItem(MainActivity.listId)
-            type = item.type // Else type has been removed
+            type = item?.type ?: listState_Normal
         }
         return type
     }
 
     fun getListTitle(): String {
-        var title: String
+        var title: String?
         runBlocking {
             title = dataBaseProvider.getListTitle(MainActivity.listId)
         }
-        return when (title) {
-            null -> resourcesProvider.getString(R.string.please_select)
-            "" -> resourcesProvider.getString(R.string.please_select)
-            else -> title
+        return if (title.isNullOrBlank()) {
+            resourcesProvider.getString(R.string.please_select)
+        } else {
+            title!!
         }
     }
 
     fun getListType(): String {
-        var type: String
+        var type: String?
         runBlocking {
             type = dataBaseProvider.getListType(MainActivity.listId)
         }
-        return when (type) {
-            "" -> listState_Normal
-            else -> type
+        return if (type.isNullOrBlank()) {
+            listState_Normal
+        } else {
+            type!!
         }
     }
 
@@ -168,16 +169,15 @@ open class ToDoListModel @Inject constructor(
     }
 
     fun getListTitleforId(listId: String): String {
-        var title: String
+        var title: String?
         runBlocking {
             title = dataBaseProvider.getListTitle(listId)
         }
 
-        when (title) {
-            "" -> {
-                return resourcesProvider.getString(R.string.please_select)
-            }
-            else -> return title
+        return if (title.isNullOrBlank()) {
+            resourcesProvider.getString(R.string.please_select)
+        } else {
+            title!!
         }
     }
 
